@@ -1,0 +1,82 @@
+
+    -- This file was automatically generated from an XSL template, which is
+    -- why it looks so ugly.  Editing it by hand would be a bad idea.
+    --
+
+    CREATE TABLE DB_TABLE_PREFIXSchema (
+  DB_COLUMN_PREFIXname
+      VARCHAR(
+      
+	  128
+	
+      )
+    
+      NOT NULL
+    
+      ,
+    DB_COLUMN_PREFIXmajor
+      INTEGER
+    
+      NOT NULL
+    
+      ,
+    DB_COLUMN_PREFIXminor
+      INTEGER
+    
+      NOT NULL
+    
+    );
+
+  
+    ALTER TABLE DB_TABLE_PREFIXSchema
+    ADD PRIMARY KEY (DB_COLUMN_PREFIXname);
+    
+
+    INSERT INTO DB_TABLE_PREFIXSchema (
+      DB_COLUMN_PREFIXname,
+      DB_COLUMN_PREFIXmajor,
+      DB_COLUMN_PREFIXminor
+      ) VALUES (
+      'Schema',
+      1,
+      0
+      );
+
+  
+      ALTER TABLE DB_TABLE_PREFIXSchema
+      ADD COLUMN DB_COLUMN_PREFIXtestCol
+      VARCHAR(
+      
+	  128
+	
+      )
+    
+      ;
+    
+      CREATE UNIQUE INDEX DB_TABLE_PREFIXSchema_18169
+      ON DB_TABLE_PREFIXSchema
+      (DB_COLUMN_PREFIXtestCol);
+    
+
+    UPDATE DB_TABLE_PREFIXSchema
+      SET DB_COLUMN_PREFIXmajor=1,
+	  DB_COLUMN_PREFIXminor=1
+      WHERE DB_COLUMN_PREFIXname='Schema' AND
+	  DB_COLUMN_PREFIXmajor=1 AND
+	  DB_COLUMN_PREFIXminor=0;
+  
+      DROP INDEX DB_TABLE_PREFIXSchema_18169;
+    
+
+    UPDATE DB_TABLE_PREFIXSchema
+      SET DB_COLUMN_PREFIXmajor=1,
+	  DB_COLUMN_PREFIXminor=2
+      WHERE DB_COLUMN_PREFIXname='Schema' AND
+	  DB_COLUMN_PREFIXmajor=1 AND
+	  DB_COLUMN_PREFIXminor=1;
+  
+      DROP TABLE DB_TABLE_PREFIXSchema;
+
+      DELETE FROM DB_TABLE_PREFIXSchema
+      WHERE DB_COLUMN_PREFIXname = 'Schema';
+    

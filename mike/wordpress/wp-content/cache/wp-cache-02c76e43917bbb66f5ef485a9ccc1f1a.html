@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>  Groovy vs JRuby</title>
+	
+	<meta name="generator" content="WordPress 2.7-RC2" /> <!-- leave this for stats -->
+	
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/custom.css" type="text/css" media="screen" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie7.css" media="screen" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie6.css" media="screen" />
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+	<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.perham.net/mike/log/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7-RC2" />
+
+</head>
+<body class="custom">
+
+<div id="container">
+
+	<div id="masthead">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		<h3>Life in the Slow Lane</h3>
+	</div>
+
+	<ul id="nav">
+		<li><a href="http://www.perham.net/mike/log">front page</a></li>
+		<li><a href="/">perham.net</a></li>
+		<li><a href="/mike/">mike</a></li>
+		<!-- li class="rss"><a href="http://www.perham.net/mike/log/?feed=rss2">RSS</a></li-->
+		<li class="rss"><a href="http://feeds.feedburner.com/perham/log">RSS</a></li>
+
+	</ul>
+	
+	<!--div id="header_img">
+	<img src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/header_3.jpg" width="970" height="140" alt="header image" title="header image" />
+	</div-->
+	<div id="content_box">
+	
+		<!--?php include (TEMPLATEPATH . '/l_sidebar.php'); ?-->
+		
+		<div id="content" class="posts">
+			
+				
+		
+<div class="navigation">
+	<span class="previous">&larr; <a href="http://www.perham.net/mike/log/?p=276">Horrible News</a></span>
+	<span class="next"><a href="http://www.perham.net/mike/log/?p=278">Maven 2.0</a> &rarr;</span>
+</div>
+<div class="clear whitespace"></div>
+
+						
+			<h2>Groovy vs JRuby</h2>
+			<h4>June 29th, 2005<!-- by mperham --> &middot; <a href="http://www.perham.net/mike/log/?p=277#comments">7 Comments</a></h4>
+			<div class="entry">
+				<p>I spent some time playing with <a href="http://groovy.codehaus.org">Groovy</a> today.  It&#8217;s somewhat similar to Ruby in that it is an interpreted language like Ruby but with tight Java integration (in fact Groovy natively executes within the Java VM by generating bytecode at runtime).  Comparing its feature list, Groovy looks like a 100% rip off of Ruby (well, imitation is the &#8230;) but not implemented as professionally.  Its founder, James Strachan, is well known in the Java community as quite gifted for starting visionary open source projects (e.g. ActiveMQ, Groovy, ServiceMix, et al) but not exactly polishing them to a gleam.</p>
+<p>Now along comes something like <a href="http://jruby.sf.net">JRuby</a>.  Ruby implemented on top of the Java VM, rather than a native interpreter.  It still has yet to gain any sort of momentum but it has the draw of Ruby and Rails: a powerful language combined with an incredible webapp framework.</p>
+<p>My guess is people who use Java will stick with Groovy, warts and all.  It&#8217;s on the JCP fast track to become THE java scripting language so even though it may look like a pig with lipstick right now, it&#8217;ll eventually become something respectable and dependable in a production environment.</p>
+<p>Those who aren&#8217;t constrained to a particular environment can evaluate Ruby.  Quite frankly Ruby is just as universal as Java, given that it can run on Linux, Windows and Mac OSX.  It&#8217;s not as polished, what with pathetic tool and IDE support, but it does have a certain clean slate appeal to it that Java, with its 100MB IDEs and monstrous enterprise application servers, cannot match.  Unfortunately Ruby does not have the mature and vast array of frameworks out there to do everything like Java.  Want to do text searching?  Out of luck in Ruby, use <a href="http://jakarta.apache.org/lucene">Lucene</a> in Java.  Want a nice web UI framework?  Ruby templates SUCK (they look identical to JSP 1.0, and that SUCKED too), Java has <a href="http://jakarta.apache.org/tapestry">Tapestry</a>.  In a perfect world, changing platforms wouldn&#8217;t involve two steps forward, one step back.  Alas.</p>
+							</div>
+			<p class="tagged"><strong>Tags:</strong> <a href="http://www.perham.net/mike/log/?cat=5" title="View all posts in Software" rel="category">Software</a></p>
+			<div class="clear"></div>
+			
+			
+<!-- You can start editing here. -->
+
+
+<div id="comments">
+
+	<h3 class="comments_headers">7 responses so far &darr;</h3>
+	
+	<ul id="comment_list">
+
+	
+			
+		<li class="comment " id="comment-126">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-126" title="Permalink to this comment">1</a></span>
+				<strong>Bob White </strong>
+				<span class="comment_time">// Sep 23, 2005 at 1:23 pm</span>
+			</p>
+			<div class="entry">
+				<p>We&#8217;re evaluating both Ruby (on Rails) and Groovy (rail-less). Given what RoR can do, it&#8217;s tempting to jump to Ruby.  But there&#8217;s grails (Groovy on &#8220;Rails&#8221;) which is just vaporware as of Sept 05.  And there&#8217;s trails (Java on &#8220;Rails&#8221; using Hibernate, Tapestry and Spring) which requires a bit more manual work than RoR.  Each of these projects has some deficiency or something unappealing, hence for the neophyte, it&#8217;s hard to know which to spend time learning.  I don&#8217;t want to let my Java bias blind me to the advantages of Ruby, nor do I want to learn Ruby and pine for the many Java libraries it cannot access (you mention Lucene, but what about access to all the various databases that have JDBC drivers and Ruby has only a few, etc).</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-47315">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-47315" title="Permalink to this comment">2</a></span>
+				<strong>tom </strong>
+				<span class="comment_time">// Aug 5, 2006 at 7:14 pm</span>
+			</p>
+			<div class="entry">
+				<p>I think it&#8217;s fair to mention the Grails project (http://grails.codehaus.org) which seems very promising.  </p>
+<p>Could you elaborate on what makes Groovy so ugly?  I was looking for an actual feature comparison between Groovy and Ruby.  I realize Java as a language is falling behind, and needs a higher-level language like Ruby.  As much as I dislike being limited by Java, I do believe in Java as a platform.  Java needs a mature and feature-rich language to keep it alive.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-51164">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-51164" title="Permalink to this comment">3</a></span>
+				<strong><a href='http://www.thewoolleyweb.com' rel='external nofollow' class='url'>Chad Woolley</a> </strong>
+				<span class="comment_time">// Nov 9, 2006 at 9:18 pm</span>
+			</p>
+			<div class="entry">
+				<p>There is text searching in Ruby.  We&#8217;ve integrated Solr with our ruby projects.  Solr runs lucene under the covers.  Ruby integration wasn&#8217;t that hard.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-53810">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-53810" title="Permalink to this comment">4</a></span>
+				<strong>Dave Newton </strong>
+				<span class="comment_time">// Feb 25, 2007 at 8:32 am</span>
+			</p>
+			<div class="entry">
+				<p>There&#8217;s text searching in Groovy, too; what am I missing?</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-73781">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-73781" title="Permalink to this comment">5</a></span>
+				<strong><a href='http://blog.zabiello.com' rel='external nofollow' class='url'>Jaroslaw Zabiello</a> </strong>
+				<span class="comment_time">// Dec 26, 2007 at 9:02 am</span>
+			</p>
+			<div class="entry">
+				<p>&#8220;Want to do text searching? Out of luck in Ruby&#8221; You must be kidding. Have you heard about Ferret? It is Lucene port in Ruby, works fast and reliable. There is even better text searcher than Lucene - Sphinx (http://www.sphinxsearch.com/), 100x faster with smaller memory usage. It works perfect with Ruby.</p>
+<p>&#8220;Ruby templates suck. they look identical to JSP 1.0, and that SUCKED too&#8221; - You have no idea about templates in Ruby. There are much more and better: Haml (http://haml.hamptoncatlin.com/) my favourite ones :),  Markaby (http://rubyforge.org/projects/markaby/) - pury Ruby,  MasterView (http://masterview.org/) if you like ASP.NET approach or Liquid (http://home.leetsoft.com/liquid) similiar to pythonic  Django, clean and easy for designers. And there are more and more. Every one can be used in Rails, you can even mix and use few of them together.</p>
+<p>And last, but not least, Groovy is just slow. It internal code is a nightmare, a lot of slow reflections everywhere.  JRuby does not use them in such way, because they are SLOW.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-73782">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-73782" title="Permalink to this comment">6</a></span>
+				<strong>mperham </strong>
+				<span class="comment_time">// Dec 26, 2007 at 10:47 am</span>
+			</p>
+			<div class="entry">
+				<p>Jaroslaw, you might want to take into account the date I wrote this post.  None of the tools you mention existed back then.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-73783">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-73783" title="Permalink to this comment">7</a></span>
+				<strong><a href='http://na' rel='external nofollow' class='url'>Beaumont Muni</a> </strong>
+				<span class="comment_time">// Dec 26, 2007 at 2:21 pm</span>
+			</p>
+			<div class="entry">
+				<p>mperham </p>
+<p>Correction on Groovy &#8230; it is not an interpreted language. Groovy compiles down to the byte code so every groovy class is a java class. As a result Groovy is different from Ruby and other interpreted languages  in that it gives you the ability to work in both the dynamic (Groovy) environment and still have ability to integrate the static (Java) environment.</p>
+<p>You can call Groovy a rip off of Ruby &#8230; but so what, I am glad its a rip &#8230; more power to the rippers, because without ripping there can never be any improvements. Isn&#8217;t that what technology is all about? &#8230; You have got to give people what they want. Show me a solutions where I can save time and money and leverage the large amounts of code I have spent years to develop and I will show a framework that companies will gravitate towards.  Why re-learn and retool when you can still leverage the vast libraries and resources that Java provides and your learning curve is low. That translates into dollars saved for companies and individuals.  understand.</p>
+ 
+							</div>
+		</li>
+		
+			
+	</ul>
+		
+	
+
+	<!-- Comment Form -->
+		
+		
+			<h3 id="respond" class="comments_headers">Leave a Comment</h3>
+			<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="comment_form">
+			
+										<p><input class="text_input" type="text" name="author" id="author" value="" tabindex="1" /><label for="author"><strong>Name</strong></label></p>
+				<p><input class="text_input" type="text" name="email" id="email" value="" tabindex="2" /><label for="email"><strong>Mail</strong></label></p>
+				<p><input class="text_input" type="text" name="url" id="url" value="" tabindex="3" /><label for="url"><strong>Website</strong></label></p>
+							<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+			
+				<p><textarea class="text_input text_area" name="comment" id="comment" rows="7" tabindex="4"></textarea></p>
+			
+							
+				<p>
+					<input name="submit" class="form_submit" type="submit" id="submit" src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/submit_comment.gif" tabindex="5" value="Submit" />
+					<input type="hidden" name="comment_post_ID" value="277" />
+				</p>
+		
+					
+			</form>
+
+		
+</div> <!-- Close #comments container -->
+<div class="clear flat"></div>
+			
+				
+		</div>
+		
+		<div id="sidebar">
+	<ul class="sidebar_list">
+		<li class="widget">
+			<h2>Contact Me</h2>
+<ul>
+<li>Email: mperham AT gmail.com</li>
+<li>Twitter: <a href="http://twitter.com/mperham">mperham</a></li>
+</ul>
+		</li>
+				<!--li class="widget">
+			<h2>Search It!</h2>
+			<form method="get" id="search_form" action="http://www.perham.net/mike/log/">
+	<input type="text" class="search_input" value="To search, type and hit enter" name="s" id="s" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" />
+	<input type="hidden" id="searchsubmit" value="Search" />
+</form>
+		</li>
+		<li class="widget">
+			<h2>Recent Entries</h2>
+			<ul>
+												<li><a href="http://www.perham.net/mike/log/?p=897">Next Generation AV</a><span class="recent_date">2.8</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=894">Me in Second Grade</a><span class="recent_date">1.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=892">Pakistan in Peril</a><span class="recent_date">1.21</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=888">Zinger now Available!</a><span class="recent_date">1.14</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=885">Health Care Costs</a><span class="recent_date">1.11</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=883">VHS era is winding down</a><span class="recent_date">12.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=880">Wedding Roundup</a><span class="recent_date">12.24</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=875">Vegas Wedding</a><span class="recent_date">12.23</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=873">Viva Las Vegas!</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=871">Secret Agency Man</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/archives" title="Visit the archives!">Visit the archives for more!</a></li>
+			</ul>
+		</li-->
+				  <li id="linkcat-6" class="linkcat"><h2>Blog</h2>
+	<ul>
+<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://www.mikeperham.com" title="My Professional Site">mikeperham</a></li>
+<li><a href="http://nsputnik.com">Nick</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://reqfd.net/stack/" rel="friend">Sharon</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+	</ul>
+</li>
+  <li id="linkcat-7" class="linkcat"><h2>Home Page</h2>
+	<ul>
+<li><a href="http://nsputnik.com">Nick</a></li>
+
+	</ul>
+</li>
+			</ul>
+</div>			
+	</div>
+
+	<div id="footer">
+		<p>&copy; 2006&ndash;2007 Mutterings &mdash; <a href="http://www.perham.net/mike/log/sitemap/">Sitemap</a> &mdash; <a href="http://cutline.tubetorial.com/">Cutline</a> by <a href="http://www.tubetorial.com">Chris Pearson</a></p>
+			</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2569989-1";
+urchinTracker();
+</script>
+</body>
+</html>
+
+<!-- Dynamic Page Served (once) in 0.352 seconds -->
+<!-- Cached page generated by WP-Super-Cache on 2009-03-09 16:29:06 -->

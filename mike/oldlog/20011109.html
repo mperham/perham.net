@@ -1,0 +1,125 @@
+<html><head><title>Web Log</title></head><body>
+<h3>11/09/2001</h3>
+So far the old new hardware is working fine.  I got some new new hardware: 
+a Thrustmaster steering wheel for racing games and a Maxtor 60GB hard 
+drive.  The steering wheel was flaky at first but there was a patch 
+available on the Windows Update site that fixed it.  The new hard drive is 
+also flaky.  It appears to crash XP on large DMA transfers.  I forced it 
+down to PIO mode and it transfers without incident.  I'm going to try 
+forcing it to ATA/33 instead of ATA/100 and see if the speed makes a 
+difference.  It should be noted that it does not crash Linux so the problem
+would seem to be XP's DMA support.
+<P>
+When working, the drive seems MUCH faster than the old drive.  XP boots in 20 
+seconds flat whereas it was taking 30 seconds before.  
+Kudos to Microsoft for their fast boot code.
+
+<h3>11/02/2001</h3>
+I got my new hardware today.  Huzzah!  Took me about 30 minutes to rip out 
+my old mainboard and install the new one.  Cool thing is that my old 
+hardware is pushing 3 yrs old now and everything was reusable.  Power 
+supply is only 250W but works fine.  Case had all the punchouts required 
+for all the built-in connectors.  Gotta love standards.
+<P>
+The new system is about 3 times faster than my old system.  I had to tweak 
+the RAM settings to get optimal performance but that wasn't too difficult.
+<P>
+<a href="http://www.hmonitor.com">hmonitor</a> is a great tool that you 
+can use to monitor the temperature of your CPU/mainboard.  It also has 
+this cool feature where it will slow down the processor when it is not 
+being used.  I assume this is a low-priority thread that simply issues the 
+HLT command.  Either way - the average temperature of my CPU has dropped 
+15 degrees celcius because of it!  Highly recommended - I wish Linux and 
+XP supported this out of the box.
+<P>
+I had to reinstall XP because of the mainboard/processor change.  What a 
+pain.  Linux worked without incident save for the fact that the 
+VIA AC97 sound chip needs a newer kernel for support.  Gotta love open 
+source.
+
+<h3>10/31/2001</h3>
+Becky and I had a picnic lunch on the lawn in front of the Capital today.
+She makes a mean hummus, avacado and tomato sandwich.  We also went to
+Rath's house in the evening to hand out candy to all the kids.
+
+<h3>10/29/2001</h3>
+Hacked the external callout into the POP3 code for Mozilla.  I couldn't figure out the PREFS api
+in Mozilla so I could store the command string in prefs.js.  I submitted the diff as is and
+hopefully the Mozilla guys will put it into the main source soon.  It takes my machine several
+hours to build Mozilla - I _really_ need to upgrade my machine (450 Celeron).  I'll probably get
+an AMD 1700+ with 512MB DDR.
+<P>
+<b>Update:</b> just ordered a 1700+, Shuttle AV31A MB and 512MB of RAM for $350.  Whoo-hoo!
+
+<h3>10/27/2001</h3>
+Wow, I had a great time with Becky at the party last night.  Tons of people
+there and plenty of booze to inbibe.
+<P>
+Planning on working on my motorcycle (it has an intermittent starter
+problem that is probably just a bad contact) and looking at Mozilla.  I
+submitted bug <a href="http://bugzilla.mozilla.org/show_bug.cgi?id=100683">
+100683</a> to run an external program before downloading POP3
+mail and I want to take a stab at doing it myself.  That's what open source
+is all about...
+
+<h3>10/26/2001</h3>
+Lunch with <a href="http://www.middleware-company.com">edro</a> and then
+off to Busey's to play with Linux and XP.  I'm really opposed to Microsoft
+based on their continuing anti-competitive business practices.  I use Linux
+99% of the time already and the other 1% is for gaming - which Windows 2000
+does ok for now.  I think $99 is a very reasonable cost given the quality
+of the XP release.  But then again, the first hit of crack is always free,
+right?
+<P>
+Becky and I are off to a Halloween party tonight with friends of hers.
+<P>
+Anybody have a <a href="http://www.svrider.com">Suzuki SV650S</a> they want
+to sell me?  I really need a bigger bike than my <a
+href="http://www.kawasaki.com/motorcycles/2002/flash/ninja500r/ninja500r.htm">Ninja 500</a>.
+I test rode an SVS the other day and it was sweet.  ALOT more power than the
+500.
+
+<h3>10/25/2001</h3>
+I read just a few days ago that computers are responsible for 13% of all
+power usage in the US.  I don't know this for a fact but I do know that
+wherever I go, computers often are left on 24 hrs a day.
+<P>
+I think this is irresponsible.
+<P>
+Not of the users but of the OS and hardware manufacturers that they don't
+do more to make power saving work straight out of the box.  It would be
+trivial for Dell to turn on monitor powerdown after 15 minutes for all the
+computers it sells.  It would be trivial for Microsoft to make it default
+for Windows.  Imagine the power savings.
+<P>
+I've setup Linux so I can put it in Standby mode.  This works out of the
+box with Redhat 7.2.  Just use <code>apm -s</code>.  This will not power
+down your drives; to do that, just use the <code>/sbin/hdparm</code>
+command to set the powerdown timeout to something reasonable.  I have an 'off' script that does all that for me (including 'sync' in case
+the power goes out while the machine is in standby).
+
+<h3>10/24/2001</h3>
+I've decided to try out the whole weblog thing.  It might be interesting to
+look back at what I did in months past...
+<P>
+Spent a few hours installing Redhat 7.2.  I learned long ago to put the
+/home directories on a separate disk so OS upgrades do not destroy user
+data.  This made the upgrade really easy... sort of.  Unfortunately XFree86
+4.1.0 does not like my GF2MX -> DVI -> 18" LCD video setup.  It couldn't
+display anything at any resolution and the log file indicated nothing
+wrong.  I grabbed nvidia's driver with lynx, installed it and everything is
+peachy.
+<P>
+Given my current unemployed status, I've been sort of bored and looking for
+an interesting project a la my jnap project 2 years ago.  I heard about
+<a href="http://www.jxta.org">jxta</a> a few months ago and am considering
+writing a generic file sharing program.  Kinda old hat at this point -
+we'll see.
+<P>
+I've gotten into Ed McBain's 87th Precinct novels recently.  Pretty good
+murder mysteries if you want a quick read.
+
+<hr>
+<a href="..">Back to Mike's Home Page</a>
+</body>
+</html>

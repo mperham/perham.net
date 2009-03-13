@@ -1,0 +1,10 @@
+# $Revision: 16041 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/remote/GalleryRemote.inc	1610159424	4081160918	37802	39004
+modules/remote/ItemAddGalleryRemote.inc	3578478022	3572882025	2003	2070
+modules/remote/RemoteSiteAdmin.inc	1049846436	2332404649	2619	2711
+modules/remote/classes/GalleryRemoteConstants.class	3370596330	2339097912	2681	2764
+modules/remote/classes/GalleryRemoteProperties.class	2043214820	2363702549	2967	3065
+modules/remote/module.inc	554716856	3332792781	2476	2560
+modules/remote/templates/ItemAddGalleryRemote.tpl	4159022639	1658449736	926	941
+modules/remote/templates/RemoteSiteAdmin.tpl	1516759221	2793275898	1094	1124

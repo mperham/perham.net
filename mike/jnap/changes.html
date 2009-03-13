@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>Jnap development log</title>
+<body>
+<font size="-1">
+<H2>Jnap development log</H2>
+Source code is in the <a href="http://cvs.sourceforge.net/cgi-bin/cvsweb.cgi/jnap/?cvsroot=jnap">Jnap CVS Repository</a>.
+<hr>
+<H3>10/28/00</h3>
+Since I recently changed jobs and envision working ALOT more now, I'm not going to have time to work on jnap for the near future.  I have thus decided to release a 1.1 "preview" which will show everyone what Remco and I have been working on for the past 7 months.  Hope you enjoy it!
+<H3>10/1/00</h3>
+I'm continuing work on v1.1.  This is a pretty massive update to jnap with a redone GUI, support for uploads, etc.
+<H3>7/17/00</h3>
+jnap 1.02 is now available with all four of the bugs listed below fixed.  Please let me know if you have any problems.
+<H3>7/12/00</h3>
+A small change in the Napster protocol caused jnap to print out an exception for every search result.  I've fixed this and cleaned up the batch file used to start jnap in windows (since I didn't realize that Java 2 does not require the runtime libraries to be in the classpath).
+<P>
+I plan on issuing a 1.02 release within the next week that fixes the Reconnect bug listed below as that is the only critical bug I know about in jnap.
+
+<H3>5/16/00</h3>
+Yes, all development of jnap has been halted for the foreseeable future.  I may issue a bugfix release for 1.0 because I find the existing bugs really annoying but I don't know if I will ever get to a 1.1/2.0 release with upload support.  Known bug list for 1.0:
+<ul>
+<li>Reconnect menu fails because listen socket does not shut down
+<li>Browse Host lists speed as "Unknown" always.
+<li>Annoying "Stop/Remove" behavior
+<li>INTERNAL: should use interrupt() rather than waiting for the threads to wakeup
+</ul>
+<H3>2/20/00</h3>
+It looks like there are going to be two, possibly three, big new features in the next version of jnap.  First, and foremost of course, is full upload support.  Second is a new idea I came up with the other day that I term "Download Groups".  This is a set of files that you wish to download.  The obvious example is downloading a full CD.  Well if it's 15 tracks and the remote host has connections limited to 2, that means you have to download 2 tracks at a time by hand.  With download groups, jnap will create two threads and use them to download all 15 tracks, 2 at a time, automatically!  Lastly, I hope jnap will have a new GUI to go along with these new features - Alain Maisonneuve has offered to redo much of jnap's GUI and I can't wait to see what he comes up with.  The bad news is that all of these new features mean that it will probably be another month before we see 1.1.
+<H3>2/15/00</h3>
+I figured out what the problem was with the Napster server ignoring me.  There isn't really a fix - it's more of a limitation of the server.  I basically have to throttle back the speed at which I send messages to the server to about 2/sec or else it starts ignoring search queries, etc.  Thanks to Jordan Ritter for his wisdom.
+<H3>2/6/00</h3>
+I haven't really been doing much with jnap lately.  It's very frustrating because the uploads don't work very well and it is near impossible to debug what it going wrong since I can't reverse engineer the original Napster program.
+<H3>2/1/00</h3>
+<b>HOLY COW!</b>  The company I work for (<a href="http://www.living.com">living.com</a>) just announced a HUGE deal with amazon.com to be their exclusive partner in sales of furniture and home furnishings for the next 5 years!!!  Take THAT, furniture.com!
+<p>
+In jnap news, uploads appear to be working ok with the official Napster servers now.  It is still a little flaky but I should be able to release 1.1 with upload support this weekend if lucky.
+<H3>1/31/00</h3>
+Uploads are working!  jnap nows sends all your MP3 data to the server, others can search and download files from you.  Firewalls are not supported currently.  I can feel version 1.1 coming soon!
+<H3>1/27/00</h3>
+I started testing the library data upload tonight.  For some reason, both OpenNAP and the napster servers are <b>ignoring</b> all the library data I send!  Merged in some nifty code from Luis Montes that allows the user to select the look and feel used by Jnap dynamically.  Thanks Luis!
+<H3>1/26/00</h3>
+95% of the MP3 data repository is now working.  Here's some initial timings:
+<table>
+<th><td>Files</td><td>Time</td></th>
+<tr><td>Initial</td><td>413</td><td>290 s</td></th>
+<tr><td>Cached</td><td>413</td><td>6 s</td></th>
+</table>
+50x speedup with a LOT less disk I/O - wow, I'm good.  :-)
+<H3>1/25/00</h3>
+Continued work on the file repository.  I got a VERY buggy version up and running tonight.  I'm happy because generating all the data Napster requires takes about 500 ms on my machine.  With the repository, it appears that this number is lowered by an order of a magnitude because I cache the MD5 hash and all other data unless the file has changed.  Perhaps I'll take some real timings tomorrow night.
+<H3>1/24/00</h3>
+Started design and implementation of the filesystem database that will cache MP3 attributes.  This will be used by the code that uploads your MP3 data to the Napster server every time jnap is started.  Once this is done and uploads are supported, others should be able to search for your MP3s and download them from you via jnap!  Hot corn!
+<H2>1/22/00 - Version 1.0</h2>
+Cleaned up a few bugs, posted version 1.0 and announced the existance of jnap on freshmeat.  Elapsed time: 6 weeks.
+<H3>1/17/00</h3>
+Got reverse downloads working!  This was the showstopper preventing the public release of jnap.  Also did some snooping and found the cause of the color problems with the Host Info dialog.  <a href="http://developer.java.sun.com/developer/bugParade/bugs/4248210.html">YASB</a> - Yet Another Swing Bug.  Once I work around this bug and get two decent icons, I'll release jnap 1.0.
+
+<H3>1/16/00</h3>
+Made several small changes based on user feedback to 0.9.  Added support for new user creation and host pinging (no search result pinging yet!).  Started work on support for others downloading from us.  All the MP3 parsing is working except for MD5 checksums - which is still returning an incorrect checksum for some reason.  I really think I'm going to make a final push to release Jnap 1.0 before starting off on another tangent though.
+
+<H3>1/12/00</h3>
+Added minimum speed pruning to the search results.  Now you don't have to see all those l4m3rz still on modems!
+
+<H3>1/10/00</h3>
+Added channel list and channel chat support.  Whoo-hoo!  I still need to figure out how to get a JTextArea to automatically scroll the last inserted text into view, but that is the biggest bug right now.  Also added a simple dialog to display the system message.
+
+<H3>1/9/00</h3>
+Added ability to sort by column to the results table.  Save As dialog now remembers the last directory you were in.  Added ability to start multiple transfers by selecting several rows and clicking "Retrieve".  Removed all support for Java 1.1.  Added doc on how to do themes.  Added error handling for invalid passwords.
+
+<H3>1/8/00</h3>
+I found some code on the Net that shows how to change the theme of the look and feel to setup custom colors and fonts.  I've modified jnap to read in its colors and font name from properties at run-time.
+
+<H3>1/7/00</h3>
+Added a "Save As..." dialog when submiting a download request.  I'm maniacal about categorizing my MP3s and I just couldn't stand downloading every file to one big directory.
+<P>
+While implementing the dialog, I found a <a href="http://developer.java.sun.com/developer/bugParade/bugs/4198808.html">bug</a> that prevents the navigation of directories in the dialog in JDK 1.1.  What kind of shoddy QA dept. must a company have to let this get by???  I have verified that it has been fixed in JDK 1.2.2 - I've moved all development of jnap to 1.2 because of this bug.
+
+<H3>1/4/00</h3>
+Added network support for chat.  GUI support will take much longer as the hardest code to write in Jnap at this point is the code to build the GUIs.
+
+<H3>1/3/00</h3>
+Added whois support.
+
+<H3>1/1/00</h3>
+Jnap development will be done via the SourceForge open source development
+system.  Added host browse feature.
+
+<h3>12/30/99</h3>
+Jnap announced.  Already supports connecting, searching and downloading.
+<p>
+</body>
+</html>

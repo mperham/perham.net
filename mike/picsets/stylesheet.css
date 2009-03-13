@@ -1,0 +1,25 @@
+BODY {
+    background-color: #F0F0C0;
+    font-family: Verdana, Georgia, sans-serif;
+    font-size: 14px;
+}
+IMG {
+    border: 0px;
+}
+.title {
+    font-size: 1.5em;
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+.description {
+    padding-bottom: 20px;
+}
+.instructions {
+    font-size: 0.75em;
+    font-style: italic;
+}
+
+HR {
+    height: 1px; 
+    width: 100%;
+}

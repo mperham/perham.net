@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>  Introducing ActiveScaffold</title>
+	
+	<meta name="generator" content="WordPress 2.7-RC2" /> <!-- leave this for stats -->
+	
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/custom.css" type="text/css" media="screen" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie7.css" media="screen" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie6.css" media="screen" />
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+	<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.perham.net/mike/log/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7-RC2" />
+
+</head>
+<body class="custom">
+
+<div id="container">
+
+	<div id="masthead">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		<h3>Life in the Slow Lane</h3>
+	</div>
+
+	<ul id="nav">
+		<li><a href="http://www.perham.net/mike/log">front page</a></li>
+		<li><a href="/">perham.net</a></li>
+		<li><a href="/mike/">mike</a></li>
+		<!-- li class="rss"><a href="http://www.perham.net/mike/log/?feed=rss2">RSS</a></li-->
+		<li class="rss"><a href="http://feeds.feedburner.com/perham/log">RSS</a></li>
+
+	</ul>
+	
+	<!--div id="header_img">
+	<img src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/header_5.jpg" width="970" height="140" alt="header image" title="header image" />
+	</div-->
+	<div id="content_box">
+	
+		<!--?php include (TEMPLATEPATH . '/l_sidebar.php'); ?-->
+		
+		<div id="content" class="posts">
+			
+				
+		
+<div class="navigation">
+	<span class="previous">&larr; <a href="http://www.perham.net/mike/log/?p=567">What I learned from Star Trek</a></span>
+	<span class="next"><a href="http://www.perham.net/mike/log/?p=571">Modern Parenting</a> &rarr;</span>
+</div>
+<div class="clear whitespace"></div>
+
+						
+			<h2>Introducing ActiveScaffold</h2>
+			<h4>May 12th, 2007<!-- by mperham --> &middot; <a href="http://www.perham.net/mike/log/?p=570#comments">18 Comments</a></h4>
+			<div class="entry">
+				<p>I hope you enjoyed my <a href="http://www-128.ibm.com/developerworks/linux/library/l-activescaffold/">DeveloperWorks article</a> on ActiveScaffold 1.0.  If you have questions or comments about the article or related technologies, please feel free to post them here!</p>
+<p><strong>Errata</strong></p>
+<ul>
+<li>The current_user_method configuration in Listing 22 is incorrect.  That config.security&#8230; line needs to go into the global configuration in app/controllers/application.rb along with the current_user method.</li>
+<li>The csv_header class method in Listing 19 needs to escape the double quotes around ID:  &#8220;\&#8221;ID\&#8221;,Last Name,First Name,Email,Birthdate&#8221;</li>
+</ul>
+							</div>
+			<p class="tagged"><strong>Tags:</strong> <a href="http://www.perham.net/mike/log/?cat=5" title="View all posts in Software" rel="category">Software</a></p>
+			<div class="clear"></div>
+			
+			
+<!-- You can start editing here. -->
+
+
+<div id="comments">
+
+	<h3 class="comments_headers">18 responses so far &darr;</h3>
+	
+	<ul id="comment_list">
+
+	
+			
+		<li class="comment " id="comment-62283">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-62283" title="Permalink to this comment">1</a></span>
+				<strong><a href='http://automailer.com/tws/' rel='external nofollow' class='url'>physio</a> </strong>
+				<span class="comment_time">// Jun 14, 2007 at 11:05 am</span>
+			</p>
+			<div class="entry">
+				<p>Hi Mike&#8230;<br />
+Thanks for the great tutorial. I&#8217;ve been struggling with AS; the documentation is quite minimal. One thing your article didn&#8217;t discuss was how to add a custom nested link. I want a link with each row that will simply display a partial and not have to call a completely different controller. </p>
+<p>Is this somehow possible? I can&#8217;t figure out how.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-62289">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-62289" title="Permalink to this comment">2</a></span>
+				<strong>mperham </strong>
+				<span class="comment_time">// Jun 14, 2007 at 12:23 pm</span>
+			</p>
+			<div class="entry">
+				<p>You could try adding a column to the list:</p>
+<p>config.list.columns.add :fake</p>
+<p>and then add a helper for that column in your helper:</p>
+<p>def fake_column(record)<br />
+  &#8220;this is a fake column&#8221;<br />
+end</p>
+<p>This is a pretty bad hack though.  You might ask on the AS mailing list and see if anyone has a better suggestion.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-63588">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-63588" title="Permalink to this comment">3</a></span>
+				<strong>ofi </strong>
+				<span class="comment_time">// Jun 23, 2007 at 1:41 pm</span>
+			</p>
+			<div class="entry">
+				<p>Hello Mike,<br />
+thanks a lot for this article which helped me especially on the localization subject. For others who may fiddle like I did with their .po files of gettext until they figured out the missing line, I&#8217;d like to  send a snippet of application.rb&#8217;s tail:</p>
+<p>class Object</p>
+<p>  include GetText<br />
+  bindtextdomain(&#8221;domain&#8221;) # THIS ONE!</p>
+<p>  def as_(*args)<br />
+    _(*args)<br />
+  end<br />
+end</p>
+<p>Cheers [ofi]</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-65184">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-65184" title="Permalink to this comment">4</a></span>
+				<strong>sergio </strong>
+				<span class="comment_time">// Aug 8, 2007 at 3:14 am</span>
+			</p>
+			<div class="entry">
+				<p>dear mike,<br />
+thank you for the nice tutorial, it is really filling a gap.<br />
+my little experience gives me a problem with your suggestion for the to_label method: i get a<br />
+uninitialized constant Person::NAME</p>
+<p>when i use NAME (a column in the table) as the label.<br />
+could you tell me what i am failing to do?<br />
+thank you!!</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-65188">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-65188" title="Permalink to this comment">5</a></span>
+				<strong>mperham </strong>
+				<span class="comment_time">// Aug 8, 2007 at 6:32 am</span>
+			</p>
+			<div class="entry">
+				<p>Sergio, this isn&#8217;t really the appropriate place to help with typical Ruby problems.  You might post your source on the ActiveScaffold mailing list and see if someone can help you there.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-65762">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-65762" title="Permalink to this comment">6</a></span>
+				<strong>Grant </strong>
+				<span class="comment_time">// Aug 31, 2007 at 1:34 am</span>
+			</p>
+			<div class="entry">
+				<p>I also found your article very helpful.  The part I am trying to figure out is how migrations work in AS.</p>
+<p>I created a table with a migration and then used ActiveScaffold to have it quickly show up on my page.  I then added another table and an extra field to the first table (foreign key -  &#8220;user_id&#8221;) into the next iteration of my migration.  After doing this the new information does not show up in the AS Page with the new field (&#8221;user_id&#8221;) column.  Is it hidden by default?  Is there a way to force it&#8217;s visibility?  How can I get the subforms to show up so I could change the user in the original table?</p>
+<p>Thank you for your insight,<br />
+Grant</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-65770">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-65770" title="Permalink to this comment">7</a></span>
+				<strong>mperham </strong>
+				<span class="comment_time">// Aug 31, 2007 at 6:40 am</span>
+			</p>
+			<div class="entry">
+				<p>Grant, have you added an association in the model, e.g. &#8220;belongs_to :user&#8221;?</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-67530">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-67530" title="Permalink to this comment">8</a></span>
+				<strong>mcr </strong>
+				<span class="comment_time">// Oct 6, 2007 at 5:16 pm</span>
+			</p>
+			<div class="entry">
+				<p>the model listing on the article seems incomplete. many relationships are not defined. The source code has the right version</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-67531">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-67531" title="Permalink to this comment">9</a></span>
+				<strong>mperham </strong>
+				<span class="comment_time">// Oct 6, 2007 at 5:20 pm</span>
+			</p>
+			<div class="entry">
+				<p>mcr, the code listing in the text is not meant to be canonical, just illustrate the topics described in the text.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-69991">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-69991" title="Permalink to this comment">10</a></span>
+				<strong>kalaiselvan </strong>
+				<span class="comment_time">// Oct 30, 2007 at 1:57 am</span>
+			</p>
+			<div class="entry">
+				<p>i&#8217;m using AS for my project - where i&#8217;m finding it difficult to do the following<br />
+1. in query screen how do I add drop down values pulled from DB?<br />
+2. how to add image file upload in create/update screen using AS</p>
+<p>can anyone explain this with examples striclttly using AS? thanks</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-71635">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-71635" title="Permalink to this comment">11</a></span>
+				<strong>Ricardo </strong>
+				<span class="comment_time">// Nov 13, 2007 at 5:21 pm</span>
+			</p>
+			<div class="entry">
+				<p>Dear Mike,</p>
+<p>Great article!</p>
+<p>Is there any way to have multiple models scaffolded in the same controller?</p>
+<p>Best regards, RIcardo</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-71636">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-71636" title="Permalink to this comment">12</a></span>
+				<strong>mperham </strong>
+				<span class="comment_time">// Nov 13, 2007 at 5:34 pm</span>
+			</p>
+			<div class="entry">
+				<p>@Ricardo, the only thing I know of like that are embedded scaffolds:</p>
+<p><a href="http://activescaffold.com/tutorials/embedded" rel="nofollow">http://activescaffold.com/tutorials/embedded</a></p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-73775">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-73775" title="Permalink to this comment">13</a></span>
+				<strong>hfwu </strong>
+				<span class="comment_time">// Dec 14, 2007 at 1:44 am</span>
+			</p>
+			<div class="entry">
+				<p>ActiveScaffold is a greate rails plugin.<br />
+But i have some trouble when i use it.<br />
+I looked for the ways to upload file or image but fail to do it. Any ways?</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-73844">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-73844" title="Permalink to this comment">14</a></span>
+				<strong>wpd </strong>
+				<span class="comment_time">// Mar 12, 2008 at 6:27 am</span>
+			</p>
+			<div class="entry">
+				<p>Thanks for the tutorial.  I&#8217;m trying to understand action links, and I have a few questions from your article.  I am brand new to RoR, so please bear with me&#8230;</p>
+<p>1) In your csv_header method, should the header line be encased in single quotation marks instead of double quotation marks?  Alternatively, should the quotation marks surrounding the ID field be escaped?  (I got syntax errors otherwise, in my RoR 2.0.2 installation.)</p>
+<p>2) On Rails 2.0.2, should there be some routing magic performed in order to get to the export_csv method?  Following your example, I got:</p>
+<p>ActiveRecord::RecordNotFound in DocumentsController#show<br />
+Couldn&#8217;t find Document with ID=export_csv</p>
+<p>From what I&#8217;ve read about the routing mechanism, and RESTful rails, I can see why I&#8217;m getting this error.  I&#8217;m just not sure what the &#8220;best&#8221; method is to work around it.  So I added the following to config/routes.rb:</p>
+<p>map.connect &#8216;documents/export_csv&#8217;, :controller =&gt; &#8216;documents&#8217;, :action =&gt; &#8216;export_csv&#8217;</p>
+<p>Note that I had to add it _before_ my &#8220;map.resources&#8221; line, so that it would match first.  It feels like I&#8217;m typing the same 2 things a lot (&#8221;documents&#8221; and &#8220;export_csv&#8221;), so I wonder if I&#8217;m not being as DRY as I could be.</p>
+<p>Is there a simpler way to connect the link to an action in my controller?  I tried specifying :controller and :action in the conf.action_links.add line, but that didn&#8217;t help.</p>
+<p>3) This aims me in the direction that I want to go, which is that I would like to have a drop down menu to narrow the view of my table down based on specific categories of records in my table.  Can you give me any pointers on how I might do that?  I would like the user to select a category from the drop down menu and filter the results displayed based on the category.  Ideally, I would like the display to update immediately, which I think means AJAX, but, as I said, I&#8217;m still learning.</p>
+<p>Again, thank you for the time and effort you put into your tutorial.  I hope my documentation of my attempt try the action links part on RoR 2.0.2 will help more than it will hinder somebody else going down this road.</p>
+<p>&#8211;wpd</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-73845">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-73845" title="Permalink to this comment">15</a></span>
+				<strong>mperham </strong>
+				<span class="comment_time">// Mar 12, 2008 at 12:15 pm</span>
+			</p>
+			<div class="entry">
+				<p>1) Yes, good catch.<br />
+2) The article was written pre-REST.  Routing in Rails 2.0 is very much biased towards RESTful routing so this code won&#8217;t work very well on 2.0.  Since CSV is just a format, we really should be using responds_to with a file extension on the URL to &#8220;route&#8221; to the CSV formatter, like &#8220;/documents/123.csv&#8221;.<br />
+3) Sorry I can&#8217;t help you here.  I haven&#8217;t used AS since the article was published so I&#8217;ve lost most of my AS mojo!  I&#8217;m sure the mailing list can help here.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-77159">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-77159" title="Permalink to this comment">16</a></span>
+				<strong><a href='http://www.azimguvenlik.com.tr' rel='external nofollow' class='url'>güvenlik sistemleri</a> </strong>
+				<span class="comment_time">// Apr 14, 2008 at 6:54 am</span>
+			</p>
+			<div class="entry">
+				<p>thanks this article</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-77171">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-77171" title="Permalink to this comment">17</a></span>
+				<strong>sanders </strong>
+				<span class="comment_time">// May 16, 2008 at 12:36 am</span>
+			</p>
+			<div class="entry">
+				<p>Thanks this article, I follow the example, when I create a project or user, it is display &#8220;[Request Failed (code 500, Internal Error)]&#8220;. I donot know why ?can you tell me the reason?</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-77203">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-77203" title="Permalink to this comment">18</a></span>
+				<strong><a href='http://www.draligus.net' rel='external nofollow' class='url'>health</a> </strong>
+				<span class="comment_time">// Aug 13, 2008 at 2:27 pm</span>
+			</p>
+			<div class="entry">
+				<p>thanks for the article</p>
+ 
+							</div>
+		</li>
+		
+			
+	</ul>
+		
+	
+
+	<!-- Comment Form -->
+		
+		
+			<h3 id="respond" class="comments_headers">Leave a Comment</h3>
+			<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="comment_form">
+			
+										<p><input class="text_input" type="text" name="author" id="author" value="" tabindex="1" /><label for="author"><strong>Name</strong></label></p>
+				<p><input class="text_input" type="text" name="email" id="email" value="" tabindex="2" /><label for="email"><strong>Mail</strong></label></p>
+				<p><input class="text_input" type="text" name="url" id="url" value="" tabindex="3" /><label for="url"><strong>Website</strong></label></p>
+							<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+			
+				<p><textarea class="text_input text_area" name="comment" id="comment" rows="7" tabindex="4"></textarea></p>
+			
+							
+				<p>
+					<input name="submit" class="form_submit" type="submit" id="submit" src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/submit_comment.gif" tabindex="5" value="Submit" />
+					<input type="hidden" name="comment_post_ID" value="570" />
+				</p>
+		
+					
+			</form>
+
+		
+</div> <!-- Close #comments container -->
+<div class="clear flat"></div>
+			
+				
+		</div>
+		
+		<div id="sidebar">
+	<ul class="sidebar_list">
+		<li class="widget">
+			<h2>Contact Me</h2>
+<ul>
+<li>Email: mperham AT gmail.com</li>
+<li>Twitter: <a href="http://twitter.com/mperham">mperham</a></li>
+</ul>
+		</li>
+				<!--li class="widget">
+			<h2>Search It!</h2>
+			<form method="get" id="search_form" action="http://www.perham.net/mike/log/">
+	<input type="text" class="search_input" value="To search, type and hit enter" name="s" id="s" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" />
+	<input type="hidden" id="searchsubmit" value="Search" />
+</form>
+		</li>
+		<li class="widget">
+			<h2>Recent Entries</h2>
+			<ul>
+												<li><a href="http://www.perham.net/mike/log/?p=897">Next Generation AV</a><span class="recent_date">2.8</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=894">Me in Second Grade</a><span class="recent_date">1.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=892">Pakistan in Peril</a><span class="recent_date">1.21</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=888">Zinger now Available!</a><span class="recent_date">1.14</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=885">Health Care Costs</a><span class="recent_date">1.11</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=883">VHS era is winding down</a><span class="recent_date">12.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=880">Wedding Roundup</a><span class="recent_date">12.24</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=875">Vegas Wedding</a><span class="recent_date">12.23</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=873">Viva Las Vegas!</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=871">Secret Agency Man</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/archives" title="Visit the archives!">Visit the archives for more!</a></li>
+			</ul>
+		</li-->
+				  <li id="linkcat-6" class="linkcat"><h2>Blog</h2>
+	<ul>
+<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://www.mikeperham.com" title="My Professional Site">mikeperham</a></li>
+<li><a href="http://nsputnik.com">Nick</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://reqfd.net/stack/" rel="friend">Sharon</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+	</ul>
+</li>
+  <li id="linkcat-7" class="linkcat"><h2>Home Page</h2>
+	<ul>
+<li><a href="http://nsputnik.com">Nick</a></li>
+
+	</ul>
+</li>
+			</ul>
+</div>			
+	</div>
+
+	<div id="footer">
+		<p>&copy; 2006&ndash;2007 Mutterings &mdash; <a href="http://www.perham.net/mike/log/sitemap/">Sitemap</a> &mdash; <a href="http://cutline.tubetorial.com/">Cutline</a> by <a href="http://www.tubetorial.com">Chris Pearson</a></p>
+			</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2569989-1";
+urchinTracker();
+</script>
+</body>
+</html>
+
+<!-- Dynamic Page Served (once) in 0.666 seconds -->
+<!-- Cached page generated by WP-Super-Cache on 2009-03-09 15:13:47 -->

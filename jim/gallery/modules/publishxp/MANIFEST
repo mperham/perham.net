@@ -1,0 +1,20 @@
+# $Revision: 16041 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/publishxp/DownloadRegistryFile.inc	33325117	283070554	6625	6831
+modules/publishxp/ItemAddPublishXp.inc	364830763	1275625583	1754	1805
+modules/publishxp/Login.inc	1558715797	1363635955	1487	1527
+modules/publishxp/NewAlbum.inc	1160967678	3583904409	4644	4785
+modules/publishxp/Options.inc	3492862698	1685313584	4375	4502
+modules/publishxp/PublishXpLogin.inc	4152428981	1538696391	3975	4104
+modules/publishxp/SelectAlbum.inc	2194656842	1210271708	4456	4590
+modules/publishxp/UploadItems.inc	2833184618	671232418	9324	9618
+modules/publishxp/UploadedItem.inc	4090352472	60480850	1731	1774
+modules/publishxp/module.inc	889442549	1764239694	2123	2182
+modules/publishxp/templates/DownloadRegistryFile.tpl	3875068982	3367957789	827	840
+modules/publishxp/templates/Head.tpl	537071753	96791586	1933	2012
+modules/publishxp/templates/ItemAddPublishXp.tpl	736007399	265488474	1680	1704
+modules/publishxp/templates/NewAlbum.tpl	66551572	1287974885	4006	4125
+modules/publishxp/templates/Options.tpl	334676927	2273583629	1923	1965
+modules/publishxp/templates/PublishXpLogin.tpl	2774640329	3726309102	2016	2074
+modules/publishxp/templates/SelectAlbum.tpl	1154710772	406515983	2074	2124
+modules/publishxp/templates/UploadItems.tpl	4219189280	229870841	2822	2891

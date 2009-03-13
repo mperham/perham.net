@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /mike/africa/IMG
+Disallow: /mike/gallery
+Disallow: /jim/gallery

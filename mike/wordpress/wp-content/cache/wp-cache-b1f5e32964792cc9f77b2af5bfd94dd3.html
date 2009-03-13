@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>  Upgrading your HDVR2 drive</title>
+	
+	<meta name="generator" content="WordPress 2.7-RC2" /> <!-- leave this for stats -->
+	
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/custom.css" type="text/css" media="screen" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie7.css" media="screen" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie6.css" media="screen" />
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+	<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.perham.net/mike/log/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7-RC2" />
+
+</head>
+<body class="custom">
+
+<div id="container">
+
+	<div id="masthead">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		<h3>Life in the Slow Lane</h3>
+	</div>
+
+	<ul id="nav">
+		<li><a href="http://www.perham.net/mike/log">front page</a></li>
+		<li><a href="/">perham.net</a></li>
+		<li><a href="/mike/">mike</a></li>
+		<!-- li class="rss"><a href="http://www.perham.net/mike/log/?feed=rss2">RSS</a></li-->
+		<li class="rss"><a href="http://feeds.feedburner.com/perham/log">RSS</a></li>
+
+	</ul>
+	
+	<!--div id="header_img">
+	<img src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/header_4.jpg" width="970" height="140" alt="header image" title="header image" />
+	</div-->
+	<div id="content_box">
+	
+		<!--?php include (TEMPLATEPATH . '/l_sidebar.php'); ?-->
+		
+		<div id="content" class="posts">
+			
+				
+		
+<div class="navigation">
+	<span class="previous">&larr; <a href="http://www.perham.net/mike/log/?p=27">Free DVD Player</a></span>
+	<span class="next"><a href="http://www.perham.net/mike/log/?p=29">It&#8217;s Cold</a> &rarr;</span>
+</div>
+<div class="clear whitespace"></div>
+
+						
+			<h2>Upgrading your HDVR2 drive</h2>
+			<h4>February 12th, 2003<!-- by mperham --> &middot; <a href="http://www.perham.net/mike/log/?p=28#comments">No Comments</a></h4>
+			<div class="entry">
+				<p>Someone emailed me asking how to upgrade his HDVR2.  Here&#8217;s the essentials:</p>
+<p>Adding a 120GB drive is pretty easy if you are comfortable mucking about<br />
+with your computer hardware.  Doesn&#8217;t take more than 5 minutes if you know<br />
+what you are doing.</p>
+<p>You put the old 40GB drive and the new 120GB in at the same time, boot<br />
+from the mfstools CD-ROM and issue a single command.  Unhook the 120GB,<br />
+put it in the HDVR2 and you are set.</p>
+<p>The boot CD is here:</p>
+<p><a href="http://star1.jongans.com/mfstools2.iso">http://star1.jongans.com/mfstools2.iso</a></p>
+<p>The command is:</p>
+<p>mfsbackup -f 4138 -6so - /dev/hdX | mfsrestore -s 127 -xzpi - /dev/hdY</p>
+<p>where X is the letter of the old drive and Y is the letter of the new<br />
+drive (the letter will be one of a, b, c, or d).  The drives are listed when the CD boots - you can read the messages by waiting for the CD to finish booting and hitting Shift-PgUp.</p>
+<p>You can read more here:</p>
+<p><a href="http://www.tivocommunity.com/tivo-vb/showthread.php?s=&#038;threadid=90268">http://www.tivocommunity.com/tivo-vb/showthread.php?s=&#038;threadid=90268</a><br />
+<a href="http://www.tivocommunity.com/tivo-vb/showthread.php?s=&#038;threadid=86235">http://www.tivocommunity.com/tivo-vb/showthread.php?s=&#038;threadid=86235</a></p>
+<p>If you have further questions, please ask them in the Tivo Upgrade Center<br />
+forum at the tivocommunity.com site.</p>
+<p>Note that adding network support is considerably more difficult - I suggest spending a weekend reading if you really want to do it.</p>
+							</div>
+			<p class="tagged"><strong>Tags:</strong> <a href="http://www.perham.net/mike/log/?cat=1" title="View all posts in General" rel="category">General</a></p>
+			<div class="clear"></div>
+			
+			
+<!-- You can start editing here. -->
+
+
+<div id="comments">
+
+	<h3 class="comments_headers">0 responses so far &darr;</h3>
+	
+	<ul id="comment_list">
+
+	
+		 
+			<!-- If comments are open, but there are no comments. -->
+				<li class="comment">
+					<div class="entry">
+						<p>There are no comments yet...Kick things off by filling out the form below.</p>
+					</div>
+				</li>
+
+		
+	</ul>
+
+	
+
+	<!-- Comment Form -->
+		
+		
+			<h3 id="respond" class="comments_headers">Leave a Comment</h3>
+			<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="comment_form">
+			
+										<p><input class="text_input" type="text" name="author" id="author" value="" tabindex="1" /><label for="author"><strong>Name</strong></label></p>
+				<p><input class="text_input" type="text" name="email" id="email" value="" tabindex="2" /><label for="email"><strong>Mail</strong></label></p>
+				<p><input class="text_input" type="text" name="url" id="url" value="" tabindex="3" /><label for="url"><strong>Website</strong></label></p>
+							<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+			
+				<p><textarea class="text_input text_area" name="comment" id="comment" rows="7" tabindex="4"></textarea></p>
+			
+							
+				<p>
+					<input name="submit" class="form_submit" type="submit" id="submit" src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/submit_comment.gif" tabindex="5" value="Submit" />
+					<input type="hidden" name="comment_post_ID" value="28" />
+				</p>
+		
+					
+			</form>
+
+		
+</div> <!-- Close #comments container -->
+<div class="clear flat"></div>
+			
+				
+		</div>
+		
+		<div id="sidebar">
+	<ul class="sidebar_list">
+		<li class="widget">
+			<h2>Contact Me</h2>
+<ul>
+<li>Email: mperham AT gmail.com</li>
+<li>Twitter: <a href="http://twitter.com/mperham">mperham</a></li>
+</ul>
+		</li>
+				<!--li class="widget">
+			<h2>Search It!</h2>
+			<form method="get" id="search_form" action="http://www.perham.net/mike/log/">
+	<input type="text" class="search_input" value="To search, type and hit enter" name="s" id="s" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" />
+	<input type="hidden" id="searchsubmit" value="Search" />
+</form>
+		</li>
+		<li class="widget">
+			<h2>Recent Entries</h2>
+			<ul>
+												<li><a href="http://www.perham.net/mike/log/?p=897">Next Generation AV</a><span class="recent_date">2.8</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=894">Me in Second Grade</a><span class="recent_date">1.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=892">Pakistan in Peril</a><span class="recent_date">1.21</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=888">Zinger now Available!</a><span class="recent_date">1.14</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=885">Health Care Costs</a><span class="recent_date">1.11</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=883">VHS era is winding down</a><span class="recent_date">12.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=880">Wedding Roundup</a><span class="recent_date">12.24</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=875">Vegas Wedding</a><span class="recent_date">12.23</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=873">Viva Las Vegas!</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=871">Secret Agency Man</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/archives" title="Visit the archives!">Visit the archives for more!</a></li>
+			</ul>
+		</li-->
+				  <li id="linkcat-6" class="linkcat"><h2>Blog</h2>
+	<ul>
+<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://www.mikeperham.com" title="My Professional Site">mikeperham</a></li>
+<li><a href="http://nsputnik.com">Nick</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://reqfd.net/stack/" rel="friend">Sharon</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+	</ul>
+</li>
+  <li id="linkcat-7" class="linkcat"><h2>Home Page</h2>
+	<ul>
+<li><a href="http://nsputnik.com">Nick</a></li>
+
+	</ul>
+</li>
+			</ul>
+</div>			
+	</div>
+
+	<div id="footer">
+		<p>&copy; 2006&ndash;2007 Mutterings &mdash; <a href="http://www.perham.net/mike/log/sitemap/">Sitemap</a> &mdash; <a href="http://cutline.tubetorial.com/">Cutline</a> by <a href="http://www.tubetorial.com">Chris Pearson</a></p>
+			</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2569989-1";
+urchinTracker();
+</script>
+</body>
+</html>
+
+<!-- Dynamic Page Served (once) in 0.331 seconds -->
+<!-- Cached page generated by WP-Super-Cache on 2009-02-12 13:28:06 -->

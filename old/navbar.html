@@ -1,0 +1,49 @@
+<html>
+
+<head>
+<base target="main">
+<title>Navigation</title>
+<style type="text/css"><!--
+  BODY { font-family : Arial ; font-size : 10pt }
+  TD { font-family : Arial ; font-size : 10pt ; bgcolor : #CCCCCC }
+  TD.button { cursor : hand ; font-family : Arial ; font-size : 10pt ; bgcolor : #CCCCCC }
+--></style>
+</head>
+<script><!--
+	function print_name(name, dir)
+	{
+		if (navigator.appVersion.charAt(0) == "4" && navigator.appName == "Netscape") {
+			document.write('<a href="' + dir + '">' + name + '</a>');
+		} else {
+			document.write(name);
+		}
+	}
+--></script>
+
+
+<body background="images/bg.jpg" bgcolor="#CCCCCC" text="#004444" link="#004444" vlink="#800080">
+<b>perham.net</b><P>
+<center>
+<table bgcolor="#CCCCCC" width="60" cellspacing="0" border="1" bordercolor="#222280" cellpadding="0" cols=1>
+<tr><td bgcolor="#00CCCC"><font color="black">People</font></td></tr>
+<tr><td align="right" onmouseover="this.style.background='#009999';" onmouseout="this.style.background='#CCCCCC';" onclick="parent.frames[1].location.href='mike'" class="button">
+<script>print_name("Mike", "mike");</script>
+</td></tr>
+<tr><td align="right" onmouseover="this.style.background='#009999';" onmouseout="this.style.background='#CCCCCC';" onclick="parent.frames[1].location.href='bob'" class="button">
+<script>print_name("Bob", "bob");</script>
+</td></tr>
+<tr><td align="right" onmouseover="this.style.background='#009999';" onmouseout="this.style.background='#CCCCCC';" onclick="parent.frames[1].location.href='jim'" class="button">
+<script>print_name("Jim", "jim");</script>
+</td></tr>
+<tr><td align="right" onmouseover="this.style.background='#009999';" onmouseout="this.style.background='#CCCCCC';" onclick="parent.frames[1].location.href='john'" class="button">
+<script>print_name("John", "john");</script>
+</td></tr>
+<tr><td bgcolor="#00CCCC"><font color="black">Misc</font></td></tr>
+<tr><td align="right" onmouseover="this.style.background='#009999';" onmouseout="this.style.background='#CCCCCC';" onclick="parent.frames[1].location.href='about.html'" class="button">
+<script>print_name("About", "about.html");</script>
+</td></tr>
+</table>
+</center>
+<p>
+</body>
+</html>

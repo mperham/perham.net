@@ -1,0 +1,66 @@
+<HTML>
+<TITLE>A collection of random BeOS driver tips</TITLE> 
+<BODY background="../bg2.jpg">
+<H2>BeOS Driver Tips and Tricks</H2>
+This is meant to be a repository for all the knowledge people have
+learned the hard way while writing BeOS drivers.  This is not 
+light reading material.  All material has been edited to keep
+the fluff to a minimum (.sigs, etc...)
+<HR>
+From <a href="mailto:thorns@cs.mcgill.ca">Simon Thornington</a>:
+<PRE>
+Subject: Re: dev #3033: aliens generating interrupts?
+  Date: Wed, 2 Apr 1997 17:02:59 -0800
+  From: William Adams <wadams@be.com>
+    To: thorns@cs.mcgill.ca
+
+>Subject: Re: dev #3033: aliens generating interrupts?
+>To: William Adams <wadams@be.com>
+>Date: Wed, 2 Apr 1997 12:29:34 -0800 (PST)
+>
+>This message is generated when the processor get interrupted, but when
+>it goes to look at the interrupt source register, none of the
+>interrupt sources appear to be interrupting.
+>
+>This typically happens because of a device driver bug.  Once common problem
+>is that the device driver's interrupt handler is calling
+>release_sem instead of release_sem_etc with the DO_NOT_RESCHEDULE
+>flag set, and then doing something to clear the interrupt on the
+>actual device hardware.  Since calling release_sem does in fact cause
+>a reschedule, the interrupt handler will continue running 'later', possibly
+>even on another processor (on beboxes and MP macs).  If the device in the
+>meantime has another interrupt ready, and the interrupt handler then clears
+>the interrupt, you lose an interrupt!
+>
+>If the clearing happens at just the right time, i.e after the device has
+>generated the interrupt causing the cpu taking i.o interrupts to be
+>interrupted, but before that cpu can read the interrupt source register,
+>you get the wonderful 'ALIENS...' message.
+>
+>>
+>>Anyone want to comment on this.
+>>-- William
+>>
+>>>Date: Tue, 1 Apr 1997 20:53:32 -0500 (EST)
+>>>To: devsupport@be.com
+>>>Subject: dev #3033: aliens generating interrupts?
+>>>From: Simon Thornington <thorns@cs.mcgill.ca>
+>>>
+>>>I just got a message on serial4 as follows:
+>>>
+>>>ALIENS ARE GENERATING INTERRUPTS! CALL BOB 80005ec4 40220020
+>>>
+>>>I wouldn't think anything of it, except that I am writing a device
+>>>driver and have been having problems with interrupts that don't appear
+>>>to be from me.  What does this message mean?
+>>>
+>>>Cheers,
+>>>
+>>>Simon.
+>>>
+</PRE>
+<HR>
+<address>Page maintained by Mike Perham 
+(<a href="mailto:mperham@cs.cornell.edu">mperham@cs.cornell.edu</a>)
+</address>
+</HTML>

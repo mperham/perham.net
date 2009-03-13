@@ -1,0 +1,61 @@
+<PRE>
+AppBar Frequently Asked Questions
+
+Q. AppBar doesn't work with Windows 97/Internet Explorer 4.0!
+A. I know.  Too bad.  That's what you get when you run bleeding edge
+software.  I may fix this when the final version of the software has
+been released.
+
+Q. Why when I change a setting and reboot, does it not save the previous
+setting?
+A. This is a known bug.  You need to QUIT AppBar and then reboot if you
+have changed any settings.
+
+Q. Are you going to add feature "x" to AppBar?
+A. I am no longer going to continue development of AppBar publicly.  I
+will no doubt add features for my own use, but I don't have the time
+to keep up a public release.
+
+Q. Can I have the source?
+A. Sure, there are two versions of AppBar: the standard C/raw Win32 API
+version, and the MFC 4.x/C++ version.  The former is in the CSRC dir
+while the latter is in the CPPSRC dir.  Be sure to use the -d flag if you
+pkunzip the archive.  There are advantages to each version: the C version
+is smaller and faster but the code is harder to read and less organized,
+but this doesn't matter if you are simply going to compile and run the
+program.  The MFC version is larger but the code is much easier to
+understand and maintain.  Basically I wrote the MFC version to learn
+C++/MFC.  I recommend using the C version if you are going to compile your
+own executable.
+   You must obtain my permission before using any of the code in any other 
+program; the supplied code is for educational purposes ONLY, not for 
+someone to make a quick buck.  If the program is freeware, I'll probably 
+allow it.  If it is shareware or commercial, maybe if I get a free 
+registered copy.
+
+Q. Why doesn't my screen saver activate when AppBar is running?
+A. This is a problem with Win95 (it works fine under NT3 and 4).  If you
+have AutoHide enabled and AppBar is hidden, the screen saver should work
+in Win95.  If you insist on turning off autohide, your screen saver will
+not work.
+
+Q. How do I add full-window drag to Win95?
+A. Try downloading 
+http://www.cs.cornell.edu/Info/People/mperham/appbar/cool.zip.  Do not
+mail me with problems with this program.  I provide it as is.
+
+Q. Why doesn't my program run or why does it leave its INI files in
+   AppBar's directory?
+A. Try setting the working directory to the app's directory.  This should
+be set automatically as of 1.0 and later.  If you do not set a working
+directory, AppBar uses the base directory of the executable as the working 
+dir (i.e. C:\WINDOWS\WINMINE.EXE would get C:\WINDOWS as its working dir).
+
+Q. AppBar does not run my *.LNK file correctly!
+A. I'm not going to support this feature.  It is not well documented by
+MS.  If it is not a link to an EXE file, I can't guarantee it will work
+at all.
+
+---------------
+Mike Perham (mperham@cs.cornell.edu)
+http://www.cs.cornell.edu/Info/People/mperham/appbar

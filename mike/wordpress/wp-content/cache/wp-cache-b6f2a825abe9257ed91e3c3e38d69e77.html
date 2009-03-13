@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>  One Way to Waste a Saturday Night</title>
+	
+	<meta name="generator" content="WordPress 2.7-RC2" /> <!-- leave this for stats -->
+	
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/custom.css" type="text/css" media="screen" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie7.css" media="screen" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie6.css" media="screen" />
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+	<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.perham.net/mike/log/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7-RC2" />
+
+</head>
+<body class="custom">
+
+<div id="container">
+
+	<div id="masthead">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		<h3>Life in the Slow Lane</h3>
+	</div>
+
+	<ul id="nav">
+		<li><a href="http://www.perham.net/mike/log">front page</a></li>
+		<li><a href="/">perham.net</a></li>
+		<li><a href="/mike/">mike</a></li>
+		<!-- li class="rss"><a href="http://www.perham.net/mike/log/?feed=rss2">RSS</a></li-->
+		<li class="rss"><a href="http://feeds.feedburner.com/perham/log">RSS</a></li>
+
+	</ul>
+	
+	<!--div id="header_img">
+	<img src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/header_4.jpg" width="970" height="140" alt="header image" title="header image" />
+	</div-->
+	<div id="content_box">
+	
+		<!--?php include (TEMPLATEPATH . '/l_sidebar.php'); ?-->
+		
+		<div id="content" class="posts">
+			
+				
+		
+<div class="navigation">
+	<span class="previous">&larr; <a href="http://www.perham.net/mike/log/?p=216">Grape Nuts</a></span>
+	<span class="next"><a href="http://www.perham.net/mike/log/?p=218">Bike Updates</a> &rarr;</span>
+</div>
+<div class="clear whitespace"></div>
+
+						
+			<h2>One Way to Waste a Saturday Night</h2>
+			<h4>January 2nd, 2005<!-- by mperham --> &middot; <a href="http://www.perham.net/mike/log/?p=217#comments">2 Comments</a></h4>
+			<div class="entry">
+				<p>My NSLU2 (aka SLUG) is a great little device that provides a file server to my home network without making noise/heat, taking a lot of space, drawing a lot of power, etc.  One of the few issues I have with it is that it does not power down the disk.  Given that I only use it maybe 5 minutes a day, there&#8217;s very little reason why the disk should be spinning the other 23:55.  The NSLU2 runs Linux and the way to spin down disks in Linux is through a command called &#8216;hdparm&#8217;.  Since the SLUG does not come with hdparm installed, I figured I would need to install the <a href="http://www.nslu2-linux.org/wiki/Unslung/HomePage">Unslung</a> replacement firmware and then install one of its packages with hdparm in it.</p>
+<p>When I initially tried to upgrade the firmware, I did it over wireless and with a HTTP proxy server.  Both of these are no-nos when trying to achieve a perfectly reliable HTTP upload with the predictable result: I &#8216;bricked&#8217; my SLUG.  Thankfully there is a recovery mode built into the NSLU2 and by following a <a href="http://groups.yahoo.com/group/nslu2-linux/message/1096">set of very arcane instructions</a> I managed to recover from the bungled upgrade.  I fixed both network issues and this time the upgrade proceeded smoothly with the end result being that my SLUG is now running Unslung 3.16.</p>
+<p>I installed busybox 1.00 and openssh 3.8.  Busybox does have hdparm built into it <b>BUT</b> the SLUG mounts the USB drive as a SCSI device and hdparm does not handle power saving with SCSI drives!  Argh.  This means I will have to pack up my disk and bring it into work so I can plug it into one of the servers there and issue the proper hdparm command via it.  At least I have ssh running on the SLUG and so therefore have scp access to the SLUG but what a price to pay for it&#8230;</p>
+							</div>
+			<p class="tagged"><strong>Tags:</strong> <a href="http://www.perham.net/mike/log/?cat=3" title="View all posts in Personal" rel="category">Personal</a></p>
+			<div class="clear"></div>
+			
+			
+<!-- You can start editing here. -->
+
+
+<div id="comments">
+
+	<h3 class="comments_headers">2 responses so far &darr;</h3>
+	
+	<ul id="comment_list">
+
+	
+			
+		<li class="comment " id="comment-66">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-66" title="Permalink to this comment">1</a></span>
+				<strong>Yo daddy </strong>
+				<span class="comment_time">// Jan 2, 2005 at 1:41 pm</span>
+			</p>
+			<div class="entry">
+				<p>On one of the best football days/evenings of the year, you were messin&#8217; with computers. And even Becky couldn&#8217;t get you to watch the &#8220;horns&#8221; win the Rose Bowl on the last play of the game??? You really are a geek. <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_smile.gif' alt=':-)' class='wp-smiley' /> </p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-67">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-67" title="Permalink to this comment">2</a></span>
+				<strong>mike </strong>
+				<span class="comment_time">// Jan 2, 2005 at 3:33 pm</span>
+			</p>
+			<div class="entry">
+				<p>Actually I did watch it.  It was over around 7pm.  The events chronicled in my post followed&#8230;</p>
+ 
+							</div>
+		</li>
+		
+			
+	</ul>
+		
+	
+
+	<!-- Comment Form -->
+		
+		
+			<h3 id="respond" class="comments_headers">Leave a Comment</h3>
+			<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="comment_form">
+			
+										<p><input class="text_input" type="text" name="author" id="author" value="" tabindex="1" /><label for="author"><strong>Name</strong></label></p>
+				<p><input class="text_input" type="text" name="email" id="email" value="" tabindex="2" /><label for="email"><strong>Mail</strong></label></p>
+				<p><input class="text_input" type="text" name="url" id="url" value="" tabindex="3" /><label for="url"><strong>Website</strong></label></p>
+							<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+			
+				<p><textarea class="text_input text_area" name="comment" id="comment" rows="7" tabindex="4"></textarea></p>
+			
+							
+				<p>
+					<input name="submit" class="form_submit" type="submit" id="submit" src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/submit_comment.gif" tabindex="5" value="Submit" />
+					<input type="hidden" name="comment_post_ID" value="217" />
+				</p>
+		
+					
+			</form>
+
+		
+</div> <!-- Close #comments container -->
+<div class="clear flat"></div>
+			
+				
+		</div>
+		
+		<div id="sidebar">
+	<ul class="sidebar_list">
+		<li class="widget">
+			<h2>Contact Me</h2>
+<ul>
+<li>Email: mperham AT gmail.com</li>
+<li>Twitter: <a href="http://twitter.com/mperham">mperham</a></li>
+</ul>
+		</li>
+				<!--li class="widget">
+			<h2>Search It!</h2>
+			<form method="get" id="search_form" action="http://www.perham.net/mike/log/">
+	<input type="text" class="search_input" value="To search, type and hit enter" name="s" id="s" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" />
+	<input type="hidden" id="searchsubmit" value="Search" />
+</form>
+		</li>
+		<li class="widget">
+			<h2>Recent Entries</h2>
+			<ul>
+												<li><a href="http://www.perham.net/mike/log/?p=888">Zinger now Available!</a><span class="recent_date">1.14</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=885">Health Care Costs</a><span class="recent_date">1.11</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=883">VHS era is winding down</a><span class="recent_date">12.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=880">Wedding Roundup</a><span class="recent_date">12.24</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=875">Vegas Wedding</a><span class="recent_date">12.23</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=873">Viva Las Vegas!</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=871">Secret Agency Man</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=869">30 (er, 20) Days to Success</a><span class="recent_date">12.12</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=867">Blog Update</a><span class="recent_date">12.9</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=866">FiveRuns</a><span class="recent_date">12.9</span></li>
+								<li><a href="http://www.perham.net/mike/log/archives" title="Visit the archives!">Visit the archives for more!</a></li>
+			</ul>
+		</li-->
+				  <li id="linkcat-6" class="linkcat"><h2>Blog</h2>
+	<ul>
+<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://www.mikeperham.com" title="My Professional Site">mikeperham</a></li>
+<li><a href="http://nsputnik.com">Nick</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://reqfd.net/stack/" rel="friend">Sharon</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+	</ul>
+</li>
+  <li id="linkcat-7" class="linkcat"><h2>Home Page</h2>
+	<ul>
+<li><a href="http://nsputnik.com">Nick</a></li>
+
+	</ul>
+</li>
+			</ul>
+</div>			
+	</div>
+
+	<div id="footer">
+		<p>&copy; 2006&ndash;2007 Mutterings &mdash; <a href="http://www.perham.net/mike/log/sitemap/">Sitemap</a> &mdash; <a href="http://cutline.tubetorial.com/">Cutline</a> by <a href="http://www.tubetorial.com">Chris Pearson</a></p>
+			</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2569989-1";
+urchinTracker();
+</script>
+</body>
+</html>
+
+<!-- Dynamic Page Served (once) in 0.450 seconds -->
+<!-- Cached page generated by WP-Super-Cache on 2009-01-21 12:49:04 -->

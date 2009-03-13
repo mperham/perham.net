@@ -1,0 +1,33 @@
+# BEGIN Url Rewrite section
+# (Automatically generated.  Do not edit this section)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteBase /mike/gallery/
+
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d [OR] 
+    RewriteCond %{REQUEST_FILENAME} gallery\_remote2\.php
+    RewriteCond %{REQUEST_FILENAME} !main\.php
+    RewriteRule .   -   [L]
+
+    
+    RewriteCond %{THE_REQUEST} \ /mike/gallery/admin/(\?.|\ .)
+    RewriteCond %{REQUEST_FILENAME} !main\.php
+    RewriteRule .   /mike/gallery/main.php?g2_view=core.SiteAdmin   [QSA,L]
+
+    RewriteCond %{THE_REQUEST} \ /mike/gallery/v/(\?.|\ .)
+    RewriteCond %{REQUEST_FILENAME} !main\.php
+    RewriteRule .   /mike/gallery/main.php?g2_view=core.ShowItem   [QSA,L]
+
+    RewriteCond %{THE_REQUEST} \ /mike/gallery/d/([0-9]+)-([0-9]+)/([^\/]+)(\?.|\ .)
+    RewriteCond %{REQUEST_FILENAME} !main\.php
+    RewriteRule .   /mike/gallery/main.php?g2_view=core.DownloadItem&g2_itemId=%1&g2_serialNumber=%2   [QSA,L]
+
+    RewriteCond %{THE_REQUEST} \ /mike/gallery/v/([^?]+)(\?.|\ .)
+    RewriteCond %{REQUEST_FILENAME} !main\.php
+    RewriteRule .   /mike/gallery/main.php?g2_view=core.ShowItem&g2_path=%1   [QSA,L]
+
+</IfModule>
+
+# END Url Rewrite section

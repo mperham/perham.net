@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>  Fedora Core 4, ImageMagick and TrueType fonts</title>
+	
+	<meta name="generator" content="WordPress 2.7-RC2" /> <!-- leave this for stats -->
+	
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/custom.css" type="text/css" media="screen" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie7.css" media="screen" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie6.css" media="screen" />
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+	<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.perham.net/mike/log/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7-RC2" />
+
+</head>
+<body class="custom">
+
+<div id="container">
+
+	<div id="masthead">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		<h3>Life in the Slow Lane</h3>
+	</div>
+
+	<ul id="nav">
+		<li><a href="http://www.perham.net/mike/log">front page</a></li>
+		<li><a href="/">perham.net</a></li>
+		<li><a href="/mike/">mike</a></li>
+		<!-- li class="rss"><a href="http://www.perham.net/mike/log/?feed=rss2">RSS</a></li-->
+		<li class="rss"><a href="http://feeds.feedburner.com/perham/log">RSS</a></li>
+
+	</ul>
+	
+	<!--div id="header_img">
+	<img src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/header_2.jpg" width="970" height="140" alt="header image" title="header image" />
+	</div-->
+	<div id="content_box">
+	
+		<!--?php include (TEMPLATEPATH . '/l_sidebar.php'); ?-->
+		
+		<div id="content" class="posts">
+			
+				
+		
+<div class="navigation">
+	<span class="previous">&larr; <a href="http://www.perham.net/mike/log/?p=368">RIP Peter Drucker</a></span>
+	<span class="next"><a href="http://www.perham.net/mike/log/?p=370">Miserable Day</a> &rarr;</span>
+</div>
+<div class="clear whitespace"></div>
+
+						
+			<h2>Fedora Core 4, ImageMagick and TrueType fonts</h2>
+			<h4>November 19th, 2005<!-- by mperham --> &middot; <a href="http://www.perham.net/mike/log/?p=369#comments">6 Comments</a></h4>
+			<div class="entry">
+				<p>I just wasted the last 2 hours trying to get RMagick to work properly on my Fedora Core 4 desktop.  Apparently the ImageMagick 6.2.2 package that ships with FC4 is simply broken and points to an Arial font that does not exist on my machine.  If you get a bunch of font-related errors when trying to run &#8216;gem install rmagick&#8217; you probably have the same problem. To fix it, I just had to <a href="http://linux.softpedia.com/progDownload/ImageMagick-Download-392.html">download</a> and install the latest ImageMagick base and devel packages.  Once installed, just run &#8216;gem update rmagick&#8217; and you should find the problem gone.  If this solves your problem, leave me a comment and say so!</p>
+							</div>
+			<p class="tagged"><strong>Tags:</strong> <a href="http://www.perham.net/mike/log/?cat=5" title="View all posts in Software" rel="category">Software</a></p>
+			<div class="clear"></div>
+			
+			
+<!-- You can start editing here. -->
+
+
+<div id="comments">
+
+	<h3 class="comments_headers">6 responses so far &darr;</h3>
+	
+	<ul id="comment_list">
+
+	
+			
+		<li class="comment " id="comment-146">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-146" title="Permalink to this comment">1</a></span>
+				<strong>Oliver Kiessler </strong>
+				<span class="comment_time">// Nov 29, 2005 at 5:54 am</span>
+			</p>
+			<div class="entry">
+				<p>In may case the install was very painless:</p>
+<p>su -<br />
+yum install ImageMagick*<br />
+ldconfig<br />
+gem install rmagick</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-12995">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-12995" title="Permalink to this comment">2</a></span>
+				<strong><a href='http://www.komendera.com/' rel='external nofollow' class='url'>Dieter Komendera</a> </strong>
+				<span class="comment_time">// May 15, 2006 at 6:48 am</span>
+			</p>
+			<div class="entry">
+				<p>Oliver Kiessler&#8217;s method worked also for Fedora Core 5.<br />
+Before I did<br />
+yum install ImageMagick*<br />
+ldconfig<br />
+the install of the gem failed while checking for dependencies:<br />
+checking for Magick-config&#8230; no<br />
+checking for GraphicsMagick-config&#8230; no<br />
+RMagick configuration failed with status 1.</p>
+<p>Now it works.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-49369">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-49369" title="Permalink to this comment">3</a></span>
+				<strong>Brendon </strong>
+				<span class="comment_time">// Oct 8, 2006 at 6:30 pm</span>
+			</p>
+			<div class="entry">
+				<p>As of 9/10/2006 you need to do yum -t install ImageMagick* to get around some annoying dependency problems in the packages as a group.</p>
+<p>If someone knows who/how to report this problem then be my guest <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-49376">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-49376" title="Permalink to this comment">4</a></span>
+				<strong>Brendon </strong>
+				<span class="comment_time">// Oct 8, 2006 at 8:03 pm</span>
+			</p>
+			<div class="entry">
+				<p>Oh and another thing that might get you, after you&#8217;ve run the statement above, you&#8217;ll need to install:</p>
+<p>yum install freetype-devel</p>
+<p>if you don&#8217;t already have it. If you&#8217;re still getting errors this guide runs you through troubleshooting the errors:</p>
+<p><a href="http://rubyforge.org/forum/forum.php?thread_id=2756&amp;forum_id=1618" rel="nofollow">http://rubyforge.org/forum/forum.php?thread_id=2756&amp;forum_id=1618</a></p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-61118">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-61118" title="Permalink to this comment">5</a></span>
+				<strong>Jason Frankovitz </strong>
+				<span class="comment_time">// May 1, 2007 at 12:21 pm</span>
+			</p>
+			<div class="entry">
+				<p>I just ran Oliver&#8217;s fix on my Fedora Core 5 machine and it worked great. Thanks!</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-65862">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-65862" title="Permalink to this comment">6</a></span>
+				<strong><a href='http://vazav.com' rel='external nofollow' class='url'>Mason</a> </strong>
+				<span class="comment_time">// Sep 3, 2007 at 10:46 pm</span>
+			</p>
+			<div class="entry">
+				<p>I realize this was for a FC4 install, but I&#8217;m installing on CentOS, and since your post helped my process, I thought I&#8217;d throw these in:</p>
+<p># yum install ImageMagick*<br />
+# yum install ghostscript*<br />
+# yum install freetype*<br />
+# ldconfig<br />
+# gem install rmagick</p>
+ 
+							</div>
+		</li>
+		
+			
+	</ul>
+		
+	
+
+	<!-- Comment Form -->
+		
+		
+			<h3 id="respond" class="comments_headers">Leave a Comment</h3>
+			<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="comment_form">
+			
+										<p><input class="text_input" type="text" name="author" id="author" value="" tabindex="1" /><label for="author"><strong>Name</strong></label></p>
+				<p><input class="text_input" type="text" name="email" id="email" value="" tabindex="2" /><label for="email"><strong>Mail</strong></label></p>
+				<p><input class="text_input" type="text" name="url" id="url" value="" tabindex="3" /><label for="url"><strong>Website</strong></label></p>
+							<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+			
+				<p><textarea class="text_input text_area" name="comment" id="comment" rows="7" tabindex="4"></textarea></p>
+			
+							
+				<p>
+					<input name="submit" class="form_submit" type="submit" id="submit" src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/submit_comment.gif" tabindex="5" value="Submit" />
+					<input type="hidden" name="comment_post_ID" value="369" />
+				</p>
+		
+					
+			</form>
+
+		
+</div> <!-- Close #comments container -->
+<div class="clear flat"></div>
+			
+				
+		</div>
+		
+		<div id="sidebar">
+	<ul class="sidebar_list">
+		<li class="widget">
+			<h2>Contact Me</h2>
+<ul>
+<li>Email: mperham AT gmail.com</li>
+<li>Twitter: <a href="http://twitter.com/mperham">mperham</a></li>
+</ul>
+		</li>
+				<!--li class="widget">
+			<h2>Search It!</h2>
+			<form method="get" id="search_form" action="http://www.perham.net/mike/log/">
+	<input type="text" class="search_input" value="To search, type and hit enter" name="s" id="s" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" />
+	<input type="hidden" id="searchsubmit" value="Search" />
+</form>
+		</li>
+		<li class="widget">
+			<h2>Recent Entries</h2>
+			<ul>
+												<li><a href="http://www.perham.net/mike/log/?p=897">Next Generation AV</a><span class="recent_date">2.8</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=894">Me in Second Grade</a><span class="recent_date">1.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=892">Pakistan in Peril</a><span class="recent_date">1.21</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=888">Zinger now Available!</a><span class="recent_date">1.14</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=885">Health Care Costs</a><span class="recent_date">1.11</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=883">VHS era is winding down</a><span class="recent_date">12.26</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=880">Wedding Roundup</a><span class="recent_date">12.24</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=875">Vegas Wedding</a><span class="recent_date">12.23</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=873">Viva Las Vegas!</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/?p=871">Secret Agency Man</a><span class="recent_date">12.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/archives" title="Visit the archives!">Visit the archives for more!</a></li>
+			</ul>
+		</li-->
+				  <li id="linkcat-6" class="linkcat"><h2>Blog</h2>
+	<ul>
+<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://www.mikeperham.com" title="My Professional Site">mikeperham</a></li>
+<li><a href="http://nsputnik.com">Nick</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://reqfd.net/stack/" rel="friend">Sharon</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+	</ul>
+</li>
+  <li id="linkcat-7" class="linkcat"><h2>Home Page</h2>
+	<ul>
+<li><a href="http://nsputnik.com">Nick</a></li>
+
+	</ul>
+</li>
+			</ul>
+</div>			
+	</div>
+
+	<div id="footer">
+		<p>&copy; 2006&ndash;2007 Mutterings &mdash; <a href="http://www.perham.net/mike/log/sitemap/">Sitemap</a> &mdash; <a href="http://cutline.tubetorial.com/">Cutline</a> by <a href="http://www.tubetorial.com">Chris Pearson</a></p>
+			</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2569989-1";
+urchinTracker();
+</script>
+</body>
+</html>
+
+<!-- Dynamic Page Served (once) in 0.478 seconds -->
+<!-- Cached page generated by WP-Super-Cache on 2009-03-07 13:01:06 -->

@@ -1,0 +1,227 @@
+<?php
+/*
+ * $RCSfile: UploadItemsControllerTest.class,v $
+ *
+ * Gallery - a web based photo album viewer and editor
+ * Copyright (C) 2000-2006 Bharat Mediratta
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or (at
+ * your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+/**
+ * @version $Revision: 1.12 $ $Date: 2006/02/14 15:54:26 $
+ * @package PublishXP
+ * @subpackage PHPUnit
+ * @author Bharat Mediratta <bharat@menalto.com>
+ */
+
+/**
+ * UploadItems controller tests
+ * @package PublishXP
+ * @subpackage PHPUnit
+ */
+class UploadItemsControllerTest extends GalleryControllerTestCase {
+
+    function UploadItemsControllerTest($methodName) {
+	$this->GalleryControllerTestCase($methodName, 'publishxp.UploadItems');
+    }
+
+    function setUp() {
+	global $gallery;
+	parent::setUp();
+
+	list ($ret, $this->_parent) = $this->_createRandomAlbum($this->_getRootId());
+	if ($ret) {
+	    print $ret->getAsHtml();
+	    return $this->failWithStatus($ret->wrap(__FILE__, __LINE__));
+	}
+	$this->_markForCleanup($this->_parent);
+	$this->_controller->setOptionInstances(array());
+
+	$ret = GalleryCoreApi::addMimeType('phpunit_ext', 'test/file', false);
+	if ($ret) {
+	    print $ret->getAsHtml();
+	    return $this->failWithStatus($ret->wrap(__FILE__, __LINE__));
+	}
+
+	$this->_saveSession =& $gallery->getSession();
+    }
+
+    function tearDown() {
+	global $gallery;
+	$ret = GalleryCoreApi::removeMimeType(array('extension' => 'phpunit_ext'));
+	if ($ret) {
+	    $this->failWithStatus($ret->wrap(__FILE__, __LINE__));
+	}
+
+	$gallery->_session = $this->_saveSession;
+
+	parent::tearDown();
+    }
+
+    function testUploadItems() {
+	GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
+	GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
+	$_FILES['userFile']['type'] = 'test/file';
+	$_FILES['userFile']['tmp_name'] = __FILE__;
+	$_FILES['userFile']['name'] = 'Foo.dat';
+
+	$results = $this->handleRequest();
+	$this->assertEquals(array('redirect' => array('view' => 'publishxp.UploadedItem'),
+				  'status' => array(),
+				  'error' => array()),
+			    $results);
+
+	$entityCounter =& GalleryTestCase::getEntityCounter();
+	$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+	list ($ret, $entity) = GalleryCoreApi::loadEntitiesById($id);
+	if ($ret) {
+	    return $this->failWithStatus($ret->wrap(__FILE__, __LINE__));
+	}
+
+	$this->assertEquals($this->_parent->getId(), $entity->getParentId());
+	$this->assertEquals('test/file', $entity->getMimeType());
+	$this->assertEquals('Foo.dat', $entity->getTitle());
+	$this->assertEquals('', $entity->getSummary(), 'summary');
+	$this->assertEquals('', $entity->getDescription(), 'description');
+    }
+
+    function testUploadItemsPermissionDenied() {
+	GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
+	GalleryUtilities::putRequestVariable('form[albumId]', 0);
+	$_FILES['userFile']['type'] = 'application/unknown';
+	$_FILES['userFile']['tmp_name'] = __FILE__;
+	$_FILES['userFile']['name'] = 'Foo.dat';
+
+	$results = $this->handleRequest(ERROR_PERMISSION_DENIED);
+    }
+
+    function testUploadItemsMissingFileName() {
+	GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
+	GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
+	$_FILES['userFile']['type'] = 'application/unknown';
+	$_FILES['userFile']['tmp_name'] = __FILE__;
+
+	$results = $this->handleRequest(ERROR_BAD_PARAMETER);
+    }
+
+    function testUploadItemsMissingMimeType() {
+	GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
+	GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
+	$_FILES['userFile']['type'] = '';
+	$_FILES['userFile']['tmp_name'] = __FILE__;
+	$_FILES['userFile']['name'] = 'Foo.csh';
+
+	$results = $this->handleRequest();
+	$this->assertEquals(array('redirect' => array('view' => 'publishxp.UploadedItem'),
+				  'status' => array(),
+				  'error' => array()),
+			    $results);
+
+	$entityCounter =& GalleryTestCase::getEntityCounter();
+	$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+	list ($ret, $entity) = GalleryCoreApi::loadEntitiesById($id);
+	if ($ret) {
+	    return $this->failWithStatus($ret->wrap(__FILE__, __LINE__));
+	}
+
+	$this->assertEquals($this->_parent->getId(), $entity->getParentId());
+	$this->assertEquals('application/x-csh', $entity->getMimeType());
+	$this->assertEquals('Foo.csh', $entity->getTitle());
+	$this->assertEquals('', $entity->getSummary(), 'summary');
+	$this->assertEquals('', $entity->getDescription(), 'description');
+    }
+
+    function testUploadItemsSetCaptionsAndStripExtensions() {
+	GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
+	GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
+	GalleryUtilities::putRequestVariable('form[setCaptions]', 1);
+	GalleryUtilities::putRequestVariable('form[stripExtensions]', 1);
+	$_FILES['userFile']['type'] = 'test/file';
+	$_FILES['userFile']['tmp_name'] = __FILE__;
+	$_FILES['userFile']['name'] = 'Foo.dat';
+
+	$results = $this->handleRequest();
+	$this->assertEquals(array('redirect' => array('view' => 'publishxp.UploadedItem'),
+				  'status' => array(),
+				  'error' => array()),
+			    $results);
+
+	$entityCounter =& GalleryTestCase::getEntityCounter();
+	$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+	list ($ret, $entity) = GalleryCoreApi::loadEntitiesById($id);
+	if ($ret) {
+	    return $this->failWithStatus($ret->wrap(__FILE__, __LINE__));
+	}
+
+	$this->assertEquals($this->_parent->getId(), $entity->getParentId());
+	$this->assertEquals('test/file', $entity->getMimeType());
+	$this->assertEquals('Foo', $entity->getTitle(), 'title');
+	$this->assertEquals('Foo', $entity->getSummary(), 'summary');
+	$this->assertEquals('', $entity->getDescription(), 'description');
+    }
+
+    function testUploadItemsWithOption() {
+	global $gallery;
+	$session =& $gallery->getSession();
+	$session->put('publishxp.extraOptionsForm',
+		      serialize(array('optionValue' => 'myOptionValue')));
+
+	GalleryUtilities::putRequestVariable('form[action][uploadItem]', 1);
+	GalleryUtilities::putRequestVariable('form[albumId]', $this->_parent->getId());
+	$_FILES['userFile']['type'] = 'test/file';
+	$_FILES['userFile']['tmp_name'] = __FILE__;
+	$_FILES['userFile']['name'] = 'Foo.dat';
+
+	$this->_controller->setOptionInstances(
+	    array('instance' => new UploadItemsControllerTestAddOption()));
+
+	$results = $this->handleRequest();
+	$this->assertEquals(array('redirect' => array('view' => 'publishxp.UploadedItem'),
+				  'status' => array(),
+				  'error' => array()),
+			    $results);
+
+	$entityCounter =& GalleryTestCase::getEntityCounter();
+	$id = $entityCounter->getRecentEntityId('GalleryUnknownItem');
+	list ($ret, $entity) = GalleryCoreApi::loadEntitiesById($id);
+	if ($ret) {
+	    return $this->failWithStatus($ret->wrap(__FILE__, __LINE__));
+	}
+
+	/* Make sure our option was called */
+	$this->assertEquals(array($entity->getId(), 'myOptionValue'),
+			    UploadItemsControllerTestAddOption::getRequestData());
+
+	$this->assertEquals($this->_parent->getId(), $entity->getParentId());
+	$this->assertEquals('test/file', $entity->getMimeType());
+	$this->assertEquals('Foo.dat', $entity->getTitle());
+	$this->assertEquals('', $entity->getSummary(), 'summary');
+	$this->assertEquals('', $entity->getDescription(), 'description');
+    }
+}
+
+class UploadItemsControllerTestAddOption {
+
+    function handleRequestAfterAdd($form, $items) {
+	GalleryUtilities::putRequestVariable(
+	    'requestData', array($items[0]->getId(), $form['optionValue']));
+	return array(null, array(), array());
+    }
+
+    function getRequestData() {
+	return GalleryUtilities::getRequestVariables('requestData');
+    }
+}
+?>

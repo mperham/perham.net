@@ -1,0 +1,53 @@
+BODY {
+	FONT-FAMILY: Verdana, sans-serif;
+	background-color: #a0b070;
+	padding: 0px;
+	margin: 0px;
+	color: black;
+}
+img {
+	border: none;
+}
+#sidebar {
+	position: absolute;
+	width: 175px;
+	padding: 10px;
+	height: 100%;
+}
+.title {
+	font-size: large;
+	margin-bottom: 10px;
+}
+.subtitle {
+	font-size: small;
+}
+.linkmenu {
+	padding-top: 10px;
+	display: table;
+	width: 100%;
+}
+.menuitem {
+	display: table-row;
+}
+	
+#content {
+	position: absolute;
+	left: 220px;
+	padding: 10px;
+	background-color: #FFFFa0;
+}
+.picturegroup {
+	padding-top: 50px;
+	display: table;
+	font-size: x-small;
+	text-align: center;
+	vertical-align: bottom;
+	width: 80%;
+}
+.picturerow {
+	display: table-row;
+	height: 200px;
+}
+.pictureset {
+	display: table-cell;
+}

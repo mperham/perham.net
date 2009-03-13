@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Catalog xmlns="http://schemas.webifysolutions.com/2004/V3/webify_v3_catalog.xsd" 
+	xmlns:api="http://schemas.webifysolutions.com/2004/V3/webify_v3_api.xsd" 
+	xmlns:uddi="urn:uddi-org:api_v3" 
+	xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" 
+	xmlns:pol="http://schemas.webifysolutions.com/2004/V3/webify_v3_policy.xsd" 
+	xmlns:sec="http://schemas.webifysolutions.com/2004/V3/webify_v3_security.xsd" 
+	xmlns:types="http://schemas.webifysolutions.com/2004/V3/webify_v3_types.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	
+	<sec:SaveSecurityRealm>
+		<api:SecurityRealm autoAddUsers="false">
+			<uddi:name>Webify</uddi:name>
+			<uddi:description>Webify default security realm</uddi:description>
+		</api:SecurityRealm>
+	</sec:SaveSecurityRealm>
+	
+	<sec:SaveLoginModule>
+		<api:LoginModule>
+			<uddi:name>Webify</uddi:name>
+			<uddi:description>Webify default login module</uddi:description>
+			<api:className>com.webify.security.jaas.WebifyLoginModule</api:className>
+			<api:controlFlag>REQUIRED</api:controlFlag>
+			<api:SecurityRealmInfo>
+				<uddi:name>Webify</uddi:name>
+			</api:SecurityRealmInfo>
+		</api:LoginModule>
+	</sec:SaveLoginModule>
+	
+	<sec:SaveOrganization>
+		<api:Organization>
+			<uddi:name>webifysolutions.com</uddi:name>
+			<api:ContactInfo>
+				<api:addressLine1>3925 W. Braker Lane</api:addressLine1>
+				<api:addressLine2/>
+				<api:city>Austin</api:city>
+				<types:emailAddress>customer.success@webifysolutions.com</types:emailAddress>
+				<api:firstName></api:firstName>
+				<api:lastName></api:lastName>
+				<api:state>TX</api:state>
+				<api:country>United States of America</api:country>
+				<api:homeNumber>512-305-0730</api:homeNumber>
+				<api:workNumber>512-305-0730</api:workNumber>
+				<api:faxNumber>512-305-0724</api:faxNumber>
+				<api:mobileNumber></api:mobileNumber>
+				<api:pagerNumber></api:pagerNumber>
+				<api:zipcode>78759</api:zipcode>
+				<api:company>Webify Solutions, Inc.</api:company>
+			</api:ContactInfo>
+			<api:SecurityRealmInfo>
+				<uddi:name>Webify</uddi:name>
+			</api:SecurityRealmInfo>
+		</api:Organization>
+	</sec:SaveOrganization>
+	
+	<sec:SaveGroup>
+		<api:Group>
+			<uddi:name>Administrators</uddi:name>
+			<api:OrganizationInfo>
+				<uddi:name>webifysolutions.com</uddi:name>
+			</api:OrganizationInfo>
+		</api:Group>
+	</sec:SaveGroup>
+	
+	<sec:SaveUser>
+		<api:User disabled="false" test="false" passwordTemporary="false">
+			<types:username>admin</types:username>
+			<types:password>admin</types:password>
+			<api:ContactInfo>
+				<api:addressLine1/>
+				<api:addressLine2/>
+				<api:city/>
+				<types:emailAddress>admin@webifysolutions.com</types:emailAddress>
+				<api:firstName/>
+				<api:lastName/>
+				<api:state/>
+				<api:country/>
+				<api:homeNumber/>
+				<api:workNumber/>
+				<api:faxNumber/>
+				<api:mobileNumber/>
+				<api:pagerNumber/>
+				<api:zipcode/>
+				<api:company/>
+			</api:ContactInfo>
+			<api:OrganizationInfo>
+				<uddi:name>webifysolutions.com</uddi:name>
+			</api:OrganizationInfo>
+		</api:User>
+	</sec:SaveUser>
+	
+	<uddi:save_tModel>
+				
+		<!-- V3 Common Utility Services tModels -->
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_inquiry">
+  			<uddi:name>webifysolutions-com:inquiry_ext_v3</uddi:name>
+			<uddi:description>Webify V3 Inquiry API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_publication">
+  			<uddi:name>webifysolutions-com:publication_ext_v3</uddi:name>
+			<uddi:description>Webify V3 Publication API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_catalog">
+  			<uddi:name>webifysolutions-com:catalog_v3</uddi:name>
+			<uddi:description>Webify V3 Catalog API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_policy">
+  			<uddi:name>webifysolutions-com:policy_v3</uddi:name>
+			<uddi:description>Webify V3 Policy API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_authorization">
+  			<uddi:name>webifysolutions-com:authorization_v3</uddi:name>
+			<uddi:description>Webify V3 Authorization API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_realm">
+  			<uddi:name>webifysolutions-com:realm_v3</uddi:name>
+			<uddi:description>Webify V3 Security Realm API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_authentication">
+  			<uddi:name>webifysolutions-com:authentication_v3</uddi:name>
+			<uddi:description>Webify V3 Authentication API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_user">
+  			<uddi:name>webifysolutions-com:user_v3</uddi:name>
+			<uddi:description>Webify V3 User Admin API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_prefs">
+  			<uddi:name>webifysolutions-com:prefs_v3</uddi:name>
+			<uddi:description>Webify V3 Subscriber Preferences API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_event">
+  			<uddi:name>webifysolutions-com:event_v3</uddi:name>
+			<uddi:description>Webify V3 Business Service Event API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:v3_inbox">
+  			<uddi:name>webifysolutions-com:inbox_v3</uddi:name>
+			<uddi:description>Webify V3 Universal Inbox API</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<!-- PRISM tModels -->
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:prism:performance:availability">
+  			<uddi:name>Availability</uddi:name>
+			<uddi:description>Fraction of time that a resource is available</uddi:description>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:prism:performance:mtrs">
+  			<uddi:name>Mean Time to Restore Service</uddi:name>
+			<uddi:description>The average (mean) time to restore a resource after a failure</uddi:description>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:webifysolutions.com:prism:performance:txn-timeout">
+  			<uddi:name>Maximum Transaction Time</uddi:name>
+			<uddi:description>The maximum allowable time for a transaction to complete</uddi:description>
+		</uddi:tModel>
+		
+		<!-- Utility tModels from UDDI V3 specification -->
+		<uddi:tModel tModelKey="uddi:uddi.org:categorization:types">
+  			<uddi:name>uddi-org:types</uddi:name>
+			  <uddi:description>UDDI Type Category System</uddi:description>
+			  <uddi:overviewDoc>
+			  	<uddi:description>UDDI Type Category System</uddi:description>
+				<uddi:overviewURL useType="text">
+					 http://uddi.org/pubs/uddi_v3.htm#UDDITypes
+				</uddi:overviewURL>
+			  </uddi:overviewDoc>
+			  <uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:categorization"
+				  keyValue="categorization"
+				  tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:checked"
+				  keyValue="checked"
+				  tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:cacheable"
+				  keyValue="cacheable"
+				  tModelKey="uddi:uddi.org:categorization:types"/>
+			  </uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:uddi.org:v3_inquiry">
+  			<uddi:name>uddi-org:inquiry_v3</uddi:name>
+			<uddi:description>UDDI Inquiry API V3.0</uddi:description>
+			<uddi:overviewDoc>
+				<uddi:description>UDDI Inquiry API V3.0</uddi:description>
+				<uddi:overviewURL useType="wsdlInterface">
+					http://uddi.org/wsdl/uddi_api_v3_binding.wsdl#UDDI_Inquiry_SoapBinding
+				</uddi:overviewURL>
+			</uddi:overviewDoc>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+		<uddi:tModel tModelKey="uddi:uddi.org:v3_publication">
+  			<uddi:name>uddi-org:publication_v3</uddi:name>
+			<uddi:description>UDDI Publication API V3.0</uddi:description>
+			<uddi:overviewDoc>
+				<uddi:description>UDDI Publication API V3.0</uddi:description>
+				<uddi:overviewURL useType="wsdlInterface">
+					http://uddi.org/wsdl/uddi_api_v3_binding.wsdl#UDDI_Publication_SoapBinding
+				</uddi:overviewURL>
+			</uddi:overviewDoc>
+			<uddi:categoryBag>
+				<uddi:keyedReference keyName="uddi-org:types:wsdl" keyValue="wsdlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:soap" keyValue="soapSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:xml" keyValue="xmlSpec" tModelKey="uddi:uddi.org:categorization:types"/>
+				<uddi:keyedReference keyName="uddi-org:types:specification" keyValue="specification" tModelKey="uddi:uddi.org:categorization:types"/>
+			</uddi:categoryBag>
+		</uddi:tModel>
+		
+	</uddi:save_tModel>
+	
+	<api:save_serviceLevel>
+		<api:ServiceLevel>
+			<uddi:name>Gold</uddi:name>
+			<uddi:description>Gold Service Level Agreement</uddi:description>
+		</api:ServiceLevel>
+		
+		<api:ServiceLevel>
+			<uddi:name>Silver</uddi:name>
+			<uddi:description>Silver Service Level Agreement</uddi:description>
+		</api:ServiceLevel>
+		
+		<api:ServiceLevel>
+			<uddi:name>Bronze</uddi:name>
+			<uddi:description>Bronze Service Level Agreement</uddi:description>
+		</api:ServiceLevel>
+	</api:save_serviceLevel>
+	
+	<api:save_connectionProfile>
+		<api:ConnectionProfile>
+			<uddi:name>WebPortal</uddi:name>
+			<uddi:description>Web portal connection profile</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference tModelKey="uddi:webifysolutions.com:v3:connection-profile" keyValue="web-portal" keyName="???"/>
+			</uddi:categoryBag>
+		</api:ConnectionProfile>
+		
+		<api:ConnectionProfile>
+			<uddi:name>DirectConnect</uddi:name>
+			<uddi:description>Web service connection profile</uddi:description>
+			<uddi:categoryBag>
+				<uddi:keyedReference tModelKey="uddi:webifysolutions.com:v3:connection-profile" keyValue="direct-connect" keyName="???"/>
+			</uddi:categoryBag>
+		</api:ConnectionProfile>
+	</api:save_connectionProfile>
+			
+</Catalog>

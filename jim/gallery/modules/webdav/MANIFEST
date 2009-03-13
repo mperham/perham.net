@@ -1,0 +1,27 @@
+# $Revision: 16513 $
+# File crc32 crc32(crlf) size size(crlf)  or  R File
+modules/webdav/Callbacks.inc	2358814663	3453825565	1439	1486
+modules/webdav/DownloadDavMount.inc	926099365	1573674116	2786	2878
+modules/webdav/ItemAddWebDav.inc	2523881622	841334078	10783	11116
+modules/webdav/WebDav.inc	296137277	2916812957	7614	7841
+modules/webdav/WebDavMount.inc	1838621692	2805740046	1587	1636
+modules/webdav/WebDavSiteAdmin.inc	553960122	2291144207	1698	1752
+modules/webdav/WebDavWorks.inc	2574696807	3621906002	1308	1352
+modules/webdav/classes/GNUmakefile	1995366819	843025639	51	52
+modules/webdav/classes/GalleryStorage/GNUmakefile	1465776782	2009162633	61	62
+modules/webdav/classes/GalleryStorage/schema.tpl	3361478170	1381064364	2241	2323
+modules/webdav/classes/Maps.inc	3097969041	2458683522	580	584
+modules/webdav/classes/Maps.xml	389449069	1930493512	1049	1087
+modules/webdav/classes/WebDavHelper.class	952450599	472385553	59906	61901
+modules/webdav/classes/WebDavRewriteHelper.class	107529024	2731722737	2434	2512
+modules/webdav/data/options/.htaccess	1142116337	350654909	1316	1345
+modules/webdav/lib/HTTP/WebDAV/Server.php	2461613593	933395689	74761	77305
+modules/webdav/lib/HTTP/WebDAV/Tools/_parse_lockinfo.php	11587171	140948099	6213	6442
+modules/webdav/lib/HTTP/WebDAV/Tools/_parse_propfind.php	2397186960	1499307163	4574	4737
+modules/webdav/lib/HTTP/WebDAV/Tools/_parse_proppatch.php	3422974363	1239742415	5688	5904
+modules/webdav/module.inc	77555575	2355439613	11462	11848
+modules/webdav/templates/ItemAddWebDav.tpl	1353965866	1079974098	387	396
+modules/webdav/templates/WebDavMount.tpl	2057727104	3263326614	1678	1719
+modules/webdav/templates/WebDavSiteAdmin.tpl	1888656763	3892656047	8485	8626
+modules/webdav/templates/blocks/WebDavUrl.tpl	2356653701	4082093646	430	440
+modules/webdav/templates/blocks/blocks.inc	740358944	826543430	102	107
