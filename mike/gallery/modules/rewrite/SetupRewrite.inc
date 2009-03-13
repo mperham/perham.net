@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,15 @@
  * @package Rewrite
  * @subpackage UserInterface
  * @author Douglas Cau <douglas@cau.se>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class SetupRewriteController extends GalleryController {
+
+    /**
+     * Rewrite parser ids
+     * @var array
+     */
+    var $_parserIds = array('modrewrite', 'isapirewrite', 'pathinfo');
 
     /**
      * @see GalleryController::handleRequest
@@ -37,6 +43,11 @@ class SetupRewriteController extends GalleryController {
 	$status = $error = array();
 	$results = array('redirect' => array('view' => 'core.SiteAdmin',
 					     'subView' => 'rewrite.SetupRewrite'));
+
+	$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
+	if ($ret) {
+	    return array($ret, null);
+	}
 
 	if (isset($form['action']['testParser'])) {
 	    list ($ret, $rewriteParser) = RewriteHelper::getRewriteParser();
@@ -59,7 +70,7 @@ class SetupRewriteController extends GalleryController {
 		return array($ret, null);
 	    }
 	} else if (isset($form['action']['save']) && isset($form['parser'])) {
-	    if (empty($form['parser']) || !preg_match('/\w/', $form['parser'])) {
+	    if (!in_array($form['parser'], $this->_parserIds)) {
 		return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 	    }
 
@@ -117,6 +128,11 @@ class SetupRewriteView extends GalleryView {
 	global $gallery;
 	$platform =& $gallery->getPlatform();
 	$SetupRewrite = array();
+
+	$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
+	if ($ret) {
+	    return array($ret, null);
+	}
 
 	/* Make sure the module is not yet active */
 	list ($ret, $rewrite) = GalleryCoreApi::loadPlugin('module', 'rewrite');

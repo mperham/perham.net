@@ -1,8 +1,6 @@
 {*
- * $Revision: 16487 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17440 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="Repository"} </h2>
@@ -27,38 +25,37 @@
     {/if}
   </h2>
   {if !empty($status.error.failedToDownload)}
-  {foreach name=plugin from=$status.error.failedToDownload key=pluginName item=failedFiles}
-  {*
-   * TODO: Update this message to something more appropriate in 2.3 (couldn't do it in 2.2 because it was
-   * added after the localization freeze.  Suggested text:
-   * "Failed to install the following packages for the %s plugin"
-   *}
-  <h2 class="giError"> {g->text text="Failed to download the %s plugin because the following files/directories could not be modified:" arg1=$pluginName}</h2>
-  <ul>
-  {foreach from=$failedFiles item=file}
-    {* TODO: remove the non-localized "(unable to download)" text as soon as 2.2 ships *}
-    <li class="giError"> {$file} (unable to download) </li>
-  {/foreach}
-  </ul>
-  {if !$smarty.foreach.plugin.last}<br/>{/if}
-  {/foreach}
+    {foreach name=pluginType from=$status.error.failedToDownload key=pluginType item=plugins}
+      {foreach name=plugin from=$plugins key=pluginName item=failedFiles}
+	<h2 class="giError"> {g->text text="Failed to download the following packages for the %s plugin:" arg1=$pluginName}</h2>
+	<ul>
+	  {foreach from=$failedFiles item=file}
+	    <li class="giError"> {$file} </li>
+	  {/foreach}
+	</ul>
+	{if !$smarty.foreach.pluginType.last}<br/>{/if}
+      {/foreach}
+    {/foreach}
   {/if}
 
   {if !empty($status.error.failedToInstall)}
-  {foreach name=plugin from=$status.error.failedToInstall key=pluginName item=failedFiles}
-  <h2 class="giError"> {g->text text="Failed to download the %s plugin because the following files/directories could not be modified:" arg1=$pluginName} </h2>
-  <ul>
-  {foreach from=$failedFiles item=file}
-    <li class="giError"> {$file} </li>
-  {/foreach}
-  </ul>
-  {if !$smarty.foreach.plugin.last}<br/>{/if}
-  {/foreach}
+    {foreach name=pluginType from=$status.error.failedToInstall key=pluginType item=plugins}
+      {foreach name=plugin from=$plugins key=pluginName item=failedFiles}
+	<h2 class="giError"> {g->text text="Failed to install the %s plugin because the following files/directories could not be modified:" arg1=$pluginName} </h2>
+	<ul>
+	  {foreach from=$failedFiles item=file}
+	    <li class="giError"> {$file} </li>
+	  {/foreach}
+	  </ul>
+	{if !$smarty.foreach.pluginType.last}<br/>{/if}
+      {/foreach}
+    {/foreach}
   {/if}
 
   {if !empty($status.error.cantUpgradeInUse)}
-    {* TODO: as soon as possible in 2.3, convert this to an internationalized string *}
-    <h2 class="giError"> Some plugins could not be automatically upgraded because they are in use.  Please return to the <a href="{g->url arg1="view=core.SiteAdmin" arg2="subView=core.AdminPlugins"}">{g->text text="Plugins"}</a> page and click the {g->text text="upgrade"} link for each of the following plugins: </h2>
+    {capture assign="pluginsLink"}<a href="{g->url arg1="view=core.SiteAdmin"
+     arg2="subView=core.AdminPlugins"}">{/capture}
+    <h2 class="giError"> {g->text text="Some plugins could not be automatically upgraded because they are in use.  Please return to the %sPlugins%s page and click the upgrade link for each of the following plugins:" arg1=$pluginsLink arg2="</a>"} </h2>
     <ul>
       {foreach from=$status.error.cantUpgradeInUse item=pluginName}
       <li class="giError"> {$pluginName} </li>
@@ -80,12 +77,6 @@
       {g->text text="%s plugin updated." arg1=$item}
     </p>
     {/foreach}
-  {/if}
-  {if !empty($status.languagePacksDeleted)}
-    <p>
-      {g->text one="%d language pack deleted." many="%d language packs deleted."
-               count=$status.languagePacksDeleted arg1=$status.languagePacksDeleted}
-    </p>
   {/if}
 </h2></div>
 {/if}
@@ -169,16 +160,28 @@
 {if !$AdminRepository.writeable.modules || !$AdminRepository.writeable.themes}
 <div class="gbBlock">
   <h3>{g->text text="Configure your Gallery"}</h3>
-  <p class="giDescription">
-    {g->text text="Before you can proceed, you have to change some permissions so that Gallery can install plugins for you.  It's easy.  Just execute the following in a shell or via your ftp client:"}
-  </p>
-  <p class="gcBackground1" style="border-width: 1px; border-style: dotted; padding: 4px">
-    <b>
-      cd gallery2<br/>
-      {if !$AdminRepository.writeable.modules}chmod 777 modules<br/>{/if}
-      {if !$AdminRepository.writeable.themes}chmod 777 themes<br/>{/if}
-    </b>
-  </p>
+  {if $AdminRepository.OS == 'unix'}
+    <p class="giDescription">
+      {g->text text="Before you can proceed, you have to change some permissions so that Gallery can install plugins for you.  It's easy.  Just execute the following in a shell or via your ftp client:"}
+    </p>
+    <p class="gcBackground1" style="border-width: 1px; border-style: dotted; padding: 4px">
+      <b>
+        cd {$AdminRepository.basePath}<br/>
+        {if !$AdminRepository.writeable.modules}chmod -R 777 modules<br/>{/if}
+        {if !$AdminRepository.writeable.themes}chmod -R 777 themes<br/>{/if}
+      </b>
+    </p>
+  {else}
+    <p class="giDescription">
+      {g->text text="Before you can proceed, please insure the following directories and sub-directories are writable, so that Gallery can install plugins for you:"}
+    </p>
+    <p class="gcBackground1" style="border-width: 1px; border-style: dotted; padding: 4px">
+      <b>
+        {if !$AdminRepository.writeable.modules}{$AdminRepository.basePath}/modules<br/>{/if}
+        {if !$AdminRepository.writeable.themes}{$AdminRepository.basePath}/themes<br/>{/if}
+      </b>
+    </p>
+  {/if}
   <p class="giDescription">
     {g->text text="If you have trouble changing permissions, ask your system administrator for assistance.  When you've fixed the permissions, click the Continue button to proceed."}
   </p>
@@ -272,8 +275,8 @@
 	<td>
 	  <div style="height: 16px" class="icon-plugin-{if
 	   $plugin.locked}locked" title="{g->text text="Locked Plugin"}"
-	  {elseif !$plugin.isCompatible}incompatible" title="{g->text text="Incompatible Plugin"}"
-	  {elseif $plugin.isUpgradeable}upgrade title="{g->text text="Upgrade Available"}"
+	  {elseif !$plugin.isCompatible || $plugin.isDowngraded}incompatible" title="{g->text text="Incompatible Plugin"}"
+	  {elseif $plugin.isUpgradeable}upgrade" title="{g->text text="Upgrade Available"}"
 	  {else}download"{/if}/>
 	</td>
 
@@ -310,7 +313,7 @@
 	</td>
 
 	<td>
-          {if $plugin.locked || !$plugin.isCompatible}
+          {if $plugin.locked || !$plugin.isCompatible || $plugin.isDowngraded}
             &nbsp;
           {else}{strip}
           <a href="{g->url arg1="view=core.SiteAdmin" arg2="subView=core.AdminRepositoryDownload" arg3="pluginType=`$plugin.type`" arg4="pluginId=`$pluginId`"}">

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,17 +23,23 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Ernesto Baschny <ernst@baschny.de>
- * @version $Revision: 15513 $
+ * @version $Revision: 18138 $
  */
 class ItemMoveController extends GalleryController {
 
     /**
      * @see GalleryController::handleRequest
+     * @todo Scalability - Don't load all album-items into memory. Need a way to load the items
+     *       incrementally, e.g. with an AJAX-powered tree widget.
      */
     function handleRequest($form) {
 	global $gallery;
 
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
 
 	$status = $error = array();
 	if (isset($form['action']['move'])) {
@@ -46,6 +52,11 @@ class ItemMoveController extends GalleryController {
 		list ($ret, $permissions) = GalleryCoreApi::getPermissions($newParentId);
 		if ($ret) {
 		    return array($ret, null);
+		}
+
+		if (!isset($permissions['core.view'])) {
+		    /* Avoid information disclosure, act as if the item didn't exist. */
+		    return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
 		$canAddItem = isset($permissions['core.addDataItem']);
@@ -69,7 +80,8 @@ class ItemMoveController extends GalleryController {
 		$selectedIds = array_keys($form['selectedIds']);
 
 		/* Load the source items */
-		list ($ret, $selectedItems) = GalleryCoreApi::loadEntitiesById($selectedIds);
+		list ($ret, $selectedItems) =
+		    GalleryCoreApi::loadEntitiesById($selectedIds, 'GalleryItem');
 		if ($ret) {
 		    return array($ret, null);
 		}
@@ -251,8 +263,13 @@ class ItemMoveView extends GalleryView {
 	global $gallery;
 
 	/* itemId is the album where we want to move items from */
-	list ($itemId, $selectedId, $page) =
-	    GalleryUtilities::getRequestVariables('itemId', 'selectedId', 'page');
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
+
+	list ($selectedId, $page) = GalleryUtilities::getRequestVariables('selectedId', 'page');
 	if ($form['formName'] != 'ItemMove') {
 	    /* First time around, load the form with item data */
 	    if ($selectedId) {
@@ -263,14 +280,9 @@ class ItemMoveView extends GalleryView {
 	    $form['numPerPage'] = 15;
 	}
 
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
-	if ($ret) {
-	    return array($ret, null);
-	}
-
 	/* Get all peers that we can delete */
-	list ($ret, $peerIds) =
-	    GalleryCoreApi::fetchChildItemIdsWithPermission($itemId, 'core.delete');
+	list ($ret, $peerIds) = GalleryCoreApi::fetchChildItemIdsWithPermission(
+	    $itemId, array('core.delete', 'core.view'));
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -312,7 +324,7 @@ class ItemMoveView extends GalleryView {
 	    }
 
 	    /* Load all the peers */
-	    list ($ret, $peerItems) = GalleryCoreApi::loadEntitiesById($peerIds);
+	    list ($ret, $peerItems) = GalleryCoreApi::loadEntitiesById($peerIds, 'GalleryItem');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -359,15 +371,15 @@ class ItemMoveView extends GalleryView {
 	    }
 
 	    /* Get ids of all albums where we can add new data items */
-	    list ($ret, $albumIds['addDataItem']) =
-		GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addDataItem');
+	    list ($ret, $albumIds['addDataItem']) = GalleryCoreApi::fetchAllItemIds(
+		'GalleryAlbumItem', array('core.addDataItem', 'core.view'));
 	    if ($ret) {
 		return array($ret, null);
 	    }
 
 	    /* Get ids of all all albums where we can add new album items */
-	    list ($ret, $albumIds['addAlbumItem']) =
-		GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', 'core.addAlbumItem');
+	    list ($ret, $albumIds['addAlbumItem']) = GalleryCoreApi::fetchAllItemIds(
+		'GalleryAlbumItem', array('core.addAlbumItem', 'core.view'));
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -377,7 +389,8 @@ class ItemMoveView extends GalleryView {
 							   $albumIds['addAlbumItem']));
 
 	    /* Load all the album entities */
-	    list ($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds['allIds']);
+	    list ($ret, $albums) =
+		GalleryCoreApi::loadEntitiesById($albumIds['allIds'], 'GalleryAlbumItem');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -388,7 +401,7 @@ class ItemMoveView extends GalleryView {
 	$urlGenerator =& $gallery->getUrlGenerator();
 
 	$ItemMove = array();
-	$ItemMove['canCancel'] = $urlGenerator->isNavigationBackPossible();
+	$ItemMove['canCancel'] = (boolean)GalleryUtilities::getRequestVariables('return');
 	$ItemMove['albumIds'] = $albumIds;
 	$ItemMove['peers'] = $peers;
 	$ItemMove['peerTypes'] = $peerTypes;
@@ -402,10 +415,10 @@ class ItemMoveView extends GalleryView {
 
 	$template->setVariable('ItemMove', $ItemMove);
 	$template->setVariable('controller', 'core.ItemMove');
-	$template->javascript('lib/yui/yahoo-min.js');
-	$template->javascript('lib/yui/dom-min.js');
-	$template->javascript('lib/yui/event-min.js');
+	$template->javascript('lib/yui/yahoo-dom-event.js');
 	$template->javascript('lib/yui/container-min.js');
+	$template->javascript('lib/yui/treeview-min.js');
+	$template->style('modules/core/data/tree.css');
 	return array(null, array('body' => 'modules/core/templates/ItemMove.tpl'));
     }
 

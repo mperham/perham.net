@@ -1,10 +1,11 @@
-var search_SearchBlock_prompt;
-var search_SearchBlock_error;
-var search_SearchBlock_input;
+var search_SearchBlock_promptString, search_SearchBlock_input,
+    search_SearchBlock_errorString, search_SearchBlock_inProgressString;
+var search_submitted = false;
 
-function search_SearchBlock_init(prompt, error) {
+function search_SearchBlock_init(prompt, error, inProgress) {
     search_SearchBlock_promptString = prompt;
     search_SearchBlock_errorString = error;
+    search_SearchBlock_inProgressString = inProgress;
     search_SearchBlock_input = document.getElementById('search_SearchBlock').searchCriteria;
 
     search_SearchBlock_input.value = prompt;
@@ -12,13 +13,16 @@ function search_SearchBlock_init(prompt, error) {
 
 function search_SearchBlock_checkForm() {
     var sc = search_SearchBlock_input.value;
-    if (sc == search_SearchBlock_promptString || sc == '') {
+    if (search_submitted) {
+	alert(search_SearchBlock_inProgressString);
+	return false;
+    } else if (sc == search_SearchBlock_promptString || sc == '') {
 	alert(search_SearchBlock_errorString);
 	return false;
-    } else {
-	document.getElementById('search_SearchBlock').submit();
-	return true;
     }
+    document.getElementById('search_SearchBlock').submit();
+    search_submitted = true;
+    return true;
 }
 
 function search_SearchBlock_focus() {

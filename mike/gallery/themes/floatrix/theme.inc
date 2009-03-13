@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Themes
  * @subpackage Floatrix
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 16034 $
+ * @version $Revision: 18172 $
  */
 class FloatrixTheme extends GalleryTheme {
 
@@ -33,8 +33,8 @@ class FloatrixTheme extends GalleryTheme {
 	$this->setId('floatrix');
 	$this->setName($gallery->i18n('Floatrix'));
 	$this->setDescription($gallery->i18n('Variable column theme based on Matrix'));
-	$this->setVersion('1.0.6');
-	$this->setRequiredCoreApi(array(7, 10));
+	$this->setVersion('1.0.8');
+	$this->setRequiredCoreApi(array(7, 20));
 	$this->setRequiredThemeApi(array(2, 5));
 	$this->setStandardSettings(
 	    array('perPage' => 12,
@@ -42,7 +42,7 @@ class FloatrixTheme extends GalleryTheme {
 		  'showImageOwner' => 0, 'showAlbumOwner' => 1,
 		  'albumFrame' => '', 'itemFrame' => '', 'photoFrame' => '',
 		  'colorpack' => '',
-		  'showMicroThumbs' => 0,
+		  'showMicroThumbs' => 0, 'dynamicLinks' => 'browse',
 		  'sidebarBlocks' => serialize(array(
 			array('core.ItemLinks', array('useDropdown' => false)),
 			array('core.PeerList', array()),

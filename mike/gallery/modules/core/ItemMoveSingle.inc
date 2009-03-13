@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class ItemMoveSingleController extends GalleryController {
 
@@ -33,11 +33,11 @@ class ItemMoveSingleController extends GalleryController {
     function handleRequest($form) {
 	global $gallery;
 
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+	list ($ret, $item) = $this->getItem();
 	if ($ret) {
 	    return array($ret, null);
 	}
+	$itemId = $item->getId();
 
 	$status = $error = array();
 
@@ -58,6 +58,15 @@ class ItemMoveSingleController extends GalleryController {
 		 * Assert that our permissions are correct.  The view should never try to make a
 		 * move that isn't legal so we can just bail if there's an inconsistency.
 		 */
+		list ($ret, $canView) =
+		    GalleryCoreApi::hasItemPermission($newParentId, 'core.view');
+		if ($ret) {
+		    return array($ret, null);
+		}
+		if (!$canView) {
+		    /* Avoid information disclosure, act as if the item didn't exist. */
+		    return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+		}
 		if (GalleryUtilities::isA($item, 'GalleryDataItem')) {
 		    $ret = GalleryCoreApi::assertHasItemPermission($newParentId,
 								   'core.addDataItem');
@@ -79,15 +88,10 @@ class ItemMoveSingleController extends GalleryController {
 
 	    /* Make sure the destination is the right type of item */
 	    if (empty($error)) {
-		list ($ret, $newParent) = GalleryCoreApi::loadEntitiesById($newParentId);
+		list ($ret, $newParent) =
+		    GalleryCoreApi::loadEntitiesById($newParentId, 'GalleryAlbumItem');
 		if ($ret) {
 		    return array($ret, null);
-		}
-
-		if (!GalleryUtilities::isA($newParent, 'GalleryAlbumItem')) {
-		    /* The view should never let this happen */
-		    return array(GalleryCoreApi::error(ERROR_BAD_DATA_TYPE),
-				 null);
 		}
 	    }
 
@@ -205,39 +209,42 @@ class ItemMoveSingleView extends GalleryView {
 
     /**
      * @see GalleryView::loadTemplate
+     * @todo Scalability - Don't load all album-items into memory. Need a way to load the items
+     *       incrementally, e.g. with an AJAX-powered tree widget.
      */
     function loadTemplate(&$template, &$form) {
 	global $gallery;
 
 	/* itemId is the album where we want to move items from */
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
+
 	if ($form['formName'] != 'ItemMoveSingle') {
 	    /* First time around, load the form with item data */
 	    $form['destination'] = '';
 	    $form['formName'] = 'ItemMoveSingle';
 	}
 
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
-	if ($ret) {
-	    return array($ret, null);
-	}
-
 	if (GalleryUtilities::isA($item, 'GalleryDataItem')) {
-	    $permission = 'core.addDataItem';
+	    $permissions = 'core.addDataItem';
 	} else if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
-	    $permission = 'core.addAlbumItem';
+	    $permissions = 'core.addAlbumItem';
 	} else {
 	    return array(GalleryCoreApi::error(ERROR_BAD_DATA_TYPE), null);
 	}
+	$permissions = array($permissions, 'core.view');
 
 	/* Get ids of all all albums where we can add this items */
-	list ($ret, $albumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', $permission);
+	list ($ret, $albumIds) = GalleryCoreApi::fetchAllItemIds('GalleryAlbumItem', $permissions);
 	if ($ret) {
 	    return array($ret, null);
 	}
 
 	/* Load all the album entities */
-	list ($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds);
+	list ($ret, $albums) = GalleryCoreApi::loadEntitiesById($albumIds, 'GalleryAlbumItem');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -250,6 +257,10 @@ class ItemMoveSingleView extends GalleryView {
 
 	$template->setVariable('ItemMoveSingle', $ItemMoveSingle);
 	$template->setVariable('controller', 'core.ItemMoveSingle');
+	$template->javascript('lib/yui/yahoo-dom-event.js');
+	$template->javascript('lib/yui/container-min.js');
+	$template->javascript('lib/yui/treeview-min.js');
+	$template->style('modules/core/data/tree.css');
 	return array(null, array('body' => 'modules/core/templates/ItemMoveSingle.tpl'));
     }
 

@@ -1,7 +1,7 @@
-# $Id: nl.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: nl.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 # Buut, <buut at users.sourceforge Remove - This dot net>, Eindhoven Feb. 2006
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-08 17:49+0200\n"
-"PO-Revision-Date: 2007-03-15 14:51+0100\n"
-"Last-Translator: B. Scheijgrond <bsmfenjat-signwanadoodotnl>\n"
+"PO-Revision-Date: 2008-07-23 14:18+0100\n"
+"Last-Translator: Marijke van Velsen <slayegirl@hetnet.nl>\n"
 "Language-Team: Dutch <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -71,16 +71,6 @@ msgid "Create Config File"
 msgstr "Aanmaken Configuratiebestand"
 
 #, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Kan niet schrijven naar het <b>config.php</b> configuratie bestand in Uw <tt>%s</tt> "
-"directory. Verander de rechten. Als U Unix gebruikt kunt U dit herstellen met <i>chmod 666 "
-"config.php</i>."
-
-#, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "Het config.php bestand bestaat niet in uw %s directory"
 
@@ -112,6 +102,9 @@ msgstr "U dient de Oracle OCI8 PHP module geïnstalleerd te hebben"
 
 msgid "You must have the Component Object Model(COM) PHP module installed"
 msgstr "U dient de Component Object Model(COM) PHP geïnstalleerd te hebben"
+
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
+msgstr "U dient  het PHP Data Object(PDO) PHP module geïnstalleerd te hebben"
 
 #, c-format
 msgid "You must specify a column prefix (we recommend %s)"
@@ -223,8 +216,11 @@ msgstr "IBM DB2 (v9.x en nieuwer)"
 msgid "Microsoft SQL Server 2005 and newer"
 msgstr "Microsoft SQL Server 2005 en nieuwer"
 
-msgid "Unknown DB type or no known tables information."
-msgstr "Onbekende DB type of geen bekende tabellen informatie."
+msgid "SQLite v3.x (Experimental!)"
+msgstr "SQLite v3.x (Experimenteel!)"
+
+msgid "Unknown database type or no known tables information."
+msgstr "Onbekend DB type of geen bekende tabellen informatie."
 
 #, c-format
 msgid "Could not find an unused table prefix similar to \"%s\"."
@@ -235,15 +231,15 @@ msgid "Could not open schema file: \"%s\"."
 msgstr "Kan schema bestand \"%s\" niet openen."
 
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "Kan de DB test reeks niet aanmaken. Controleer de teruggekregen foutmelding en README.html "
 "voor missende rechten en schoon de database op."
 
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "Test mislukt om een DB test reeks weg te gooien. Controleer de teruggekregen foutmelding en "
 "README.html voor missende rechten en schoon de database op."
@@ -330,8 +326,8 @@ msgstr "Systeemcontroles"
 msgid "Performing system checks"
 msgstr "Systeem controle wordt uitgevoerd"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP versie >= 4.3.0 of >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP versie &gt;= 4.3.0 of &gt;= 5.0.4"
 
 #, c-format
 msgid ""
@@ -437,7 +433,7 @@ msgid ""
 "php.ini). You should raise this limit to at least <b>%sMB</b> for proper Gallery operation."
 msgstr ""
 "Let Op: uw PHP is ingesteld om het geheugen te beperken tot %sb (<b>memory_limit</b> "
-"parameter in php.ini). U dient deze te verhogen tot minstens <>%sMB</b> om Gallery juist te "
+"parameter in php.ini). U dient deze te verhogen tot minstens <b>%sMB</b> om Gallery juist te "
 "laten functioneren."
 
 msgid "File uploads allowed"
@@ -513,14 +509,14 @@ msgstr "Zend compatibility modus"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Let Op: uw PHP is ingesteld met de Zend ze1_compatibility_mode welke kan veroorzaken dat PHP "
-"crasht. Klik <a href=\"%s\">hier</a> om uw PHP te testen. Als u \"SUCCES\" ziet dan is uw "
-"PHP ok. Als u een fout of geen reactie krijgt, dan dient u ze1_compatability_mode uit te "
-"zetten voordat u doorgaat."
+"crasht. Klik %shier%s om uw PHP te testen. Als u \"SUCCES\" ziet dan is uw PHP ok. Als u een "
+"fout of geen reactie krijgt, dan dient u ze1_compatability_mode uit te zetten voordat u "
+"doorgaat."
 
 msgid "putenv() allowed"
 msgstr "putenv() toegestaan"
@@ -702,6 +698,18 @@ msgstr "Maak een configuratie bestand"
 
 #, c-format
 msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Kan niet schrijven naar het <b>config.php</b> configuratie bestand in uw %s directory. "
+"Verander de rechten. Als u Unix gebruikt kunt u dit herstellen met <i>chmod 666 config.php</"
+"i>. U kunt ook het %sconfig.php%s bestand downloaden en de bestaande config.php in %s map "
+"vervangen."
+
+#, c-format
+msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
 "b> in your <b>%s</b> directory.  This is a very important file that gives Gallery all the "
 "information that it needs to operate.  After we create it, you can read through this file "
@@ -787,6 +795,12 @@ msgstr "DB Wachtwoord:"
 msgid "DB Name:"
 msgstr "DB Naam:"
 
+msgid "DB Schema:"
+msgstr "DB Schema:"
+
+msgid "(optional)"
+msgstr "(optioneel)"
+
 msgid "Table Prefix:"
 msgstr "Tabel Voorvoegsel:"
 
@@ -817,14 +831,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Ga naar mijn Gallery!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"U kunt nu naar uw nieuwe Gallery gaan. Geef de URL voor %smain.php%s in uw %s directory op "
-"in uw browser."
 
 msgid "Installer Help"
 msgstr "Installatie Help"
@@ -1007,53 +1013,40 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "Er zijn fouten opgetreden. Zie hieronder"
 
-msgid "Please select the installation type"
-msgstr "Selecteer het installatie type"
-
 msgid "Standard installation"
 msgstr "Standaardinstallatie"
 
 #, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
-"Dit is het standaard installatie type. Kies dit installatie type als u een niuewe Gallery in "
-"een wilt installeren in de %s directory welke toegankelijk zal zijn met de URL %s."
+"Dit is het standaard installatie type. De Gallery komt in de map %s  welke toegankelijk zal "
+"zijn met de URL %s."
 
 msgid "Multisite installation"
 msgstr "Multisite installatie"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Gallery ondersteunt meerdere onafhankelijke sites vanuit één enkele installatie van de code. "
-"Kies dit installatie type als u een nieuwe Gallery wilt installeren op dezelfde webserver, "
-"maar in een verschillend pad, subdomein of URL domein."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"De multisites delen geen albums, foto's, gebruikers of iets anders. Zij hebben ieder hun "
-"eigen database en opslagdirectory nodig. Voor meer informatie en uitleg over Multisite "
-"installatie, bezoek de %s pagina."
+"Dit is voor meerdere Gallery installaties op één web server. Elke Gallery is onafhankelijk "
+"met zijn eigen database van foto's, albums en gebruikers. For meer informatie, ga naar %s "
+"pagina"
 
 msgid "You must enter a directory"
 msgstr "U dient een directory op te geven"
 
+#, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
-"De opgegeven directory is de programmacode directory. Als u Gallery wilt installeren in de "
-"programmacode directory, kies het standaard installatie type. Als u een multisite wilt "
-"installeren, kies een andere directory."
+"De opgegeven %s map. Als u Gallery daar wilt installeren ,  kies het standaard installatie "
+"type. Als u een multisite wilt installeren, kies een andere directory."
 
 msgid ""
 "The directory you entered either does not exist, or is prohibited by your webserver "
@@ -1068,11 +1061,11 @@ msgstr ""
 "te staan."
 
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
-"Als de installatie van je \"multisite zich in een andere virtuele host bevindt, moet je je "
+"Als de installatie van uw multisite zich in een andere virtuele host bevindt, moet u uw "
 "systeembeheerder verzoeken de instelling van je <b>open_basedir</b> zodanig te wijzigen dat "
 "de virtuele hosts voor elkaar toegankelijk worden."
 
@@ -1090,25 +1083,18 @@ msgid "Unable to create multisite files. Ensure the files listed below are write
 msgstr ""
 "Kan de multisite bestanden niet aanmaken. Zorg dat de bestanden hieronder schrijfbaar zijn."
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Alle multisites zijn geïnstalleerd vanuit deze centrale programmacode (codebase)."
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
+msgstr "Map voor de nieuwe Gallery installatie (voorbeeld: /var/www/example.com/gallery2)"
 
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "You must provide the URL for your new multisite"
+msgstr "U moet een URL opgeven voor de nieuwe multisite"
+
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
 msgstr ""
-"Geef de directory voor de nieuwe multisite hieronder op. Het pad moet anders zijn dan zijn "
-"programmacode installatie pad:"
+"URL voor de nieuwe Gallery installatie  (voorbeeld: http://example.com/gallery2/main.php) "
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
-msgstr ""
-"De volgende directory dient schrijfbaar te zijn voor uw webserver/php gebruiker of dient de "
-"volgende schrijfbare bestanden te bevatten:"
-
-msgid "Select Directory"
-msgstr "Kies Directory"
+msgid "Select Directory and URL"
+msgstr "Selecteer een map en URL"
 
 msgid "Multisite directory setup successfully."
 msgstr "Multisite directory succesvol ingesteld."
@@ -1214,6 +1200,9 @@ msgstr ""
 "te vullen. Dus als u problemen heeft om het juiste pad naar uw g2data directory te vinden, "
 "experimenteer dan met de paden in het tekstvak hieronder en zie welke aanvullingen het voor "
 "u biedt."
+
+msgid "Do not use the installation directory for storage"
+msgstr "Gebruik niet de installatiemap voor opslag"
 
 msgid "The directory you entered is read only"
 msgstr "De opgegeven directory is alleen te lezen"
@@ -1372,58 +1361,47 @@ msgstr "Gaan"
 msgid "Begin Installation&raquo;"
 msgstr "Begin Installatie&raquo;"
 
-#~ msgid "MSSQL (2005 and newer)"
-#~ msgstr "MySQL (2005 of nieuwer)"
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "U kunt nu naar uw nieuwe Gallery gaan. Geef de URL voor %smain.php%s in uw %s directory "
+#~ "op in uw browser."
 
-#~ msgid "Installed Gallery Core successfully"
-#~ msgstr "Gallery Core succesvol geïnstalleerd"
+#~ msgid "Please select the installation type"
+#~ msgstr "Selecteer het installatie type"
 
 #~ msgid ""
-#~ "Congratulations, we've successfully installed the Gallery framework.  However, most of "
-#~ "the really cool features from Gallery come from additional modules that you can install "
-#~ "and configure.  The next step will take you through the process of selecting modules to "
-#~ "install so that you can tune Gallery to do exactly what you want."
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
 #~ msgstr ""
-#~ "Gefeliciteerd, we hebben het Gallery raamwerk succesvol geïnstalleerd.Hoe dan ook, de "
-#~ "meeste te gekke Gallery functionaliteiten komen van additionele modules de u kunt "
-#~ "installeren en configureren. De volgende stap zal u door het proces loodsen waarbij u "
-#~ "modules kunt installeren, waarmee u Gallery kunt afstemmen naar uw behoeften."
-
-#~ msgid "Install More Modules"
-#~ msgstr "Meer Modules Installeren"
+#~ "Gallery ondersteunt meerdere onafhankelijke sites vanuit één enkele installatie van de "
+#~ "code. Kies dit installatie type als u een nieuwe Gallery wilt installeren op dezelfde "
+#~ "webserver, maar in een verschillend pad, subdomein of URL domein."
 
 #~ msgid ""
-#~ "Before we can proceed, you should create a file in your <b>%s</b> directory called "
-#~ "<i>config.php</i>.  You must make sure that the webserver will be able to write to it.  "
-#~ "If you're on unix, try doing <i>chmod 666 config.php</i>.  On Windows, you shouldn't have "
-#~ "to do anything special.  When you've created this file and set the permissions properly, "
-#~ "you can proceed.  If there's a problem, we'll tell you what to fix."
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
 #~ msgstr ""
-#~ "Voordat we verder kunnen gaan, dient u een bestand in uw <b>%s</b> directory aan te maken "
-#~ "genaamd <i>config.php</i>. U dient ervoor te zorgen dat de webserver in staat is hiernaar "
-#~ "te schrijven. Als u Unix gebruikt kunt u dit doen door <i>chmod 666 config.php</i> uit te "
-#~ "voeren. Onder Windows hoeft u niets speciaals te doen. Als u dit bestand heeft aangemaakt "
-#~ "met de juiste rechten kunt u doorgaan. Als er een probleem is, zullen we u aangeven hoe u "
-#~ "dit kunt oplossen."
+#~ "De multisites delen geen albums, foto's, gebruikers of iets anders. Zij hebben ieder hun "
+#~ "eigen database en opslagdirectory nodig. Voor meer informatie en uitleg over Multisite "
+#~ "installatie, bezoek de %s pagina."
 
-#~ msgid "Install Other Modules"
-#~ msgstr "Installeer Andere Modules"
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr "Alle multisites zijn geïnstalleerd vanuit deze centrale programmacode (codebase)."
 
 #~ msgid ""
-#~ "Gallery needs a directory to store your images. The directory we chose for you will work, "
-#~ "but is web accessible."
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
 #~ msgstr ""
-#~ "Gallery heeft een directory nodig waarin deze de afbeeldingen kan opslaan. De huidige "
-#~ "directory is toegangkelijk vanaf het internet, echter deze kan wel gebruikt worden."
+#~ "Geef de directory voor de nieuwe multisite hieronder op. Het pad moet anders zijn dan "
+#~ "zijn programmacode installatie pad:"
 
-#~ msgid "mkdir %s"
-#~ msgstr "mkdir %s"
-
-#~ msgid "chmod 777 %s"
-#~ msgstr "chmod 777 %s"
-
-#~ msgid "cd %s"
-#~ msgstr "cd %s"
-
-#~ msgid "PostgreSQL v6.x (not well tested)"
-#~ msgstr "PostgreSQL v6.x (niet goed getest)"
+#~ msgid ""
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
+#~ msgstr ""
+#~ "De volgende directory dient schrijfbaar te zijn voor uw webserver/php gebruiker of dient "
+#~ "de volgende schrijfbare bestanden te bevatten:"

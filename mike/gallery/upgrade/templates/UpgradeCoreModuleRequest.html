@@ -50,46 +50,6 @@
       <?php print _("The installed version is newer than the version you are trying to upgrade to. You cannot downgrade G2. Please replace the gallery2 files with files from the currently installed version or later.") ?>
     </p>
     <?php else: ?>
-    <p>
-      <?php print _("Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  If you fail to make a backup and something goes wrong, there is a strong possibility that we will not be able to help you recover your data!  Refer to the following example:") ?>
-    </p>
-
-    <div class="example">
-    <?php if (!strncmp($templateData['storeConfig']['type'], 'mysql', 5)): ?>
-      <h3> <?php print _("MySQL") ?> </h3>
-      <?php printf('mysqldump -u%s -p -h %s --opt %s > %s.sql',
-		   $templateData['storeConfig']['username'],
-		   $templateData['storeConfig']['hostname'],
-		   $templateData['storeConfig']['database'],
-		   $templateData['storeConfig']['database']) ?>
-
-    <?php elseif (!strncmp($templateData['storeConfig']['type'], 'postgres', 8)): ?>
-      <h3> <?php print _("PostgreSQL") ?> </h3>
-      <?php printf('pg_dump -h %s --format=t %s > %s.sql',
-		   $templateData['storeConfig']['hostname'],
-		   $templateData['storeConfig']['database'],
-		   $templateData['storeConfig']['database']) ?>
-
-    <?php elseif ($templateData['storeConfig']['type'] == 'oci8po'): ?>
-      <h3> <?php print _("Oracle") ?> </h3>
-      <?php printf('exp %s@%s file=%s.dmp full=yes',
-		   $templateData['storeConfig']['username'],
-		   $templateData['storeConfig']['database'],
-		   $templateData['storeConfig']['database']) ?>
-
-    <?php elseif (strstr($templateData['storeConfig']['type'], 'db2')): ?>
-      <h3> <?php print _("IBM DB2") ?> </h3>
-      <?php printf('db2 "backup database %s"',
-		   $templateData['storeConfig']['database']) ?>
-
-    <?php elseif (strstr($templateData['storeConfig']['type'], 'mssql')): ?>
-      <h3> <?php print _("Microsoft SQL Server") ?> </h3>
-      <?php printf('sqlcmd -S %s\SQLEXPRESS -e -Q "backup database %s to disk = \'%s.bkp\'"',
-		   $templateData['storeConfig']['hostname'],
-		   $templateData['storeConfig']['database'],
-		   $templateData['storeConfig']['database']) ?>
-    <?php endif; ?>
-    </div>
 
     <p>
       <form method="post" action="<?php generateUrl('index.php?step=' . $stepNumber) ?>">
@@ -100,13 +60,11 @@
     </p>
 
     <div class="go">
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
 	<?php if (!$templateData['isConfigUpgradeRequired']
 		  || $templateData['isConfigWriteable']): ?>
-	  <a href="javascript:document.forms[0].submit()"><?php print _('Begin Upgrade') ?></a>
+	  <a href="javascript:document.forms[0].submit()" class="btn continue"><i></i><span><span></span><i></i><?php print _('Begin Upgrade') ?></span></a>
 	<?php else: ?>
-	  <a href="<?php generateUrl('index.php?step=' . $stepNumber) ?>"><?php print _('Recheck config.php') ?></a>
+	  <a href="<?php generateUrl('index.php?step=' . $stepNumber) ?>" class="btn continue"><i></i><span><span></span><i></i><?php print _('Recheck config.php') ?></span></a>
 	<?php endif; ?>
-	  </div></div></div></div></div></div></div></div></div>
     </div>
     <?php endif; ?>

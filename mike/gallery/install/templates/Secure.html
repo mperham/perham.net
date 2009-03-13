@@ -43,10 +43,7 @@
 
     <?php if ($templateData['showFileSystemPermissionWarnings'] && !$templateData['secure']): ?>
     <div class="go">
-      <div class="btn btn-redo"><div><div><div><div><div><div><div><div>
-	<a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>">
-	  <?php echo _('Check Again') ?>
-	</a>
-      </div></div></div></div></div></div></div></div></div>
+	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>" class="btn redo"><i></i><span><span></span><i></i>
+	  <?php echo _('Check Again') ?></span></a>
     </div>
     <?php endif; ?>

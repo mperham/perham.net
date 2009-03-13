@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Ernesto Baschny <ernst@baschny.de>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryChildEntityHelper_simple {
@@ -32,7 +32,7 @@ class GalleryChildEntityHelper_simple {
      * @see GalleryCoreApi::fetchChildItemIdsWithPermission
      */
     function fetchChildItemIdsWithPermission($itemId, $permissionId) {
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -54,7 +54,7 @@ class GalleryChildEntityHelper_simple {
      * @see GalleryCoreApi::fetchLinkableChildItemIdsWithPermission
      */
     function fetchLinkableChildItemIdsWithPermission($itemId, $permissionId) {
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -123,14 +123,15 @@ class GalleryChildEntityHelper_simple {
     /**
      * Helper function for getting child ids
      *
-     * @param object GalleryItem $item
+     * @param GalleryItem $item
      * @param int $offset an offset into the child item list (null for no offset)
      * @param int $count a count of how many child items to return (null for unlimited)
      * @param string $class a class to restrict children to (eg. 'GalleryAlbumItem')
-     * @param string $requiredPermission a required permission (can be null)
+     * @param string|array $requiredPermission a single required permission-id (can be null)
+     *                                         or an array or permission-ids
      * @param boolean $linkableOnly whether to restrict to linkable items only
      * @param int $userId the userid we're doing this for (defaults to active user id)
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array of item ids
      * @access private
      */
@@ -236,36 +237,34 @@ class GalleryChildEntityHelper_simple {
     function fetchParents($item, $permission=null, $filterBreadcrumb=false) {
 	global $gallery;
 
-	if (GalleryUtilities::isA($item, 'GalleryAlbumItem')) {
-	    list ($ret, $parentIds) =
-		GalleryCoreApi::fetchParentSequence($item->getId(), $filterBreadcrumb);
-	    if ($ret) {
-		return array($ret, null);
-	    }
-	} else {
-	    list ($ret, $parentIds) =
-		GalleryCoreApi::fetchParentSequence($item->getParentId(), $filterBreadcrumb);
-	    if ($ret) {
-		return array($ret, null);
-	    }
-	    array_push($parentIds, $item->getParentId());
+	if (!GalleryUtilities::isA($item, 'GalleryItem')) {
+	    return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 	}
+
+	list ($ret, $parentIds) =
+		GalleryCoreApi::fetchParentSequence($item->getId(), $filterBreadcrumb);
+	if ($ret) {
+	    return array($ret, null);
+	}
+
 	if (empty($parentIds)) {
 	    return array(null, array());
 	}
 
 	if (isset($permission)) {
-	    $ret = GalleryCoreApi::studyPermissions($parentIds);
+	    if (!is_array($permission)) {
+		$permission = array($permission);
+	    }
+	    list ($ret, $permissionMap) = GalleryCoreApi::fetchPermissionsForItems($parentIds);
 	    if ($ret) {
 		return array($ret, null);
 	    }
 	    foreach ($parentIds as $i => $id) {
-		list ($ret, $hasPermission) = GalleryCoreApi::hasItemPermission($id, $permission);
-		if ($ret) {
-		    return array($ret, null);
-		}
-		if (!$hasPermission) {
-		    unset($parentIds[$i]);
+		foreach ($permission as $permissionId) {
+		    if (!isset($permissionMap[$id][$permissionId])) {
+			unset($parentIds[$i]);
+			break;
+		    }
 		}
 	    }
 	    if (empty($parentIds)) {
@@ -273,7 +272,7 @@ class GalleryChildEntityHelper_simple {
 	    }
 	}
 
-	list ($ret, $parents) = GalleryCoreApi::loadEntitiesById($parentIds);
+	list ($ret, $parents) = GalleryCoreApi::loadEntitiesById($parentIds, 'GalleryItem');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -284,12 +283,12 @@ class GalleryChildEntityHelper_simple {
     /**
      * Helper function for getting descendent ids.
      *
-     * @param object GalleryItem $item
+     * @param GalleryItem $item
      * @param int $offset an offset into the child item list (null for no offset)
      * @param int $count a count of how many child items to return (null for unlimited)
      * @param string $class a class to restrict children to (eg. 'GalleryAlbumItem')
      * @param string $requiredPermission a required permission (defaults to 'core.view')
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array of ids
      * @access private
      */
@@ -407,7 +406,7 @@ class GalleryChildEntityHelper_simple {
      *
      * @param string $orderBy orderBy (null/empty to use site default for both parameters)
      * @param string $orderDirection orderDirection
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string order by clause, string select clause,
      *               string a row matching condition,
      *               string optional join clause
@@ -524,8 +523,12 @@ class GalleryChildEntityHelper_simple {
 		if ($ret) {
 		    return array($ret, null, null, null, null);
 		}
+		list ($ret, $as) = $storage->getFunctionSql('AS', array());
+		if ($ret) {
+		    return array($ret, null, null, null, null);
+		}
 		$order[] = 2 + count($order);
-		$select[] = $case;
+		$select[] = "$case $as albumsFirst";
 		$join[] = 'LEFT JOIN [GalleryAlbumItem=1] ON [BASE::ID] = [GalleryAlbumItem=1::id]';
 		break;
 

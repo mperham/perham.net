@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * URL rewrite helper.
- * @package Rewrite
- * @subpackage Classes
- * @author Douglas Cau <douglas@cau.se>
- * @version $Revision: 15865 $
- * @static
- */
 
 /* General status codes */
 define('REWRITE_STATUS_OK', 0);
@@ -36,6 +28,10 @@ define('REWRITE_STATUS_EMPTY_VALUE', 5);
 
 /**
  * URL rewrite helper.
+ * @package Rewrite
+ * @subpackage Classes
+ * @author Douglas Cau <douglas@cau.se>
+ * @version $Revision: 17580 $
  * @static
  */
 class RewriteHelper {
@@ -44,8 +40,8 @@ class RewriteHelper {
      * Load and initialize the rewrite plugin.  If no plugin has been configured yet it returns a
      * GalleryStatus ERROR_MISSING_VALUE.
      * @param boolean $new (optional) true if we need a new instance
-     * @return array object GalleryStatus a status code
-     *               object RewritePlugin a loaded parser
+     * @return array GalleryStatus a status code
+     *               RewritePlugin a loaded parser
      */
     function getRewriteParser($new=false) {
 	global $gallery;
@@ -63,8 +59,7 @@ class RewriteHelper {
 	    }
 
 	    $path = 'modules/rewrite/classes/parsers/' . $rewriteParserId . '/parser.inc';
-	    if ($platform->file_exists(
-		    GalleryCoreApi::getPluginBaseDir('module', 'rewrite') . $path)) {
+	    if ($platform->file_exists(GalleryCoreApi::getCodeBasePath($path))) {
 		GalleryCoreApi::requireOnce($path);
 	    }
 	    $class = $rewriteParserId . 'Parser';
@@ -78,10 +73,10 @@ class RewriteHelper {
      * Parse active rules into an array of regular expressions for parsing URLs during page requests
      * and build an array for the URL generator to use when generating short URLs.
      * @param array $activeRules array array ('pattern' => string pattern) active rules by reference
-     * @param object RewriteParser $rewriteParser
-     * @param object GalleryModule $upgradeModule (optional) passed in during activate / upgrade
+     * @param RewriteParser $rewriteParser
+     * @param GalleryModule $upgradeModule (optional) passed in during activate / upgrade
      * @param array $flags optional definition of default and mandatory flags
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int rewrite status code (REWRITE_STATUS_OK on success)
      *               array parsed patterns translated to regular expressions
      *               array short URLs which will used by to generate URLs
@@ -110,24 +105,35 @@ class RewriteHelper {
 	    return array($ret, null, null, null, null);
 	}
 
+	list ($ret, $modules) = GalleryCoreApi::fetchPluginStatus('module');
+	if ($ret) {
+	    return array($ret, null, null, null, null);
+	}
+
 	$regexRules = array();
 	$shortUrls = array();
 	foreach (array_keys($activeRules) as $moduleId) {
+	    $module = null;
 	    if (isset($upgradeModule) && $upgradeModule->getId() == $moduleId) {
 		/* Avoid PLUGIN_VERSION_MISMATCH during upgrade by passing in module */
 		$module = $upgradeModule;
-	    } else {
-		list ($ret, $module) = GalleryCoreApi::loadPlugin('module', $moduleId);
+	    } else if (isset($modules[$moduleId]) && !empty($modules[$moduleId]['available'])
+		    && isset($modules[$moduleId]['active'])) {
+		/* Ignore version mismatch to ensure that we don't deactivate any modules */
+		list ($ret, $module) = GalleryCoreApi::loadPlugin('module', $moduleId, true, true);
 		if ($ret) {
-		    if ($ret->getErrorCode() & ERROR_PLUGIN_VERSION_MISMATCH) {
-			/*
-			 * Add CONFIGURATION_REQUIRED code to more gracefully abort upgrade if a
-			 * dependent module for one of our rules also needs upgrading.
-			 */
-			$ret->addErrorCode(ERROR_CONFIGURATION_REQUIRED);
-		    }
 		    return array($ret, null, null, null, null);
 		}
+	    }
+
+	    if (!isset($module) || !GalleryCoreApi::isPluginCompatibleWithApis($module)) {
+		/* Remove rules for modules that are incompatible or unavailable */
+		$ret = RewriteHelper::setHistoryForModule($moduleId, $activeRules[$moduleId]);
+		if ($ret) {
+		    return array($ret, null, null, null, null);
+		}
+		unset($activeRules[$moduleId]);
+		continue;
 	    }
 
 	    $rules = $module->getRewriteRules();
@@ -267,7 +273,7 @@ class RewriteHelper {
      * @param array $regexRules of parsed rules
      * @param array $rule rewrite rule
      * @param array $activeRule array ('pattern' => string pattern)
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int rewrite status code (REWRITE_STATUS_OK on success)
      * @access private
      */
@@ -341,7 +347,7 @@ class RewriteHelper {
 
     /**
      * Comparison function used to order regex rules.  Order rules from most specific to least
-     * specific.  
+     * specific.
      * @param array $a first rule to compare
      * @param array $b second rule to compare
      * @return int an integer less than, equal to, or greater than zero if the first rule is
@@ -401,7 +407,7 @@ class RewriteHelper {
     /**
      * Get the rewrite rule history for a specific module.
      * @param string $moduleId id of the module
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array (mixed ruleId => array ('pattern' => string pattern))
      */
     function getHistoryForModule($moduleId) {
@@ -419,7 +425,7 @@ class RewriteHelper {
      * Store the rewrite rule history for a specific module.
      * @param string $moduleId id of the module
      * @param array $history array (mixed ruleId => array ('pattern' => string pattern))
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function setHistoryForModule($moduleId, $history) {
 	if (!empty($history)) {

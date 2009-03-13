@@ -1,7 +1,7 @@
-# $Id: sr.po 16026 2007-03-16 16:30:29Z mindless $
+# $Id: sr.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,10 +20,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
-"Report-Msgid-Bugs-To: gallery-translations@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-06-07 15:43-0700\n"
-"PO-Revision-Date: 2005-09-07 12:42+0200\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-09-06 19:02+0200\n"
+"PO-Revision-Date: 2008-09-21 17:58+0100\n"
 "Last-Translator: Jozef Selesi <selesi@gmail.com>\n"
 "Language-Team: Srpski <en@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr ""
 "X-Generator: KBabel 1.10\n"
 
 msgid "Unknown"
-msgstr "FNepoznato"
+msgstr "Nepoznato"
 
 msgid "Admin User Setup"
 msgstr "Podešavanje administrativnog naloga"
@@ -71,16 +71,6 @@ msgstr ""
 msgid "Create Config File"
 msgstr "Pravljenje konfiguracione datoteke"
 
-#, fuzzy, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Pisanje u <b>config.php</b> datoteku sa podešavanjima u vašem <tt>%s</tt> direktorijumu nije "
-"moguće. Molimo vas da joj izmenite prava. Ako koristite Unix, možete izvršiti <i>chmod 666 "
-"config.php</i> da ovo sredite."
-
 #, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "Datoteka config.php ne postoji u vašem %s direktorijumu."
@@ -98,9 +88,8 @@ msgstr "Podešavanje baze podataka"
 msgid "You must have the MySQL PHP module installed"
 msgstr "Morate imati instaliran MySQL PHP modul"
 
-#, fuzzy
 msgid "You must have the MySQL Improved PHP module installed"
-msgstr "Morate imati instaliran MySQL PHP modul"
+msgstr "Morate imati instaliran MySQL Improved PHP modul"
 
 msgid "You must have the ibm_db2 PHP module installed"
 msgstr "Morate imati instaliran ibm_db2 PHP modul"
@@ -111,9 +100,12 @@ msgstr "Morate imati instaliran PostgreSQL PHP modul"
 msgid "You must have the Oracle OCI8 PHP module installed"
 msgstr "Morate imati instaliran Oracle OCI8 PHP modul"
 
-#, fuzzy
 msgid "You must have the Component Object Model(COM) PHP module installed"
-msgstr "Morate imati instaliran Oracle OCI8 PHP modul"
+msgstr "Morate imati instaliran Component Object Model (COM) PHP modul"
+
+#, fuzzy
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
+msgstr "Morate imati instaliran Component Object Model (COM) PHP modul"
 
 #, c-format
 msgid "You must specify a column prefix (we recommend %s)"
@@ -176,7 +168,6 @@ msgstr ""
 "da bi se izbrisali svi podaci u bazi i direktorijumu za skladištenje, i pređite na sledeći "
 "korak."
 
-#, fuzzy
 msgid ""
 "Gallery tables already exist in the database and the Gallery storage directory seems to be "
 "intact. Either choose to reuse the existing database tables and storage directory data or "
@@ -184,7 +175,7 @@ msgid ""
 msgstr ""
 "Tabele Galerije već postoje u bazi podataka, a direktorijum za skladištenje se čini "
 "netaknutim. Ili iskoristite tabele u postojećoj bazi podataka i podatke u direktorijumu za "
-"skladištenje, ili uradite čistu instalaciju prilikom koje će svi postojeći podaci u bazi i "
+"skladištenje, ili izaberite čistu instalaciju prilikom koje će svi postojeći podaci u bazi i "
 "direktorijumu za skladištenje biti izbrisani."
 
 msgid ""
@@ -208,13 +199,11 @@ msgstr ""
 "Nije moguće učitati G2 API. Molimo vas da izbrišete tabele u Galerijinoj bazi i podatke u "
 "direktorijumu za skladištenje."
 
-#, fuzzy
 msgid "MySQL (v3.23.34a and newer)"
-msgstr "MySQL sa transakcijama (v3.23.34a ili novija)"
+msgstr "MySQL (v3.23.34a ili novija)"
 
-#, fuzzy
 msgid "MySQL (versions before v3.23.34a)"
-msgstr "MySQL (sve verzije)"
+msgstr "MySQL (verzije pre v3.23.34a)"
 
 msgid "PostgreSQL v7.x and newer"
 msgstr "PostgreSQL v7.x ili novija"
@@ -225,32 +214,34 @@ msgstr "Oracle (9i i novije)"
 msgid "IBM DB2 (v9.x and newer)"
 msgstr "IBM DB2 (v9.x i novije)"
 
-#, fuzzy
 msgid "Microsoft SQL Server 2005 and newer"
-msgstr "PostgreSQL v7.x ili novija"
+msgstr "Microsoft SQL Server 2005 ili noviji"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr ""
+
+msgid "Unknown database type or no known tables information."
 msgstr "Nepoznat tip baze ili nema informacija o postojećim tabelama."
 
 #, c-format
 msgid "Could not find an unused table prefix similar to \"%s\"."
 msgstr "Nije pronađen neiskorišćen prefix nalik na \"%s\"."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open schema file: \"%s\"."
-msgstr "Otvaranje SQL test datoteke \"%s\" nije uspelo."
+msgstr "Otvaranje šematske datoteke \"%s\" nije uspelo."
 
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "Nije uspelo pravljenje test sekvence u bazi podataka. Pročitajte prikazanu poruku o grešci, "
 "proverite u README.html da li su sve privilegije odgovarajuće podešene i ispraznite bazu "
 "podataka."
 
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "Nije uspelo brisanje testne sekvence iz baze podataka. Pročitajte prikazanu poruku o grešci, "
 "proverite u README.html da li su sve privilegije odgovarajuće podešene i ispraznite bazu "
@@ -266,16 +257,14 @@ msgstr ""
 "Pročitajte prikazanu poruku o grešci, proverite u README.html da li su sve privilegije "
 "odgovarajuće podešene i ispraznite bazu podataka."
 
-#, fuzzy
 msgid "Finish Installation"
-msgstr "Višesajtna instalacija"
+msgstr "Završi instalaciju"
 
 msgid "Install Gallery Core"
 msgstr "Instalacija jezgra Galerije"
 
-#, fuzzy
 msgid "Installing the core module"
-msgstr "Instaliraj druge module"
+msgstr "Instaliranje modula sa jezgrom"
 
 msgid "Unable to initialize our Gallery data"
 msgstr "Nije moguće pripremiti Galerijine podatke za rad"
@@ -298,21 +287,18 @@ msgstr "Nije moguće potvrditi transakciju u bazi podataka"
 msgid "Core module is only partially installed."
 msgstr "Modul sa jezgrom je samo delimično instaliran."
 
-#, fuzzy
 msgid "Install Plugins"
-msgstr "Instalacioni koraci"
+msgstr "Instaliranje modula"
 
-#, fuzzy
 msgid "Unable to initialize our Gallery session"
-msgstr "Nije moguće pripremiti Galerijine podatke za rad"
+msgstr "Nije moguće pripremiti sesiju Galerije"
 
 #, c-format
 msgid "Unable to load the %s module"
 msgstr "Nije moguće učitati modul %s"
 
-#, fuzzy
 msgid "Installing modules"
-msgstr "Instalacija dodatnih modula"
+msgstr "Instalacija modula"
 
 #, c-format
 msgid "Unable to install the %s module"
@@ -343,17 +329,16 @@ msgstr "Provera sistema"
 msgid "Performing system checks"
 msgstr "Provera sistema"
 
-#, fuzzy
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP verzija >= 4.1.0 ili >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP verzija &gt;= 4.3.0 ili &gt;= 5.0.4"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Gallery 2 requires PHP version 4.3.0 or newer or 5.0.4 or newer. You have PHP version "
 "%s installed. Contact your webserver administrator to request an upgrade, available at the %"
 "sPHP website%s."
 msgstr ""
-"Greška: Galeriji 2 je potrebna PHP verzija 4.1.0 ili novija, ili 5.0.4 ili novija. Imate "
+"Greška: Galeriji 2 je potrebna PHP verzija 4.3.0 ili novija, ili 5.0.4 ili novija. Imate "
 "instaliran PHP verzije %s. Tražite od administratora vašeg web servera da instalira noviju "
 "verziju, koja se može preuzeti sa %sPHP web sajta%s."
 
@@ -389,13 +374,13 @@ msgstr "Safe Mode"
 msgid "Regular expressions"
 msgstr "Regularni izrazi"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Your PHP is configured without support for %sPerl Compatible Regular Expressions%s. "
 "You must enable these functions before Gallery will run."
 msgstr ""
-"Greška: Vaša verzija PHP-a je konfigurisana sa uključenim safe mode-om. Safe mode mora biti "
-"isključen pre pokretanja Galerije."
+"Greška: Vaša verzija PHP-a je konfigurisana bez podrške za %sPerl kompatibilne regularne "
+"izraze%s. Morate omogućiti ove ove funkcije pre pokretanja Galerije."
 
 msgid "exec() allowed"
 msgstr "exec() je dozvoljen"
@@ -431,17 +416,15 @@ msgstr ""
 msgid "Filesystem Operations"
 msgstr "Operacije sistema datoteka"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Essential filesystem operations are disabled in your PHP by the "
 "<b>disabled_functions</b> parameter in php.ini. You must allow these functions before "
 "Gallery will run. These functions are missing: %s."
 msgstr ""
-"Upozorenje: Funkcija set_time_limit() je onemogućena u vašoj verziji PHP-a parametrom "
-"<b>disabled_functions</b> u php.ini datoteci. Galerija može da radi sa ovakvim "
-"podešavanjima, ali ne pouzdano. Bilo koja radnja koja traje duže od %d sekundi će biti "
-"neuspešna (a u nekim slučajevima samo prikazati praznu stranu), uz mogućnost oštećenja "
-"podataka."
+"Greška: Osnovne operacije sa sistemom datoteka su u vašem PHP-u onemogućene parametrom "
+"<b>disabled_functions</b> u php.ini datoteci. Morate omogućiti ove funkcije pre pokretanja "
+"Galerije. Nedostaju sledeće funkcije: %s."
 
 msgid "Memory limit"
 msgstr "Ograničenje memorije"
@@ -473,15 +456,15 @@ msgstr ""
 msgid "Maximum upload size"
 msgstr "Maksimalna veličina prenosa"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Your PHP is configured to limit the size of file uploads to %sb "
 "(<b>upload_max_filesize</b> parameter in php.ini). You should raise this limit to allow "
 "uploading bigger files."
 msgstr ""
 "Upozorenje: Vaša verzija PHP-a je podešena da ograniči veličinu datoteka pri prenosu na %sb "
-"(parametar <b>upload_max_filesize</b> u php.ini). Trebalo bi da povećate ovu vrednost da bi "
-"bio moguć prenos većih datoteka."
+"(parametar <b>upload_max_filesize</b> u php.ini datoteci). Trebalo bi da povećate ovu "
+"vrednost da bi bio moguć prenos većih datoteka."
 
 msgid "Maximum POST size"
 msgstr "Maksimalna POST veličina"
@@ -531,30 +514,27 @@ msgstr "Režim Zend kompatibilnosti"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Upozorenje: Vaša verzija PHP-a je konfigurisana sa uključenim Zend ze1_compatibility_mode "
-"režimom, što može prouzrokovati krah PHP-a. Kliknite <a href=\"%s\">here</a> da proverite "
-"vaš PHP. Ako se prikaže \"SUCCESS\", onda je sve u redu sa vašim PHP-om. Ako dobijete grešku "
-"ili se ništa ne prikaže, onda morate isključiti ze1_compatibility_mode pre nego što "
-"nastavite."
+"režimom, što može prouzrokovati krah PHP-a. Kliknite %sovde%s da proverite vaš PHP. Ako se "
+"prikaže \"SUCCESS\", onda je sve u redu sa vašim PHP-om. Ako dobijete grešku ili se ništa ne "
+"prikaže, onda morate isključiti ze1_compatibility_mode pre nego što nastavite."
 
 msgid "putenv() allowed"
 msgstr "putenv() je dozvoljen"
 
-#, fuzzy
 msgid ""
 "Warning: The putenv() function is disabled in your PHP by the <b>disabled_functions</b> "
 "parameter in php.ini.  Gallery can function with this setting, but on some rare systems "
 "Gallery will be unable to run in other languages than the system language and English."
 msgstr ""
-"Upozorenje: Funkcija set_time_limit() je onemogućena u vašoj verziji PHP-a parametrom "
+"Upozorenje: Funkcija putenv() je onemogućena u vašoj verziji PHP-a parametrom "
 "<b>disabled_functions</b> u php.ini datoteci. Galerija može da radi sa ovakvim "
-"podešavanjima, ali ne pouzdano. Bilo koja radnja koja traje duže od %d sekundi će biti "
-"neuspešna (a u nekim slučajevima samo prikazati praznu stranu), uz mogućnost oštećenja "
-"podataka."
+"podešavanjima, ali na nekim retkim sistemima Galerija neće moći da radi ni na jednom jeziku "
+"osim engleskog i sistemskog."
 
 msgid "Output buffering disabled"
 msgstr "Baferovanje izlaza je onemogućeno"
@@ -593,9 +573,8 @@ msgstr "Manifest fali ili je nedostupan"
 msgid "Welcome"
 msgstr "Dobro došli"
 
-#, fuzzy
 msgid "Please correct the following errors"
-msgstr "Primili smo sledeće greške vezane za bezu podataka:"
+msgstr "Molimo vas da ispravite sledeće greške"
 
 msgid ""
 "Every Gallery will have at least one administrator user who has full access to view/modify "
@@ -722,6 +701,18 @@ msgstr "Pravljenje konfiguracione datoteke"
 
 #, c-format
 msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Pisanje u <b>config.php</b> datoteku sa podešavanjima u vašem %s direktorijumu nije moguće. "
+"Molimo vas da joj izmenite prava. Ako koristite Unix, možete izvršiti <i>chmod 666 config."
+"php</i> da ovo sredite. Možete i preuzeti %sconfig.php%s datoteku i sami zamenite postojeću "
+"verziju u %s direktorijumu."
+
+#, c-format
+msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
 "b> in your <b>%s</b> directory.  This is a very important file that gives Gallery all the "
 "information that it needs to operate.  After we create it, you can read through this file "
@@ -804,6 +795,12 @@ msgstr "Lozinka:"
 msgid "DB Name:"
 msgstr "Naziv baze:"
 
+msgid "DB Schema:"
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
+
 msgid "Table Prefix:"
 msgstr "Prefiks tabela:"
 
@@ -834,14 +831,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Idi u moju Galeriju"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"Sada možete preći u vašu novu Galeriju. Unesite adresu %smain.php%s datoteke u vašem %s "
-"direktorijumu."
 
 msgid "Installer Help"
 msgstr "Pomoć u vezi sa instalacijom"
@@ -989,27 +978,25 @@ msgstr "Galerija: <strong>vaše fotografije</strong> na <strong>vašem web sajtu
 msgid "Missing files (%d)"
 msgstr "Nedostajuće datoteke (%d)"
 
-#, fuzzy
 msgid ""
 "Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
 "be safe to ignore these."
 msgstr ""
-"Napomena: Koristite Galeriju iz CVS-a, pa se može desiti da se ovde pojave nedavno uklonjene "
-"datoteke."
+"Napomena: Koristite Galeriju iz SVN-a, pa se može desiti da se ovde pojave nedavno uklonjene "
+"datoteke. Slobodno ih možete ignorisati."
 
 #, c-format
 msgid "Modified files (%d)"
 msgstr "Promenjene datoteke (%d)"
 
-#, fuzzy
 msgid ""
 "Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
 "probably ignore these, but to be safe you should make sure that you do 'svn update' before "
 "continuing."
 msgstr ""
-"Napomena: Koristite Galeriju iz CVS-a, pa se može očekivati da će postojati bar neke "
-"izmenjene datoteke. Verovatno ih možete ignorisati, ali za svaki slučaj izvršite 'cvs update "
-"-Pd' pre nego što nastavite."
+"Napomena: Koristite Galeriju iz SVN-a, pa se može očekivati da će postojati bar neke "
+"izmenjene datoteke. Verovatno ih možete ignorisati, ali za svaki slučaj izvršite 'svn "
+"update' pre nego što nastavite."
 
 #, c-format
 msgid "Old files (%d)"
@@ -1025,16 +1012,13 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "Desile su se greške. Molimo vas pogledate poruke ispod."
 
-msgid "Please select the installation type"
-msgstr "Molimo vas da izaberete vrstu instalacije:"
-
 msgid "Standard installation"
 msgstr "Standardna instalacija"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 "Ovo je podrazumevana vrsta instalacije. Izaberite je ako želite da instalirate novu Galeriju "
 "u direktorijum %s kojoj će moći da se pristupi preko adrese %s."
@@ -1042,32 +1026,20 @@ msgstr ""
 msgid "Multisite installation"
 msgstr "Višesajtna instalacija"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Galerija jednom instalacijom osnovnih datoteka može da podrži više nezavisnih sajtova. "
-"Izaberite ovu vrstu instalacije ako želite da instalirate novu Galeriju na isti web server, "
-"ali u drugi direktorijum, poddomen ili URL domen."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"Višesajtne Galerije ne dele albume, fotografije, korisnike niti bilo šta drugo. Potrebne su "
-"im sopstvene baze podataka i direktorijumi za skladištenje. Za više informacija i "
-"objašnjenja u vezi sa Višesajtnim instalacijama, posetite %s stranu."
 
 msgid "You must enter a directory"
 msgstr "Morate uneti direktorijum"
 
+#, fuzzy, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
 "Direktorijum koje ste uneli je direktorijum skladišta izvornog koda. Ako želite da "
 "instalirate Galeriju u taj direktorijum, izaberite standardnu vrstu instalacije. Ako želite "
@@ -1084,10 +1056,11 @@ msgstr ""
 "izabrati direktorijum pod jednim od njih, ili morate izmeniti <b>open_basedir</b> parametar "
 "u vašoj PHP konfiguraciji da biste dozvolili upis i u neki drugi direktorijum."
 
+#, fuzzy
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
 "Ako se vaša višesajtna instalacija nalazi u drugom virtuelnom domaćinu, treba da "
 "kontaktirate vašeg sistem administratora i tražite da konfigurišu vaš <b>open_basedir</b> "
@@ -1108,23 +1081,17 @@ msgstr ""
 "Pravljenje višesajtnih fajlova nije moguće. Proverite da li je moguće pisati u ispod "
 "navedene datoteke."
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Sve višesajtne Galerije se instaliraju iz ovog skladišta izvornog koda."
-
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
 msgstr ""
-"Unesite ispod direktorijum za novu višesajtnu Galeriju. Putanja mora biti različita od "
-"putanje ovog skladišta izvornog koda:"
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
+msgid "You must provide the URL for your new multisite"
 msgstr ""
-"Vaš web sever i PHP moraju imati pravo pisanja u direktorijum ili sadržati sledeće datoteke:"
 
-msgid "Select Directory"
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
+msgstr ""
+
+#, fuzzy
+msgid "Select Directory and URL"
 msgstr "Izaberi direktorijum"
 
 msgid "Multisite directory setup successfully."
@@ -1230,6 +1197,9 @@ msgstr ""
 "pokušajte da eksperimentišete sa putanjama u polju za unos ispod i vidite koje su vam dopune "
 "pružene."
 
+msgid "Do not use the installation directory for storage"
+msgstr ""
+
 msgid "The directory you entered is read only"
 msgstr "Direktorijum koji ste uneli je samo za čitanje"
 
@@ -1238,9 +1208,9 @@ msgstr ""
 "Desila se greška u toku pravljenja strukture direktorijuma unutar direktorijuma za "
 "skladištenje."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Your storage directory is %sweb accessible%s."
-msgstr "Direktorijum za skladištenje je uspešno podešen."
+msgstr "Vaš direktorijum za skladištenje je %sdostupan preko weba%s."
 
 #, c-format
 msgid "Unable to verify that the storage directory is not %sweb accessible%s."
@@ -1263,7 +1233,6 @@ msgstr "Napomena: Ovo su samo primeri! Moguće je da neće raditi baš najbolje 
 msgid "Unix (with ftp access)"
 msgstr "Unix (sa FTP pristupom)"
 
-#, fuzzy
 msgid ""
 "Note that ftp servers and clients vary so these instructions may not work for you. Consult "
 "the manual for your FTP client or talk to a system administrator for help with this if you "
@@ -1271,7 +1240,7 @@ msgid ""
 msgstr ""
 "Obratite pažnju na to da FTP serveri i klijenti variraju, tako da ova uputstva možda neće "
 "odgovarati vašem slučaju. Pročitajte uputstvo vašeg FTP klijenta ili razgovarajte sa "
-"administratorom sistema ako imate problema,"
+"administratorom sistema ako imate problema."
 
 msgid ""
 "In some web hosting environments, the paths that you see in the shell or via FTP are not the "
@@ -1387,6 +1356,51 @@ msgstr "Kreni"
 
 msgid "Begin Installation&raquo;"
 msgstr "Počni instalaciju&raquo;"
+
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "Sada možete preći u vašu novu Galeriju. Unesite adresu %smain.php%s datoteke u vašem %s "
+#~ "direktorijumu."
+
+#~ msgid "Please select the installation type"
+#~ msgstr "Molimo vas da izaberete vrstu instalacije:"
+
+#~ msgid ""
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
+#~ msgstr ""
+#~ "Galerija jednom instalacijom osnovnih datoteka može da podrži više nezavisnih sajtova. "
+#~ "Izaberite ovu vrstu instalacije ako želite da instalirate novu Galeriju na isti web "
+#~ "server, ali u drugi direktorijum, poddomen ili URL domen."
+
+#~ msgid ""
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
+#~ msgstr ""
+#~ "Višesajtne Galerije ne dele albume, fotografije, korisnike niti bilo šta drugo. Potrebne "
+#~ "su im sopstvene baze podataka i direktorijumi za skladištenje. Za više informacija i "
+#~ "objašnjenja u vezi sa Višesajtnim instalacijama, posetite %s stranu."
+
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr "Sve višesajtne Galerije se instaliraju iz ovog skladišta izvornog koda."
+
+#~ msgid ""
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
+#~ msgstr ""
+#~ "Unesite ispod direktorijum za novu višesajtnu Galeriju. Putanja mora biti različita od "
+#~ "putanje ovog skladišta izvornog koda:"
+
+#~ msgid ""
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
+#~ msgstr ""
+#~ "Vaš web sever i PHP moraju imati pravo pisanja u direktorijum ili sadržati sledeće "
+#~ "datoteke:"
 
 #, fuzzy
 #~ msgid "MSSQL (2005 and newer)"

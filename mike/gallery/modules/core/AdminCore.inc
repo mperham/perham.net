@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15692 $
+ * @version $Revision: 17678 $
  */
 class AdminCoreController extends GalleryController {
 
@@ -105,12 +105,6 @@ class AdminCoreController extends GalleryController {
 		    $form['cookie']['domain'] = '';
 		}
 	    }
-
-	    if (empty($form['language']['useBrowserPref'])) {
-		$form['language']['useBrowserPref'] = '0';
-	    } else {
-		$form['language']['useBrowserPref'] = '1';
-	    }
 	}
 
 	if (isset($form['action']['emailTest'])) {
@@ -133,10 +127,9 @@ class AdminCoreController extends GalleryController {
 			   'default.orderBy',
 			   'default.orderDirection',
 			   'default.theme',
-			   'default.language',
-			   'language.useBrowserPref',
 			   'session.lifetime',
 			   'session.inactivityTimeout',
+			   'session.siteAdministrationTimeout',
 			   'misc.markup',
 			   'smtp.host',
 			   'smtp.from',
@@ -230,10 +223,9 @@ class AdminCoreView extends GalleryView {
 			   'permissions.file',
 			   'exec.beNice',
 			   'exec.expectedStatus',
-			   'default.language',
-			   'language.useBrowserPref',
 			   'session.lifetime',
 			   'session.inactivityTimeout',
+			   'session.siteAdministrationTimeout',
 			   'misc.markup',
 			   'smtp.host',
 			   'smtp.from',
@@ -262,9 +254,6 @@ class AdminCoreView extends GalleryView {
 	    $form['emailTest']['to'] = '';
 	}
 
-	/* Radio button handling */
-	$form['language']['useBrowserPref'] = (int)!empty($form['language']['useBrowserPref']);
-
 	list ($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
 	if ($ret) {
 	    return array($ret, null);
@@ -273,20 +262,6 @@ class AdminCoreView extends GalleryView {
 	$platform =& $gallery->getPlatform();
 	$translator =& $gallery->getTranslator();
 	$AdminCore = $can = array();
-
-	if ($translator->canTranslate()) {
-	    $can['translate'] = true;
-
-	    /* Set up our language selection list */
-	    $AdminCore['languageList'] = array();
-	    $supportedLanguages = $translator->getSupportedLanguages();
-	    foreach ($supportedLanguages as $language => $countryList) {
-		foreach ($countryList as $country => $languageData) {
-		    $AdminCore['languageList'][$language . '_' . $country] =
-			$languageData['description'];
-		}
-	    }
-	}
 
 	/* Set up our session time lists */
 	$sessionTimeList = array();

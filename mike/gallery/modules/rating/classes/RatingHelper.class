@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Rating
  * @subpackage Classes
  * @author  Don Seiler <don@seiler.us>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class RatingHelper {
@@ -33,7 +33,7 @@ class RatingHelper {
      *
      * @param int $itemIds GalleryItem id
      * @param int $userId User id to fetch rating of
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array  double  latest average rating
      *                      int     count of total ratings
      */
@@ -54,7 +54,8 @@ class RatingHelper {
 		    'rating' => GalleryUtilities::roundToString($rating, 3),
 		    'votes' => (int)$result[2],
 		    'averagePercent' => GalleryUtilities::roundToString(($rating * 100 / 5), 3),
-		    'stars' => round($rating * 2)
+		    'stars' => round($rating * 2),
+		    'userRating' => 'N/A', 'userStars' => 0
 		    );
 
 	    if ($rating == 0) {
@@ -62,12 +63,11 @@ class RatingHelper {
 	    }
 	}
 
-	/* Set defaults if a requested ID isn't found. */
+	/* Set defaults if a requested ID isn't found */
 	foreach ($itemIds as $itemId) {
 	    if (!isset($data[$itemId])) {
 		$data[$itemId] = array('itemId' => $itemId, 'rating' => 0, 'votes' => 0,
-				       'userRating' => 'N/A', 'userStars' => 0, 'stars' => 0,
-				       'averagePercent' => 0);
+		    'userRating' => 'N/A', 'userStars' => 0, 'stars' => 0, 'averagePercent' => 0);
 	    }
 	}
 
@@ -119,7 +119,7 @@ class RatingHelper {
      * @param int $itemId GalleryItem id
      * @param int $rating Rating score
      * @param int $userId
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array  double  new avg rating for itemId
      *                      int     total votes for itemId
      */
@@ -133,7 +133,7 @@ class RatingHelper {
 	}
 
 	/* Make sure the item really exists */
-	list ($ret, $entity) = GalleryCoreApi::loadEntitiesById($itemId);
+	list ($ret, $entity) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 	if ($ret) {
 	    return array($ret, null);
 	}

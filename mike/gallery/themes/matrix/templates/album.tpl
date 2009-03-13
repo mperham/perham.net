@@ -1,8 +1,6 @@
 {*
- * $Revision: 15690 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 16349 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <table width="100%" cellspacing="0" cellpadding="0">
   <tr valign="top">
@@ -10,17 +8,19 @@
     <td id="gsSidebarCol">
       {g->theme include="sidebar.tpl"}
     </td>
-    <script type="text/javascript">
-      {* hide the sidebar if there's nothing in it *}
-      // <![CDATA[
-      var el = document.getElementById("gsSidebarCol");
-      var text = el.innerText;  // IE
-      if (!text) text = el.textContent; // Firefox
-      if (!text || !text.match(/\S/)) el.style.display = 'none';
-      // ]]>
-    </script>
     {/if}
     <td>
+      {if !empty($theme.params.sidebarBlocks)}
+      <script type="text/javascript">
+         {* hide the sidebar if there's nothing in it *}
+         // <![CDATA[
+         var el = document.getElementById("gsSidebarCol");
+         var text = el.innerText;  // IE
+         if (!text) text = el.textContent; // Firefox
+         if (!text || !text.match(/\S/)) el.style.display = 'none';
+         // ]]>
+      </script>
+      {/if}
       <div id="gsContent" class="gcBorder1">
         <div class="gbBlock gcBackground1">
           <table style="width: 100%">
@@ -122,7 +122,7 @@
 		  {if $child.canContainChildren && (!isset($theme.params.albumFrame)
 		   || $theme.params.albumFrame == $theme.params.itemFrame)}
 		    {* Add prefix for albums unless imageframe will differentiate *}
-		    {g->text text="%s" arg1=$child.title|markup}
+		    {g->text text="Album: %s" arg1=$child.title|markup}
 		  {else}
 		    {$child.title|markup}
 		  {/if}

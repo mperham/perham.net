@@ -1,7 +1,7 @@
-# $Id: eu.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: eu.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,21 +16,21 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
-# Piarres Beobide <pi@beobide.net>, 2005.
-#
+# Piarres Beobide <pi@beobide.net>, 2005, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-10-30 22:52+0100\n"
-"PO-Revision-Date: 2006-05-22 15:19+0200\n"
-"Last-Translator: \n"
-"Language-Team:  <eu@li.org>\n"
+"PO-Revision-Date: 2007-06-26 11:44+0200\n"
+"Last-Translator: Piarres Beobide <pi@beobide.net>\n"
+"Language-Team: Euskara <Librezale@librezale.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.2\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Bookmarks: -1,-1,-1,38,-1,-1,-1,-1,-1,-1\n"
 
 msgid "Unknown"
 msgstr "Ezezaguna"
@@ -72,16 +72,6 @@ msgid "Create Config File"
 msgstr "Konfigurazio Fitxategia Sortu"
 
 #, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Ezin da zure %s direktorioko <b>config.php</b> fitxategia idatzi.   Aldatu fitxategi horren "
-"baimenak.  Unix bat erabiltzen ari bazara <i>chmod 666 config.php</i> egin dezakezu hau "
-"konpontzeko."
-
-#, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "Config.php fitxategirik ez dago zure %s direktorioan"
 
@@ -112,6 +102,10 @@ msgid "You must have the Oracle OCI8 PHP module installed"
 msgstr "Oracle OCI8 PHP modulua instalaturik izan behar duzu"
 
 msgid "You must have the Component Object Model(COM) PHP module installed"
+msgstr "Osagai Objektu Modelo (COM) PHP modulua instalaturik izan behar duzu"
+
+#, fuzzy
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
 msgstr "Osagai Objektu Modelo (COM) PHP modulua instalaturik izan behar duzu"
 
 #, c-format
@@ -217,14 +211,18 @@ msgstr "PostgreSQL v7.x eta berriagoa"
 msgid "Oracle (9i and newer)"
 msgstr "Oracle (9i eta berriagoak)"
 
+#, fuzzy
 msgid "IBM DB2 (v9.x and newer)"
-msgstr "IBM DB2 (v9.x eta berriagoak)"
+msgstr "IBM DB2 (8.2 eta berriagoak)"
+
+msgid "Microsoft SQL Server 2005 and newer"
+msgstr "Microsoft SQL Zerbitzari 2005 eta berriagoa"
+
+msgid "SQLite v3.x (Experimental!)"
+msgstr ""
 
 #, fuzzy
-msgid "Microsoft SQL Server 2005 and newer"
-msgstr "PostgreSQL v7.x eta berriagoa"
-
-msgid "Unknown DB type or no known tables information."
+msgid "Unknown database type or no known tables information."
 msgstr "DB mota ezezaguna edo ez dira taula argibideak ezagutzen."
 
 #, c-format
@@ -235,16 +233,18 @@ msgstr "Ezin da \"%s\"-ren antzeko taula aurrizki erabili gabekorik aurkitu."
 msgid "Could not open schema file: \"%s\"."
 msgstr "Ezin da eskema fitxategia aurkitu: \"%s\"."
 
+#, fuzzy
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "DB proba sekuentzia sortzerakoan huts egin du.Begiratu itzulitako errorea eta README.html "
 "fitxategia baimen falta eta datu base garbitzeari buruzko argibide gehiagorako."
 
+#, fuzzy
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "DB proba sekuentziak huts egin du.Begiratu itzulitako errore mezua eta README.html "
 "fitxategia baimen falta eta datu base garbitzeari buruzko argibide gehiagorako."
@@ -256,8 +256,8 @@ msgid ""
 "Check the returned error message and README.html for missing privileges and clean up the "
 "database."
 msgstr ""
-"Markatu errorea mezua eta README errepikatu arte eta gora.Begiratu itzulitako errore mezua "
-"eta README.html baimen eza eta datubase garbiketari buruz argibide gehiagorako."
+"Begiratu itzulitako errore mezua eta README.html baimen eza eta datubase garbiketari buruz "
+"argibide gehiagorako."
 
 msgid "Finish Installation"
 msgstr "Instalazioa amaitu"
@@ -289,9 +289,8 @@ msgstr "Ezin da datubase transakzioa egin"
 msgid "Core module is only partially installed."
 msgstr "Muin modulua erdizka instalaturik dago."
 
-#, fuzzy
 msgid "Install Plugins"
-msgstr "Instalatu Urratsak"
+msgstr "Pluginak Instalatu "
 
 msgid "Unable to initialize our Gallery session"
 msgstr "Ezin izan da Gallery saioa abiarazi"
@@ -332,8 +331,8 @@ msgstr "Sistema Egiaztapenak"
 msgid "Performing system checks"
 msgstr "Sistema egiaztapenak egiten"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP bertsioa >= 4.3.0 edo >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP bertsioa &gt;= 4.3.0 edo &gt;= 5.0.4"
 
 #, c-format
 msgid ""
@@ -343,7 +342,7 @@ msgid ""
 msgstr ""
 "Errorea: Gallery 2-rentzat beharrezkoa da PHP 4.3.0 edo berriagoa edo 5.0.4 bertsio edo "
 "berriagoa. Instalaturik duzun PHP bertsioa %s da. Harremanetan ipini web zerbitzari "
-"kudeatzailearekin %sPHP website%s-n aurki dezaken eguneraketa eskatzeko."
+"kudeatzailearekin %sPHP webgunea%s-n aurki dezaken eguneraketa eskatzeko."
 
 msgid "PHP Version"
 msgstr "PHP Bertsioa"
@@ -415,17 +414,17 @@ msgstr ""
 "batzuetan orri zuri bat itzuliko du) datu galera aukerak asko handituz."
 
 msgid "Filesystem Operations"
-msgstr ""
+msgstr "Fitxategi sistema Ekintzak"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Essential filesystem operations are disabled in your PHP by the "
 "<b>disabled_functions</b> parameter in php.ini. You must allow these functions before "
 "Gallery will run. These functions are missing: %s."
 msgstr ""
-"Abisua: PHP putenv() funtzioa php.ini fitxategiko <b>disabled_functions</b> parametroaz "
-"ezgaiturik dago. Galeriak ezarpen hauekin funtziona dezake, baina kasu bereizi batzuetan "
-"honek Gallery ingelesa ez den beste hizkuntzetan ezin erabili izana eragin dezake."
+"Abisua: Beharrezko fitxategi sistema ekintzak php.ini fitxategiko <b>disabled_functions</b> "
+"parametroaz ezgaiturik dago. Funtzio hauek gaitu behar dituzu Galeria abiarazteko. Funtzio "
+"hauek falta dira: %s."
 
 msgid "Memory limit"
 msgstr "Memoria muga"
@@ -457,7 +456,7 @@ msgstr ""
 msgid "Maximum upload size"
 msgstr "Gehienezko igoera tamaina"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Your PHP is configured to limit the size of file uploads to %sb "
 "(<b>upload_max_filesize</b> parameter in php.ini). You should raise this limit to allow "
@@ -515,19 +514,18 @@ msgstr "Zend bateragarritasun modua"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Abisua: Zure PHP Zend ze1_compatibility_mode-az konfiguraturik dago, honek PHP apur dezake.  "
-"<a href=\"%s\">Hemen </a> klikatu zure PHP instalazio probatzeko.  \"LORTUA\" ikusiz gero "
-"zure PHP-a ondo dago.  Errore bat jaso edo erantzunik jaso ezean jarraitu aurretik "
-"ze1_compatibility_mode ezgaitu beharko zenuke."
+"%sHemen %s klikatu zure PHP instalazio probatzeko.  \"LORTUA\" ikusiz gero zure PHP-a ondo "
+"dago.  Errore bat jaso edo erantzunik jaso ezean jarraitu aurretik ze1_compatibility_mode "
+"ezgaitu beharko zenuke."
 
 msgid "putenv() allowed"
 msgstr "putenv() onarturik"
 
-#, fuzzy
 msgid ""
 "Warning: The putenv() function is disabled in your PHP by the <b>disabled_functions</b> "
 "parameter in php.ini.  Gallery can function with this setting, but on some rare systems "
@@ -561,11 +559,11 @@ msgid "Test skipped due to other errors."
 msgstr "Proba beste errore batzugatik alde batetara utzia."
 
 msgid "Theme available"
-msgstr ""
+msgstr "Gai erabilgarria"
 
 #, c-format
 msgid "Error: There must be at least one theme in the %s folder!"
-msgstr ""
+msgstr "Errorea: Behintzat gai bat egon behar da %s karpetan!"
 
 msgid "Manifest missing or inaccessible."
 msgstr "Manifestua falta da edo ezin da eskuratu."
@@ -582,7 +580,7 @@ msgid ""
 "can add additional users later."
 msgstr ""
 "Galeria bakoitzak behintzat elementu guztiak ikusi/eraldatzeko baimena duen kudeatzaile bai "
-"izan behar du. Hautatu zure kudeaketa kontuarentzat erabiltzaile-izen eta pasahitz bat. "
+"izan behar du. Hautatu zure kudeaketa kontuarentzat erabiltzaile izen eta pasahitz bat. "
 "Erabiltzaile gehiago beranduago gehitu ditzakezu."
 
 msgid "Admin username"
@@ -699,6 +697,18 @@ msgstr "Konfigurazio fitxategi bat sortu"
 
 #, c-format
 msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Ezin da zure %s direktorioko <b>config.php</b> fitxategia idatzi.   Aldatu fitxategi horren "
+"baimenak.  Unix bat erabiltzen ari bazara <i>chmod 666 config.php</i> egin dezakezu hau "
+"konpontzeko. Bestela %sconfig.php%s fitxategia deskargatu eta %s direktorioan duzun config."
+"php-rengatik ordeztu dezakezu zure kabuz."
+
+#, c-format
+msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
 "b> in your <b>%s</b> directory.  This is a very important file that gives Gallery all the "
 "information that it needs to operate.  After we create it, you can read through this file "
@@ -714,17 +724,22 @@ msgid ""
 "Before we can proceed, you should create a file in your <b>%s</b> directory called <i>config."
 "php</i>.  You must make sure that the webserver will be able to write to it."
 msgstr ""
+"Aurrera jarraitu ahal izateko <b>%s</b> direktorioan <i>config.php</i> izeneko fitxategi bat "
+"sortu behar duzu. Web zerbitzariak fitxategi horretan idazteko baimenak dituela ziurtatu "
+"behar zara."
 
 msgid "Unix (with shell access)"
 msgstr "Unix (shell sarrerarekin)"
 
 msgid "On Windows, you shouldn't have to do anything special."
-msgstr ""
+msgstr "Windows-pean ez duzu ezer bereizirik egin beharrik."
 
 msgid ""
 "When you've created this file and set the permissions properly, you can proceed.  If there's "
 "a problem, we'll tell you what to fix."
 msgstr ""
+"Fitxategi hori sortu eta beharrezko baimenak ezarri ondoren, aurrera jarraitu dezakezu, "
+"arazorik egonez gero nola konpondu esango dizugu."
 
 msgid "Create config file"
 msgstr "Konfigurazio fitxategia sortu"
@@ -752,7 +767,7 @@ msgid ""
 msgstr ""
 "Mesedez zure datubase mota hautatu eta egiaztapen informazioa idatzi.  Instalatzaileak ez du "
 "datubasea sortuko beraz zuk datubase bat eskuz sortu eta izena hemen idatzi behar duzu.  "
-"Gaqllery dagoeneko taulak dituen datubase batetan instalatzen ari bazara, taula eta zutabe "
+"Gallery dagoeneko taulak dituen datubase batetan instalatzen ari bazara, taula eta zutabe "
 "aurrizkiek Gallery datuak dituzun besteetatik bereizirik mantentzen lagunduko du."
 
 msgid ""
@@ -766,16 +781,22 @@ msgid "Database type:"
 msgstr "Datubase mota:"
 
 msgid "DB Hostname:"
-msgstr "DB Ostalari-izena:"
+msgstr "DB Ostalari izena:"
 
 msgid "DB Username:"
-msgstr "DB Erabiltzaile-izena:"
+msgstr "DB Erabiltzaile izena:"
 
 msgid "DB Password:"
 msgstr "DB Pasahitza:"
 
 msgid "DB Name:"
 msgstr "DB Izena:"
+
+msgid "DB Schema:"
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
 
 msgid "Table Prefix:"
 msgstr "Taula Aurrizkia:"
@@ -803,18 +824,10 @@ msgid ""
 "it's time to upload some photos!"
 msgstr ""
 "Zorionak! Gallery 2 instalazioa egoki amaitu da! Ikusten... ez zein ain zaila, edo bai? "
-"Orain  argazki batzu igotzeko unea da!"
+"Orain  argazki batzuk igotzeko unea da!"
 
 msgid "Go to my Gallery!"
 msgstr "Nire Galeriara joan!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"Orain zure galeriara joan nahiko duzu.  Nabigatzailean %s direktorioko %smain.php%s URL-a "
-"ipini ezazu."
 
 msgid "Installer Help"
 msgstr "Instalazio Laguntza"
@@ -841,8 +854,8 @@ msgid ""
 "steps)."
 msgstr ""
 "Sistema arakatze urratsean ez badaude abisu edo errorerik, zure biltegiratze direktorioa "
-"uztu, datubase taulak ezabatu eta instalazioa bigarren aldi batez egin ezazu (urrats guztiak "
-"berregin)."
+"hustu, datubase taulak ezabatu eta instalazioa bigarren aldi batez egin ezazu (urrats "
+"guztiak berregin)."
 
 #, c-format
 msgid "Please visit the %sG2 FAQ%s and read the %sKnown issues section of the Readme%s."
@@ -872,8 +885,8 @@ msgid ""
 "point, you should continue with the installer and add in some of the optional modules so "
 "that you can get the right set of features that you want for your Gallery installation."
 msgstr ""
-"Gallery muina behar bezala instalatu da.  Naiz eta puntu honetan danak behar bezala "
-"funtzionatzen duen, instalatzailearekin jarraitu eta aukeran dauden moduluetako batzu "
+"Gallery muina behar bezala instalatu da.  Naiz eta puntu honetan denak behar bezala "
+"funtzionatzen duen, instalatzailearekin jarraitu eta aukeran dauden moduluetako batzuk "
 "instalatu beharko zenituzke erabili nahi dituzun ezaugarrien arabera."
 
 msgid ""
@@ -884,8 +897,8 @@ msgid ""
 "ones you choose here on the Site Administration page, so any decision you make here is not "
 "permanent."
 msgstr ""
-"Hurrengo modulu hauek instalatu eta gaitu daitezke.  Behintzat tresna-joko grafiko bat "
-"instalatu beharko zenuke, bestela GAllery ez da zure irudietako argazkitxoak egiteko gai "
+"Hurrengo modulu hauek instalatu eta gaitu daitezke.  Behintzat tresnajoko grafiko bat "
+"instalatu beharko zenuke, bestela Gallery ez da zure irudietako argazkitxoak egiteko gai "
 "izango.  Sistema gehienetan instalazio automatikoak beharrezko osagaiak instalatuko ditu.  "
 "Hala ere kasu batzuetan huts egiten du.  Zuk beti izango duzu moduluak gaitu edo ezgaitzeko "
 "aukera bai hemen bai Gune Kudeaketa orrialdean, beraz hemen hartutako erabakiak beranduago "
@@ -967,7 +980,7 @@ msgid ""
 "be safe to ignore these."
 msgstr ""
 "Oharra: Zu SVN-ko Gallery erabiltzen ari zara, beraz azken aldian ezabaturiko fitxategi "
-"batzu agertu daitezke.  Abisuari kasu ez egitea segurua izan daiteke."
+"batzuk agertu daitezke.  Abisuari kasu ez egitea segurua izan daiteke."
 
 #, c-format
 msgid "Modified files (%d)"
@@ -996,16 +1009,13 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "Erroreak gertatu dira. Mesedez begiratu beheragoko mezuak."
 
-msgid "Please select the installation type"
-msgstr "Mesedez instalazio mota bat hautatu ezazu"
-
 msgid "Standard installation"
 msgstr "Instalazio arrunta"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 "Hau da lehenetsiriko instalazio mota. Aukeratu instalazio mota hau %s direktorioan %s URL-an "
 "ikusiko den galeria berri bat instalatu nahi izan ezkero."
@@ -1013,32 +1023,20 @@ msgstr ""
 msgid "Multisite installation"
 msgstr "Gune anitzeko instalazioa"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Gallery kodearen instalazio bakar batez banaturiko gune anitz onartzen ditu. Aukeratu "
-"instalazio mota hau Gallery berri bat zerbitzari berdinean baina beste bide, domeinu edo URL "
-"domeinu batetan instalatu nahi izan ezkero."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"Gune anitzek ez dute beraien artean irudirik, erabiltzailerik ez beste ezer partekatzen.  "
-"Bakoitzak bere datubase eta biltegiratze direktorio berezia behar ditu.  Gune anitzeko "
-"instalazioari buruz informazio edo argibide gehiagorako jo %s orrialdera."
 
 msgid "You must enter a directory"
 msgstr "Direktorio bat idatzi behar duzu"
 
+#, fuzzy, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
 "Zuk emandako direktorioa iturburu direktorioa da. Galeria bat iturburu direktorioan "
 "instalatu nahi izan ezkero, hautatu instalazio estandar mota. Gune anitzeko gune bat "
@@ -1050,12 +1048,20 @@ msgid ""
 "directories.  You must choose a directory under one of these, or you must modify the "
 "<b>open_basedir</b> setting in your PHP configuration to allow a new directory."
 msgstr ""
+"Zuk emandako direktorioa edo ez dago edo zure web zerbitzariaren konfigurazioan galerazirik "
+"dago.  Zure web zerbitzaria hurrengo direktorioetan bakarrik sartzeko konfiguraturik dago.  "
+"Hauen azpiko direktorioa bt hautatu dezakezu edo bestela PHP  konfigurazioan "
+"<b>open_basedir</b> ezarpena aldatu beharduzu direktorio berria onartzeko."
 
+#, fuzzy
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
+"Gune anitzetako instalazioa beste ostalari birtual batetan badago, sistema kudeatzailearekin "
+"harremanetan ipini eta zure ostalari birtualak bestea eskuratu ahal izateko  zure "
+"<b>open_basedir</b> ezarpena aldatzeko eskatu."
 
 msgid "The directory you entered does not exist"
 msgstr "Emandako direktorioa ez da aurkitzen"
@@ -1072,24 +1078,17 @@ msgstr ""
 "Ezin dira gune anitz fitxategiak sortu. Ziurtatu beheanzerrendaturiko fitxategiak "
 "idazgarriak direla."
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Gune anitz guztiak kode errepositorio nagusi honetatik (iturburua) instalatuko dira."
-
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
 msgstr ""
-"Gune anitz gune berriaren direktorioa idatzi behean. Bidea iturburu instalazio bidearen "
-"ezberdina izan behar da:"
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
+msgid "You must provide the URL for your new multisite"
 msgstr ""
-"Direktorioa zure web zerbitzari/php erabiltzailearentzat idazgarria izan behar edo honako "
-"fitxategi idazgarri hauek izan behar ditu:"
 
-msgid "Select Directory"
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
+msgstr ""
+
+#, fuzzy
+msgid "Select Directory and URL"
 msgstr "Hautatu direktorioa"
 
 msgid "Multisite directory setup successfully."
@@ -1154,21 +1153,28 @@ msgid ""
 "directory outside of the %sdocument root%s directory or add a random string to the end of "
 "the directory name (e.g. %s)."
 msgstr ""
+" Gallery-k direktorio bat behar du irudiak biltegiratzeko. Guk hautaturiko direktorioak "
+"funtziona dezake baina kokapena edo duen izenak ez du segurtasun altuena ematen. Edo hautatu "
+"beste direktorio bat %sdokumento erro%stik kanpo edo ausazko kate bat gehitu diretorioari "
+"izenaren amaieran (adibidez %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For maximum security you should pick a directory that is not %sweb accessible%s. If this is "
 "not possible, specify a randomized name for this directory."
 msgstr ""
-"Segurtasuna handitzeko web bidez eskuragarri ez den direktorioa bat hautatu Beharko zenuke."
+"Segurtasuna handitzeko %sweb bidez eskuragarri%s ez den direktorioa bat hautatu Beharko "
+"zenuke. Hau posible ez bada ausazko izen bat ezarri direktorio honi."
 
 msgid ""
 "If you choose a randomized name or prefer to stick with the specified directory, please "
 "confirm your choice."
 msgstr ""
+"Ausazko izen bat hautatu baduzu edo ezarritako direktorioarekin jarraitu nahi izanez gero, "
+"berretsi zure aukera."
 
 msgid "Yes, please omit the security check:"
-msgstr ""
+msgstr "Bai, mesedez ezikusia egin segurtasun proba hau:"
 
 msgid ""
 "This is a multisite installation. Remember that each multisite requires its own storage "
@@ -1186,20 +1192,22 @@ msgstr ""
 "saiatu gara.  Baina zure g2data direktorioaren bidea ezagutzeko arazorik izan ezkero, testu "
 "kutxan bideak sartuaz proba ezazu eta zein eratan betetzea eskaintzen zaizun begiratu."
 
+msgid "Do not use the installation directory for storage"
+msgstr ""
+
 msgid "The directory you entered is read only"
 msgstr "Ezarritako direktorioa irakurketarako bakarrik da"
 
 msgid "There was an error creating the directory structure within the storage directory."
 msgstr "Errore bat gertatu da biltegiratze direktorio barneko egitura sortzerakoan."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Your storage directory is %sweb accessible%s."
-msgstr "Biltegiratze direktorioa behar bezala ezarri da."
+msgstr "Biltegiratze direktorioa %sweb bidez eskuragarria%s da."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to verify that the storage directory is not %sweb accessible%s."
-msgstr ""
-"Segurtasuna handitzeko web bidez eskuragarri ez den direktorioa bat hautatu Beharko zenuke."
+msgstr "Ezin da egiaztatu biltegiratze direktorioa ez bat da %sweb bidez eskuragarria%s"
 
 msgid "Directory path:"
 msgstr "Direktorio bidea:"
@@ -1220,7 +1228,6 @@ msgstr ""
 msgid "Unix (with ftp access)"
 msgstr "Unix (ftp sarrerarekin)"
 
-#, fuzzy
 msgid ""
 "Note that ftp servers and clients vary so these instructions may not work for you. Consult "
 "the manual for your FTP client or talk to a system administrator for help with this if you "
@@ -1228,7 +1235,7 @@ msgid ""
 msgstr ""
 "Kontutan izan ftp zerbitzari eta bezero aginduak aldatu egin daitezkeela kasu batetatik "
 "bestera eta agian agindu hauek ez dira zure kasuan baliagarriak. Zure fTP bezeroaren manuala "
-"begira ezazu edo sistema kudeatzaileari galde iezaiozu arazorik izan ezkero"
+"begira ezazu edo sistema kudeatzaileari galde iezaiozu arazorik izan ezkero."
 
 msgid ""
 "In some web hosting environments, the paths that you see in the shell or via FTP are not the "
@@ -1238,7 +1245,7 @@ msgid ""
 msgstr ""
 "Zenbait zerbitzari ingurunetan, shell bidez edo ftp bidez ikusten diren bideak ez dira PHP "
 "inguruneak ikusten dituen berdinak.  Zure datu direktorioari benetako bidea jakin ahal "
-"izateko, behean dagoen kodea duen <b>dir.php</b> PHP skript-a sortu eta zure datu "
+"izateko, behean dagoen kodea duen <b>dir.php</b> PHP script-a sortu eta zure datu "
 "direktorioan ipini ezazu."
 
 #, c-format
@@ -1246,7 +1253,7 @@ msgid ""
 "then figure out the URL to dir.php and open it in your web browser (eg, %s).  This will tell "
 "you the exact path to enter here."
 msgstr ""
-"orduan zure nabegadorean dir.php helbidera bidali (adib %s). Hau da zehazki hemen idatzi "
+"orduan zure nabigatzailean dir.php helbidera bidali (adib %s). Hau da zehazki hemen idatzi "
 "behar duzun bidea."
 
 msgid ""
@@ -1256,7 +1263,7 @@ msgid ""
 "update the path here accordingly."
 msgstr ""
 "<b> Oharra</b>: Honek zure datu direktorioa web bidez eskuragarri izatea eskatzen du, hau "
-"irudi suebakia salto egin dezakelako ez da gomendatzen.  Bein bidea era honetara jakin "
+"irudi suebakia salto egin dezakelako ez da gomendatzen.  Behin bidea era honetara jakin "
 "duzula, datu direktorioa web bidez eskuragarri ez den leku batetara aldatzea eta orduan "
 "bidea hara mugitzea gomendatzen dugu."
 
@@ -1331,8 +1338,8 @@ msgid ""
 "and make changes at any time. Please read the %sInstaller Help File%s before proceeding."
 msgstr ""
 "Gallery 2 zerbitzarian instalatzeko %d urrats bete behar dira. Instalatzaile honek 11 urrats "
-"horietan gidatu eta Gallery behar bezala martxan ipini arte beste urrats batzu egin behar "
-"direnean laguntza eskeiniko dizu. Urrats bat betetzean, edozein momentuan atzera jo eta nahi "
+"horietan gidatu eta Gallery behar bezala martxan ipini arte beste urrats batzuk egin behar "
+"direnean laguntza eskainiko dizu. Urrats bat betetzean, edozein momentuan atzera jo eta nahi "
 "dituzun aldaketak egin ahal izango dituzu. Mesedez irakurri %sInstaller Help File%s "
 "(Ingelesez) jarraitu aurretik."
 
@@ -1345,59 +1352,48 @@ msgstr "Joan"
 msgid "Begin Installation&raquo;"
 msgstr "Instalazio hasi&raquo;"
 
-#, fuzzy
-#~ msgid "MSSQL (2005 and newer)"
-#~ msgstr "MySQL (3.23.34a bertsio eta berriagoak)"
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "Orain zure galeriara joan nahiko duzu.  Nabigatzailean %s direktorioko %smain.php%s URL-a "
+#~ "ipini ezazu."
 
-#~ msgid "Installed Gallery Core successfully"
-#~ msgstr "Gallery Muina egoki instalatu da"
+#~ msgid "Please select the installation type"
+#~ msgstr "Mesedez instalazio mota bat hautatu ezazu"
 
 #~ msgid ""
-#~ "Congratulations, we've successfully installed the Gallery framework.  However, most of "
-#~ "the really cool features from Gallery come from additional modules that you can install "
-#~ "and configure.  The next step will take you through the process of selecting modules to "
-#~ "install so that you can tune Gallery to do exactly what you want."
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
 #~ msgstr ""
-#~ "Zorionak, Gallery ingurunea behar bezala instalatu duzu.  Hala ere Gallery-ren ezaugarri "
-#~ "erabilgarrienak orain instalatu eta konfiguratu ditzakezun modulu gehigarrien bidez "
-#~ "instalatzen dira.  Hurrengo urratsak Gallery zehazki zuk nahi duzun portamoldea izan "
-#~ "dezan moduluak instalatzeko aukera emango dizu."
-
-#~ msgid "MSSQL (Experimental!)"
-#~ msgstr "MSSQL (Esperimentala!)"
+#~ "Gallery kodearen instalazio bakar batez banaturiko gune anitz onartzen ditu. Aukeratu "
+#~ "instalazio mota hau Gallery berri bat zerbitzari berdinean baina beste bide, domeinu edo "
+#~ "URL domeinu batetan instalatu nahi izan ezkero."
 
 #~ msgid ""
-#~ "Gallery needs a directory to store your images. The directory we chose for you will work, "
-#~ "but is web accessible."
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
 #~ msgstr ""
-#~ "Gallery-k direktorioa bat behar du zure irudiak biltegiratzeko. Instalatzaileak "
-#~ "hautatutako direktorioak funtzionatuko du baina web bidez eskuragarria da."
+#~ "Gune anitzek ez dute beraien artean irudirik, erabiltzailerik ez beste ezer partekatzen.  "
+#~ "Bakoitzak bere datubase eta biltegiratze direktorio berezia behar ditu.  Gune anitzeko "
+#~ "instalazioari buruz informazio edo argibide gehiagorako jo %s orrialdera."
 
-#~ msgid "mkdir %s"
-#~ msgstr "mkdir %s"
-
-#~ msgid "chmod 777 %s"
-#~ msgstr "chmod 777 %s"
-
-#~ msgid "cd %s"
-#~ msgstr "cd %s"
-
-#~ msgid "Install More Modules"
-#~ msgstr "Modulu gehiago instalatu"
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr ""
+#~ "Gune anitz guztiak kode errepositorio nagusi honetatik (iturburua) instalatuko dira."
 
 #~ msgid ""
-#~ "Before we can proceed, you should create a file in your <b>%s</b> directory called "
-#~ "<i>config.php</i>.  You must make sure that the webserver will be able to write to it.  "
-#~ "If you're on unix, try doing <i>chmod 666 config.php</i>.  On Windows, you shouldn't have "
-#~ "to do anything special.  When you've created this file and set the permissions properly, "
-#~ "you can proceed.  If there's a problem, we'll tell you what to fix."
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
 #~ msgstr ""
-#~ "Jarraitu aurretik <b>%s</b> direktorioan <i>config.php</i> izeneko fitxategi bat sortu "
-#~ "behar duzu. Web zerbitzaria fitxategi horretan idazteko gai dela ziurtatu behar duzu.  "
-#~ "Unix makina batetan bazaude  <i>chmod 666 config.php</i> egiten saiatu.  Windowspean ez "
-#~ "zenuke ezer bereizirik egin beharko.  Bein fitxategi hori sortu eta behar diren baimenak "
-#~ "ezarri dituzula, aurrera jarraitu dezakezu.  Arazorik aurkitu ezkero nola konpondu esango "
-#~ "dizugu."
+#~ "Gune anitz gune berriaren direktorioa idatzi behean. Bidea iturburu instalazio bidearen "
+#~ "ezberdina izan behar da:"
 
-#~ msgid "Install Other Modules"
-#~ msgstr "Modulu gehiago instalatu"
+#~ msgid ""
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
+#~ msgstr ""
+#~ "Direktorioa zure web zerbitzari/php erabiltzailearentzat idazgarria izan behar edo honako "
+#~ "fitxategi idazgarri hauek izan behar ditu:"

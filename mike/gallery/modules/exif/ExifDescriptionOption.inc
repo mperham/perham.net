@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
  * @author Elliot Shepherd <elliot@jarofworms.com>
  * @author Georg Rehfeld <rehfeld@georg-rehfeld.de>
  * @author Jozsef R.Nagy <jozsef.rnagy@site.hu>
- * @version $Revision: 15926 $
+ * @version $Revision: 17580 $
  */
 class ExifDescriptionOption extends ItemAddOption {
 
@@ -82,15 +82,30 @@ class ExifDescriptionOption extends ItemAddOption {
 	    $batchSize = 100;
 	    do {
 		$currentItems = array_splice($itemsInBatches, 0, $batchSize);
+
+		$currentItemIds = array();
+		foreach ($currentItems as $item) {
+		    $currentItemIds[] = $item->getId();
+		}
+
+		list ($ret, $lockId) = GalleryCoreApi::acquireWriteLock($currentItemIds);
+		if ($ret) {
+		    return array($ret, null, null);
+		}
+
+		list ($ret, $exifData) = ExifExtractor::getMetaData($currentItemIds, $needed);
+		if ($ret) {
+		    GalleryCoreApi::releaseLocks($lockId);
+		    return array($ret, null, null);
+		}
+
 		for ($i = 0; $i < count($currentItems); $i++) {
 		    $itemId = $currentItems[$i]->getId();
-
-		    list ($ret, $exifData) = ExifExtractor::getMetaData(array($itemId), $needed);
+		    list ($ret, $currentItems[$i]) = $currentItems[$i]->refresh();
 		    if ($ret) {
+			GalleryCoreApi::releaseLocks($lockId);
 			return array($ret, null, null);
 		    }
-
-		    $mustSave = false;
 
 		    /*
 		     * TODO(xlerb) reconsider, if ExifHelper should be changed to do the
@@ -110,11 +125,9 @@ class ExifDescriptionOption extends ItemAddOption {
 		    if (!empty($itemDescription)) {
 			if ($addOption & EXIF_ITEM_SUMMARY) {
 			    $currentItems[$i]->setSummary($itemDescription);
-			    $mustSave = true;
 			}
 			if ($addOption & EXIF_ITEM_DESCRIPTION) {
 			    $currentItems[$i]->setDescription($itemDescription);
-			    $mustSave = true;
 			}
 		    }
 
@@ -122,18 +135,38 @@ class ExifDescriptionOption extends ItemAddOption {
 			    && !empty($exifData[$itemId]['IPTC/Keywords']['value'])) {
 			$currentItems[$i]->setKeywords(
 				$exifData[$itemId]['IPTC/Keywords']['value']);
-			$mustSave = true;
 		    }
 
 		    if ($addOption & IPTC_ITEM_TITLE
 			    && !empty($exifData[$itemId]['IPTC/ObjectName']['value'])) {
 			$currentItems[$i]->setTitle($exifData[$itemId]['IPTC/ObjectName']['value']);
-			$mustSave = true;
 		    }
 
-		    /* rotate item based on exifdata */
-		    if ($addOption & EXIF_ITEM_ROTATE
-			    && !empty($exifData[$itemId]['Orientation']['value'])) {
+		    if ($currentItems[$i]->isModified()) {
+			$ret = $currentItems[$i]->save();
+			if ($ret) {
+			    GalleryCoreApi::releaseLocks($lockId);
+			    return array($ret, null, null);
+			}
+		    }
+		}
+
+		$ret = GalleryCoreApi::releaseLocks($lockId);
+		if ($ret) {
+		    return array($ret, null, null);
+		}
+
+		/*
+		 * Rotate item based on exifdata in a separate loop because applyToolkitOperation
+		 * does its own write locking.
+		 */
+		if ($addOption & EXIF_ITEM_ROTATE) {
+		    for ($i = 0; $i < count($currentItems); $i++) {
+			$itemId = $currentItems[$i]->getId();
+
+			if (empty($exifData[$itemId]['Orientation']['value'])) {
+			    continue;
+			}
 
 			$orientation = $exifData[$itemId]['Orientation']['value'];
 			$args = array();
@@ -175,35 +208,13 @@ class ExifDescriptionOption extends ItemAddOption {
 				    $operation, $args, $preserveOriginal, $currentItems[$i],
 				    empty($preferred) ? null : $preferred[$itemId]);
 			    if ($ret) {
-				return array($ret, null, null);
+				/* Just write to error log; allow (unrotated) photo to be added */
+				GalleryCoreApi::addEventLogEntry('Gallery Error',
+					'Unable to rotate item ' . $itemId, $ret->getAsText());
 			    }
 			}
 		    }
-
-		    if ($mustSave && empty($args)) {
-			/**
-			 * @TODO This is going to generate errors in a few cases because we're
-			 * not refreshing the item after we lock it.  We really should be locking
-			 * all the items at the top of this loop and releasing them at the bottom,
-			 * but that will conflict with GalleryCoreApi::applyToolkitOperation above
-			 * which also wants to lock the item.  Alternatively, we can buffer up all
-			 * the changes we want to make to the item and then lock it here,
-			 * refresh the item after locking it and then replay the changes here
-			 * before saving.
-			 */
-			list ($ret, $lockId) = GalleryCoreApi::acquireWriteLock($itemId);
-			if ($ret) {
-			    return array($ret, null, null);
-			}
-
-			$ret = $currentItems[$i]->save();
-			GalleryCoreApi::releaseLocks($lockId);
-			if ($ret) {
-			    return array($ret, null, null);
-			}
-		    }
 		}
-
 	    } while (!empty($itemsInBatches));
 	}
 	return array(null, $errors, $warnings);

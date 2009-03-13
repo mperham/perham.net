@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class ItemEditItem extends ItemEditPlugin {
 
@@ -163,7 +163,8 @@ class ItemEditItem extends ItemEditPlugin {
 		    }
 		} else if (isset($thumbnail) && empty($form['thumbnail']['size'])) {
 		    /* Delete the thumbnail */
-		    $ret = GalleryCoreApi::deleteEntityById($thumbnail->getId());
+		    $ret = GalleryCoreApi::deleteEntityById($thumbnail->getId(),
+							    'GalleryDerivative');
 		    if ($ret) {
 			return array($ret, null, null, null);
 		    }
@@ -336,8 +337,9 @@ class ItemEditItem extends ItemEditPlugin {
 		}
 	    }
 	} else if (isset($thumbnail) && $thumbnail->getDerivativeSourceId() != $item->getId()) {
-	    list ($ret, $source) =
-		GalleryCoreApi::loadEntitiesById($thumbnail->getDerivativeSourceId());
+	    list ($ret, $source) = GalleryCoreApi::loadEntitiesById(
+		$thumbnail->getDerivativeSourceId(),
+		array('GalleryFileSystemEntity', 'GalleryDerivative'));
 	    if ($ret) {
 		return array($ret, null, null);
 	    }
@@ -356,7 +358,7 @@ class ItemEditItem extends ItemEditPlugin {
 	}
 
 	$ItemEditItem = array('can' => $can,
-			      'typeName' => $item->itemTypeName());
+		'typeName' => array_merge($item->itemTypeName(), $item->itemTypeName(false)));
 
 	/* The originateTimestamp that we can get from our toolkits */
 	list ($ret, $originationTimestamp) = GalleryCoreApi::fetchOriginationTimestamp($item);

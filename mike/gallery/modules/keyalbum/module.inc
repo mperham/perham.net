@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  *
  * @package KeyAlbum
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 16474 $
+ * @version $Revision: 18172 $
  */
 class KeyAlbumModule extends GalleryModule {
 
@@ -32,11 +32,12 @@ class KeyAlbumModule extends GalleryModule {
 	$this->setId('keyalbum');
 	$this->setName($gallery->i18n('Keyword Albums'));
 	$this->setDescription($gallery->i18n('Dynamic albums based on keyword search'));
-	$this->setVersion('1.0.0.2');
+	$this->setVersion('1.0.6');
+	$this->_templateVersion = 1;
 	$this->setGroup('display', $gallery->i18n('Display'));
 	$this->setCallbacks('getSiteAdminViews|getItemSummaries');
-	$this->setRequiredCoreApi(array(7, 10));
-	$this->setRequiredModuleApi(array(3, 2));
+	$this->setRequiredCoreApi(array(7, 27));
+	$this->setRequiredModuleApi(array(3, 6));
     }
 
     /**
@@ -60,7 +61,17 @@ class KeyAlbumModule extends GalleryModule {
 	if (!isset($params['themeSettingsId'])) {
 	    list ($ret, $entity) =
 		GalleryCoreApi::newFactoryInstance('GalleryEntity', 'GalleryEntity');
-	    $entity->create();
+	    if ($ret) {
+		return $ret;
+	    }
+	    if (!isset($entity)) {
+		return GalleryCoreApi::error(ERROR_MISSING_OBJECT, __FILE__, __LINE__,
+					     'Unable to get a GalleryEntity instance');
+	    }
+	    $ret = $entity->create();
+	    if ($ret) {
+		return $ret;
+	    }
 	    $ret = $entity->save(false);
 	    if ($ret) {
 		return $ret;
@@ -70,7 +81,7 @@ class KeyAlbumModule extends GalleryModule {
 		return $ret;
 	    }
 	}
-	if (!empty($currentVersion) && version_compare($currentVersion, '1.0.0.2', '<')) {
+	if (!empty($currentVersion) && version_compare($currentVersion, '1.0.3', '<')) {
 	    /* Format for keyword data changed; force refresh */
 	    foreach (array_keys($params) as $key) {
 		if (preg_match('/^allKeywords.*\.time$/', $key)) {
@@ -162,7 +173,9 @@ class KeyAlbumModule extends GalleryModule {
 		      'help' => $this->translate('Short URL for Keyword Albums'),
 		      'keywords' => array(
 			  'keyword' => array('pattern' => '([^?/]+)',
-			      'help' => $this->translate('Keyword to use for dynamic album')))
+			      'help' => $this->translate('Keyword to use for dynamic album')),
+			  'page' => array('pattern' => '([0-9]*)',
+			      'help' => $this->translate('Page number in a dynamic album')))
 		    ));
     }
 }

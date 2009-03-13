@@ -1,8 +1,6 @@
 {*
- * $Revision: 15368 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="{$class}">
 {if isset($message)}
@@ -43,7 +41,7 @@
 	{elseif ($setting.type == 'checkbox')}
 	  <input type="checkbox" onclick="changeSetting('{$settingKey}')"
 		 name="{g->formVar var="form[key][$settingKey]"}"
-	   {if !empty($form.key.$settingKey)}checked="checked"{/if}/>
+	   {if !empty($form.key.$settingKey)} checked="checked"{/if}/>
 	{elseif ($setting.type == 'block-list')}
 	    <table>
 	      <tr>
@@ -116,18 +114,18 @@
 	      {foreach from=$ThemeSettingsForm.availableBlocks key=moduleId item=blocks}
 		{foreach from=$blocks key=blockName item=block}
 		  block = bsw_addAvailableBlock("{$setting.key}", "{$moduleId}.{$blockName}",
-			  "{g->text text=$block.description l10Domain="modules_$moduleId"}");
+			  "{g->text text=$block.description l10Domain="modules_$moduleId" forJavascript=true}");
 		  {if !empty($block.vars)}
 		    {foreach from=$block.vars key=varKey item=varInfo}
 		      tmp = new Array();
 		      {if ($varInfo.type == 'choice')}
 			{foreach from=$varInfo.choices key=choiceKey item=choiceValue}
 			  tmp["{$choiceKey}"] = "{g->text text=$choiceValue
-							  l10Domain="modules_$moduleId"}";
+							  l10Domain="modules_$moduleId" forJavascript=true}";
 			{/foreach}
 		      {/if}
 		      block.addVariable("{$varKey}", "{$varInfo.default}",
-			"{g->text text=$varInfo.description l10Domain="modules_$moduleId"}",
+			"{g->text text=$varInfo.description l10Domain="modules_$moduleId" forJavascript=true}",
 			"{$varInfo.type}", tmp);
 		      {if !empty($varInfo.overrides)}
 		      {foreach from=$varInfo.overrides item=override}
@@ -139,8 +137,8 @@
 		{/foreach}
 	      {/foreach}
 	      {* Now initialize the form with the album block values *}
-	      bsw_initAdminForm("{$setting.key}", "{g->text text="Parameter"}",
-						  "{g->text text="Value"}");
+	      bsw_initAdminForm("{$setting.key}", "{g->text text="Parameter" forJavascript=true}",
+						  "{g->text text="Value" forJavascript=true}");
 	      // ]]>
 	    </script>
 	{/if}

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryLockSystem.class');
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 15799 $
+ * @version $Revision: 18067 $
  */
 class FlockLockSystem extends GalleryLockSystem {
 
@@ -116,7 +116,8 @@ class FlockLockSystem extends GalleryLockSystem {
 	    }
 	}
 
-	$lockId = crc32(microtime());
+	list ($ignored, $lockId) = $this->_newLockId();
+
 	$this->_locks[$lockId] = array('lockId' => $lockId, 'type' => $lockType, 'ids' => $locked);
 	return array(null, $lockId);
     }
@@ -206,7 +207,12 @@ class FlockLockSystem extends GalleryLockSystem {
      * @see GalleryLockSystem::_newLockId
      */
     function _newLockId() {
-	return array(null, crc32(microtime()));
+	$lockId = crc32(microtime());
+	if (0 > $lockId) {
+	    /* crc32 generates signed integers (-2^31..2^31-1). Cast to unsigned. */
+	    $lockId = (int)($lockId + 0x080000000);
+	}
+	return array(null, $lockId);
     }
 }
 ?>

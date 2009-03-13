@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +17,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
+require_once(dirname(__FILE__) . '/../../modules/core/classes/GalleryCoreApi.class');
 
 /**
  * Welcome screen
@@ -39,8 +41,20 @@ class WelcomeStep extends InstallStep {
     }
 
     function loadTemplateData(&$templateData) {
+	global $translator;
+
 	$templateData['totalSteps'] = count($GLOBALS['steps']) - 1;
 	$templateData['bodyFile'] = 'Welcome.html';
+	if (isset($translator)) {
+	    list ($supportedLanguages) = $translator->getLanguageData();
+	    $templateData['languages'] = array();
+	    foreach ($supportedLanguages as $lang => $list) {
+		foreach ($list as $country => $data) {
+		    $code = $lang . '_' . $country;
+		    $templateData['languages'][$code] = $data['description'];
+		}
+	    }
+	}
     }
 
     function isOptional() {

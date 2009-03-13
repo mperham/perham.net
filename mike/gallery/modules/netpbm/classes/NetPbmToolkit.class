@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryToolkit.class');
  * @package NetPbm
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class NetPbmToolkit extends GalleryToolkit {
 
@@ -334,8 +334,8 @@ class NetPbmToolkit extends GalleryToolkit {
 		}
 
 		/* Convert from percentages to pixels */
-		$compositeAlignX = (int)($compositeAlignX / 100 * $width);
-		$compositeAlignY = (int)($compositeAlignY / 100 * $height);
+		$compositeAlignX = (int)($compositeAlignX / 100 * ($width - $compositeWidth));
+		$compositeAlignY = (int)($compositeAlignY / 100 * ($height - $compositeHeight));
 
 		/* Clip to our bounding box */
 		$compositeAlignX = min($compositeAlignX, $width - $compositeWidth);
@@ -515,7 +515,7 @@ class NetPbmToolkit extends GalleryToolkit {
      * @param string $outputMimeType
      * @param boolean $preserveMetaData (optional) whether to use jhead to preserve exif data
      * @param string $jpegQuality (optional) override module setting for jpeq quality
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function _transformImage($mimeType, $command, $sourceFilename, $destFilename, $outputMimeType,
 			     $preserveMetaData=true, $jpegQuality=null) {
@@ -609,7 +609,7 @@ class NetPbmToolkit extends GalleryToolkit {
      *
      * @param string $mimeType
      * @param string $filename the path to an image file
-     * @return array object GalleryStatus a status code,
+     * @return array GalleryStatus a status code,
      *               array 1 or more string commands
      */
     function _convertToPnmCmd($mimeType, $filename) {
@@ -659,7 +659,7 @@ class NetPbmToolkit extends GalleryToolkit {
      * @param string $mimeType
      * @param string $filename the path to an image file
      * @param string $jpegQuality (optional) override module setting for jpeg quality
-     * @return array object GalleryStatus a status code,
+     * @return array GalleryStatus a status code,
      *               array 1 or more string commands
      */
     function _convertFromPnmCmd($mimeType, $filename, $jpegQuality=null) {
@@ -724,7 +724,7 @@ class NetPbmToolkit extends GalleryToolkit {
     /**
      * Execute the command.  Flatten the command array first.
      * @param array $cmdArray
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string stdout output, string stderr output
      * @access private
      */

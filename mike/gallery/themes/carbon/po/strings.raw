@@ -1,4 +1,4 @@
-# $Id: strings.raw 15342 2006-12-01 21:14:46Z andy_st $
+# $Id: strings.raw 16208 2007-04-01 22:53:59Z mindless $
 
 /* theme.inc */
 gettext("Carbon")
@@ -37,12 +37,12 @@ gettext("Next")
 gettext("Last")
 
 /* templates/photo.tpl */
+gettext("Exif")
+gettext("Close") /* also in: templates/sidebar.tpl */
 gettext("Download %s")
 gettext("There is nothing to view for this item.")
 gettext("View in original album")
 gettext("Download %s in original format")
-gettext("Exif")
-gettext("Close") /* also in: templates/sidebar.tpl */
 
 /* templates/progressbar.tpl */
 gettext("Continue...")

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,14 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * @package Rewrite
- * @subpackage Parsers
- * @version $Revision: 15818 $
- * @author Douglas Cau <douglas@cau.se>
- */
 
-/* Required class */
 GalleryCoreApi::requireOnce('modules/rewrite/classes/RewriteParser.class');
 
 /* Status codes used by the Apache mod_rewrite parser */
@@ -41,6 +34,11 @@ define('REWRITE_STATUS_EMBED_HTACCESS_CANT_WRITE', 18);
  * This URL rewrite parser provides Apache mod_rewrite support for short URLs.
  *
  *   http://httpd.apache.org/docs/2.2/mod/mod_rewrite.html
+ *
+ * @package Rewrite
+ * @subpackage Parsers
+ * @version $Revision: 17580 $
+ * @author Douglas Cau <douglas@cau.se>
  */
 class ModRewriteParser extends RewriteParser {
 
@@ -116,7 +114,7 @@ class ModRewriteParser extends RewriteParser {
 		    'file, please create it.');
 		break;
 	    default:
-	        return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+		return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 	    }
 	}
 
@@ -127,7 +125,7 @@ class ModRewriteParser extends RewriteParser {
      * @see RewriteParser::loadTestResultsTemplate
      */
     function loadTestResultsTemplate(&$template, &$form) {
-    	GalleryCoreApi::requireOnce(
+	GalleryCoreApi::requireOnce(
 	    'modules/rewrite/classes/parsers/modrewrite/ModRewriteHelper.class');
 	return ModRewriteHelper::loadTestResultsTemplate($template, $form);
     }
@@ -256,7 +254,7 @@ class ModRewriteParser extends RewriteParser {
      * @see RewriteParser::fetchEmbedConfig
      */
     function saveEmbedConfig($param) {
-    	GalleryCoreApi::requireOnce(
+	GalleryCoreApi::requireOnce(
 	    'modules/rewrite/classes/parsers/modrewrite/ModRewriteHelper.class');
 
 	list ($ret, $code) = ModRewriteHelper::saveEmbedConfig($param, $this, true);

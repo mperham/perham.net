@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17662 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock">
   {if $ItemEditItem.can.changePathComponent}
@@ -59,7 +57,7 @@
 	     viewL10domain="modules_core"
 	     element="title" firstMarkupBar=true}
 
-    <input type="text" id="title" size="60"
+    <input type="text" id="title" size="60" maxlength="{$ItemEdit.fieldLengths.title}"
      name="{g->formVar var="form[title]"}" value="{$form.title}"/>
 
     {if !empty($form.error.title.missingRootTitle)}
@@ -110,7 +108,9 @@
 </div>
 
 <div class="gbBlock">
-  <h3> {g->text text="%s Date and Time" arg1=$ItemEditItem.typeName.0} </h3>
+  <h3> {g->text text="%s Date and Time" arg1=$ItemEditItem.typeName.0
+	postSprintfArg1=$ItemEditItem.typeName.2} </h3>
+	{* Specific translations: {g->text text="Link Date and Time"} *}
 
   <p class="giDescription">
     {if !empty($ItemEditItem.isItemPhoto)}
@@ -119,7 +119,9 @@
       {g->text text="Set the date and time to be displayed for this item."}
     {else}
       {g->text text="Set the date and time to be displayed for this %s."
-	       arg1=$ItemEditItem.typeName.1}
+	       arg1=$ItemEditItem.typeName.1 postSprintfArg1=$ItemEditItem.typeName.3}
+      {* Specific translations:
+	 {g->text text="Set the date and time to be displayed for this link."} *}
     {/if}
   </p>
 

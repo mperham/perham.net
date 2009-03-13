@@ -185,6 +185,7 @@ img.gallery-photo {
 .block-core-Navigator .first-and-previous,
 .block-core-Navigator .next-and-last {
 	display: inline;
+	float: left;
 }
 
 .block-core-Navigator .current {
@@ -337,12 +338,8 @@ table.gbDataTable td.gbEven {
 }
 
 .autoCompleteContainer {
-    border: 1px solid #404040;
+    border-color: #404040 #404040 #0a0;
     background-color: #fff;
-    border-top: 0px;
-    border-bottom: 1px dotted rgb(0, 172, 0);
-    margin-bottom: -1px;
-    margin-top: 0px;
 }
 
 .autoCompleteContainer li.yui-ac-highlight {

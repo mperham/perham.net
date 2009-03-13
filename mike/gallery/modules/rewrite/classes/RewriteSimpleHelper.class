@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Rewrite
  * @subpackage Classes
  * @author Douglas Cau <douglas@cau.se>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class RewriteSimpleHelper {
@@ -32,7 +32,7 @@ class RewriteSimpleHelper {
      * This is an onLoad function called by RewriteUrlGenerator::init if there's a path keyword
      * that needs to be parsed to an itemId. Used by other modules that has %path%.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function loadItemIdFromPath() {
 	list ($path, $itemId) = GalleryUtilities::getRequestVariables('path', 'itemId');
@@ -57,7 +57,7 @@ class RewriteSimpleHelper {
      *
      * @param string $url url passed by reference
      * @param array $params of url params passed by reference
-     * @param object GalleryEntity $entity loaded entity with item id = $params['itemId'], or null
+     * @param GalleryEntity $entity loaded entity with item id = $params['itemId'], or null
      * @return boolean true on success
      */
     function parsePath(&$url, &$params, &$entity) {

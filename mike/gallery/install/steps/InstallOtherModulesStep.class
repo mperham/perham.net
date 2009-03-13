@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
  */
 
 /**
- * Install plugins
+ * Install plugins.
  * @package Install
  */
 class InstallOtherModulesStep extends InstallStep {
+
     function stepName() {
 	return _('Install Plugins');
     }
@@ -37,20 +38,19 @@ class InstallOtherModulesStep extends InstallStep {
 
 	global $gallery;
 	$currentModule = $totalModules = 0;
-	$templateData['stackTrace'] = '';
 	$template = new StatusTemplate();
 
 	$ret = $this->_selectAdminUser();
 	if ($ret) {
 	    $templateData['errors'][] = _('Unable to initialize our Gallery session');
-	    $templateData['stackTrace'] .= $ret->getAsHtml();
+	    $templateData['stackTrace'][] = $ret->getAsHtml();
 	    unset($_REQUEST['module']);
 	}
 	if (isset($_REQUEST['module'])) {
 	    $storage =& $gallery->getStorage();
 	}
 
-	if ( !empty($_REQUEST['module']) && is_array($_REQUEST['module']) ) {
+	if (!empty($_REQUEST['module']) && is_array($_REQUEST['module'])) {
 	    uksort($_REQUEST['module'], array($this, '_sortModules'));
 	    $template->renderHeader(true);
 	    $totalModules = count($_REQUEST['module']);
@@ -61,7 +61,7 @@ class InstallOtherModulesStep extends InstallStep {
 		    $this->resetL10Domain();
 		    $templateData['errors'][] =
 			sprintf(_('Unable to load the %s module'), $moduleId);
-		    $templateData['stackTrace'] .= $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		    continue;
 		}
 		$module->setName($module->translate($module->getName()));
@@ -77,7 +77,7 @@ class InstallOtherModulesStep extends InstallStep {
 		    $this->resetL10Domain();
 		    $templateData['errors'][] =
 			sprintf(_('Unable to install the %s module'), $module->getName());
-		    $templateData['stackTrace'] = $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		    continue;
 		}
 		$moduleInstalled[$moduleId] = true;
@@ -87,7 +87,7 @@ class InstallOtherModulesStep extends InstallStep {
 		if ($ret) {
 		    $this->resetL10Domain();
 		    $templateData['errors'][] = _('Unable to commit database transaction');
-		    $templateData['stackTrace'] .= $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		}
 
 		list ($ret, $success) = $module->autoConfigure();
@@ -95,7 +95,7 @@ class InstallOtherModulesStep extends InstallStep {
 		    $this->resetL10Domain();
 		    $templateData['errors'][] =
 			    sprintf(_('Unable to activate the %s module'), $module->getName());
-		    $templateData['stackTrace'] .= $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		    continue;
 		}
 
@@ -111,7 +111,7 @@ class InstallOtherModulesStep extends InstallStep {
 		if ($ret) {
 		    $templateData['errors'][] =
 			    sprintf(_('Unable to activate the %s module'), $module->getName());
-		    $templateData['stackTrace'] .= $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		    continue;
 		}
 		$templateData['activated'][$moduleId] = $module->getName();
@@ -126,7 +126,7 @@ class InstallOtherModulesStep extends InstallStep {
 	    $ret = $storage->commitTransaction();
 	    if ($ret) {
 		$templateData['errors'][] = _('Unable to commit database transaction');
-		$templateData['stackTrace'] .= $ret->getAsHtml();
+		$templateData['stackTrace'][] = $ret->getAsHtml();
 	    }
 	}
 	$templateData['bodyFile'] = 'InstallOtherModulesSuccess.html';
@@ -152,7 +152,7 @@ class InstallOtherModulesStep extends InstallStep {
 	    list ($ret, $moduleList) = GalleryCoreApi::fetchPluginStatus('module', true);
 	    if ($ret) {
 		$templateData['errors'][] = _('Unable to get the module list');
-		$templateData['stackTrace'] = $ret->getAsHtml();
+		$templateData['stackTrace'][] = $ret->getAsHtml();
 	    }
 	}
 
@@ -163,7 +163,7 @@ class InstallOtherModulesStep extends InstallStep {
 		    $this->resetL10Domain();
 		    $templateData['warnings'][] =
 			sprintf(_('Unable to load the %s module'), $moduleId);
-		    $templateData['stackTrace'] = $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		} else {
 		    $modulePlugin->setName($modulePlugin->translate($modulePlugin->getName()));
 		    $modulePlugin->setDescription(
@@ -211,9 +211,9 @@ class InstallOtherModulesStep extends InstallStep {
 	$cacheKey = 'Installer::installOtherModulesStepInitialized';
 	if (!GalleryDataCache::containsKey($cacheKey)) {
 	    /*
-	     * Disable the data cache before initializing.  If we don't do this
-	     * *first* then some data (like factory registrations) will get cached
-	     * now, and then the modules won't be able to update it later on.
+	     * Disable the data cache before initializing.  If we don't do this *first* then some
+	     * data (like factory registrations) will get cached now, and then the modules won't be
+	     * able to update it later on.
 	     */
 	    GalleryDataCache::setFileCachingEnabled(false);
 
@@ -222,17 +222,18 @@ class InstallOtherModulesStep extends InstallStep {
 	    }
 	    require_once(dirname(__FILE__) . '/../../bootstrap.inc');
 	    require_once(dirname(__FILE__) . '/../../init.inc');
-	    $ret = GalleryInitFirstPass(array('debug' => 'buffered', 'noDatabase' => true,
-					  'activeLanguage' => $_SESSION['language']));
+	    $ret = GalleryInitFirstPass(array('debug' => 'buffered',
+					      'noDatabase' => true,
+					      'activeLanguage' => $_SESSION['language']));
 	    if ($ret) {
 		$templateData['errors'][] = _('Unable to initialize our Gallery data');
-		$templateData['stackTrace'] = $ret->getAsHtml();
+		$templateData['stackTrace'][] = $ret->getAsHtml();
 	    }
 	    if (empty($templateData['errors'])) {
 		$ret = $this->_selectAdminUser();
 		if ($ret) {
 		    $templateData['errors'][] = _('Unable to initialize our Gallery session');
-		    $templateData['stackTrace'] .= $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		}
 	    }
 	    GalleryDataCache::put($cacheKey, true);
@@ -248,8 +249,8 @@ class InstallOtherModulesStep extends InstallStep {
     }
 
     /**
-     * Find admin user and set as active user
-     * @return object GalleryStatus a status code
+     * Find admin user and set as active user.
+     * @return GalleryStatus a status code
      */
     function _selectAdminUser() {
 	global $gallery;
@@ -267,7 +268,8 @@ class InstallOtherModulesStep extends InstallStep {
 	    return GalleryCoreApi::error(ERROR_MISSING_VALUE);
 	}
 	$adminUserInfo = array_keys($adminUserInfo);
-	list ($ret, $adminUser) = GalleryCoreApi::loadEntitiesById($adminUserInfo[0]);
+	list ($ret, $adminUser) =
+	    GalleryCoreApi::loadEntitiesById($adminUserInfo[0], 'GalleryUser');
 	if ($ret) {
 	    return $ret;
 	}

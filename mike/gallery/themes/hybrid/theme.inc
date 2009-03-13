@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Themes
  * @subpackage Hybrid
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 16487 $
+ * @version $Revision: 18172 $
  */
 class HybridTheme extends GalleryTheme {
 
@@ -33,8 +33,8 @@ class HybridTheme extends GalleryTheme {
 	$this->setId('hybrid');
 	$this->setName($gallery->i18n('Hybrid'));
 	$this->setDescription($gallery->i18n('Combined album/image/slideshow dynamic view'));
-	$this->setVersion('1.1.4.1');
-	$this->setRequiredCoreApi(array(7, 10));
+	$this->setVersion('1.1.9');
+	$this->setRequiredCoreApi(array(7, 36));
 	$this->setRequiredThemeApi(array(2, 5));
 	$this->setStandardSettings(array(
 	    'rows' => 30, 'columns' => 2,
@@ -141,19 +141,29 @@ class HybridTheme extends GalleryTheme {
 	$theme['cookiePath'] = preg_replace('#^.*?://.*?(/|$)#', '/',
 					    $urlGenerator->getCurrentUrlDir());
 
-	$showId = GalleryUtilities::getRequestVariables('showId');
-	if (!empty($showId)) {
+	list ($showId, $show, $slide) =
+	    GalleryUtilities::getRequestVariables('showId', 'show', 'slide');
+	if ($show == 'first' && !empty($imageWidths)) {
+	    $viewIndex = 0;
+	}
+	else if ($show == 'last' && !empty($imageWidths)) {
+	    $viewIndex = count($imageWidths) - 1;
+	}
+	else if (!empty($showId)) {
 	    /* Start with initial view of this item */
 	    foreach ($theme['children'] as $tmp) {
 		if ($tmp['id'] == $showId) {
 		    if (isset($tmp['imageIndex'])) {
-			$theme['viewIndex'] = $tmp['imageIndex'];
-			/* Set cookie to popup image just once */
-			setcookie('G2_hybrid_view', '1');
+			$viewIndex = $tmp['imageIndex'];
 		    }
 		    break;
 		}
 	    }
+	}
+	if (isset($viewIndex)) {
+	    $theme['viewIndex'] = $viewIndex;
+	    /* Set cookie to popup image just once */
+	    setcookie('G2_hybrid_view', $slide ? '2' : '1');
 	}
 
 	$template->head('themes/hybrid/templates/header.tpl');
@@ -167,7 +177,8 @@ class HybridTheme extends GalleryTheme {
 	list ($detail, $renderId) = GalleryUtilities::getRequestVariables('detail', 'renderId');
 	if (!empty($renderId)) {
 	    /* Render this item */
-	    list ($ret, $image) = GalleryCoreApi::loadEntitiesById($renderId);
+	    list ($ret, $image) = GalleryCoreApi::loadEntitiesById(
+		    $renderId, array('GalleryDataItem', 'GalleryDerivative'));
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -201,7 +212,8 @@ class HybridTheme extends GalleryTheme {
 	}
 
 	/* Otherwise, redirect to parent with initial view of this item  */
-	list ($ret, $parent) = GalleryCoreApi::loadEntitiesById($item->getParentId());
+	list ($ret, $parent) =
+	    GalleryCoreApi::loadEntitiesById($item->getParentId(), 'GalleryItem');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -284,7 +296,7 @@ class HybridTheme extends GalleryTheme {
 	    if ($ret) {
 		return array($ret, null, null);
 	    }
-	    list ($ret, $childItems) = GalleryCoreApi::loadEntitiesById($childIds);
+	    list ($ret, $childItems) = GalleryCoreApi::loadEntitiesById($childIds, 'GalleryItem');
 	    if ($ret) {
 		return array($ret, null, null);
 	    }

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,13 +31,13 @@ if (!class_exists('Smarty')) {
  * @package GalleryCore
  * @subpackage Classes
  * @author Ernesto Baschny <ernst@baschny.de>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class GallerySmarty extends Smarty {
 
     /**
      * A GalleryStatus object from the last called fetch
-     * @var object GalleryStatus
+     * @var GalleryStatus
      * @access private
      */
     var $_firstGalleryStatus;
@@ -47,7 +47,7 @@ class GallerySmarty extends Smarty {
      * Fetch should also return a GalleryStatus object
      *
      * @see Smarty::fetch
-     * @return array object GalleryStatus the return status
+     * @return array GalleryStatus the return status
      *               string the output from the template
      */
     function fetch($_smarty_tpl_file, $_smarty_cache_id = null,

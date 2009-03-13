@@ -1,8 +1,6 @@
 {*
- * $Revision: 15504 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="URL Rewrite Administration"} </h2>
@@ -128,7 +126,8 @@
       {/if}
     </td>
     <td>
-      <input type="checkbox" name="{g->formVar var="form[rules][$moduleId][$ruleId][active]"}" {if isset($rule.active)}checked="checked"{/if}/>
+      <input type="checkbox" name="{g->formVar var="form[rules][$moduleId][$ruleId][active]"}" 
+	{if isset($rule.active)} checked="checked"{/if}/>
     </td>
     <td style="text-align: center;">
       <span id="rules-{$moduleId}-{$ruleId}-toggle"
@@ -188,7 +187,7 @@
 </div>
 
 <div class="gbBlock gcBackground1">
-  <input type="submit"class="inputTypeSubmit" name="{g->formVar var="form[action][rules]"}" value="{g->text text="Save"}"/>
+  <input type="submit" class="inputTypeSubmit" name="{g->formVar var="form[action][rules]"}" value="{g->text text="Save"}"/>
 </div>
 {/if}
 {* END Rules Tab *}
@@ -208,7 +207,8 @@
   </p>
 
   <p class="giDescription">
-    <input type="checkbox" name="{g->formVar var="form[allowEmptyReferer]"}" {if isset($form.allowEmptyReferer)}checked="checked"{/if}/>
+    <input type="checkbox" name="{g->formVar var="form[allowEmptyReferer]"}" 
+	{if isset($form.allowEmptyReferer)} checked="checked"{/if}/>
     {g->text text="Allow empty referer?"}
   </p>
 

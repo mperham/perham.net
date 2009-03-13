@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package ArchiveUpload
  * @subpackage UserInterface
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class ArchiveUploadSiteAdminController extends GalleryController {
 
@@ -149,6 +149,7 @@ class ArchiveUploadSiteAdminView extends GalleryView {
 	    return array($ret, null);
 	}
 	$form['isConfigure'] = !$isActive;
+	$form['canExec'] = !in_array('exec', split(',\s*', ini_get('disable_functions')));
 
 	if (isset($form['action']['test'])) {
 	    if (empty($form['error']['unzipPath'])) {

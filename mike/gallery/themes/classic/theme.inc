@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
  * @subpackage Classic
  * @author Bharat Mediratta <bharat@menalto.com>
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 16034 $
+ * @version $Revision: 18172 $
  */
 class ClassicTheme extends GalleryTheme {
 
@@ -34,8 +34,8 @@ class ClassicTheme extends GalleryTheme {
 	$this->setId('classic');
 	$this->setName($gallery->i18n('Classic'));
 	$this->setDescription($gallery->i18n('Classic Gallery2 root album look and feel'));
-	$this->setVersion('1.1.3');
-	$this->setRequiredCoreApi(array(7, 10));
+	$this->setVersion('1.1.6');
+	$this->setRequiredCoreApi(array(7, 27));
 	$this->setRequiredThemeApi(array(2, 4));
 	$this->setStandardSettings(
 	    array('rows' => 10, 'columns' => 1,
@@ -194,11 +194,11 @@ class ClassicTheme extends GalleryTheme {
 
     /**
      * Build template data for subalbum tree
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _buildTree($childIds, &$treeList, &$treeItems, $maxDepth, $subalbumSort, $userId) {
-	list ($ret, $items) = GalleryCoreApi::loadEntitiesById($childIds);
+	list ($ret, $items) = GalleryCoreApi::loadEntitiesById($childIds, 'GalleryItem');
 	if ($ret) {
 	    return $ret;
 	}
@@ -225,7 +225,7 @@ class ClassicTheme extends GalleryTheme {
 	    }
 	}
 	if (!empty($treeIds)) {
-	    list ($ret, $items) = GalleryCoreApi::loadEntitiesById($treeIds);
+	    list ($ret, $items) = GalleryCoreApi::loadEntitiesById($treeIds, 'GalleryAlbumItem');
 	    if ($ret) {
 		return $ret;
 	    }
@@ -238,7 +238,7 @@ class ClassicTheme extends GalleryTheme {
 
     /**
      * Helper function for _buildTree
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _doBuildTree($album, $branchId, &$treeList, &$treeItems, $maxDepth, $userId, $depth) {
@@ -248,7 +248,8 @@ class ClassicTheme extends GalleryTheme {
 	    return $ret;
 	}
 	if (!empty($subAlbumIds)) {
-	    list ($ret, $subAlbums) = GalleryCoreApi::loadEntitiesById($subAlbumIds);
+	    list ($ret, $subAlbums) =
+		GalleryCoreApi::loadEntitiesById($subAlbumIds, 'GalleryAlbumItem');
 	    if ($ret) {
 		return $ret;
 	    }

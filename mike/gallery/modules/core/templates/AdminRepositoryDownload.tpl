@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17456 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="Download %s" arg1=$AdminRepositoryDownload.pluginName} </h2>
@@ -29,7 +27,7 @@
 
 <div class="gbBlock">
   <p class="giDescription">
-    {g->text text="Download a package in order to use this plugin.  You can upgrade by choosing a newer version of the package to download.  Language packages are optional, You only need to download the ones that you want to use on your site."}
+    {g->text text="Download a package in order to use this plugin.  You can upgrade by choosing a newer version of the package to download."}
   </p>
   <h2> {g->text text="Base Packages"} </h2>
   {foreach from=$AdminRepositoryDownload.upgradeData item=item}
@@ -46,32 +44,19 @@
       {assign var="currentlyInstalled" value=$item.repository}
     {/if}
   </p>
-  {/foreach}
-
-  <h2> {g->text text="Language Packages"} </h2>
-  {foreach from=$AdminRepositoryDownload.upgradeData item=item}
-  <div style="position: relative; left: 25px">
+  <div style="position: relative; left: 25px; ">
     <div class="languagePacks" id="{$item.repository}_languagePacks"
 	 style="{if empty($currentlyInstalled) || $item.repository != $currentlyInstalled}display: none{/if}">
+      <p> {g->text text="The following language packages are available for this plugin"} </p>
       <p id="{$item.repository}_languages">
         {if !empty($item.languages)}
-        {g->text text="(%sselect all%s%sselect none%s)"
-	   arg1="<a id=\"`$item.repository`_selectAllLink\" href=\"javascript:selectAll('`$item.repository`')\">"
-	   arg2="</a>"
-	   arg3="<a style=\"display: none\" id=\"`$item.repository`_selectNoneLink\" href=\"javascript:selectNone('`$item.repository`')\">"
-	   arg4="</a>"}
         {foreach from=$item.languages key=code item=pack}
-        <br/>
 	{counter assign="langId"}
 	{capture assign="label"}
-	{assign var="checked" value=""}
-	<label for="lang_{$langId}">
+	{assign var="repository" value=$item.repository}
 	{if $pack.relation == "older" && $pack.currentBuild}
 	  {g->text text="%s version %s (upgrading from %s)"
 	      arg1="<b>`$pack.name`</b>" arg2=$pack.newBuild arg3=$pack.currentBuild}
-          {if !empty($AdminRepositoryDownload.installedLanguages.$code)}
-	  {assign var="checked" value="checked"}
-	  {/if}
 	{elseif $pack.relation == "older"}
 	  {g->text text="%s version %s" arg1="<b>`$pack.name`</b>" arg2=$pack.newBuild}
 	{elseif $pack.relation == "newer"}
@@ -79,14 +64,9 @@
 	      arg1="<b>`$pack.name`</b>" arg2=$pack.newBuild arg3="<b>" arg4=$pack.currentBuild arg5="</b>"}
 	{else}
 	  {g->text text="%s version %s (currently installed)" arg1="<b>`$pack.name`</b>" arg2=$pack.newBuild}
-	  {assign var="checked" value="checked"}
 	{/if}
-	</label>
 	{/capture}
-	  <input type="hidden" name="{g->formVar var="form[languagesAvailable][]"}" value="{$item.repository}:{$code}"/>
-	  <input id="lang_{$langId}" type="checkbox" name="{g->formVar var="form[languages][]"}"
-	    value="{$item.repository}:{$code}:{$pack.newBuild}" {if !empty($checked)}checked="{$checked}"{/if}/>
-	{$label}
+	{$label}<br/>
         {/foreach}
         {else} {* !empty($item.languages) *}
           <i>{g->text text="No compatible language packages available"}</i>
@@ -95,11 +75,6 @@
     </div>
   </div>
   {/foreach}
-  {if !isset($currentlyInstalled)}
-  <div style="position: relative; left: 25px" id="languageListPlaceholder">
-    <i>{g->text text="You must select a base package before choosing language packs."}</i>
-  </div>
-  {/if}
 </div>
 
 <div class="gbBlock gcBackground1">

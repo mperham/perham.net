@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,11 +28,11 @@
  * @package Gd
  * @subpackage Classes
  * @author Ernesto Baschny <ernst@baschny.de>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class GdFunctionality {
     /**
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       string phpinfo output
      */
     function phpinfo($section=null) {
@@ -118,7 +118,7 @@ class GdFunctionality {
      * Requires:
      * - PHP 4 >= 4.3.0, PHP 5
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       array the output of gd_info
      */
     function gd_info() {
@@ -145,7 +145,7 @@ class GdFunctionality {
      * Requires:
      * - any PHP
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       res GD-resource
      */
     function imageCreate($width, $height) {
@@ -171,7 +171,7 @@ class GdFunctionality {
      * (which at the current stage of this module will always be the case,
      * since this is the minimal required version).
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       res GD-resource
      */
     function imageCreateTruecolor($width, $height) {
@@ -204,7 +204,7 @@ class GdFunctionality {
     /**
      * Check if a resource that is based on $filename is valid
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       resource GD resource
      */
     function checkResource($res, $filename) {
@@ -226,7 +226,7 @@ class GdFunctionality {
      * - any PHP version
      * - GD with GIF support
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       res GD-resource
      */
     function imageCreateFromGif($filename) {
@@ -250,7 +250,7 @@ class GdFunctionality {
      * - any PHP >= 3.0.16
      * - GD >= 1.8 (for JPEG support)
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       res GD-resource
      */
     function imageCreateFromJpeg($filename) {
@@ -265,7 +265,7 @@ class GdFunctionality {
      * - any PHP >= 3.0.13
      * - GD (with PNG support)
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       res GD-resource
      */
     function imageCreateFromPng($filename) {
@@ -280,7 +280,7 @@ class GdFunctionality {
      * - PHP 4 >= 4.0.1 or PHP 5
      * - GD >= 1.8 (for WBMP support)
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       res GD-resource
      */
     function imageCreateFromWbmp($filename) {
@@ -295,7 +295,7 @@ class GdFunctionality {
      * - PHP 4 >= 4.0.1 or PHP 5
      * - GD
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       res GD-resource
      */
     function imageCreateFromXbm($filename) {
@@ -310,7 +310,7 @@ class GdFunctionality {
      * - PHP 4 >= 4.0.1 or PHP 5
      * - GD
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       res GD-resource
      */
     function imageCreateFromXpm($filename) {
@@ -325,7 +325,7 @@ class GdFunctionality {
      * - any PHP
      * - GD with GIF support
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imageGif($res, $filename) {
 	if (!function_exists('imageGif')) {
@@ -346,7 +346,7 @@ class GdFunctionality {
      * - any PHP >= 3.0.16
      * - GD >= 1.8
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imageJpeg($res, $filename, $quality) {
 	if (!function_exists('imageJpeg')) {
@@ -367,7 +367,7 @@ class GdFunctionality {
      * - any PHP 3>= 3.0.13
      * - GD
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imagePng($res, $filename) {
 	if (!function_exists('imagePng')) {
@@ -388,7 +388,7 @@ class GdFunctionality {
      * - PHP 3>= 3.0.15 or PHP 4 >= 4.0.1 or PHP 5
      * - GD >= 1.8 (for WBMP support)
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imageWbmp($res, $filename) {
 	if (!function_exists('imageWbmp')) {
@@ -408,7 +408,7 @@ class GdFunctionality {
      * Requires:
      * - PHP 5
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imageXbm($res, $filename) {
 	if (!function_exists('imageXbm')) {
@@ -429,7 +429,7 @@ class GdFunctionality {
      * - PHP 4 >= 4.0.6 or PHP 5
      * - GD >= 2.0.1
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imageCopyResampled(
 	    $dstRes, $srcRes, $dstX, $dstY, $srcX, $srcY, $dstW, $dstH, $srcW, $srcH) {
@@ -451,7 +451,7 @@ class GdFunctionality {
      * Requires:
      * - any PHP
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imageCopyResized($dstRes, $srcRes, $dstX, $dstY, $srcX, $srcY,
 			      $dstW, $dstH, $srcW, $srcH) {
@@ -470,7 +470,7 @@ class GdFunctionality {
      * Requires:
      * - PHP 4 >= 4.0.1 or PHP 5
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imageCopyMerge($dstRes, $srcRes, $dstX, $dstY, $srcX, $srcY, $srcW, $srcH, $pct) {
 	$result = @imageCopyMerge($dstRes, $srcRes, $dstX, $dstY, $srcX, $srcY, $srcW, $srcH, $pct);
@@ -487,7 +487,7 @@ class GdFunctionality {
      * Requires:
      * - any PHP >= 3.0.6
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function imageCopy($dstRes, $srcRes, $dstX, $dstY, $srcX, $srcY, $srcW, $srcH) {
 	$result = @imageCopy($dstRes, $srcRes, $dstX, $dstY, $srcX, $srcY, $srcW, $srcH);
@@ -522,7 +522,7 @@ class GdFunctionality {
      * Requires:
      * - PHP 4 >= 4.3.0 or PHP 5
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       resource new gd resource
      */
     function imageRotate($srcRes, $angle, $bgdColor) {
@@ -544,6 +544,145 @@ class GdFunctionality {
      */
     function imagedestroy($res) {
 	@imagedestroy($res);
+    }
+
+    /**
+     * Set the flag to save full alpha channel information (as opposed to single-color transparency)
+     * when saving PNG images
+     *
+     * Requires:
+     * - PHP 4 >= 4.3.2 or PHP 5
+     *
+     * @param resource $res
+     * @param bool $saveFlag
+     * @return array GalleryStatus
+     *	             bool true on success, false on failure
+     */
+    function imagesavealpha($res, $saveflag) {
+    	if (!function_exists('imagesavealpha')) {
+	    return array(GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE | ERROR_UNSUPPORTED_OPERATION),
+			 null);
+    	}
+    	return array(null, @imagesavealpha($res, $saveflag));
+    }
+
+    /**
+     * Set the blending mode for an image
+     *
+     * @param resource $res
+     * @param bool $blendmode
+     * @return bool true on success, false on failure
+     */
+    function imagealphablending($res, $blendmode) {
+    	return @imagealphablending($res, $blendmode);
+    }
+
+    /**
+     * Allocate a color for an image.
+     *
+     * Requires:
+     * - PHP 4 >= 4.3.2 or PHP 5
+     *
+     * @param resource $res
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @param int $alpha
+     * @return array GalleryStatus
+     *	             int a color identifier, false on failure
+     */
+    function imagecolorallocatealpha($res, $red, $green, $blue, $alpha) {
+    	if (!function_exists('imagecolorallocatealpha')) {
+	    return array(GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE | ERROR_UNSUPPORTED_OPERATION),
+			 null);
+    	}
+    	return array(null, @imagecolorallocatealpha($res, $red, $green, $blue, $alpha));
+    }
+
+    /**
+     * Allocate a color for an image.
+     *
+     * @param resource $res
+     * @param int $red
+     * @param int $green
+     * @param int $blue
+     * @return int a color identifier, false on failure
+     */
+    function imagecolorallocate($res, $red, $green, $blue) {
+    	return @imagecolorallocate($res, $red, $green, $blue);
+    }
+
+    /**
+     * Draw a filled rectangle spanned by 2 points.
+     *
+     * @param resource $res
+     * @param int $x1 x coordinate of point 1
+     * @param int $y1 y coordinate of point 1
+     * @param int $x2 x coordinate of point 2
+     * @param int $y2 y coordinate of point 2
+     * @return bool true on success, false on failure
+     */
+    function imagefilledrectangle($res, $x1, $y1, $x2, $y2, $color) {
+    	return @imagefilledrectangle($res, $x1, $y1, $x2, $y2, $color);
+    }
+
+    /**
+     * Get / set the transparent color.
+     *
+     * @param resource $res
+     * @param int $color (optional) A color identifier
+     * @return The identifier of the new (or current, if none is specified) transparent color.
+     */
+    function imagecolortransparent($res, $color=null) {
+	if ($color !== null) {
+	    return @imagecolortransparent($res, $color); 
+	} else {
+	    return @imagecolortransparent($res);
+	}
+    }
+
+    /**
+     * Convert a true color image to a palette image.
+     * @param resource $res
+     * @param bool $dither
+     * @param int $ncolors
+     * @return true on success, false on failure
+     */
+    function imagetruecolortopalette($res, $dither, $ncolors) {
+	return @imagetruecolortopalette($res, $dither, $ncolors);
+    }
+
+    /**
+     * Get the index of the color of a pixel.
+     * @param resource $res
+     * @param int $x
+     * @param int $y
+     * @return int The index of the color
+     */
+    function imagecolorat($res, $x, $y) {
+	return @imagecolorat($res, $x, $y);
+    }
+
+    /**
+     * set the color of a pixel.
+     * @param resource $res
+     * @param int $x
+     * @param int $y
+     * @param int $color A color identifier
+     * @return bool true on success, false on failure
+     */
+    function imagesetpixel($res, $x, $y, $color) {
+	return @imagesetpixel($res, $x, $y, $color);
+    }
+
+    /**
+     * Get the colors for an index.
+     * @param resource $res
+     * @param int $index
+     * @return array('red' => int, 'green' => int, 'blue' => int, 'alpha' => int)
+     */
+    function imagecolorsforindex($res, $index) {
+	return @imagecolorsforindex($res, $index);
     }
 }
 ?>

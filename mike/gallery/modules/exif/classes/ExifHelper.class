@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
  * @author Georg Rehfeld <rehfeld@georg-rehfeld.de>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 
 /**
@@ -52,7 +52,7 @@ define('EXIF_ITEM_DESCRIPTION', 2);
 define('IPTC_ITEM_KEYWORDS', 4);
 
 /**
- * Import IPTC Object Name into item title
+ * Import IPTC Name into item title
  */
 define('IPTC_ITEM_TITLE', 32);
 
@@ -80,7 +80,7 @@ class ExifHelper {
      * Reset the given view mode back to its default settings
      *
      * @param int $viewMode
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function setDefaultProperties($viewMode) {
 	switch ($viewMode) {
@@ -152,7 +152,7 @@ class ExifHelper {
      * This is used on upgrade of the module from before IPTC times.
      *
      * @param int $viewMode
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function addDefaultIptcProperties($viewMode) {
 	list ($ret, $properties) = ExifHelper::getProperties($viewMode);
@@ -213,7 +213,7 @@ class ExifHelper {
      * it isn't read here, that happens lazily when actually accessing IPTC values.
      *
      * @param string $path the path to a jpeg file
-     * @return array   object GalleryStatus a status code
+     * @return array   GalleryStatus a status code
      *                 object  the JPEG object containing the IPTC data
      * @see getIptcValue
      * @todo (xlerb) reduce size of lib/JPEG: 1. remove whitespace/comments; 2. refactor according
@@ -248,7 +248,7 @@ class ExifHelper {
      *
      * @param string $path the path to the file
      * @param int $viewMode
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array title/value pairs
      */
     function getExifData($path, $viewMode) {
@@ -421,7 +421,7 @@ class ExifHelper {
      *
      * @param array $source the data source
      * @param array $keyPath the key path
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string value
      */
     function getExifValue(&$source, $keyPath) {
@@ -472,7 +472,7 @@ class ExifHelper {
      * Return the target properties for the given view mode
      *
      * @param int $viewMode the view mode (EXIF_SUMMARY, etc)
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array logical exif property names
      */
     function getProperties($viewMode) {
@@ -496,7 +496,7 @@ class ExifHelper {
      *
      * @param int $viewMode the view mode (EXIF_SUMMARY, etc)
      * @param array $properties logical property key/value pairs
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function setProperties($viewMode, $properties) {
 
@@ -987,6 +987,10 @@ class ExifHelper {
 	    array($gallery->i18n('IPTC: Copyright Flag'), 'IPTC.CopyrightFlag');
 	$data['IPTC/TimeCreated'] =
 	    array($gallery->i18n('IPTC: Time Created'), 'IPTC.TimeCreated');
+	$data['IPTC/ContentLocationName'] =
+	    array($gallery->i18n('IPTC: Content Location Name'), 'IPTC.ContentLocationName');
+	$data['IPTC/Sublocation'] =
+	    array($gallery->i18n('IPTC: Sub Location'), 'IPTC.Sublocation');
 
 	return $data;
     }

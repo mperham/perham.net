@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock">
   <h3> {g->text text="Resized Photos"} </h3>
@@ -14,7 +12,7 @@
   {if $ItemEditPhoto.editSizes.can.createResizes}
     {counter start=0 assign=index}
     {foreach from=$form.resizes item=resize}
-      <input type="checkbox"{if $form.resizes.$index.active} checked="checked"{/if}
+      <input type="checkbox" {if $form.resizes.$index.active}checked="checked" {/if}
        name="{g->formVar var="form[resizes][$index][active]"}"/>
       {g->dimensions formVar="form[resizes][$index]"
 		     width=$form.resizes.$index.width height=$form.resizes.$index.height}

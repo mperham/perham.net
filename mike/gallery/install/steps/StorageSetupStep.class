@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@ class StorageSetupStep extends InstallStep {
 		if (substr($dir, -1) != DIRECTORY_SEPARATOR) {
 		    $dir .= DIRECTORY_SEPARATOR;
 		}
+		$originalDir = $dir;
 		/*
 		 * Make the path absolute since relative to the install/ folder isn't the same as
 		 * relative to the main.php entry file. And also check if it exists.
@@ -74,9 +75,18 @@ class StorageSetupStep extends InstallStep {
 			}
 		    }
 		}
+		/* Ensure that it is an absolute filesystem path */
+		$dir = @realpath($dir);
+		if (!empty($dir) && substr($dir, -1) != DIRECTORY_SEPARATOR) {
+		    $dir .= DIRECTORY_SEPARATOR;
+		}
 		/* Check if the (newly created) dir exists, is writeable etc. */
 		if (!is_dir($dir)) {
 		    $templateData['error']['missing_dir'] = 1;
+		} else if (substr($dir, 0, -1) === $_SESSION['configPath']
+			|| ($galleryStub->getConfig('isMultisite')
+			    && substr($dir, 0, -1) === dirname(dirname(dirname(__FILE__))))) {
+		    $templateData['error']['in_gallery_dir'] = 1;
 		} else if (!is_readable($dir)) {
 		    $templateData['error']['inaccessible_dir'] = 1;
 		} else if (!is_writeable($dir)) {
@@ -110,7 +120,7 @@ class StorageSetupStep extends InstallStep {
 		    }
 		}
 	    }
-	    $templateData['dir'] = $dir;
+	    $templateData['dir'] = isset($originalDir) ? $originalDir : $this->_dir;
 	} else {
 	    $templateData['dir'] = $this->_dir;
 	}

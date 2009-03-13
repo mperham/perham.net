@@ -15,13 +15,11 @@
       <input type="hidden" name="step" value="<?php print $stepNumber ?>"/>
       <select name="language" onchange="this.form.submit()" style="direction:ltr">
 	<?php
-	  foreach ($translator->getSupportedLanguages() as $language => $list) {
-	    foreach ($list as $country => $data) {
-	      $code = $language . '_' . $country;
-	      print '<option value="' . $code . '"';
-	      if ($code == $_SESSION['language']) print ' selected="selected"';
-	      print '>' . $data['description'] . "</option>\n";
-	    }
+	  /* Don't use $language here as it conflicts with $_SESSION if register_globals is on */
+	  foreach ($templateData['languages'] as $code => $description) {
+	    print '<option value="' . $code . '"';
+	    if ($code == $_SESSION['language']) print ' selected="selected"';
+	    print '>' . $description . "</option>\n";
 	  }
 	?>
       </select>

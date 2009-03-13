@@ -1,7 +1,7 @@
-# $Id: sv.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: sv.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,14 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
-# 
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-01-15 16:15+0100\n"
-"PO-Revision-Date: 2007-01-01 22:10+0100\n"
-"Last-Translator: Anders Lindquist <andersl@saaf.se>\n"
+"PO-Revision-Date: 2008-09-25 13:46+0100\n"
+"Last-Translator: Martin Öberg <spam-g2translation@strickz.com>\n"
 "Language-Team: Swedish <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,13 +33,13 @@ msgid "Unknown"
 msgstr "Okänd"
 
 msgid "Admin User Setup"
-msgstr "Uppsättning av Admin-användaren"
+msgstr "Konfigurering av administratörsanvändaren"
 
 msgid "admin"
 msgstr "admin"
 
 msgid "Gallery Administrator"
-msgstr "Gallery-administratör"
+msgstr "Galleriadministratör"
 
 msgid "Authenticate"
 msgstr "Verifiera"
@@ -67,18 +67,8 @@ msgid "Create Config File"
 msgstr "Skapar konfigurationsfilen"
 
 #, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Kan ej skriva till <b>config.php</b> konfigurationsfilen i din %s katalog. Ändra filens "
-"rättigheter. Om du är på en Unix-maskin så kan du använda kommandot <i>chmod 666 config.php</"
-"i> för att ordna detta."
-
-#, c-format
 msgid "The config.php file does not exist in your %s directory"
-msgstr "Filen config.php finns ej i katalogen %s"
+msgstr "Filen config.php finns inte i katalogen %s"
 
 msgid ""
 "The config.php file exists but is not writeable.  If your server is Windows, you may have to "
@@ -107,6 +97,9 @@ msgstr "Du måste ha Oracle OCI8-PHP-modulen installerad"
 
 msgid "You must have the Component Object Model(COM) PHP module installed"
 msgstr "Du måste ha <i>Component Object Model (COM)</i>-PHP-modulen installerad"
+
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
+msgstr "Du måste ha PHP-modulen PHP Data Object (PDO) installerad."
 
 #, c-format
 msgid "You must specify a column prefix (we recommend %s)"
@@ -217,7 +210,10 @@ msgstr "IBM DB2 (v9.x och nyare)"
 msgid "Microsoft SQL Server 2005 and newer"
 msgstr "Microsoft SQL Server 2005 och nyare"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr "SQLite v3.x (Experimentellt stöd)"
+
+msgid "Unknown database type or no known tables information."
 msgstr "Okänd databastyp eller okänd tabellinformation."
 
 #, c-format
@@ -229,21 +225,21 @@ msgid "Could not open schema file: \"%s\"."
 msgstr "Kunde inte öppna schemafilen \"%s\"."
 
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "Misslyckades med att skapa en databastestsekvens. Kontrollera felmeddelandet och README.html "
 "efter saknade privilegier och rensa upp databasen."
 
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
-"Test misslyckades med att radera en databastestsekvens. Kontrollera felmeddelandet och "
+"Testet misslyckades med att radera en databastestsekvens. Kontrollera felmeddelandet och "
 "README.html efter saknade privilegier och rensa upp databasen."
 
 msgid "Missing SQL statements"
-msgstr "Saknad SQL-sats"
+msgstr "Saknar SQL-satser"
 
 msgid ""
 "Check the returned error message and README.html for missing privileges and clean up the "
@@ -324,8 +320,8 @@ msgstr "Kontroll av Systemet"
 msgid "Performing system checks"
 msgstr "Utför kontroll av Systemet"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP version >= 4.3.0 eller >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP version &gt;= 4.3.0 eller &gt;= 5.0.4"
 
 #, c-format
 msgid ""
@@ -506,14 +502,13 @@ msgstr "Zend-kompatibilitetsläge"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Varning: Din PHP är konfigurerad med Zend zel_compatibility_mode vilket kan orsaka att PHP "
-"havererar. Klicka <a href=\"%s\">här</a> för att testa din PHP. Om du ser \"LYCKADES\" är "
-"din PHP ok. Om du får ett fel eller inget svar måste du stänga av ze1_compatibility_mode "
-"innan du fortsätter."
+"havererar. Klicka %shär%s för att testa din PHP. Om du ser \"LYCKADES\" är din PHP ok. Om du "
+"får ett fel eller inget svar måste du stänga av ze1_compatibility_mode innan du fortsätter."
 
 msgid "putenv() allowed"
 msgstr "putenv() tillåten"
@@ -689,6 +684,18 @@ msgstr "Skapa en konfigurationsfil"
 
 #, c-format
 msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Kan inte skriva till konfigurationsfilen <b>config.php</b> i katalogen %s. Var vänlig och "
+"ändra dess rättigheter. Om du är i en Unix-miljö kan du använda kommandot <i>chmod 666 "
+"config.php</i> för att lösa detta. Du kan också ladda ner filen %sconfig.php%s och ersätta "
+"den existerande config.php i katalogen %s."
+
+#, c-format
+msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
 "b> in your <b>%s</b> directory.  This is a very important file that gives Gallery all the "
 "information that it needs to operate.  After we create it, you can read through this file "
@@ -771,6 +778,12 @@ msgstr "Lösenord för databas:"
 msgid "DB Name:"
 msgstr "Databasnamn:"
 
+msgid "DB Schema:"
+msgstr "Databasschema:"
+
+msgid "(optional)"
+msgstr "(valfri)"
+
 msgid "Table Prefix:"
 msgstr "Tabellprefix:"
 
@@ -801,14 +814,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Gå till mitt Gallery!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"Du kan nu gå till ditt nya Gallery. Ange adressen i din browser till %smain.php%s i "
-"katalogen %s."
 
 msgid "Installer Help"
 msgstr "Installationshjälp"
@@ -990,53 +995,41 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "Fel inträffade. Var god se meddelande nedan."
 
-msgid "Please select the installation type"
-msgstr "Var god välj installationstyp"
-
 msgid "Standard installation"
 msgstr "Standardinstallation"
 
 #, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
-"Det här är en standardinstallation. Välj denna installationstyp om du vill installera ett "
-"nytt Gallery i katalogen %s som kommer att vara åtkomlig via adress %s."
+"Det här är den vanligaste installationstypen. Ditt galleri kommer att hamna i mappen %s som "
+"kommer att vara åtkomlig via %s."
 
 msgid "Multisite installation"
 msgstr "Multisite-installation"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Gallery kan stödja flera oberoende webbsidor med en installation av programkoden. Välj denna "
-"installationstyp om du vill installera ett nytt Gallery på samma webbserver men under annan "
-"sökväg, underdomän eller domän."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"Multisite-installationer delar inte album, bilder, användare eller någonting annat. De "
-"behöver alla sin egen databas och egen fillagerkatalog. För mer information och förklaring "
-"om Multisite-installationer, besök %s-sidan."
+"Detta används för att ha flera Gallery-installationer på samma webbserver. Varje galleri är "
+"helt oberoende och har sin egen databas med foton, album och användare. För mer detaljer, se "
+"sidan %s."
 
 msgid "You must enter a directory"
 msgstr "Du måste ange en katalog"
 
+#, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
-"Katalogen du angav är kodförvaringsplatsens katalog. Om du vill installera ett Gallery i "
-"kodförvaringsplatsens katalog, välj en standardinstallation. Om du vil installera en "
-"multisite, välj en annan katalog."
+"Du angav katalogen %s. Om du vill installera ett galleri där måste du välja "
+"standardinstallationstypen. Om du vill installera en multisajt måste du välja en annan "
+"katalog."
 
 msgid ""
 "The directory you entered either does not exist, or is prohibited by your webserver "
@@ -1050,13 +1043,13 @@ msgstr ""
 "<b>open_basedir</b>-inställningen i din PHP-konfiguration för att tillåta en ny katalog."
 
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
-"Om din multisite-installation är en annan virtuell host, måste du kontakta din "
-"systemadministratör och begära att de konfigurerar din <b>open_basedir</b> inställning så "
-"att dina virtuella hostar kan få åtkomst till varandra."
+"Om din multisajtinstallation är på en annan virtuell host, måste du kontakta din "
+"systemadministrator och be att de konfigurerar din <b>open_basedir</b>-inställning så att "
+"dina virtuella hostar kan få åtkomst till varandra."
 
 msgid "The directory you entered does not exist"
 msgstr "Katalogen du angav existerar inte"
@@ -1072,25 +1065,18 @@ msgid "Unable to create multisite files. Ensure the files listed below are write
 msgstr ""
 "Kan inte skapa multisite-filer. Säkerställ att filerna som listas här nedan är skrivbara."
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Alla multisites är installerade från denna centrala kodförvaringsplats (codebase)."
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
+msgstr "Katalogen för den nya Gallery-installationen (exempel: /var/www/example.com/gallery2) "
 
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "You must provide the URL for your new multisite"
+msgstr "Du måste ange adressen till din nya multisajt"
+
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
 msgstr ""
-"Ange katalog för den nya webbsidan nedan. Sökvägen måste skilja från den centrala "
-"kodförvaringsplatsens sökväg:"
+"Adress till den nya Gallery-installationen (exempel: http://example.com/gallery2/main.php) "
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
-msgstr ""
-"Katalogen måste vara skrivbar för din webbserver/PHP-användare eller innehålla följande "
-"skrivbara filer:"
-
-msgid "Select Directory"
-msgstr "Välj Katalog "
+msgid "Select Directory and URL"
+msgstr "Välj katalog och adress"
 
 msgid "Multisite directory setup successfully."
 msgstr "Lyckades sätta upp multisite-katalogen."
@@ -1193,6 +1179,9 @@ msgstr ""
 "sökvägarna som du fyller i. Om du har problem med att hitta rätt sökväg till din "
 "datakatalog, experimentera med sökvägarna i textrutan nedan och se vilken expansion den ger "
 "dig."
+
+msgid "Do not use the installation directory for storage"
+msgstr "Använd inte installationskatalogen för lagring"
 
 msgid "The directory you entered is read only"
 msgstr "Katalogen du angett tillåter endast läsning"
@@ -1349,3 +1338,48 @@ msgstr "Utför"
 
 msgid "Begin Installation&raquo;"
 msgstr "Börja Installationen&raquo;"
+
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "Du kan nu gå till ditt nya Gallery. Ange adressen i din browser till %smain.php%s i "
+#~ "katalogen %s."
+
+#~ msgid "Please select the installation type"
+#~ msgstr "Var god välj installationstyp"
+
+#~ msgid ""
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
+#~ msgstr ""
+#~ "Gallery kan stödja flera oberoende webbsidor med en installation av programkoden. Välj "
+#~ "denna installationstyp om du vill installera ett nytt Gallery på samma webbserver men "
+#~ "under annan sökväg, underdomän eller domän."
+
+#~ msgid ""
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
+#~ msgstr ""
+#~ "Multisite-installationer delar inte album, bilder, användare eller någonting annat. De "
+#~ "behöver alla sin egen databas och egen fillagerkatalog. För mer information och "
+#~ "förklaring om Multisite-installationer, besök %s-sidan."
+
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr "Alla multisites är installerade från denna centrala kodförvaringsplats (codebase)."
+
+#~ msgid ""
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
+#~ msgstr ""
+#~ "Ange katalog för den nya webbsidan nedan. Sökvägen måste skilja från den centrala "
+#~ "kodförvaringsplatsens sökväg:"
+
+#~ msgid ""
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
+#~ msgstr ""
+#~ "Katalogen måste vara skrivbar för din webbserver/PHP-användare eller innehålla följande "
+#~ "skrivbara filer:"

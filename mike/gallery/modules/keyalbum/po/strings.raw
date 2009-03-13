@@ -1,9 +1,9 @@
-# $Id: strings.raw 15447 2006-12-13 19:23:45Z mindless $
+# $Id: strings.raw 17316 2007-12-28 17:43:45Z mindless $
 
 /* KeywordAlbum.inc */
+gettext("Keyword Album: %s")
 gettext("Keyword Album") /* also in: module.inc */
 gettext("keyword album")
-gettext("Keyword Album: %s")
 
 /* KeywordAlbumSiteAdmin.inc */
 gettext("All album views")
@@ -19,6 +19,7 @@ gettext("Display")
 gettext("Keywords:") /* also in: templates/blocks/KeywordLinks.tpl */
 gettext("Short URL for Keyword Albums")
 gettext("Keyword to use for dynamic album")
+gettext("Page number in a dynamic album")
 
 /* templates/KeywordAlbumSiteAdmin.tpl */
 gettext("Keyword Album Settings")

@@ -1,4 +1,4 @@
-# $Id: strings.raw 15342 2006-12-01 21:14:46Z andy_st $
+# $Id: strings.raw 16853 2007-08-10 03:46:26Z mindless $
 
 /* module.inc */
 gettext("EXIF/IPTC")
@@ -204,6 +204,8 @@ gettext("IPTC: Original Transmission Reference")
 gettext("IPTC: Date Created")
 gettext("IPTC: Copyright Flag")
 gettext("IPTC: Time Created")
+gettext("IPTC: Content Location Name")
+gettext("IPTC: Sub Location")
 
 /* templates/AdminExif.tpl */
 gettext("EXIF/IPTC Settings")
@@ -246,10 +248,12 @@ gettext("When photos are added to Gallery check for IPTC Object Name and apply t
 gettext("Item Title")
 gettext("When photos are added should we rotate them based on EXIF orientation data?")
 gettext("Rotate pictures automatically")
+gettext("Warning: No toolkit support for rotation of JPEG images.  Make sure to activate a toolkit module if using this option.")
 gettext("Preserve Original on Rotating")
 gettext("Save")
 
 /* templates/blocks/ExifInfo.tpl */
+gettext("Loading..")
 gettext("Photo Properties")
 gettext("summary")
 gettext("details")

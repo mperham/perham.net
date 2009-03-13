@@ -1,7 +1,7 @@
-# $Id: lt.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: lt.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 # along with this program; if not, write to the Free Software
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-12 23:42+0200\n"
 "PO-Revision-Date: 2007-03-08 11:17+0200\n"
@@ -73,16 +73,6 @@ msgid "Create Config File"
 msgstr "Sukurti konfigūracijos failą"
 
 #, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Neįmanoma įrašyti konfigūracinio failo <b>config.php</b> aplanke %s.  Prašau jo pakeisti "
-"prieigos teises.  Jei jūs naudojate Unix, tuomet norėdami tai ištaisyti įvykdykite komandą "
-"<i>chmod 666 config.php</i>."
-
-#, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "Failas config.php aplanke %s neegzistuoja"
 
@@ -113,6 +103,10 @@ msgid "You must have the Oracle OCI8 PHP module installed"
 msgstr "Reikia turėti įdiegta PHP modulį Oracle OCI8"
 
 msgid "You must have the Component Object Model(COM) PHP module installed"
+msgstr "Reikia turėti įdiegta PHP modulį Object Model(COM)"
+
+#, fuzzy
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
 msgstr "Reikia turėti įdiegta PHP modulį Object Model(COM)"
 
 #, c-format
@@ -222,7 +216,11 @@ msgstr "IBM DB2 (v9.x ir naujesnė)"
 msgid "Microsoft SQL Server 2005 and newer"
 msgstr "Microsoft SQL Server 2005 ar naujesnė"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown database type or no known tables information."
 msgstr "Nežinomas duombazės tipas arba nėra žinomos lentelių informacijos."
 
 #, c-format
@@ -233,16 +231,18 @@ msgstr "Nerastas nepanaudotas lentelių prefiksas, kuris būtu panašus į „%s
 msgid "Could not open schema file: \"%s\"."
 msgstr "Nepavyko atidaryti schemos failo :„%s“."
 
+#, fuzzy
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "Nepavyko sukurti DB bandomosios įvykių eigos. Peržiūrėkite klaidos pranešimą ir README.html "
 "dėl trūkstamų privilegijų ir išvalykite duombazę."
 
+#, fuzzy
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "Nepavyko atlikti DB numetimo testo įvykių sekos. Peržiūrėkite klaidos pranešimą ir README."
 "html dėl trūkstamų privilegijų ir išvalykite duombazę."
@@ -329,8 +329,8 @@ msgstr "Sistemos patikrinimai"
 msgid "Performing system checks"
 msgstr "Vykdomi sistemos patikrinimai"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP versija >= 4.3.0 arba >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP versija &gt;= 4.3.0 arba &gt;= 5.0.4"
 
 #, c-format
 msgid ""
@@ -510,14 +510,14 @@ msgstr "Suderinamumo su Zend modulis"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Dėmesio: Jūsų serverio PHP suderintas su Zend ze1_compatibility_mode kad gali sukelti PHP "
-"lūžimą. Spauskite <a href=\"%s\">čia</a>, kad patikrinti jūsų PHP. Jei pamatysite „SĖKMĖ“, "
-"tuomet jūsų PHP  tvarkoje. Jei gausite klaidos pranešimo, ar negausite jokio pranešimo, "
-"tuomet norėdami testi turite išjungti ze1_compatibility_mode."
+"lūžimą. Spauskite %sčia%s, kad patikrinti jūsų PHP. Jei pamatysite „SĖKMĖ“, tuomet jūsų PHP  "
+"tvarkoje. Jei gausite klaidos pranešimo, ar negausite jokio pranešimo, tuomet norėdami testi "
+"turite išjungti ze1_compatibility_mode."
 
 msgid "putenv() allowed"
 msgstr "putenv() leidžiamas"
@@ -689,6 +689,17 @@ msgstr "Bandyti vėl"
 msgid "Create a config file"
 msgstr "Sukurti konfigūracijos failą"
 
+#, fuzzy, c-format
+msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Neįmanoma įrašyti konfigūracinio failo <b>config.php</b> aplanke %s.  Prašau jo pakeisti "
+"prieigos teises.  Jei jūs naudojate Unix, tuomet norėdami tai ištaisyti įvykdykite komandą "
+"<i>chmod 666 config.php</i>."
+
 #, c-format
 msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
@@ -773,6 +784,12 @@ msgstr "DB slaptažodis:"
 msgid "DB Name:"
 msgstr "DB vardas:"
 
+msgid "DB Schema:"
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
+
 msgid "Table Prefix:"
 msgstr "Lentelių prefiksas:"
 
@@ -803,14 +820,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Įeiti į mano galeriją!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"Dabar galite įeiti į savo naują galeriją. Įveskite naršyklėje adresą %smain.php%s jūsų %s "
-"aplanke."
 
 msgid "Installer Help"
 msgstr "Diegiklio pagalba"
@@ -992,16 +1001,13 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "Yra klaidų. Peržiūrėkite žemiau esančius pranešimus."
 
-msgid "Please select the installation type"
-msgstr "Pasirinkite įdiegimo tipą"
-
 msgid "Standard installation"
 msgstr "Standartinis įdiegimas"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 "Tai numatytas įdiegimo tipas. Pasirinkite šį įdiegimo tipą, jei norite naują Galeriją "
 "įdiegti į palanką %s, kuris bus pasiekiamas adresu %s."
@@ -1009,32 +1015,20 @@ msgstr ""
 msgid "Multisite installation"
 msgstr "Daugelio saitų įdiegimas"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Galerija palaiko keletą nepriklausomų saitų, naudojant vieną kodo įdiegimą. Pasirinkite šį "
-"įdiegimo tipą, jei norite turėti naują galeriją tame pačiame serveryje keliuose skirtinguose "
-"aplankuose, subdomenuose ar adresuose."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"Daugelio saitų įdiegimas albumų, fotografijų, vartotojų ar bet ko kito bendrai nenaudoja. "
-"Jiems visiems reikia atskiro duomenų aplanko ir duomenų bazės. Norėdami sužinoti daugiau "
-"apie keleto saitų įdiegimą, pasilankykite puslapyje %s."
 
 msgid "You must enter a directory"
 msgstr "Reikia įvesti aplanką"
 
+#, fuzzy, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
 "Aplankas, kurį įvedėte yra kodo bazės aplankas. Jei norite įdiegti galeriją ten pat kur ir "
 "kodo bazė, tuomet pasirinkite standartinį įdiegimo tipą. Jei norite įdiegti keletą saitų, "
@@ -1052,9 +1046,9 @@ msgstr ""
 "<b>open_basedir</b>."
 
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
 
 msgid "The directory you entered does not exist"
@@ -1072,22 +1066,17 @@ msgstr ""
 "Nepavyko sukurti keleto saitų failų. Įsitikinkite, kad išvardinti failai yra prieinami "
 "rašymui."
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Visi saitai įdiegiami iš centrinės kodo repozicijos (kodo bazė)."
-
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
-msgstr "Žemiau įveskite naujo saito aplanką. Kodo bazės aplankas netinka:"
-
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
 msgstr ""
-"Aplankas turi būti prieinamas rašymui web serverio/php vartotojui,  arba jame turi būti "
-"prieinami rašymui šie failai:"
 
-msgid "Select Directory"
+msgid "You must provide the URL for your new multisite"
+msgstr ""
+
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
+msgstr ""
+
+#, fuzzy
+msgid "Select Directory and URL"
 msgstr "Pasirinkite aplanką"
 
 msgid "Multisite directory setup successfully."
@@ -1190,6 +1179,9 @@ msgstr ""
 "Jei jūs naudojate modernią naršyklę, Galerija pamėgins jūsų įvedamą kelią užbaigti "
 "automatiškai. Jei nesiseka rasti tinkamo kelio iki G2 duomenų aplanko, pamėginkite teksto "
 "lauke paeksperimentuoti ir pažiūrėkite ką jums siūlo automatinis užbaigimas."
+
+msgid "Do not use the installation directory for storage"
+msgstr ""
 
 msgid "The directory you entered is read only"
 msgstr "Įvestas aplankas prieinamas tik skaitymui"
@@ -1344,3 +1336,46 @@ msgstr "Pirmyn"
 
 msgid "Begin Installation&raquo;"
 msgstr "Pradėti diegimą&raquo;"
+
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "Dabar galite įeiti į savo naują galeriją. Įveskite naršyklėje adresą %smain.php%s jūsų %s "
+#~ "aplanke."
+
+#~ msgid "Please select the installation type"
+#~ msgstr "Pasirinkite įdiegimo tipą"
+
+#~ msgid ""
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
+#~ msgstr ""
+#~ "Galerija palaiko keletą nepriklausomų saitų, naudojant vieną kodo įdiegimą. Pasirinkite "
+#~ "šį įdiegimo tipą, jei norite turėti naują galeriją tame pačiame serveryje keliuose "
+#~ "skirtinguose aplankuose, subdomenuose ar adresuose."
+
+#~ msgid ""
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
+#~ msgstr ""
+#~ "Daugelio saitų įdiegimas albumų, fotografijų, vartotojų ar bet ko kito bendrai nenaudoja. "
+#~ "Jiems visiems reikia atskiro duomenų aplanko ir duomenų bazės. Norėdami sužinoti daugiau "
+#~ "apie keleto saitų įdiegimą, pasilankykite puslapyje %s."
+
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr "Visi saitai įdiegiami iš centrinės kodo repozicijos (kodo bazė)."
+
+#~ msgid ""
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
+#~ msgstr "Žemiau įveskite naujo saito aplanką. Kodo bazės aplankas netinka:"
+
+#~ msgid ""
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
+#~ msgstr ""
+#~ "Aplankas turi būti prieinamas rašymui web serverio/php vartotojui,  arba jame turi būti "
+#~ "prieinami rašymui šie failai:"

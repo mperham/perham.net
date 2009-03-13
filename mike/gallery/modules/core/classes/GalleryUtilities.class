@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17582 $
  * @static
  */
 class GalleryUtilities {
@@ -905,34 +905,51 @@ class GalleryUtilities {
     /**
      * Set HTTP response header.
      * @param string $header HTTP response header
-     * @param boolean $replace (optional) avoid replacing HTTP response header if already set
+     * @param boolean $replace (optional) avoid setting HTTP response header if it would replace an
+     *     existing header.  This differs from the PHP header() $replace param which adds a header
+     *     if it would otherwise replace and existing header.
      */
     function setResponseHeader($header, $replace=true) {
 	/* Use our PHP VM for testability */
 	global $gallery;
 	$phpVm = $gallery->getPhpVm();
 
-	$headers =& GalleryUtilities::_getResponseHeaders();
+	$responseHeaders =& GalleryUtilities::_getResponseHeaders();
 
+	/* Special case for HTTP status codes.  See http://php.net/header */
 	$key = 'status';
 	if (strncasecmp($header, 'HTTP/', 5)) {
-	    $key = strtolower(substr($header, 0, strpos($header, ':')));
+	    $key = GalleryUtilities::strToLower(substr($header, 0, strpos($header, ':')));
 	}
 
-	if ($replace || empty($headers[$key])) {
-	    $phpVm->header($header);
-	    $headers[$key] = $header;
+	/* Avoid setting HTTP response header if it would replace an existing header */
+	if (!$replace && (!empty($responseHeaders[$key])
+		|| ($key == 'location' && !empty($responseHeaders['status'])
+		    && !preg_match('/^HTTP\/[0-9]\.[0-9] 3/', $responseHeaders['status'])))) {
+	    return;
+	}
+
+	$phpVm->header($header);
+	$responseHeaders[$key] = $header;
+
+	/*
+	 * Special case for the Location: header.  Set HTTP status code unless some 3xx status code
+	 * is already set.  See http://php.net/header
+	 */
+	if ($key == 'location' && (empty($responseHeaders['status'])
+		|| !preg_match('/^HTTP\/[0-9]\.[0-9] 3/', $responseHeaders['status']))) {
+	    $responseHeaders['status'] = 'HTTP/1.0 302 Found';
 	}
     }
 
     /**
-     * Get HTTP response headers.
-     * @return array key => value pairs of headers.
+     * Array of response headers which have already been set.
+     * @return array key => value pairs of headers
      * @access private
      */
     function &_getResponseHeaders() {
-	static $headers = array();
-	return $headers;
+	static $responseHeaders;
+	return $responseHeaders;
     }
 
     /**
@@ -1114,8 +1131,8 @@ class GalleryUtilities {
 
     /**
      * Return approximate filename of given GalleryEntity, or 'unknown' if we can't figure it out.
-     * @param object GalleryEntity $entity
-     * @return array object GalleryStatus a status code
+     * @param GalleryEntity $entity
+     * @return array GalleryStatus a status code
      *               string pseudoFileName a filename
      */
     function getPseudoFileName($entity) {
@@ -1128,7 +1145,8 @@ class GalleryUtilities {
 	if (GalleryUtilities::isA($entity, 'GalleryFileSystemEntity')) {
 	    $pseudoFileName = $entity->getPathComponent();
 	} else if (GalleryUtilities::isA($entity, 'GalleryDerivative')) {
-	    list ($ret, $parentEntity) = GalleryCoreApi::loadEntitiesById($entity->getParentId());
+	    list ($ret, $parentEntity) =
+		GalleryCoreApi::loadEntitiesById($entity->getParentId(), 'GalleryEntity');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -1208,7 +1226,15 @@ class GalleryUtilities {
      * @return array(file => array('checksum'=>..,'size'=>..,'viewable'=>..), ...)
      */
     function readIndividualManifest($filePath, &$manifest) {
-	$lines = file($filePath);
+	global $gallery;
+
+	/* If the method getPlatform exists, then we are not installing and it is safe to use. */
+	if (method_exists($gallery, "getPlatform")) {
+	    $platform =& $gallery->getPlatform();
+	    $lines = $platform->file($filePath);
+	} else {
+	    $lines = file($filePath);
+	}
 	if (!empty($lines)) {
 	    foreach ($lines as $line) {
 		$line = trim(preg_replace('/#.*/', '', $line));
@@ -1240,7 +1266,7 @@ class GalleryUtilities {
      * @return boolean
      */
     function isValidEmailString($email) {
-	return (preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z]{2,4}$/', $email) > 0);
+	return (preg_match('/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.-]+\.[a-zA-Z]{2,6}$/', $email) > 0);
     }
 
     /**

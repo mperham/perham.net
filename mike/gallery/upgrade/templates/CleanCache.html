@@ -24,8 +24,6 @@
       <?php print _("Even though there were errors, you can still continue.  Or, you can try deleting these directories yourself and then click the <b>Try Again</b> link below."); ?>
     </p>
     <div class="go">
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-	    <a href="<?php generateUrl('index.php?step=' . $currentStep->getStepNumber()) ?>"><?php print _('Try Again') ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+	  <a href="<?php generateUrl('index.php?step=' . $currentStep->getStepNumber()) ?>" class="btn continue"><i></i><span><span></span><i></i><?php print _('Try Again') ?></span></a>
     </div>
     <?php endif; ?>

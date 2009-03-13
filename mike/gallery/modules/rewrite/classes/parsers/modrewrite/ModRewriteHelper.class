@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Rewrite
  * @subpackage Parsers
  * @author Douglas Cau <douglas@cau.se>
- * @version $Revision: 15990 $
+ * @version $Revision: 17580 $
  */
 class ModRewriteHelper {
 
@@ -208,7 +208,7 @@ class ModRewriteHelper {
      * Return the .htaccess content given a set or rewrite rules.
      * @param array $regexRules regular expression rules with settings
      * @param boolean $embedded (optional) true if the embedded .htaccess is wanted
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string the Gallery .htaccess section
      */
     function getHtaccessContent($regexRules, $embedded=false) {
@@ -318,7 +318,7 @@ class ModRewriteHelper {
     /**
      * Return the absolute path to the .htaccess file.
      * @param boolean $embedded (optional) true if embedded .htaccess is wanted
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string .htaccess file path
      */
     function getHtaccessPath($embedded=false) {
@@ -338,7 +338,7 @@ class ModRewriteHelper {
     /**
      * Check if the .htaccess file is writeable.
      * @param boolean $embedded (optional) if true then the embedded .htaccess is checked
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int rewrite status code (REWRITE_STATUS_OK on success)
      */
     function checkFile($embedded=false) {
@@ -380,7 +380,7 @@ class ModRewriteHelper {
      * Write Gallery data to the .htaccess file.
      * @param array $regexRules regular expression rules with settings
      * @param boolean $embedded (optional) if true then the embedded .htaccess is written
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int rewrite status code
      */
     function writeFile($regexRules, $embedded=false) {
@@ -439,7 +439,7 @@ class ModRewriteHelper {
      *     REWRITE_STATUS_APACHE_UNABLE_TO_TEST    unable to properly test mod_rewrite
      *     REWRITE_STATUS_MULTISITE                can't test mod_rewrite in multisite
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int rewrite status code
      *               int rewrite true status code
      */
@@ -651,7 +651,7 @@ class ModRewriteHelper {
     /**
      * @see RewriteParser::fetchEmbedConfig
      * @param array $param config values
-     * @param object ModRewriteParser $parser
+     * @param ModRewriteParser $parser
      * @param boolean $saveActiveRules true if we want to write the .htaccess
      */
     function saveEmbedConfig($param, $parser, $saveActiveRules) {

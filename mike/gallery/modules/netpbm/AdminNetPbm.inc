@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/netpbm/classes/NetPbmToolkitHelper.class');
  * @package NetPbm
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AdminNetPbmController extends GalleryController {
 
@@ -265,6 +265,7 @@ class AdminNetPbmView extends GalleryView {
 	$AdminNetPbm['failCount'] = $failCount;
 	$AdminNetPbm['debugSnippet'] = $debugSnippet;
 	$AdminNetPbm['isConfigure'] = !$isActive;
+	$AdminNetPbm['canExec'] = !in_array('exec', split(',\s*', ini_get('disable_functions')));
 
 	if ($failCount > 0) {
 	    $template->javascript('lib/javascript/BlockToggle.js');

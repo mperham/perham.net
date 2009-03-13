@@ -1,6 +1,6 @@
 <?php
 /*
-V4.93 10 Oct 2006  (c) 2000-2006 John Lim (jlim#natsoft.com.my). All rights reserved.
+V4.98 13 Feb 2008  (c) 2000-2008 John Lim (jlim#natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -132,6 +132,8 @@ class ADODB_mysql extends ADOConnection {
 	// if magic quotes disabled, use mysql_real_escape_string()
 	function qstr($s,$magic_quotes=false)
 	{
+		if (is_null($s)) return 'NULL';
+
 		if (!$magic_quotes) {
 		
 			if (ADODB_PHPVER >= 0x4300) {
@@ -213,19 +215,16 @@ class ADODB_mysql extends ADOConnection {
 			if ($holdtransOK) $this->_transOK = true; //if the status was ok before reset
 			$u = strtoupper($seqname);
 			$this->Execute(sprintf($this->_genSeqSQL,$seqname));
-			// Don't insert a new row if there is already one or if there's an error.
 			$cnt = $this->GetOne(sprintf($this->_genSeqCountSQL,$seqname));
-			if ($cnt !== false && !$cnt) {
-				$this->Execute(sprintf($this->_genSeq2SQL,$seqname,$startID-1));
-			}
+			if (!$cnt) $this->Execute(sprintf($this->_genSeq2SQL,$seqname,$startID-1));
 			$rs = $this->Execute($getnext);
 		}
+		
 		if ($rs) {
 			$this->genID = mysql_insert_id($this->_connectionID);
 			$rs->Close();
-		} else {
+		} else
 			$this->genID = 0;
-		}
 		
 		$this->_logsql = $savelog;
 		return $this->genID;
@@ -450,8 +449,9 @@ class ADODB_mysql extends ADOConnection {
 			$fld->primary_key = ($rs->fields[3] == 'PRI');
 			$fld->auto_increment = (strpos($rs->fields[5], 'auto_increment') !== false);
 			$fld->binary = (strpos($type,'blob') !== false);
-			$fld->unsigned = (strpos($type,'unsigned') !== false);
-				
+			$fld->unsigned = (strpos($type,'unsigned') !== false);	
+			$fld->zerofill = (strpos($type,'zerofill') !== false);
+			
 			if (!$fld->binary) {
 				$d = $rs->fields[4];
 				if ($d != '' && $d != 'NULL') {
@@ -636,13 +636,13 @@ class ADORecordSet_mysql extends ADORecordSet{
 		if ($fieldOffset != -1) {
 			$o = @mysql_fetch_field($this->_queryID, $fieldOffset);
 			$f = @mysql_field_flags($this->_queryID,$fieldOffset);
-			$o->max_length = @mysql_field_len($this->_queryID,$fieldOffset); // suggested by: Jim Nicholson (jnich@att.com)
+			$o->max_length = @mysql_field_len($this->_queryID,$fieldOffset); // suggested by: Jim Nicholson (jnich#att.com)
 			//$o->max_length = -1; // mysql returns the max length less spaces -- so it is unrealiable
 			$o->binary = (strpos($f,'binary')!== false);
 		}
 		else if ($fieldOffset == -1) {	/*	The $fieldOffset argument is not provided thus its -1 	*/
 			$o = @mysql_fetch_field($this->_queryID);
-		$o->max_length = @mysql_field_len($this->_queryID); // suggested by: Jim Nicholson (jnich@att.com)
+		$o->max_length = @mysql_field_len($this->_queryID); // suggested by: Jim Nicholson (jnich#att.com)
 		//$o->max_length = -1; // mysql returns the max length less spaces -- so it is unrealiable
 		}
 			

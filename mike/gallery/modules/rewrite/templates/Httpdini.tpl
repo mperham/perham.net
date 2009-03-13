@@ -1,8 +1,6 @@
 {*
- * $Revision: 15865 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 16235 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 # BEGIN Gallery 2 Url Rewrite section (GalleryID: {$Httpdini.galleryId})
 # Do not edit this section manually. Gallery will overwrite it automatically.

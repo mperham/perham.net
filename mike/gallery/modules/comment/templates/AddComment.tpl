@@ -1,15 +1,13 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17438 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="Add Comment"} </h2>
 </div>
 
 {if isset($form.action.preview)}
-<div class="gbBlock">
+<div class="gcBorder2" style="padding: 0.7em;">
   <h3> {g->text text="Comment Preview"} </h3>
 
   <div class="one-comment gcBorder2">
@@ -70,6 +68,12 @@
     {if isset($form.error.comment.missing)}
     <div class="giError">
       {g->text text="You must enter a comment!"}
+    </div>
+    {/if}
+    
+    {if isset($form.error.comment.flood)}
+    <div class="giError">
+      {g->text text="Please wait a little longer before posting another comment"}
     </div>
     {/if}
   </div>

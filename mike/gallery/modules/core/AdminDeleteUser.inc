@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AdminDeleteUserController extends GalleryController {
 
@@ -92,14 +92,15 @@ class AdminDeleteUserController extends GalleryController {
 		}
 	    } else { /* new owner field is empty, set the default new owner: 'admin' */
 		$activeUserId = $gallery->getActiveUserId(); /* activeUser = site admin */
-		list ($ret, $newOwner) = GalleryCoreApi::loadEntitiesById($activeUserId);
+		list ($ret, $newOwner) =
+		    GalleryCoreApi::loadEntitiesById($activeUserId, 'GalleryUser');
 		if ($ret) {
 		    return array($ret, null);
 		}
 	    }
 
 	    /* Verify the user exists */
-	    list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId);
+	    list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -146,7 +147,7 @@ class AdminDeleteUserController extends GalleryController {
 		} /* /if !empty($itemIds) */
 
 		/* Delete the user */
-		$ret = GalleryCoreApi::deleteEntityById($user->getId());
+		$ret = GalleryCoreApi::deleteEntityById($user->getId(), 'GalleryUser');
 		if ($ret) {
 		    return array($ret, null);
 		}
@@ -186,7 +187,7 @@ class AdminDeleteUserView extends GalleryView {
 	}
 
 	$userId = GalleryUtilities::getRequestVariables('userId');
-	list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId);
+	list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 	if ($ret) {
 	    return array($ret, null);
 	}

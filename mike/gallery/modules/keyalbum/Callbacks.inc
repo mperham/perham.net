@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 /**
  * @package KeyAlbum
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 16474 $
+ * @version $Revision: 17580 $
  */
 class KeyAlbumCallbacks {
 
@@ -86,7 +86,7 @@ class KeyAlbumCallbacks {
      * @param int $maxWeight max value for font enlargement in keyword cloud
      * @param boolean $includeFrequency false to only get distinct keywords, but not consider their
      *        frequency (cloud requires frequency)
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @static
      */
     function _findAllKeywords($param, $onlyPublic, $sizeLimit, $maxWeight, $includeFrequency) {

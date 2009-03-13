@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class ItemReorderController extends GalleryController {
 
@@ -33,7 +33,11 @@ class ItemReorderController extends GalleryController {
     function handleRequest($form) {
 	global $gallery;
 
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
 
 	/* Check permissions */
 	$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'core.edit');
@@ -62,12 +66,23 @@ class ItemReorderController extends GalleryController {
 	     * Make sure that the selectedId and targetId are children of the album
 	     */
 	    if (empty($error)) {
-		$selectedId = $form['selectedId'];
-		$targetId = $form['targetId'];
+		$selectedId = (int)$form['selectedId'];
+		$targetId = (int)$form['targetId'];
 		list ($ret, $entities) =
-		    GalleryCoreApi::loadEntitiesById(array($selectedId, $targetId));
+		    GalleryCoreApi::loadEntitiesById(array($selectedId, $targetId), 'GalleryItem');
 		if ($ret) {
 		    return array($ret, null);
+		}
+
+		list ($ret, $permissions) =
+		    GalleryCoreApi::fetchPermissionsForItems(array($selectedId, $targetId));
+		if ($ret) {
+		    return array($ret, null);
+		}
+		if (!isset($permissions[$selectedId]['core.view'])
+			|| !isset($permissions[$selectedId]['core.view'])) {
+		    /* Avoid information disclosure, act as if the items didn't exist. */
+		    return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		}
 
 		if ($entities[0]->getParentId() != $itemId ||
@@ -172,18 +187,17 @@ class ItemReorderView extends GalleryView {
 	global $gallery;
 
 	/* itemId is the album where we want to move items from */
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
 
 	if ($form['formName'] == 'ItemReorder') {
 	    /* No validation at the moment */
 	} else {
 	    /* First time around, load the form with item data */
 	    $form['formName'] = 'ItemReorder';
-	}
-
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
-	if ($ret) {
-	    return array($ret, null);
 	}
 
 	$show = array();
@@ -207,7 +221,7 @@ class ItemReorderView extends GalleryView {
 	    }
 
 	    /* Load all the peers */
-	    list ($ret, $peerItems) = GalleryCoreApi::loadEntitiesById($peerIds);
+	    list ($ret, $peerItems) = GalleryCoreApi::loadEntitiesById($peerIds, 'GalleryItem');
 	    if ($ret) {
 		return array($ret, null);
 	    }

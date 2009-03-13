@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Shutterfly
  * @subpackage UserInterface
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 16471 $
+ * @version $Revision: 17580 $
  */
 class PrintPhotosView extends GalleryView {
 
@@ -59,12 +59,27 @@ class PrintPhotosView extends GalleryView {
 	if (empty($cartItemIds) || empty($returnUrl)) {
 	    return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 	}
+	$ret = $urlGenerator->assertIsInternalUrl($returnUrl);
+	if ($ret) {
+	    return $ret;
+	}
 
 	/* Load the necessary item data */
 	$itemIds = array_keys($cartItemIds);
-	list ($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds);
+	list ($ret, $items) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryPhotoItem');
 	if ($ret) {
 	    return $ret;
+	}
+
+	list ($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems($itemIds);
+	if ($ret) {
+	    return $ret;
+	}
+	foreach ($itemIds as $id) {
+	    if (empty($permissions[$id]['core.view'])) {
+		/* Avoid information disclosure, act as if the item didn't exist. */
+		return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
+	    }
 	}
 
 	list ($ret, $thumbnails) = GalleryCoreApi::fetchThumbnailsByItemIds($itemIds);
@@ -82,18 +97,14 @@ class PrintPhotosView extends GalleryView {
 	    return $ret;
 	}
 
-	$ret = GalleryCoreApi::studyPermissions($itemIds);
-	if ($ret) {
-	    return $ret;
-	}
-
 	/* We want to know which are viewable to guests */
 	list ($ret, $anonymousUserId) =
 	    GalleryCoreApi::getPluginParameter('module', 'core', 'id.anonymousUser');
 	if ($ret) {
 	    return $ret;
 	}
-	$ret = GalleryCoreApi::studyPermissions($itemIds, $anonymousUserId, false);
+	list ($ret, $publicPermissions) =
+	    GalleryCoreApi::fetchPermissionsForItems($itemIds, $anonymousUserId, false);
 	if ($ret) {
 	    return $ret;
 	}
@@ -103,23 +114,14 @@ class PrintPhotosView extends GalleryView {
 	$entries = $protectedIds = array();
 	foreach ($items as $item) {
 	    $itemId = $item->getId();
-	    list ($ret, $permissions) = GalleryCoreApi::getPermissions($itemId);
-	    if ($ret) {
-		return $ret;
-	    }
-	    list ($ret, $publicPermissions) =
-		GalleryCoreApi::getPermissions($itemId, $anonymousUserId, false);
-	    if ($ret) {
-		return $ret;
-	    }
 
-	    if (!isset($permissions['shutterfly.print'])) {
+	    if (!isset($permissions[$itemId]['shutterfly.print'])) {
 		/* Skip any cart items for which we don't have print permission */
 		continue;
 	    }
 
 	    $source = isset($preferreds[$itemId]) ? $preferreds[$itemId] : $item;
-	    $needSession = !isset($publicPermissions['core.viewSource']);
+	    $needSession = !isset($publicPermissions[$itemId]['core.viewSource']);
 
 	    if ($needSession && !isset($sfSession)) {
 		/*

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class ItemAddConfirmationView extends GalleryView {
 
@@ -33,11 +33,11 @@ class ItemAddConfirmationView extends GalleryView {
     function loadTemplate(&$template, &$form) {
 	global $gallery;
 
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+	list ($ret, $item) = $this->getItem();
 	if ($ret) {
 	    return array($ret, null);
 	}
+	$itemId = $item->getId();
 
 	/*
 	 * We know what kind of operation happened, but for now let's compress
@@ -48,8 +48,8 @@ class ItemAddConfirmationView extends GalleryView {
 	if (!empty($status['addedFiles'])) {
 	    $count = sizeof($status['addedFiles']);
 	    for ($i = 0; $i < $count; $i++) {
-		list ($ret, $entity) =
-		    GalleryCoreApi::loadEntitiesById($status['addedFiles'][$i]['id']);
+		list ($ret, $entity) = GalleryCoreApi::loadEntitiesById(
+		    $status['addedFiles'][$i]['id'], 'GalleryItem');
 		if (!$ret) {
 		    $status['addedFiles'][$i]['exists'] = true;
 		    $uploaded++;

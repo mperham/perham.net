@@ -1,8 +1,6 @@
 {*
- * $Revision: 16471 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="Gallery Themes"} </h2>
@@ -99,6 +97,13 @@
       </select>
     </td>
   </tr></table>
+
+  <p class="giDescription">
+    {capture assign="pluginsLink"}<a href="{g->url arg1="view=core.SiteAdmin"
+     arg2="subView=core.AdminPlugins"}">{/capture}
+    {g->text text="To activate more themes visit the %sPlugins%s page."
+	     arg1=$pluginsLink arg2="</a>"}
+  </p>
 </div>
 
 <div class="gbBlock gcBackground1">
@@ -159,7 +164,7 @@
 		{html_options options=$setting.choices selected=$form.key[$setting.key]}
 	      </select>
 	    {elseif ($setting.type == 'checkbox')}
-	      <input type="checkbox"{if !empty($setting.value)} checked="checked"{/if}
+	      <input type="checkbox" {if !empty($setting.value)}checked="checked" {/if}
 	       name="{g->formVar var="form[key][`$setting.key`]"}" />
 	    {elseif ($setting.type == 'block-list')}
 	      <table>
@@ -231,18 +236,18 @@
 		{foreach from=$AdminThemes.availableBlocks key=moduleId item=blocks}
 		  {foreach from=$blocks key=blockName item=block}
 		    block = bsw_addAvailableBlock("{$setting.key}", "{$moduleId}.{$blockName}",
-			    "{g->text text=$block.description l10Domain="modules_$moduleId"}");
+			    "{g->text text=$block.description l10Domain="modules_$moduleId" forJavascript=true}");
 		    {if !empty($block.vars)}
 		      {foreach from=$block.vars key=varKey item=varInfo}
 			tmp = new Array();
 			{if ($varInfo.type == 'choice')}
 			  {foreach from=$varInfo.choices key=choiceKey item=choiceValue}
 			    tmp["{$choiceKey}"] = "{g->text text=$choiceValue
-							    l10Domain="modules_$moduleId"}";
+							    l10Domain="modules_$moduleId" forJavascript=true}";
 			  {/foreach}
 			{/if}
 			block.addVariable("{$varKey}", "{$varInfo.default}",
-			  "{g->text text=$varInfo.description l10Domain="modules_$moduleId"}",
+			  "{g->text text=$varInfo.description l10Domain="modules_$moduleId" forJavascript=true}",
 			  "{$varInfo.type}", tmp);
 	                {if !empty($varInfo.overrides)}
 	                {foreach from=$varInfo.overrides item=override}
@@ -254,8 +259,8 @@
 		  {/foreach}
 		{/foreach}
 		{* Now initialize the form with the album block values *}
-		bsw_initAdminForm("{$setting.key}", "{g->text text="Parameter"}",
-						    "{g->text text="Value"}");
+		bsw_initAdminForm("{$setting.key}", "{g->text text="Parameter" forJavascript=true}",
+						    "{g->text text="Value" forJavascript=true}");
 		// ]]>
 	      </script>
 	    {/if}

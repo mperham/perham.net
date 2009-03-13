@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 16471 $
+ * @version $Revision: 17580 $
  * @static
  */
 class WebHelper_simple {
@@ -35,17 +35,12 @@ class WebHelper_simple {
      *       header to verify that we got all the data we expected.
      *
      */
-    function fetchWebFile($url, $outputFile, $extraHeaders=array(), $depth=0) {
+    function fetchWebFile($url, $outputFile, $extraHeaders=array(), $postDataArray=array(),
+	    $depth=0) {
 	global $gallery;
 
 	/* Convert illegal characters */
 	$url = str_replace(' ', '%20', $url);
-
-	$components = parse_url($url);
-	$port = empty($components['port']) ? 80 : $components['port'];
-	if (empty($components['path'])) {
-	    $components['path'] = '/';
-	}
 
 	/* Don't redirect too far */
 	if ($depth > 5) {
@@ -53,29 +48,32 @@ class WebHelper_simple {
 	    return array(false, null, null, null);
 	}
 
+	$urlComponents = WebHelper_simple::_parseUrlForFsockopen($url);
 	$platform =& $gallery->getPlatform();
-	$fd = @$platform->fsockopen($components['host'], $port, $errno, $errstr, 5);
+	$fd = @$platform->fsockopen(
+		$urlComponents['fsockhost'], $urlComponents['port'], $errno, $errstr, 5);
 	if (empty($fd)) {
 	    $gallery->debug("Error $errno: '$errstr' retrieving $url");
 	    return array(false, null, null, null);
 	}
 
-	$get = $components['path'];
-	if (!empty($components['query'])) {
-	    $get .= '?' . $components['query'];
+	$requestMethod = 'GET';
+	$postDataRaw = '';
+	if (!empty($postDataArray)) {
+	    $requestMethod = 'POST';
+	    $postDataRaw = WebHelper_simple::_encodePostData($postDataArray, $extraHeaders);
 	}
 
-	/* Unescape ampersands, since if the url comes from form input it will be escaped */
-	$get = str_replace('&amp;', '&', $get);
-
-	$headerLines = array('Host: ' . $components['host']);
+	$headerLines = array('Host: ' . $urlComponents['host']);
 	foreach ($extraHeaders as $headerKey => $headerValue) {
 	    $headerLines[] = "$headerKey: $headerValue";
 	}
 
-	$ok = $platform->fwrite($fd, sprintf("GET %s HTTP/1.0\r\n%s\r\n\r\n",
-					     $get,
-					     implode("\r\n", $headerLines)));
+	$ok = $platform->fwrite($fd, sprintf("%s %s HTTP/1.0\r\n%s\r\n\r\n%s",
+					     $requestMethod,
+					     $urlComponents['uri'],
+					     implode("\r\n", $headerLines),
+					     $postDataRaw));
 	if (!$ok) {
 	    /* Zero bytes written or false was returned */
 	    $gallery->debug(
@@ -117,44 +115,11 @@ class WebHelper_simple {
 	}
 
 	if (isset($headers['Location'])) {
-	    $redirectUrl = $headers['Location'];
-	    if (is_array($redirectUrl)) {
-		/* If odd http response has multiple Location headers just pick the first */
-		$redirectUrl = array_shift($redirectUrl);
-	    }
-
-	    /* The redirect url is supposed to be absolute, but not everybody plays by the rules */
-	    $redirectComponents = parse_url($redirectUrl);
-	    foreach (array('scheme', 'host') as $key) {
-		if (empty($redirectComponents[$key])) {
-		    $redirectComponents[$key] = $components[$key];
-		}
-	    }
-
-	    if (empty($redirectComponents['port'])) {
-		if (isset($components['port'])) {
-		    $redirectPort = ':' . $components['port'];
-		} else {
-		    $redirectPort = '';
-		}
-	    }
-
-	    if (empty($redirectComponents['query'])) {
-		$query = '';
-	    } else {
-		$query = '?' . $redirectComponents['query'];
-	    }
-
-	    $redirectUrl = sprintf('%s://%s%s%s%s',
-				   $redirectComponents['scheme'],
-				   $redirectComponents['host'],
-				   $redirectPort,
-				   $redirectComponents['path'],
-				   $query);
+	    $redirectUrl = WebHelper_simple::_parseLocation($headers['Location'], $urlComponents);
 
 	    /* Returning output directly from fetchWebFile() confuses the CodeAudit */
-	    $result =
-		WebHelper_simple::fetchWebFile($redirectUrl, $outputFile, $extraHeaders, $depth+1);
+	    $result = WebHelper_simple::fetchWebFile($redirectUrl, $outputFile, $extraHeaders,
+		$postDataArray, $depth+1);
 	    return array($result[0], $result[1], $result[2], $result[3]);
 	}
 
@@ -208,37 +173,11 @@ class WebHelper_simple {
 	    WebHelper_simple::requestWebPage($url, 'GET', $extraHeaders);
 
 	if (isset($responseHeaders['Location'])) {
-	    $redirectUrl = $responseHeaders['Location'];
-	    if (is_array($redirectUrl)) {
-		/* If odd HTTP response has multiple Location headers just pick the first */
-		$redirectUrl = array_shift($redirectUrl);
-	    }
-
-	    $urlComponents = parse_url($url);
-	    if (empty($urlComponents['port'])) {
-		$urlComponents['port'] = 80;
-	    }
-
-	    /* The redirect URL is supposed to be absolute, but not everybody plays by the rules */
-	    $redirectComponents = parse_url($redirectUrl);
-	    foreach (array('scheme', 'host', 'port') as $key) {
-		if (empty($redirectComponents[$key])) {
-		    $redirectComponents[$key] = $urlComponents[$key];
-		}
-	    }
-
-	    $redirectUrl = sprintf('%s://%s%s%s%s',
-				   $redirectComponents['scheme'],
-				   $redirectComponents['host'],
-				   $redirectComponents['port'] == 80
-				       ? '' : ':' . $redirectComponents['port'],
-				   $redirectComponents['path'],
-				   empty($redirectComponents['query'])
-				       ? '' : '?' . $redirectComponents['query']);
+	    $redirectUrl =
+		WebHelper_simple::_parseLocation($responseHeaders['Location'], parse_url($url));
 
 	    /* Returning output directly from fetchWebPage confuses the CodeAudit */
 	    $result = WebHelper_simple::fetchWebPage($redirectUrl, $extraHeaders, $depth + 1);
-
 	    return array($result[0], $result[1], $result[2], $result[3], $result[4]);
 	}
 
@@ -252,17 +191,7 @@ class WebHelper_simple {
      * @see GalleryCoreApi::postToWebPage
      */
     function postToWebPage($url, $postDataArray, $extraHeaders=array()) {
-	$postDataRaw = '';
-	foreach ($postDataArray as $key => $value) {
-	    if (!empty($postDataRaw)) {
-		$postDataRaw .= '&';
-	    }
-	    $postDataRaw .= urlencode($key) . '=' . urlencode($value);
-	}
-	$postDataRaw .= "\r\n";
-
-	$extraHeaders['Content-Type'] = 'application/x-www-form-urlencoded';
-	$extraHeaders['Content-Length'] = strlen($postDataRaw);
+	$postDataRaw = WebHelper_simple::_encodePostData($postDataArray, $extraHeaders);
 
 	/* Read the web page into a buffer */
 	list ($responseStatus, $responseHeaders, $responseBody) =
@@ -272,30 +201,44 @@ class WebHelper_simple {
     }
 
     /**
+     * Encode the post data.  For each key/value pair, urlencode both the key and the value and then
+     * concatenate together.  As per the specification, each key/value pair is separated with an
+     * ampersand (&)
+     * @param array $postDataArray the key/value post data
+     * @param array $extraHeaders extra headers to pass to the server
+     * @return string the encoded post data
+     */
+    function _encodePostData($postDataArray, &$extraHeaders) {
+	$postDataRaw = '';
+	foreach ($postDataArray as $key => $value) {
+	    if (!empty($postDataRaw)) {
+		$postDataRaw .= '&';
+	    }
+	    $postDataRaw .= urlencode($key) . '=' . urlencode($value);
+	}
+
+	$extraHeaders['Content-Type'] = 'application/x-www-form-urlencoded';
+	$extraHeaders['Content-Length'] = strlen($postDataRaw);
+
+	return $postDataRaw;
+    }
+
+    /**
      * @see GalleryCoreApi::requestWebPage
      */
     function requestWebPage($url, $requestMethod='GET', $requestHeaders=array(), $requestBody='') {
 	global $gallery;
 	$platform =& $gallery->getPlatform();
 
-	$urlComponents = parse_url($url);
-	if (empty($urlComponents['port'])) {
-	    $urlComponents['port'] = 80;
-	}
-	if (empty($urlComponents['path'])) {
-	    $urlComponents['path'] = '/';
-	}
+	/* Convert illegal characters */
+	$url = str_replace(' ', '%20', $url);
 
+	$urlComponents = WebHelper_simple::_parseUrlForFsockopen($url);
 	$handle = @$platform->fsockopen(
-	    $urlComponents['host'], $urlComponents['port'], $errno, $errstr, 5);
+	    $urlComponents['fsockhost'], $urlComponents['port'], $errno, $errstr, 5);
 	if (empty($handle)) {
 	    $gallery->debug("Error $errno: '$errstr' requesting $url");
 	    return array(null, null, null);
-	}
-
-	$requestUri = $urlComponents['path'];
-	if (!empty($urlComponents['query'])) {
-	    $requestUri .= '?' . $urlComponents['query'];
 	}
 
 	$headerLines = array('Host: ' . $urlComponents['host']);
@@ -305,7 +248,7 @@ class WebHelper_simple {
 
 	$success = $platform->fwrite($handle, sprintf("%s %s HTTP/1.0\r\n%s\r\n\r\n%s",
 						      $requestMethod,
-						      $requestUri,
+						      $urlComponents['uri'],
 						      implode("\r\n", $headerLines),
 						      $requestBody));
 	if (!$success) {
@@ -356,6 +299,65 @@ class WebHelper_simple {
 	$platform->fclose($handle);
 
 	return array($responseStatus, $responseHeaders, $responseBody);
+    }
+
+    /**
+     * Prepare for fsockopen call.
+     * @param string $url
+     * @return array url components
+     * @access private
+     */
+    function _parseUrlForFsockopen($url) {
+	$urlComponents = parse_url($url);
+	if (GalleryUtilities::strToLower($urlComponents['scheme']) == 'https') {
+	    $urlComponents['fsockhost'] = 'ssl://' . $urlComponents['host'];
+	    $defaultPort = 443;
+	} else {
+	    $urlComponents['fsockhost'] = $urlComponents['host'];
+	    $defaultPort = 80;
+	}
+	if (empty($urlComponents['port'])) {
+	    $urlComponents['port'] = $defaultPort;
+	}
+	if (empty($urlComponents['path'])) {
+	    $urlComponents['path'] = '/';
+	}
+	$uri = $urlComponents['path']
+	    . (empty($urlComponents['query']) ? '' : '?' . $urlComponents['query']);
+	/* Unescape ampersands, since if the url comes from form input it will be escaped */
+	$urlComponents['uri'] = str_replace('&amp;', '&', $uri);
+	return $urlComponents;
+    }
+
+    /**
+     * Prepare to follow redirect URL.
+     * @param string $location
+     * @param array $fromComponents context we're redirecting from
+     * @param string redirect URL
+     */
+    function _parseLocation($location, $fromComponents) {
+	if (is_array($location)) {
+	    /* If odd http response has multiple Location headers just pick the first */
+	    $location = array_shift($location);
+	}
+
+	/* The redirect url is supposed to be absolute, but not everybody plays by the rules */
+	$components = parse_url($location);
+	foreach (array('scheme', 'host') as $key) {
+	    if (empty($components[$key])) {
+		$components[$key] = $fromComponents[$key];
+		if ($key == 'host' && empty($components['port'])
+			&& !empty($fromComponents['port'])) {
+		    $components['port'] = $fromComponents['port'];
+		}
+	    }
+	}
+
+	$port = empty($components['port']) ? '' : ':' . $components['port'];
+	$query = empty($components['query']) ? '' : '?' . $components['query'];
+
+	return sprintf('%s://%s%s%s%s',
+		$components['scheme'], $components['host'], $port, $components['path'], $query);
     }
 }
 ?>

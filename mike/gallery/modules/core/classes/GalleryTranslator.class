@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,20 @@
  */
 
 /**
- * Internationalization and Localization utilities
+ * Internationalization and Localization utilities.
+ * 
+ * Definitions:
+ * $locale - consists of ISO 3166 country codes and ISO 639 language codes i.e. en_US, en_GB, es_MX
+ * $language - the first portion of the locale
+ * $langCode - representation of the locale with the country portion removed if it is the default.
+ * 	       (i.e. en_US => en; en_GB => en_GB) in some cases the $langCode == $locale.  The
+ * 	       exception is the handling of chinese.  For political reasons there is no default
+ * 	       country and it's always represented by the full $locale (zh_CN or zh_TW)
+ * @todo go through and standardize the usage or remove the langCode usage and just use locale 
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class GalleryTranslator {
 
@@ -180,7 +189,7 @@ class GalleryTranslator {
 	    /* Portuguese */
 	    $supportedLanguages['pt']['BR']['description'] = 'Portugu&#234;s Brasileiro';
 	    $supportedLanguages['pt']['PT']['description'] = 'Portugu&#234;s';
-	    $defaultCountry['pt'] = 'BR';
+	    $defaultCountry['pt'] = 'PT';
 
 	    /* Romanian */
 	    $supportedLanguages['ro']['RO']['description'] = 'Rom&#226;n&#259;';
@@ -195,8 +204,9 @@ class GalleryTranslator {
 	    $defaultCountry['sl'] = 'SI';
 
 	    /* Serbian */
-	    $supportedLanguages['sr']['YU']['description'] = 'Srpski';
-	    $defaultCountry['sr'] = 'YU';
+	    /* Note: our sr.po files are actually sr_CS@Latn - sr_CS script should be cyrillic */
+	    $supportedLanguages['sr']['CS']['description'] = 'Srpski';
+	    $defaultCountry['sr'] = 'CS';
 
 	    /* Finnish */
 	    $supportedLanguages['fi']['FI']['description'] = 'Suomi';
@@ -205,10 +215,6 @@ class GalleryTranslator {
 	    /* Swedish */
 	    $supportedLanguages['sv']['SE']['description'] = 'Svenska';
 	    $defaultCountry['sv'] = 'SE';
-
-	    /* Thai */
-	    $supportedLanguages['th']['TH']['description'] = 'Thai';
-	    $defaultCountry['th'] = 'TH';
 
 	    /* Ukrainian */
 	    $supportedLanguages['uk']['UA']['description'] = 'Українська';
@@ -267,14 +273,12 @@ class GalleryTranslator {
 
     /**
      * Return the list of languages that we support.
-     *
-     * @return array['language code']['country code'] =
+      * @return array['language code']['country code'] =
      *              array('description', 'right-to-left'?)
+     * @deprecated Remove on next major api bump. Use GalleryCoreApi::getSupportedLanguages
      */
     function getSupportedLanguages() {
-	/* Get our language data */
-	list ($supportedLanguages, $defaultCountry) = GalleryTranslator::getLanguageData();
-	return $supportedLanguages;
+	return GalleryCoreApi::getSupportedLanguages();
     }
 
     /**
@@ -282,7 +286,7 @@ class GalleryTranslator {
      *
      * @param string $languageCode the language code hint (eg. 'en_US' or 'zh_CN')
      * @param boolean $dontUseDatabase (optional) true if we should not use the database
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string language code
      */
     function init($languageCode=null, $dontUseDatabase=false) {
@@ -344,7 +348,11 @@ class GalleryTranslator {
 	}
 	/* For Norwegian try nb language code in addition to no */
 	if (substr($locale, 0, 2) == 'no') {
-	    return GalleryTranslator::_setlocale($category, 'nb' . substr($locale, 2));
+	    return GalleryTranslator::_setlocale($category, substr_replace($locale, 'nb', 0, 2));
+	}
+	/* For Serbia & Montenegro also try the old country code for Yugoslavia */
+	if (substr($locale, 3, 2) == 'CS') {
+	    return GalleryTranslator::_setlocale($category, substr_replace($locale, 'YU', 3, 2));
 	}
 	$gallery->debug("Warning: Unable to select locale $locale");
 	return false;
@@ -353,7 +361,7 @@ class GalleryTranslator {
     /**
      * Get default language code for this request.
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string language code
      * @static
      */
@@ -382,6 +390,14 @@ class GalleryTranslator {
     }
 
     /**
+     * Return supported locale that was selected after initialization.
+     * @return string locale
+     */
+    function getActiveLanguageCode() {
+	return $this->_languageCode;
+    }
+
+    /**
      * Find a supported locale from given string.
      *
      * @param string $languageCode the language code hint
@@ -399,7 +415,7 @@ class GalleryTranslator {
 	}
 
 	list ($language, $country) = preg_split('/[-_]/', "${languageCode}_");
-	$country = strtoupper($country);
+	$country = GalleryUtilities::strToUpper($country);
 	if ((empty($country) || !isset($supportedLanguages[$language][$country]))
 		&& isset($defaultCountry[$language])) {
 	    /* Use default country if none specified or particular country not supported */
@@ -447,7 +463,7 @@ class GalleryTranslator {
      *  $data['arg1'] = 'fun';
      *  $data['arg2'] = 2;  or  $data['args'] = array('fun', 2);
      *
-     *  localized:  'Some text to localize with 5 arguments'
+     *  localized:  'Some fun text to localize with 5 arguments'
      *
      * Example 2:
      *  $data['one'] = 'You have %d orange'
@@ -458,7 +474,7 @@ class GalleryTranslator {
      *
      * @param string $domain the domain (eg. pluginType . 's_' . pluginId)
      * @param mixed $data a single string, or an array of parameters
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string the localized value
      */
     function translateDomain($domain, $data) {
@@ -475,20 +491,15 @@ class GalleryTranslator {
 
 	if (function_exists('dgettext') && $this->_languageCode != 'en_US') {
 	    if (isset($domain) && !isset($this->_boundDomains[$domain])) {
-		$platform =& $gallery->getPlatform();
-		list ($componentType, $componentName) = split('_', $domain);
-		$basePath = sprintf('%s/%s/%s/locale',
-				    $platform->realpath(dirname(__FILE__) . '/../../..'),
-				    $componentType, $componentName);
-		if ($gallery->getDebug()) {
-		    $gallery->debug("Binding text domain: $domain -> $basePath");
-		}
-		bindtextdomain($domain, $basePath);
+		/* The installer and upgrader use a separate domain and should never end up here */
+		$localeDir = $gallery->getConfig('data.gallery.locale');
+		bindtextdomain($domain, $localeDir);
 		textdomain($domain);
 		if (function_exists('bind_textdomain_codeset')) {
 		    bind_textdomain_codeset($domain, 'UTF-8');
 		}
-		$this->_boundDomains[$domain] = $basePath;
+
+		$this->_boundDomains[$domain] = 1;
 	    }
 
 	    /*
@@ -520,10 +531,6 @@ class GalleryTranslator {
 	    } else {
 		$localized = $data['many'];
 	    }
-	    /* Strip out comment text used to assist translators */
-	    if (substr($localized, -3) == '-->' && $i = strpos($localized, ' <!--')) {
-		$localized = substr($localized, 0, $i);
-	    }
 	}
 
 	$i = 1;
@@ -547,9 +554,50 @@ class GalleryTranslator {
 	 * This is a useful debug routine.  Uncomment it to have every string prefixed with the
 	 * domain it was localized in.
 	 */
-	//$localized = "<font size=1 color=#C33>$domain:</font>$localized";
+	// $localized = "<font size=1 color=#C33>$domain/{$this->_languageCode}:</font>$localized";
 
 	return array(null, $localized);
+    }
+
+    /**
+     * Convert the locale to the language code
+     * @param string $locale The locale code to be converted (i.e. en_US, en_GB, etc.)
+     * @return array GalleryStatus a status code
+     * 		     string language code (i.e. en, en_GB, etc.)
+     */
+    function getLanguageCodeFromLocale($locale) {
+	list ($language, $country) = explode('_', $locale . '_' );
+	/* Don't apply default to Chinese for political correctness */
+	if ($language == 'zh') {
+	    return array(null, $locale);
+	}
+	list ($value, $defaultCountries) = $this->getLanguageData();
+	if (!isset($defaultCountries[$language])) {
+	    return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__,
+				"No default country defined for \"$locale\"."), null);
+	}
+
+	return array(null, ($country == $defaultCountries[$language]) ? $language : $locale);
+    }
+
+    /**
+     * Determine the language and country given the language code (i.e. en, en_GB)
+     * @param string $langCode The language code to be converted.
+     * @return array GalleryStatus a status code
+     * 		     string language
+     * 		     string country
+     */
+    function getLanguageAndCountryFromLanguageCode($langCode) {
+	list ($language, $country) = explode('_', $langCode . '_');
+	if (empty($country)) {
+	    list ($value, $defaultCountries) = $this->getLanguageData();
+	    if (!isset($defaultCountries[$language])) {
+		return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__,
+				"No default country defined for \"$langCode\"."), null, null);
+	    }
+	    $country = $defaultCountries[$language];
+	}
+	return array(null, $language, $country);
     }
 }
 ?>

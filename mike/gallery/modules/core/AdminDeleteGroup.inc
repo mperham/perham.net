@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AdminDeleteGroupController extends GalleryController {
 
@@ -48,12 +48,12 @@ class AdminDeleteGroupController extends GalleryController {
 	} else if (isset($form['action']['delete'])) {
 
 	    /* Only allow users to delete GROUP_NORMAL groups. */
-	    list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId);
+	    list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId, 'GalleryGroup');
 	    if ($ret) {
 		return array($ret, null);
 	    }
 
-	    $ret = GalleryCoreApi::deleteEntityById($group->getId());
+	    $ret = GalleryCoreApi::deleteEntityById($group->getId(), 'GalleryGroup');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -92,7 +92,7 @@ class AdminDeleteGroupView extends GalleryView {
 	}
 
 	$groupId = GalleryUtilities::getRequestVariables('groupId');
-	list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId);
+	list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId, 'GalleryGroup');
 	if ($ret) {
 	    return array($ret, null);
 	}

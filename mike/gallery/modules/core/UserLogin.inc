@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15955 $
+ * @version $Revision: 17924 $
  */
 class UserLoginController extends GalleryController {
 
@@ -193,6 +193,7 @@ class UserLoginView extends GalleryView {
      */
     function loadTemplate(&$template, &$form) {
 	global $gallery;
+	$session =& $gallery->getSession();
 
 	/* Check if the default login view URL has been overridden and redirect appropriately */
 	$loginRedirect = $gallery->getConfig('loginRedirect');
@@ -210,6 +211,7 @@ class UserLoginView extends GalleryView {
 		$redirectUrl = $urlGenerator->generateUrl($loginRedirect,
 							  array('forceSessionId' => false,
 							  	'forceFullUrl' => true));
+		$redirectUrl = rtrim(str_replace('&amp;', '&', $redirectUrl), '&? ');
 		$phpVm->header("Location: $redirectUrl");
 		$phpVm->exit_();
 	    }
@@ -218,15 +220,21 @@ class UserLoginView extends GalleryView {
 	if ($form['formName'] != 'UserLogin') {
 	    $form['formName'] = 'UserLogin';
 	    $form['username'] = '';
-
-	    /*
-	     * When logging in we don't have a session yet, thus no navigation history / a place
-	     * to store the returnUrl. Thus store the returnUrl in the login form
-	     */
-	    $returnUrl = GalleryUtilities::getRequestVariables('return');
-	    $form['returnUrl'] = !empty($returnUrl) ? $returnUrl : '';
 	}
 
+	$reauthenticate = false;
+	list ($ret, $isAdmin) = GalleryCoreApi::isUserInSiteAdminGroup();
+	if ($ret) {
+    	    return array($ret, null);
+	}
+	if ($isAdmin) {
+	    list ($ret, $reauthenticate) = $session->hasSiteAdminSessionExpired();
+	    if ($ret) {
+		return array($ret, null);
+    	    }
+	}
+
+	$template->setVariable('reauthenticate', $reauthenticate);
 	$template->setVariable('controller', 'core.UserLogin');
 	return array(null, array('body' => 'modules/core/templates/UserLogin.tpl'));
     }

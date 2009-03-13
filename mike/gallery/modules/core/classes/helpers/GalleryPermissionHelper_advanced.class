@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/helpers/GalleryPermissionHelpe
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 16471 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryPermissionHelper_advanced {
@@ -41,7 +41,9 @@ class GalleryPermissionHelper_advanced {
 	}
 
 	$event = GalleryCoreApi::newEvent('Gallery::ViewableTreeChange');
-	$event->setData(array('userId' => $userId, 'itemId' => $itemId));
+	$event->setData(array('userId' => $userId, 'itemId' => $itemId, 
+			      'permission' => $permission, 'applyToChildren' => $applyToChildren, 
+			      'changeType' => 'add'));
 	list ($ret) = GalleryCoreApi::postEvent($event);
 	if ($ret) {
 	    return $ret;
@@ -60,7 +62,8 @@ class GalleryPermissionHelper_advanced {
 	    return $ret;
 	}
 
-	$ret = GalleryPermissionHelper_advanced::_postGroupEvent($groupId, $itemId);
+	$ret = GalleryPermissionHelper_advanced::_postGroupEvent( 
+	    $groupId, $itemId, $permission, $applyToChildren, 'add');
 	if ($ret) {
 	    return $ret;
 	}
@@ -73,12 +76,15 @@ class GalleryPermissionHelper_advanced {
      *
      * @param int $groupId
      * @param mixed $itemId item id or array of ids
-     * @return object GalleryStatus a status code
+     * @param string $permission the permission id
+     * @param boolean $applyToChildren whether or not this call applies to child items
+     * @param string $changeType the type of change ('add' or 'remove')
+     * @return GalleryStatus a status code
      * @access private
      */
-    function _postGroupEvent($groupId, $itemId) {
+    function _postGroupEvent($groupId, $itemId, $permission, $applyToChildren, $changeType) {
 	$userId = null;
-	list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId);
+	list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId, 'GalleryGroup');
 	if ($ret) {
 	    return $ret;
 	}
@@ -92,7 +98,9 @@ class GalleryPermissionHelper_advanced {
 	}
 
 	$event = GalleryCoreApi::newEvent('Gallery::ViewableTreeChange');
-	$event->setData(array('userId' => $userId, 'itemId' => $itemId));
+	$event->setData(array('userId' => $userId, 'itemId' => $itemId, 
+			      'permission' => $permission, 'applyToChildren' => $applyToChildren,
+			      'changeType' => $changeType));
 	list ($ret) = GalleryCoreApi::postEvent($event);
 	if ($ret) {
 	    return $ret;
@@ -126,7 +134,9 @@ class GalleryPermissionHelper_advanced {
 	}
 
 	$event = GalleryCoreApi::newEvent('Gallery::ViewableTreeChange');
-	$event->setData(array('userId' => $userId, 'itemId' => $itemId));
+	$event->setData(array('userId' => $userId, 'itemId' => $itemId, 
+			      'permission' => $permission, 'applyToChildren' => $applyToChildren, 
+			      'changeType' => 'remove'));
 	list ($ret) = GalleryCoreApi::postEvent($event);
 	if ($ret) {
 	    return $ret;
@@ -146,7 +156,8 @@ class GalleryPermissionHelper_advanced {
 	    return $ret;
 	}
 
-	$ret = GalleryPermissionHelper_advanced::_postGroupEvent($groupId, $itemId);
+	$ret = GalleryPermissionHelper_advanced::_postGroupEvent( 
+	    $groupId, $itemId, $permission, $applyToChildren, 'remove');
 	if ($ret) {
 	    return $ret;
 	}
@@ -176,7 +187,7 @@ class GalleryPermissionHelper_advanced {
      * @param int $permission the permission id
      * @param bool $applyToChildren whether or not this call applies to child items
      * @param array $removeEventIds (optional) base event data for Gallery::RemovePermission event
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _changePermission($changeType, $itemId, $entityId,
@@ -535,7 +546,7 @@ class GalleryPermissionHelper_advanced {
      *
      * @param int $itemId GalleryItem id
      * @param int $userOrGroupId user id or group id
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int permissions or null if not found
      * @access private
      */
@@ -597,7 +608,7 @@ class GalleryPermissionHelper_advanced {
      * Create a duplicate access list.
      *
      * @param int $oldAccessListId the id of the source access list
-     * @return array object GalleryStatus a status code,
+     * @return array GalleryStatus a status code,
      *               int AccessListId the new access list's id
      * @access private
      */
@@ -873,7 +884,7 @@ class GalleryPermissionHelper_advanced {
     /**
      * Return an unused permission bit that we can use for our purposes
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int location of a bit (1, 2, 3, etc)
      * @access private
      */
@@ -923,7 +934,7 @@ class GalleryPermissionHelper_advanced {
      * Add a permission to the database and to our permission cache.
      *
      * @param array $data the specific permission data
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _setPermission($data) {
@@ -951,7 +962,7 @@ class GalleryPermissionHelper_advanced {
      * permission from the system.
      *
      * @param array $permissionIds permission ids
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function _removePermissionsFromAllItems($permissionIds) {
 	global $gallery;
@@ -1012,7 +1023,7 @@ class GalleryPermissionHelper_advanced {
      * access map.
      *
      * @param string $type 'read' or 'write'
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *         int lock id
      * @access private
      */
@@ -1095,7 +1106,7 @@ class GalleryPermissionHelper_advanced {
 	$gallery->guaranteeTimeLimit(60);
 	while ($result = $searchResults->nextResult()) {
 	    $aclId = $result[0];
-	    $key = sprintf("%s|%s,", $result[1], $storage->convertIntToBits($result[2]));
+	    $key = sprintf("%s|%d|,", $result[1], $result[2]);
 	    if (!isset($aclIdToKey[$aclId])) {
 		$aclIdToKey[$aclId] = '';
 	    }

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17769 $
  */
 class SiteAdminView extends GalleryView {
 
@@ -33,10 +33,14 @@ class SiteAdminView extends GalleryView {
     function loadTemplate(&$template, &$form) {
 	global $gallery;
 
-	/* Make sure we have adequate permissions */
-	$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
+	/**
+	 * Make sure we have adequate permissions.
+	 * @todo Remove _permissionCheck() since the check is done in main.php now.
+	 *       (r17170 obsoleted the check here (from r16894). Keep the assert here of course. 
+	 */
+	$ret = $this->_permissionCheck(GalleryCoreApi::assertUserIsSiteAdministrator());
 	if ($ret) {
-	    return array($ret, null);
+	    return array($ret[0], $ret[1]);
 	}
 
 	/* Load the module list */
@@ -55,6 +59,10 @@ class SiteAdminView extends GalleryView {
 	 */
 	$subView = GalleryUtilities::getRequestVariables('subView');
 	$showAllSiteAdminViews = ($subView == 'core.AdminPlugins');
+	if ($showAllSiteAdminViews) {
+	    /* Ensure translations available even for uninstalled plugins */
+	    GalleryCoreApi::installTranslationsForLocale();
+	}
 
 	foreach ($moduleStatus as $moduleId => $status) {
 	    if (empty($status['active']) && !$showAllSiteAdminViews) {
@@ -210,20 +218,12 @@ class SiteAdminView extends GalleryView {
 	    $SiteAdmin = array();
 	}
 
-	/* Get the links for navigating back to where we came from */
-	$urlGenerator =& $gallery->getUrlGenerator();
-	list ($ret, $navigationLinks) = $urlGenerator->getNavigationLinks();
-	if ($ret) {
-	    return array($ret, null);
-	}
-
 	list ($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
 	if ($ret) {
 	    return array($ret, null);
 	}
 
 	/* Set up my view parameters */
-	$SiteAdmin['navigationLinks'] = $navigationLinks;
 	$SiteAdmin['subViewGroups'] = $subViewGroups;
 	$SiteAdmin['subViewName'] = $subViewName;
 	$SiteAdmin['viewBodyFile'] = $results['body'];

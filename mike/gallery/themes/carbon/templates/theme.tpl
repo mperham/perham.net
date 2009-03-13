@@ -1,11 +1,9 @@
 {*
- * $Revision: 15506 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17592 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="{g->language}">
+<html lang="{g->language}" xmlns="http://www.w3.org/1999/xhtml">
   <head>
     {* Let Gallery print out anything it wants to put into the <head> element *}
     {g->head}
@@ -41,7 +39,7 @@
       {elseif $theme.pageType == 'progressbar'}
 	<div id="gsHeader">
           {if !empty($theme.params.logoImageLocation)}
-	  <img src="{$theme.params.logoImageLocation}" alt=""/>
+	  <img src="{g->url href=$theme.params.logoImageLocation}" alt=""/>
           {else}
 	  <img src="{g->url href="images/galleryLogo_sm.gif"}" width="107" height="48" alt=""/>
           {/if}
@@ -54,7 +52,7 @@
 	    <td align="left" valign="top" width="50%">
 	      <a href="{g->url}">
 		{if !empty($theme.params.logoImageLocation)}
-		<img src="{$theme.params.logoImageLocation}" alt=""/>
+		<img src="{g->url href=$theme.params.logoImageLocation}" alt=""/>
 		{else}
 		<img src="{g->url href="images/galleryLogo_sm.gif"}" width="107" height="48" alt=""/>
 		{/if}

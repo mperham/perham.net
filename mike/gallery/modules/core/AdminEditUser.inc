@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AdminEditUserController extends GalleryController {
 
@@ -39,7 +39,7 @@ class AdminEditUserController extends GalleryController {
 	$results = $status = $error = array();
 
 	$userId = GalleryUtilities::getRequestVariables('userId');
-	list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId);
+	list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -181,7 +181,7 @@ class AdminEditUserView extends GalleryView {
 	}
 
 	$userId = GalleryUtilities::getRequestVariables('userId');
-	list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId);
+	list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -223,9 +223,8 @@ class AdminEditUserView extends GalleryView {
 	    }
 
 	    $languageList = array();
-	    $languageList[''] = $module->translate('<none>');
-	    $translator =& $gallery->getTranslator();
-	    $supportedLanguages = $translator->getSupportedLanguages();
+	    $languageList[''] = $module->translate('&lt;none&gt;');
+	    $supportedLanguages = GalleryCoreApi::getSupportedLanguages();
 	    foreach ($supportedLanguages as $language => $countryList) {
 		foreach ($countryList as $country => $languageData) {
 		    $languageList[$language . '_' . $country] = $languageData['description'];

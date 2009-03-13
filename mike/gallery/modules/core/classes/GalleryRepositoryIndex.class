@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryRepositoryUtilities.cla
  * @package GalleryCore
  * @subpackage Classes
  * @author Jozef Selesi <selesi at gmail dot com>
- * @version $Revision: 15731 $
+ * @version $Revision: 17580 $
  */
 class GalleryRepositoryIndex {
 
@@ -52,7 +52,7 @@ class GalleryRepositoryIndex {
 
     /**
      * Repository utilities.
-     * @var object GalleryRepositoryUtilities
+     * @var GalleryRepositoryUtilities
      * @access private
      */
     var $_utilities;
@@ -66,7 +66,7 @@ class GalleryRepositoryIndex {
     /**
      * Downloads the repostory index from the Gallery server and
      * writes it to the local repository cache.
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function update() {
 	global $gallery;
@@ -133,7 +133,7 @@ class GalleryRepositoryIndex {
      * Gets index meta data, which currently includes the local index timestamp (set when the index
      * has been downloaded) and each plugin type count.
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *		     array 'timestamp' => integer (Unix timestamp)
      *			   'moduleCount' => integer
      *			   'themeCount' => integer
@@ -169,7 +169,7 @@ class GalleryRepositoryIndex {
 
     /**
      * Loads and unserializes the index from the local filesystem into memory.
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function load() {
 	global $gallery;
@@ -197,7 +197,7 @@ class GalleryRepositoryIndex {
 
     /**
      * Unserializes the index into memory.
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function unserializeIndex(&$index) {
 	if (false === ($this->_index = @unserialize($index))) {
@@ -213,7 +213,7 @@ class GalleryRepositoryIndex {
      *
      * @param string $pluginType
      * @param string $pluginId
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *		     string plugin build
      */
     function getPluginHeader($pluginType, $pluginId) {
@@ -237,7 +237,7 @@ class GalleryRepositoryIndex {
      *
      * @param string $pluginType
      * @param string $pluginId
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *		     array languageCode => revision
      */
     function getAvailableLanguagesInPlugin($pluginType, $pluginId) {
@@ -260,7 +260,18 @@ class GalleryRepositoryIndex {
 	 */
 	$data = $this->_index[$pluginType . 's'][$pluginId];
 	if (!empty($data['header']['stringsRevision'])) {
-	    return array(null, $data['languages'][$data['header']['stringsRevision']]);
+	    $stringRevision = $data['header']['stringsRevision'];
+	    $languages = GalleryCoreApi::getSupportedLanguages();
+	    $languageData = array();
+	    foreach ($data['languages'][$stringRevision] as $langCode => $version) {
+		list ($language, $country) = explode ('_', $langCode . '_');
+		$installed = empty($country) ? !empty($languages[$language]) 
+					     : !empty($languages[$language][$country]);
+		if ($installed) {
+		    $languageData[$langCode] = $version;
+		}
+	    }
+	    return array(null, $languageData);
 	} else {
 	    return array(null, array());
 	}
@@ -283,7 +294,7 @@ class GalleryRepositoryIndex {
      *
      * @param string $pluginType
      * @param string $pluginId
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *		     string the plugin name
      */
     function getPluginName($pluginType, $pluginId) {
@@ -322,7 +333,7 @@ class GalleryRepositoryIndex {
      *
      * @param string $pluginType
      * @param string $pluginId
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *		     string descriptor URL
      */
     function getDescriptorUrl($pluginType, $pluginId) {
@@ -347,7 +358,7 @@ class GalleryRepositoryIndex {
      * @param string $pluginType
      * @param string $pluginId
      * @param string $package package name
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *		     string package URL
      */
     function getPackageUrl($pluginType, $pluginId, $package) {
@@ -376,7 +387,7 @@ class GalleryRepositoryIndex {
      * @param string $pluginType
      * @param string $pluginId
      * @param string $package package name
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *		     string version/revision
      *		     string build/revision
      */
@@ -423,7 +434,7 @@ class GalleryRepositoryIndex {
      * @return array plugin list
      */
     function getPlugins($pluginType, $showAllPlugins = false, $coreApis = null) {
-	$pluginList = array();
+	$pluginList = array($pluginType => array());
 
 	foreach ($this->_index[$pluginType . 's'] as $pluginId => $plugin) {
 	    /* Skip core module. */
@@ -479,6 +490,119 @@ class GalleryRepositoryIndex {
     function getRepositoryCacheDir() {
 	global $gallery;
 	return $gallery->getConfig('repository.cache') . $this->_source . '/';
+    }
+
+    /**
+     * The purpose of this method is to determine which language packages should be downloaded from
+     * the repository for the supplied locale(s).  To be included as a downloadable language
+     * package, two conditions must be met. 1) The plugin must be locally available and 2) the local
+     * module's requiredCoreApi and requiredPluginApi must be less than (<) the repository index's
+     * requiredCoreApi and requiredPluginApi respectively.  The repository index's required api's 
+     * are on a per plugin basis.  If the plugin status does not contain the required api's (not 
+     * installed), then the plugin is loaded and the values extracted from the class directly.
+     * A further check is made to insure that the language pack is an older build to prevent over-
+     * riding local modifications.
+     * An exact check of language package compatibility is not possible at the moment, so this check
+     * is primarily to ensure that plugins from a release branch get lang updates/packages from the 
+     * release branch and not from the experimental branch repository.
+     *
+     * @param mixed $locales a single or an array of locale identifiers.
+     * @return array GalleryStatus a status code
+     *		     array[$pluginType] => 
+     *			array($pluginId => array('name' => $pluginName, 
+     * 			    'files' => array('descriptor' => $descriptorUrl,
+     * 				'en_gb' => url, 'pt_BR' => url...))
+     */
+    function getLanguagePackageFiles($locales) {
+	global $gallery;
+	$platform =& $gallery->getPlatform();
+
+	$files = array();
+	if (!is_array($locales)) {
+	    $locales = array($locales);
+	}
+
+	foreach (array('module', 'theme') as $pluginType) {
+	    list ($ret, $pluginStatus) = GalleryCoreApi::fetchPluginStatus($pluginType);
+	    if ($ret) {
+		return array($ret, null);
+	    }
+	    foreach ($this->_index[$pluginType . 's'] as $pluginId => $entry) {
+		if (empty($entry['header']['stringsRevision']) 
+			|| empty($entry['header']['requiredCoreApi'])
+			|| empty($entry['header']['requiredPluginApi'])) {
+		    continue;
+		}
+		if (!empty($pluginStatus[$pluginId]) 
+			&& !empty($pluginStatus[$pluginId]['available'])) {
+		    if (empty($pluginStatus[$pluginId]['requiredCoreApi'])) {
+			list ($ret, $plugin) = 
+			    GalleryCoreApi::loadPlugin($pluginType, $pluginId, true);
+			if ($ret) {
+			    return array($ret, null);
+			}
+			$requiredCoreApi = $plugin->getRequiredCoreApi();
+			$requiredPluginApi = $pluginType == 'module' 
+			    ? $plugin->getRequiredModuleApi() : $plugin->getRequiredThemeApi();
+		    } else {
+			$requiredCoreApi = $pluginStatus[$pluginId]['requiredCoreApi'];
+			$requiredPluginApi = $pluginType == 'module' 
+			    ? $pluginStatus[$pluginId]['requiredModuleApi'] 
+			    : $pluginStatus[$pluginId]['requiredThemeApi'];
+		    }
+		    if ((version_compare(implode('.', $requiredCoreApi), 
+				implode('.', $entry['header']['requiredCoreApi']), '<')) 
+			    || (version_compare(implode('.', $requiredPluginApi),
+				implode('.', $entry['header']['requiredPluginApi']), '<'))) {
+			continue;
+		    }
+
+		    $stringsRevision = $entry['header']['stringsRevision'];
+		    list ($ret, $pluginName) = $this->getPluginName($pluginType, $pluginId);
+		    if ($ret) {
+			return array($ret, null);
+		    }
+
+		    list ($ret, $descriptorUrl) = $this->getDescriptorUrl($pluginType, $pluginId);
+		    if ($ret) {
+			return array($ret, null);
+		    }
+
+		    list ($ret, $pluginPackages) =
+	  		$this->_utilities->getPluginPackages($pluginType, $pluginId);
+	  	    if ($ret) {
+	  		return array($ret, null);
+	  	    }
+
+		    $revision = $entry['languages'][$stringsRevision];
+		    foreach ($locales as $locale) {
+			$packageName = 'lang-' . $locale;
+			$hasPackage = !empty($pluginPackages[$packageName]);
+			if ($hasPackage) {
+			    $package = $pluginPackages[$packageName];
+			    $includePackage = !$package['locked']
+						  && (empty($revision[$locale])
+						      || $package['version'] < $revision[$locale]);
+			}
+			/*
+			 * We want this pack if it is not installed or if the the local revision is
+			 * older than the repository revision
+			 */
+			if (!empty($revision[$locale]) && (!$hasPackage || $includePackage)) {
+			    list ($ret, $packageUrl) = 
+				$this->getPackageUrl($pluginType, $pluginId, $packageName);
+			    if ($ret) {
+				return array($ret, null);
+			    }
+			    $files[$pluginType][$pluginId]['name'] = $pluginName;
+			    $files[$pluginType][$pluginId]['files']['descriptor'] = $descriptorUrl;
+			    $files[$pluginType][$pluginId]['files'][$locale] = $packageUrl;
+			}
+		    }
+		}
+	    }
+	}
+	return array(null, $files);
     }
 }
 ?>

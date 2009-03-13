@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryDerivativeHelper_simple {
@@ -34,7 +34,8 @@ class GalleryDerivativeHelper_simple {
     function rebuildCacheIfNotCurrent($derivativeId, $fixBroken=false) {
 	global $gallery;
 
-	list ($ret, $derivative) = GalleryCoreApi::loadEntitiesById($derivativeId);
+	list ($ret, $derivative) =
+			GalleryCoreApi::loadEntitiesById($derivativeId, 'GalleryDerivative');
 	if ($ret) {
 	    return array($ret, null, null);
 	}
@@ -88,7 +89,7 @@ class GalleryDerivativeHelper_simple {
      * @param array $itemIds GalleryItem ids
      * @param array $sourceIds GalleryDataItem or GalleryDerivative source ids
      * @param array $types derivative types (eg. 'DERIVATIVE_TYPE_IMAGE_THUMBNAIL')
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array(GalleryItem id => GalleryDerivativeImage, ...)
      * @access private
      */
@@ -167,7 +168,8 @@ class GalleryDerivativeHelper_simple {
 	    sort($derivativeIds, SORT_NUMERIC);
 
 	    /* Load all the derivative images */
-	    list ($ret, $derivativeEntities) = GalleryCoreApi::loadEntitiesById($derivativeIds);
+	    list ($ret, $derivativeEntities) =
+			GalleryCoreApi::loadEntitiesById($derivativeIds, 'GalleryDerivative');
 	    if ($ret) {
 		return array($ret, null);
 	    }

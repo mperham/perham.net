@@ -1,7 +1,7 @@
 /****************************
  * Slider theme for Gallery2
  * @author Alan Harder <alan.harder@sun.com>
- * $Revision: 15342 $
+ * $Revision: 17012 $
  */
 
 div#imagearea {
@@ -450,12 +450,8 @@ div.gbTabBar span.o {
 }
 
 .autoCompleteContainer {
-    border: 1px solid #404040;
+    border-color: #444 #444 #0a0;
     background-color: #fff;
-    border-top: 0px;
-    border-bottom: 1px dotted rgb(0, 172, 0);
-    margin-bottom: -1px;
-    margin-top: 0px;
 }
 
 .autoCompleteContainer li.yui-ac-highlight {

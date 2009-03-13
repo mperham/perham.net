@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17662 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2>
@@ -60,7 +58,7 @@
   {include file="gallery:modules/core/templates/MarkupBar.tpl"
 	   viewL10domain="modules_core"
 	   element="title_`$item.id`" firstMarkupBar=$smarty.foreach.itemLoop.first}
-  <input type="text" id="title_{$item.id}" size="60"
+  <input type="text" id="title_{$item.id}" size="60" maxlength="{$ItemEditCaptions.fieldLengths.title}"
    name="{g->formVar var="form[items][`$item.id`][title]"}" value="{$item.title}"/>
 
   <h4> {g->text text="Summary"} </h4>

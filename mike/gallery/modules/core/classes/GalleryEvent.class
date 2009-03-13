@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class GalleryEvent {
 
@@ -36,7 +36,7 @@ class GalleryEvent {
 
     /**
      * Target entity
-     * @var object GalleryEntity
+     * @var GalleryEntity
      * @access private
      */
     var $_entity;
@@ -51,7 +51,7 @@ class GalleryEvent {
 
     function GalleryEvent() {
 	$this->setEventName(null);
-	$this->setEntity(null);
+	$this->setEntity($null=null);
 	$this->setData(null);
     }
 
@@ -73,17 +73,17 @@ class GalleryEvent {
 
     /**
      * Set this event's entity
-     * @param object GalleryEntity $entity
+     * @param GalleryEntity $entity
      */
-    function setEntity($entity) {
-	$this->_entity = $entity;
+    function setEntity(&$entity) {
+	$this->_entity =& $entity;
     }
 
     /**
      * Return the event's entity
-     * @return object GalleryEntity
+     * @return GalleryEntity
      */
-    function getEntity() {
+    function &getEntity() {
 	return $this->_entity;
     }
 

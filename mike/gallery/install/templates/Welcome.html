@@ -11,13 +11,10 @@
       <select name="language" onchange="this.form.submit()" style="direction:ltr">
 	<?php
 	  /* Don't use $language here as it conflicts with $_SESSION if register_globals is on */
-	  foreach ($translator->getSupportedLanguages() as $lang => $list) {
-	    foreach ($list as $country => $data) {
-	      $code = $lang . '_' . $country;
-	      print '<option value="' . $code . '"';
-	      if ($code == $_SESSION['language']) print ' selected="selected"';
-	      print '>' . $data['description'] . "</option>\n";
-	    }
+	  foreach ($templateData['languages'] as $code => $description) {
+	    print '<option value="' . $code . '"';
+	    if ($code == $_SESSION['language']) print ' selected="selected"';
+	    print '>' . $description . "</option>\n";
 	  }
 	?>
       </select>
@@ -26,7 +23,5 @@
     <?php endif; ?>
 
     <div class="go">
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $stepNumber + 1)) ?>"><?php print _('Begin Installation&raquo;') ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $stepNumber + 1)) ?>" class="btn continue"><i></i><span><span></span><i></i><?php print _('Begin Installation&raquo;') ?></span></a>
     </div>

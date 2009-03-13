@@ -1,6 +1,6 @@
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ function autoCompleteAttach(element, url) {
 
     var ds = new YAHOO.widget.DS_XHR(path, ["\n", "\t"]);
     ds.queryMatchContains = true;
-    ds.responseType = ds.TYPE_FLAT;
+    ds.responseType = YAHOO.widget.DS_XHR.TYPE_FLAT;
 
     // Extract that param that has __VALUE__ in it and use that as
     // the data source scriptQueryParam
@@ -68,4 +68,45 @@ function autoCompleteAttach(element, url) {
     YAHOO.util.Dom.setXY(shadow, pos);
     YAHOO.util.Dom.setStyle(shadow, "width", target_width + "px");
     oAutoComp = new YAHOO.widget.AutoComplete(element, element + '_autoCompleteContainer', ds);
+
+    // Change the default behavior of YUI!'s AutoComplete. Copy the list item as text and not
+    // its HTML source to the input field of the AutoComplete container.
+
+    var getInnerText = function(obj) {
+	return obj.innerText ? obj.innerText
+			     : obj.textContent ? obj.textContent // Fallback for Firefox
+					       : "";
+    }
+
+    // @param string htmlEntitizedString e.g. &lt;p&gt;Hello&lt;/p&gt;
+    // @return string HTML-entity-decoded string, e.g. <p>Hello</p>
+    var htmlEntityDecode = function(htmlEntitizedString) {
+        var htmlNode = document.createElement("div");
+        htmlNode.innerHTML = htmlEntitizedString;
+
+	// In Safari, innerText only works if the element is visible DOM content
+	var isSafari = navigator.userAgent.toLowerCase().indexOf("safari") != -1;
+	if (isSafari) {
+	    var container = document.getElementsByTagName('body')[0];
+	    container.appendChild(htmlNode);
+	}
+
+        var content = getInnerText(htmlNode);
+
+	if (isSafari) {
+	    htmlNode.parentNode.removeChild(htmlNode);
+	}
+
+	return content;
+    }
+
+    // @see http://developer.yahoo.com/yui/autocomplete/#customevents
+    var itemSelectHandler = function(sType, aArgs) {    
+        var elListItem = aArgs[1]; //the <li> element selected in the suggestion container
+        var decodedString = htmlEntityDecode(elListItem.innerHTML);
+        if (!decodedString) decodedString = elListItem.innerHTML; // fallback
+        YAHOO.util.Dom.get(element).value = decodedString;
+    };
+
+    oAutoComp.itemSelectEvent.subscribe(itemSelectHandler);
 }

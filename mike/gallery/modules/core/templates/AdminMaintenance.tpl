@@ -1,12 +1,18 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="System Maintenance"} </h2>
 </div>
+
+{if isset($form.error.maintenanceModeRequired)}
+  <div class="gbBlock">
+    <h2 class="giError">
+    {g->text text="Gallery must be in maintenance mode before the task can be run."}
+    </h2>
+  </div>
+{/if}
 
 {if isset($status.run)}
 <div class="gbBlock">
@@ -18,11 +24,60 @@
     </h2>
   {else}
     <h2 class="giError">
-      {g->text text="The %s task failed to complete successfully." arg1=$smarty.capture.taskTitle}
+    {g->text text="The %s task failed to complete successfully." arg1=$smarty.capture.taskTitle}
     </h2>
   {/if}
 </div>
 {/if}
+
+{if isset($status.setMode)}
+<div class="gbBlock">
+     <h2 class="giSuccess">
+    {if isset($status.setMode.setOn)}
+        {g->text text="Maintenance Mode has been turned on."}
+    {elseif isset($status.setMode.setOff)}
+        {g->text text="Maintenance Mode has been turned off."}
+    {/if}
+     </h2>
+</div>
+{/if}
+
+<div class="gbBlock">
+  <table class="gbDataTable" width="100%">
+  <tr>
+    <td>
+      <h4>{g->text text="Maintenance Mode"}</h4>
+    </td><td align="left" valign="bottom">
+      <input type="checkbox" {if $AdminMaintenance.setMode.mode}checked="checked" {/if}
+	     name="{g->formVar var="form[setMode][mode]}"
+	     onclick="BlockToggle('setMode-maintenance-url', 'not needed', 'table-row')"/>
+    </td>
+    <td>
+      <p class="giDescription">
+         {g->text text="Restrict user access to the system while maintenance is being performed."}
+      </p>
+    </td>
+  </tr>
+  <tr id="setMode-maintenance-url" {if !$AdminMaintenance.setMode.mode}style="display: none"{/if}>
+    <td colspan="3">
+      <h4>{g->text text="Maintenance Mode Url"}</h4>
+      <p class="giDescription">
+        {g->text text="The Maintenance Mode Url specifies where requests will be redirected when access to the site has been restricted by the administrator."}
+        {g->text text="If left blank Gallery will display a default page with an administrator login link. This page will be themed when the code base is up to date, otherwise it will display a plain unstyled page."}
+        <br/>
+        <i>{g->text text="For example: /maintenance.html"}</i>
+      </p>
+      <input type="text" size="60"
+             name="{g->formVar var="form[setMode][url]"}" value="{$AdminMaintenance.setMode.url}"
+             id="giFormPath"/>
+    </td>
+  </tr></table>
+</div>
+
+<div class="gbBlock gcBackground1">
+  <input type="submit" class="inputTypeSubmit"
+   name="{g->formVar var="form[action][setMode]"}" value="{g->text text="Set"}"/>
+</div>
 
 <div class="gbBlock">
   <table class="gbDataTable" width="100%">
@@ -39,7 +94,9 @@
 	<span id="task-{$taskId}-toggle"
 	      class="giBlockToggle gcBackground1 gcBorder2"
 	      style="border-width: 1px"
-	      onclick="BlockToggle('task-{$taskId}-description', 'task-{$taskId}-toggle', 'table-row')">{if !isset($status.run) || $status.run.taskId != $taskId}+{else}-{/if}</span>
+	      onclick="BlockToggle('task-{$taskId}-description', 'task-{$taskId}-toggle', 'table-row')">
+	      {if !isset($status.run) || $status.run.taskId != $taskId}+{else}-{/if}
+	</span>
 	{g->text text=$info.title l10Domain=$info.l10Domain}
       </td><td>
 	{if isset($info.timestamp)}

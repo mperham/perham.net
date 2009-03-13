@@ -312,7 +312,7 @@ div.gbTabBar span.o {
 }
 
 .autoCompleteContainer {
-    border: 1px solid #404040;
+    border-color: #404040 #404040 #080;
     background-color: #fff;
 }
 

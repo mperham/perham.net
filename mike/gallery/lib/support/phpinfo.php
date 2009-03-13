@@ -1,5 +1,5 @@
-<?php if (!defined('G2_SUPPORT')) { return; } ?>
 <?php
+if (!defined('G2_SUPPORT')) { return; }
 ob_start();
 phpinfo();
 $phpinfo = ob_get_contents();
@@ -63,7 +63,8 @@ $phpinfo = preg_replace_callback(
   <body>
     <div id="content">
       <div id="title">
-        <a href="../../">Gallery</a> &raquo; <a href="index.php">Support</a> &raquo; PHP Info
+	<a href="../../">Gallery</a> &raquo;
+	<a href="<?php generateUrl('index.php') ?>">Support</a> &raquo; PHP Info
       </div>
       <?php print $phpinfo; ?>
     </div>

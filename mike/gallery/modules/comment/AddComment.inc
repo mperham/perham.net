@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Comment
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AddCommentController extends GalleryController {
     /**
@@ -40,7 +40,11 @@ class AddCommentController extends GalleryController {
     function handleRequest($form) {
 	global $gallery;
 
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
 
 	/* Make sure we have permission to add a comment */
 	$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'comment.add');
@@ -70,6 +74,18 @@ class AddCommentController extends GalleryController {
 		$error[] = 'form[error][comment][missing]';
 	    }
 
+	    /* Check for flooding - don't allow more than 1 comment every 30 seconds */
+	    list ($ret, $commentTime) = GalleryCommentHelper::getLatestCommentTime(
+		GalleryUtilities::getRemoteHostAddress());
+	    if ($ret) {
+		return array($ret, null);
+	    }
+	    $phpVm = $gallery->getPhpVm();
+	    $currentTime = $phpVm->time();
+	    if ($currentTime - $commentTime < 30) {
+		$error[] = 'form[error][comment][flood]';
+	    }
+		
 	    list ($ret, $useValidationPlugins) = GalleryCommentHelper::useValidationPlugins();
 	    if ($ret) {
 		return array($ret, null);
@@ -143,7 +159,7 @@ class AddCommentController extends GalleryController {
 		$comment->setSubject($form['subject']);
 		$comment->setComment($form['comment']);
 		$comment->setAuthor($form['author']);
-		$comment->setDate(time());
+		$comment->setDate($currentTime);
 
 		$ret = $comment->save();
 		if ($ret) {

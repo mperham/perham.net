@@ -1,7 +1,7 @@
-# $Id: de.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: de.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,13 +21,14 @@
 # - Frederik Kunz <frederik.kunz@web.de>
 # - Georg Rehfeld <rehfeld@georg-rehfeld.de>
 # - Bananeweizen <bananeweizen@gmx.de>
+# - Jens Tkotz <jens@peino.de>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Upgrader 2.2.2\n"
+"Project-Id-Version: Gallery: Upgrader 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-20 12:20+0200\n"
-"PO-Revision-Date: 2006-11-07 01:19+0100\n"
+"PO-Revision-Date: 2008-10-03 07:39+0100\n"
 "Last-Translator: Andy Staudacher <ast@gmx.ch>\n"
 "Language-Team: German <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -60,6 +61,24 @@ msgstr "Der Cache-Ordner konnte nicht gesäubert werden"
 msgid "Unable to commit database transaction"
 msgstr "Die Datenbank-Transaktion konnte nicht abgeschlossen werden (commit)"
 
+msgid "Database Backup"
+msgstr "Datenbank Sicherung"
+
+msgid "Error attempting to enable maintenance mode."
+msgstr "Fehler beim Einschalten des Wartungsmodus."
+
+msgid "Backing up the Gallery database"
+msgstr "Start der Sicherung Ihrer Gallery Datenbank"
+
+msgid "Errors occurred during the database backup"
+msgstr "Es traten Fehler während der Sicherung auf."
+
+msgid "Error attempting to disable maintenance mode."
+msgstr "Fehler beim Beenden des Wartungsmodus."
+
+msgid "Unable to determine if automated backup is available."
+msgstr "Gallery konnte nicht feststellen, ob eine automatisierte Sicherung möglich ist."
+
 msgid "Finish Upgrade"
 msgstr "Aktualisierung abschließen"
 
@@ -69,8 +88,8 @@ msgstr "Systemprüfungen"
 msgid "Performing system checks"
 msgstr "Systemprüfungen werden durchgeführt"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP-Version >= 4.3.0 oder >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP-Version &gt;= 4.3.0 oder &gt;= 5.0.4"
 
 # param0 = existing php version, param1 = '<a href...>', param2 = '</a>'
 #, c-format
@@ -255,15 +274,14 @@ msgstr "Zend-Kompatibilitätsmodus"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Warnung: Ihr PHP ist für den Zend Modus <tt>ze1_compatibility_mode</tt> konfiguriert, "
-"wodurch PHP abstürzen kann.  Klicken Sie <a href=\"%s\">hier</a>, um Ihr PHP zu testen.  "
-"Wenn Sie \"SUCCESS\" (Erfolg) sehen, dann ist Ihr PHP OK. Erhalten Sie einen Fehler oder "
-"keine Antwort, dann müssen Sie den <tt>ze1_compatibility_mode</tt> abschalten, bevor Sie "
-"fortfahren."
+"wodurch PHP abstürzen kann.  Klicken Sie %shier%s, um Ihr PHP zu testen.  Wenn Sie \"SUCCESS"
+"\" (Erfolg) sehen, dann ist Ihr PHP OK. Erhalten Sie einen Fehler oder keine Antwort, dann "
+"müssen Sie den <tt>ze1_compatibility_mode</tt> abschalten, bevor Sie fortfahren."
 
 msgid "putenv() allowed"
 msgstr "putenv() erlaubt"
@@ -311,11 +329,116 @@ msgstr ""
 "Fehler: Einige Dateien oder Ordner in Ihrem Speicherordner können vom Webserver nicht "
 "verändert werden. Führen Sie chown -R webserverBenutzer %s ODER chmod -R 777 %s aus."
 
+#, c-format
+msgid "Inaccessible or missing  files (%d)"
+msgstr "Fehlende oder nicht lesbare Dateien (%d)"
+
 msgid "Gallery file integrity"
 msgstr "Gallery-Dateiintegrität"
 
 msgid "Manifest missing or inaccessible."
 msgstr "Manifest fehlt oder ist nicht abrufbar."
+
+msgid ""
+"Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
+"be safe to ignore these."
+msgstr ""
+"Beachten Sie: Sie verwenden die SVN-Version von Gallery, also kann es sein, dass hier vor "
+"kurzem entfernte Dateien stehen. Sie können diese wahrscheinlich gefahrlos ignorieren."
+
+#, c-format
+msgid "Missing files (%d)"
+msgstr "Fehlende Dateien (%d)"
+
+msgid ""
+"Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
+"probably ignore these, but to be safe you should make sure that you do 'svn update' before "
+"continuing."
+msgstr ""
+"Beachten Sie: Sie verwenden die SVN-Version von Gallery, also sind veränderte Dateien zu "
+"erwarten. Sie können diese wahrscheinlich ignorieren, aber um sicher zu gehen, sollten Sie "
+"ein <b>svn update</b> ausführen, bevor Sie fortsetzen."
+
+#, c-format
+msgid "Modified files (%d)"
+msgstr "Veränderte Dateien (%d)"
+
+#, c-format
+msgid ""
+"These files are no longer part of Gallery. They probably won't cause any problems but it is "
+"a good idea to remove them to keep your install clean.  Gallery can't remove these files for "
+"you, but you can download and run %sthis script%s in your gallery2 directory to delete them "
+"for you."
+msgstr ""
+"Diese Dateien gehören nicht mehr zur Gallery. Wahrscheinlich machen sie keine Probleme, aber "
+"es ist dennoch eine gute Idee, sie zu entfernen, um Ihre Installation sauber zu halten.  "
+"Gallery kann diese Dateien nicht entfernen, aber Sie können %sdieses Skript%s in Ihrem "
+"Galley2 Ordner ausführen um die Dateien zu löschen."
+
+#, c-format
+msgid "Old files (%d)"
+msgstr "Veraltete Dateien (%d)"
+
+msgid "Database permissions"
+msgstr "Datenbank Berechtigungen"
+
+msgid ""
+"Error: The configured database user does not have the required database privileges to "
+"perform the upgrade."
+msgstr ""
+"Fehler: Der angegebene Datenbank-User hat nicht die erforderlichen Rechte um eine "
+"Aktualisierung durchzuführen."
+
+#, c-format
+msgid "The storage folder path is not defined in config.php (%s)"
+msgstr "Der Pfad für die Datenablage ist nicht in der config.php (%s) hinterlegt."
+
+msgid "Database permission test failed. Could not connect to database."
+msgstr ""
+"Der Test für die Datenbank-Berechtigungen schlug fehl. Es konnte keine Verbindung zur "
+"Datenbank hergestellt werden."
+
+msgid "Database permission test failed. Could not acquire database information."
+msgstr ""
+"Der Test für die Datenbank-Berechtigungen schlug fehl. Informationen über die Datenbank "
+"konnten nicht abgerufen werden."
+
+#, c-format
+msgid "Could not find an unused table prefix similar to \"%s\"."
+msgstr "Es konnte kein ungenutztes Tabellenprefix gefunden, das änlich zu \"%s\" ist."
+
+msgid "Database permission test failed due to corrupted file integrity."
+msgstr ""
+"Der Test für die Datenbank-Berechtigungen schlug aufgrund korrupter Datei-Integrität fehl."
+
+msgid "Failed to create, alter or drop a database test table. "
+msgstr "Fehler beim Erzeugen, Löschen oder Verändern der Testtabellen in der Datenbank."
+
+msgid ""
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
+msgstr ""
+"Fehler beim Erzeugen einer Datenbank Testsequenz.  Schauen Sie sich die zurückgegebene "
+"Fehlermeldung and und lese die README.html um weitere Informationen zum Thema fehlende "
+"Rechte und Aufräumen der Datenbank zu bekommen."
+
+msgid ""
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
+msgstr ""
+"Fehler beim Löschen einer Datenbank Testsequenz.  Schauen Sie sich die zurückgegebene "
+"Fehlermeldung and und lese die README.html um weitere Informationen zum Thema fehlende "
+"Rechte und Aufräumen der Datenbank zu bekommen."
+
+msgid "Missing SQL statements"
+msgstr "Fehlende SQL-Statements"
+
+msgid ""
+"Check the returned error message and README.html for missing privileges and clean up the "
+"database."
+msgstr ""
+"Schauen Sie sich die zurückgegebene Fehlermeldung and und lese die README.html um weitere "
+"Informationen zum Thema fehlende Rechte und Aufräumen der Datenbank zu bekommen."
 
 msgid "Upgrade Core"
 msgstr "Aktualisiere Kern"
@@ -487,6 +610,87 @@ msgstr ""
 msgid "Try Again"
 msgstr "Erneut versuchen"
 
+msgid ""
+"Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  "
+"If you fail to make a backup and something goes wrong, there is a strong possibility that we "
+"will not be able to help you recover your data!"
+msgstr ""
+"Bevor wir die Aktualisierung vornehmen <b>raten wir Ihnen dringend</b>, eine "
+"Sicherheitskopie Ihrer Datenbank vorzunehmen! Falls Sie versäumen, eine Sicherheitskopie zu "
+"erstellen und etwas schief läuft, ist die Wahrscheinlichkeit hoch, dass wir Ihnen beim "
+"Wiederherstellen Ihrer Daten nicht helfen können. Sehen Sie hierzu die folgenden Beispiele:"
+
+msgid "You have three options:"
+msgstr "Sie haben drei Optionen:"
+
+msgid "You have two options:"
+msgstr "Sie haben zwei Optionen:"
+
+msgid "Do the automated backup (<b>recommended</b>)."
+msgstr "Automatische Sicherung (<b>Empfohlen</b>)."
+
+msgid "Do a manual backup (see below)."
+msgstr "Manuelle Sicherung (näheres unten)."
+
+msgid "MySQL"
+msgstr "MySQL"
+
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+msgid "Oracle"
+msgstr "Oracle"
+
+msgid "IBM DB2"
+msgstr "IBM DB2"
+
+msgid "Microsoft SQL Server"
+msgstr "Microsoft SQL Server"
+
+msgid "Continue without a backup (<b>discouraged</b>)."
+msgstr "Keine Sicherung (<b>Raten wir ab von</b>)."
+
+msgid ""
+"If you choose to perform the automated backup, please be patient.  If you cancel or reload "
+"the page, you may interfere with the backup process."
+msgstr ""
+"Haben Sie bitte Geduld, sobald die Aktualisierung begonnen hat. Wenn Sie abbrechen oder die "
+"Seite neu laden, könnten Sie störend auf die Installation einwirken."
+
+msgid "Begin Database Backup"
+msgstr "Datenbanksicherung starten"
+
+msgid "Skip Database Backup"
+msgstr "Datenbanksicherung überspringen"
+
+#, c-format
+msgid "Continue to Step %d&raquo;"
+msgstr "Weiter zum Schritt %d&raquo;"
+
+msgid "Stack Trace:"
+msgstr "Stack-Trace:"
+
+msgid "Gallery Database Backup successful."
+msgstr "Die Gallery Datenbank wurde erfolgreich gesichert."
+
+msgid "We've successfully backed up the data in your Gallery database."
+msgstr "Ihre Daten wurden erfolgreich in der Gallery Datenbank gesichert."
+
+msgid "The following warnings were produced during the backup process:"
+msgstr "Die folgenden Warnungen traten während der Sicherung auf:"
+
+#, c-format
+msgid "Database backup completed and the backup file is located at: %s."
+msgstr "Sicherung der Datenbank vollständig, die Sicherungsdatei liegt ab unter: %s."
+
+msgid ""
+"Please note that your backup contains sensitive data (like passwords) and should not be "
+"stored online! We recommend that you download it from your server and keep it safely offline."
+msgstr ""
+"Bedenken Sie, daß die Sicherung sensible Daten (zum Beispiel Passwörter) enthält und sollte "
+"nicht onlie verfügbar sein. Wir empfehlen den Download von Ihrem Server und anschließende "
+"Löschung."
+
 msgid "Finished!"
 msgstr "Abgeschlossen!"
 
@@ -529,54 +733,8 @@ msgstr "Aktualisierung zu %d%% abgeschlossen"
 msgid "Redo this step"
 msgstr "Diesen Schritt wiederholen"
 
-#, c-format
-msgid "Continue to Step %d&raquo;"
-msgstr "Weiter zum Schritt %d&raquo;"
-
 msgid "Gallery: <strong>your photos</strong> on <strong>your website</strong>"
 msgstr "Gallery: <strong>Ihre Photos</strong> auf <strong>Ihrer Webseite</strong>"
-
-#, c-format
-msgid "Missing files (%d)"
-msgstr "Fehlende Dateien (%d)"
-
-msgid ""
-"Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
-"be safe to ignore these."
-msgstr ""
-"Beachten Sie: Sie verwenden die SVN-Version von Gallery, also kann es sein, dass hier vor "
-"kurzem entfernte Dateien stehen. Sie können diese wahrscheinlich gefahrlos ignorieren."
-
-#, c-format
-msgid "Modified files (%d)"
-msgstr "Veränderte Dateien (%d)"
-
-msgid ""
-"Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
-"probably ignore these, but to be safe you should make sure that you do 'svn update' before "
-"continuing."
-msgstr ""
-"Beachten Sie: Sie verwenden die SVN-Version von Gallery, also sind veränderte Dateien zu "
-"erwarten. Sie können diese wahrscheinlich ignorieren, aber um sicher zu gehen, sollten Sie "
-"ein <b>svn update</b> ausführen, bevor Sie fortsetzen."
-
-#, c-format
-msgid "Old files (%d)"
-msgstr "Veraltete Dateien (%d)"
-
-#, c-format
-msgid ""
-"These files are no longer part of Gallery. They probably won't cause any problems but it is "
-"a good idea to remove them to keep your install clean.  Gallery can't remove these files for "
-"you, but you can download and run %s in your gallery2 directory to delete them for you."
-msgstr ""
-"Diese Dateien gehören nicht mehr zur Gallery. Wahrscheinlich machen sie keine Probleme, aber "
-"es ist dennoch eine gute Idee, sie zu entfernen, um Ihre Installation sauber zu halten.  "
-"Gallery kann diese Dateien nicht entfernen, aber Sie können %s in Ihrem Galley2 Ordner "
-"ausführen um die Dateien zu löschen."
-
-msgid "this script"
-msgstr "dieses Skript"
 
 msgid "Upgrade Steps"
 msgstr "Aktualisierung"
@@ -639,9 +797,6 @@ msgstr ""
 "einige Debug-Informationen finden. Bitte melden Sie das im %sGallery Forum%s, um Hilfe zur "
 "Problem-Diagnose zu bekommen."
 
-msgid "Stack Trace:"
-msgstr "Stack-Trace:"
-
 msgid "Debug Output:"
 msgstr "Debug-Ausgabe:"
 
@@ -690,31 +845,6 @@ msgstr ""
 "Die installierte Version ist neuer als die Version, auf die Sie Gallery zu aktualisieren "
 "versuchen. Sie können G2 nicht zurückstufen. Bitte ersetzen Sie die gallery2-Dateien mit "
 "Dateien aus der momentan installierten oder einer aktuelleren Version."
-
-msgid ""
-"Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  "
-"If you fail to make a backup and something goes wrong, there is a strong possibility that we "
-"will not be able to help you recover your data!  Refer to the following example:"
-msgstr ""
-"Bevor wir die Aktualisierung vornehmen <b>raten wir Ihnen dringend</b>, eine "
-"Sicherheitskopie Ihrer Datenbank vorzunehmen! Falls Sie versäumen, eine Sicherheitskopie zu "
-"erstellen und etwas schiefläuft, ist die Wahrscheinlichkeit hoch, dass wir Ihnen beim "
-"Wiederherstellen Ihrer Daten nicht helfen können. Sehen Sie hierzu die folgenden Beispiele:"
-
-msgid "MySQL"
-msgstr "MySQL"
-
-msgid "PostgreSQL"
-msgstr "PostgreSQL"
-
-msgid "Oracle"
-msgstr "Oracle"
-
-msgid "IBM DB2"
-msgstr "IBM DB2"
-
-msgid "Microsoft SQL Server"
-msgstr "Microsoft SQL Server"
 
 msgid ""
 "Once the upgrade has begun, please be patient.  If you cancel or reload the page, you may "
@@ -839,19 +969,3 @@ msgstr "Sprache auswählen:"
 # Badly chosen mgsid: means: switch to selected language
 msgid "Go"
 msgstr "Sprache einstellen"
-
-#~ msgid ""
-#~ "<b>Reminder</b>: Now check the permissions on config.php and make sure it is not globally "
-#~ "writeable."
-#~ msgstr ""
-#~ "<b>Erinnerung</b>: Stellen Sie nun sicher, dass für die Datei config.php keine globale "
-#~ "Schreibberechtigung besteht."
-
-#~ msgid "mysqldump -u%s -p -h %s --opt %s > %s.sql"
-#~ msgstr "mysqldump -u%s -p -h %s --opt %s > %s.sql"
-
-#~ msgid "pg_dump -h %s --format=t %s > %s.sql"
-#~ msgstr "pg_dump -h %s --format=t %s > %s.sql"
-
-#~ msgid "Upgrade More Modules"
-#~ msgstr "Weitere Module aktualisieren"

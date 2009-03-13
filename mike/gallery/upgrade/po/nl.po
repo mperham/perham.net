@@ -1,7 +1,7 @@
-# $Id: nl.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: nl.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 # Buut Eindhoven < >, augustus 2005
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Upgrader 2.2.2\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-12 14:00+0200\n"
-"PO-Revision-Date: 2006-03-17 17:07+0100\n"
-"Last-Translator: B. Scheijgrond <bsmfenj@wanadoo.nl>\n"
+"Project-Id-Version: Gallery: Upgrader 2.3\n"
+"Report-Msgid-Bugs-To: gallery-translations@lists.sourceforge.net\n"
+"POT-Creation-Date: 2007-06-14 17:58-0700\n"
+"PO-Revision-Date: 2008-07-23 14:09+0100\n"
+"Last-Translator: Marijke van Velsen <slayegirl@hetnet.nl>\n"
 "Language-Team: Dutch <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -53,6 +53,24 @@ msgstr "Kan de Pagina cache niet wissen"
 msgid "Unable to commit database transaction"
 msgstr "Kan de database transactie niet uitvoeren"
 
+msgid "Database Backup"
+msgstr "Database Backup"
+
+msgid "Error attempting to enable maintenance mode."
+msgstr "Poging aanzetten van onderhoudsmodus is mislukt"
+
+msgid "Backing up the Gallery database"
+msgstr "Backup maken van Gallery database"
+
+msgid "Errors occurred during the database backup"
+msgstr "Er zijn fouten opgetreden tijden het maken van de database backup"
+
+msgid "Error attempting to disable maintenance mode."
+msgstr "Poging uitzetten van onderhoudsmodus is mislukt"
+
+msgid "Unable to determine if automated backup is available."
+msgstr "Het is niet mogelijk om te bepalen of automatische backup beschikbaar is."
+
 msgid "Finish Upgrade"
 msgstr "Opwaardering Voltooien"
 
@@ -60,10 +78,10 @@ msgid "System Checks"
 msgstr "Systeem Controles"
 
 msgid "Performing system checks"
-msgstr ""
+msgstr "Systeem controle wordt uitgevoerd"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP versie >= 4.3.0 of >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP versie &gt;= 4.3.0 of &gt;= 5.0.4"
 
 #, c-format
 msgid ""
@@ -145,17 +163,17 @@ msgstr ""
 "alleen resulteren in een blanco pagina) wat mogelijk kan leiden tot data corruptie."
 
 msgid "Filesystem Operations"
-msgstr ""
+msgstr "Beheer Bestandsysteem"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Essential filesystem operations are disabled in your PHP by the "
 "<b>disabled_functions</b> parameter in php.ini. You must allow these functions before "
 "Gallery will run. These functions are missing: %s."
 msgstr ""
 "Let Op: De putenv() functie is door de <b>disabled_functions</b> parameter in uw php.ini "
-"uitgeschakeld. Op sommige systemen zonder deze instelling zal Gallery niet in staat zijn om "
-"andere talen dan de systeem taal en Engels te gebruiken."
+"uitgeschakeld. Deze functies moeten aan staan voordat Gallery zal werken. De missende "
+"functies zijn: %s"
 
 msgid "Memory limit"
 msgstr "Geheugen limiet"
@@ -245,14 +263,14 @@ msgstr "Zend compatibility modus"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Let Op: Uw PHP is ingesteld met de Zend ze1_compatibility_mode welke kan veroorzaken dat PHP "
-"crasht. Klik <ahref=\"%s\">hier</a> om Uw PHP te testen. Als u \"SUCCES\" ziet dan is Uw PHP "
-"ok. Indien U een fout of geen reactie krijgt, dan dient U ze1_compatability_mode uit te "
-"zetten voordat u doorgaat."
+"crasht. Klik %shier%s om Uw PHP te testen. Als u \"SUCCES\" ziet dan is Uw PHP ok. Indien U "
+"een fout of geen reactie krijgt, dan dient U ze1_compatability_mode uit te zetten voordat u "
+"doorgaat."
 
 msgid "putenv() allowed"
 msgstr "putenv() toegestaan"
@@ -299,18 +317,115 @@ msgstr ""
 "worden door de webserver account. Gebruik <b>chown -R webserver account %s</b> of <b>chmod -"
 "R 777 %s</b> om dit te verhelpen."
 
+#, c-format
+msgid "Inaccessible or missing  files (%d)"
+msgstr "onbereikbare  of missende bestanden (%d)"
+
 msgid "Gallery file integrity"
 msgstr "Gallery bestandsintegriteit"
 
 msgid "Manifest missing or inaccessible."
 msgstr "Manifest is afwezig of ontoegankelijk."
 
+msgid ""
+"Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
+"be safe to ignore these."
+msgstr ""
+"Let op: u voert Gallery uit vanuit SVN, daarom kunnen recent verwijderde bestanden hier "
+"verschijnen. Het kan veiliger zijn ze te negeren."
+
+#, c-format
+msgid "Missing files (%d)"
+msgstr "Missende bestanden (%d)"
+
+msgid ""
+"Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
+"probably ignore these, but to be safe you should make sure that you do 'svn update' before "
+"continuing."
+msgstr ""
+"Let op: u voert Gallery uit vanuit SVN, daarom kunt u sommige gewijzigde bestanden "
+"verwachten. U kunt deze waarschijnlijk veilig nergeren. Voor de zekerheid zou u <b>svn "
+"update</b> uit moeten voeren, voordat u verder gaat."
+
+#, c-format
+msgid "Modified files (%d)"
+msgstr "Gewijzigde bestanden (%d)"
+
+#, c-format
+msgid ""
+"These files are no longer part of Gallery. They probably won't cause any problems but it is "
+"a good idea to remove them to keep your install clean.  Gallery can't remove these files for "
+"you, but you can download and run %sthis script%s in your gallery2 directory to delete them "
+"for you."
+msgstr ""
+"Deze bestanden maken geen deel (meer) uit van Gallery. Waarschijnlijk veroorzaken ze geen "
+"problemen, maar voor de netheid zou het goed zijn om deze te verwijderen. Gallery kan deze "
+"bestanden niet verwijderen, echter U kan %sthis script%s naar de Gallery2 directory "
+"downloaden om de ongebruikte bestanden te verwijderen."
+
+#, c-format
+msgid "Old files (%d)"
+msgstr "Oude bestanden (%d)"
+
+msgid "Database permissions"
+msgstr "Database rechten"
+
+msgid ""
+"Error: The configured database user does not have the required database privileges to "
+"perform the upgrade."
+msgstr ""
+"Fout: De geconfigureerde database gebruiker heeft geen niet voldoende rechten om de upgraden "
+"uit te voeren."
+
+#, c-format
+msgid "The storage folder path is not defined in config.php (%s)"
+msgstr "Het pad van de opslagmap is niet ingesteld in config.php (%s)"
+
+#, fuzzy
+msgid "Database permission test failed. Could not connect to database."
+msgstr "Database permissie test is mislukt vanwege corrupte bestand integriteit."
+
+#, fuzzy
+msgid "Database permission test failed. Could not acquire database information."
+msgstr "Database permissie test is mislukt vanwege corrupte bestand integriteit."
+
+#, c-format
+msgid "Could not find an unused table prefix similar to \"%s\"."
+msgstr "Kan geen ongebruikte tabelvoorvoegsel vinden die lijkt op \"%s\"."
+
+msgid "Database permission test failed due to corrupted file integrity."
+msgstr "Database permissie test is mislukt vanwege corrupte bestand integriteit."
+
+msgid "Failed to create, alter or drop a database test table. "
+msgstr "Creëren, veranderen of verwijderen van database test tabel is mislukt "
+
+msgid ""
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
+msgstr ""
+"Creëren van test database cyclus is mislukt. Bekijk de error en README.html voor missende "
+"rechten en schoon de database op."
+
+msgid ""
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
+msgstr ""
+"Verwijderen van test database cyclus is mislukt. Bekijk de error en README.html voor "
+"missende rechten en schoon de database op."
+
+msgid "Missing SQL statements"
+msgstr "Missende SQL statements"
+
+msgid ""
+"Check the returned error message and README.html for missing privileges and clean up the "
+"database."
+msgstr "Bekijk de error en README.html voor missende rechten en schoon de database op."
+
 msgid "Upgrade Core"
 msgstr "Core Opwaarderen"
 
-#, fuzzy
 msgid "Upgrade Plugins"
-msgstr "Modules Opwaarderen"
+msgstr "Upgrade Plugins"
 
 msgid "Unable to initialize Gallery session"
 msgstr "Kan de Gallery sessie niet initialiseren"
@@ -354,9 +469,9 @@ msgstr "Verzoek om data aan %s module niet mogelijk"
 msgid "Other"
 msgstr "Andere"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to query the %s theme"
-msgstr "Verzoek om data aan %s thema niet mogelijk"
+msgstr "Niet mogelijk om %s thema op te vragen."
 
 msgid "Themes"
 msgstr "Thema's"
@@ -374,19 +489,22 @@ msgstr "Welkom"
 
 #, c-format
 msgid "<b>Error:</b> could not locate %s.  Please place it in your %s directory."
-msgstr ""
+msgstr "<b>Fout:</b> kan %s niet vinden. Plaats deze in uw %s  map."
 
 #, c-format
 msgid ""
 "<b>Error:</b> your %s file is not readable.  Please give Gallery read permissions on the "
 "file."
 msgstr ""
+"<b>Fout:</b> uw %s bestand is niet leesbaar. Geeft u Gallery rechten om dit bestand te lezen."
 
 #, c-format
 msgid ""
 "<b>Error:</b> your %s key does not match correctly.  Please use the new authentication "
 "string from below and try again."
 msgstr ""
+"<b>Fout!</b> uw %s key is niet correct. Gebruik de nieuwe authenticatie string van hieronder "
+"en probeer opnieuw."
 
 msgid ""
 "In order to proceed with the upgrade process, we have to verify that you are who you claim.  "
@@ -470,15 +588,94 @@ msgstr ""
 msgid "Try Again"
 msgstr "Probeer Opnieuw"
 
+msgid ""
+"Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  "
+"If you fail to make a backup and something goes wrong, there is a strong possibility that we "
+"will not be able to help you recover your data!"
+msgstr ""
+"Voordat u upgraden, <b>raden wij u ten zeerste aan</b> dat u een backup van uw database "
+"maakt! Als u geen backup maakt en er gaat iets mis, dan is er een grote kans dat we niet in "
+"staat zijn om u te helpen om uw data te herstellen. "
+
+msgid "You have three options:"
+msgstr "U heeft 3 opties:"
+
+msgid "You have two options:"
+msgstr "U heeft 2 opties:"
+
+msgid "Do the automated backup (<b>recommended</b>)."
+msgstr "Automatische backup (<b>aangeraden</b>)"
+
+msgid "Do a manual backup (see below)."
+msgstr "Handmatige backup (zie hieronder)"
+
+msgid "MySQL"
+msgstr "MySQL"
+
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+msgid "Oracle"
+msgstr "Oracle"
+
+msgid "IBM DB2"
+msgstr "IBM DB2"
+
+msgid "Microsoft SQL Server"
+msgstr "Microsoft SQL Server"
+
+msgid "Continue without a backup (<b>discouraged</b>)."
+msgstr "Doorgaan zonder backup (<b>afgeraden</b>)"
+
+msgid ""
+"If you choose to perform the automated backup, please be patient.  If you cancel or reload "
+"the page, you may interfere with the backup process."
+msgstr ""
+"Wees geduldig wanneer de upgrade is begonnen. Indien u annuleert of de pagina herlaad, kan "
+"dit het backupproces verstoren."
+
+msgid "Begin Database Backup"
+msgstr "Start Database Backup"
+
+msgid "Skip Database Backup"
+msgstr "Database Backup overslaan"
+
+#, c-format
+msgid "Continue to Step %d&raquo;"
+msgstr "Ga verder naar Stap %d&raquo;"
+
+msgid "Stack Trace:"
+msgstr "Stack Trace:"
+
+msgid "Gallery Database Backup successful."
+msgstr "Gallery Database backup succesvol."
+
+msgid "We've successfully backed up the data in your Gallery database."
+msgstr "We hebben een succesvolle backup van de data in de uw Gallery database."
+
+msgid "The following warnings were produced during the backup process:"
+msgstr "De volgende waarschuwingen zijn geproduceerd bij het backup proces:"
+
+#, c-format
+msgid "Database backup completed and the backup file is located at: %s."
+msgstr "Database backup is compleet en opgeslagen op : %s"
+
+msgid ""
+"Please note that your backup contains sensitive data (like passwords) and should not be "
+"stored online! We recommend that you download it from your server and keep it safely offline."
+msgstr ""
+"Let op! Backups bevatten gevoelige informatie (zoals wachtwoorden) en mogen niet online "
+"bewaard worden. We raden u aan om de backup te downloaden van de server en veilig offline op "
+"te slaan."
+
 msgid "Finished!"
 msgstr "Voltooid!"
 
-#, fuzzy
 msgid ""
 "Congratulations! Your Gallery 2 upgrade is complete!  To upgrade any additional Gallery 2 "
 "plugins you may use the Site Administrator interface."
 msgstr ""
-"Gefeliciteerd! uw Gallery2 upgrade is voltooid! Om Gallery2 modules op te waarden kunt u de "
+"Gefeliciteerd! uw Gallery2 upgrade is voltooid! Om Gallery2 moduleste upgraden kunt u de "
 "Site Beheer te gebruiken."
 
 msgid "Go to my Gallery!"
@@ -511,54 +708,8 @@ msgstr "Opwaardering %d%% voltooid"
 msgid "Redo this step"
 msgstr "Herhaal deze stap"
 
-#, c-format
-msgid "Continue to Step %d&raquo;"
-msgstr "Ga verder naar Stap %d&raquo;"
-
 msgid "Gallery: <strong>your photos</strong> on <strong>your website</strong>"
 msgstr "Gallery: <strong>uw foto's</strong> op <strong>uw website</strong>"
-
-#, c-format
-msgid "Missing files (%d)"
-msgstr "Missende bestanden (%d)"
-
-msgid ""
-"Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
-"be safe to ignore these."
-msgstr ""
-"Let op: u voert Gallery uit vanuit SVN, daarom kunnen recent verwijderde bestanden hier "
-"verschijnen. Het kan veiliger zijn ze te negeren."
-
-#, c-format
-msgid "Modified files (%d)"
-msgstr "Gewijzigde bestanden (%d)"
-
-msgid ""
-"Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
-"probably ignore these, but to be safe you should make sure that you do 'svn update' before "
-"continuing."
-msgstr ""
-"Let op: u voert Gallery uit vanuit SVN, daarom kunt u sommige gewijzigde bestanden "
-"verwachten. U kunt deze waarschijnlijk veilig nergeren. Voor de zekerheid zou u <b>svn "
-"update</b> uit moeten voeren, voordat u verder gaat."
-
-#, c-format
-msgid "Old files (%d)"
-msgstr "Oude bestanden (%d)"
-
-#, c-format
-msgid ""
-"These files are no longer part of Gallery. They probably won't cause any problems but it is "
-"a good idea to remove them to keep your install clean.  Gallery can't remove these files for "
-"you, but you can download and run %s in your gallery2 directory to delete them for you."
-msgstr ""
-"Deze bestanden maken geen deel (meer) uit van Gallery. Waarschijnlijk veroorzaken ze geen "
-"problemen, maar voor de netheid zou het goed zijn om deze te verwijderen. Gallery kan deze "
-"bestanden niet verwijderen, echter U kan %s naar de Gallery2 directory downloaden om de "
-"ongebruikte bestanden te verwijderen."
-
-msgid "this script"
-msgstr "dit script"
 
 msgid "Upgrade Steps"
 msgstr "Opwaardeer Stappen"
@@ -619,9 +770,6 @@ msgstr ""
 "vind u wat debug informatie. Rapporteer deze in de %sGallery Forums%s en dan kunnen wij u "
 "helpen om het probleem te diagnotiseren."
 
-msgid "Stack Trace:"
-msgstr "Stack Trace:"
-
 msgid "Debug Output:"
 msgstr "Debug Uitvoer:"
 
@@ -642,7 +790,7 @@ msgstr "Op dit moment geïnstalleerd"
 
 #, c-format
 msgid "Core Module version: %s (Gallery %s)"
-msgstr ""
+msgstr "Core Module versie %s (Gallery %s)"
 
 msgid "New version"
 msgstr "Nieuwe versie"
@@ -670,30 +818,6 @@ msgstr ""
 "geïnstalleerde versie of nieuwer."
 
 msgid ""
-"Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  "
-"If you fail to make a backup and something goes wrong, there is a strong possibility that we "
-"will not be able to help you recover your data!  Refer to the following example:"
-msgstr ""
-"Voordat u opwaardeert, <b>raden wij u ten zeerste aan</b> dat u een backup van uw database "
-"maakt! Als u geen backup maakt en er gaat iets mis, dan is er een grote kans dat we niet in "
-"staat zijn om u te helpen om uw data te herstellen. Raadpleeg het volgende voorbeeld:"
-
-msgid "MySQL"
-msgstr "MySQL"
-
-msgid "PostgreSQL"
-msgstr "PostgreSQL"
-
-msgid "Oracle"
-msgstr "Oracle"
-
-msgid "IBM DB2"
-msgstr "IBM DB2"
-
-msgid "Microsoft SQL Server"
-msgstr "Microsoft SQL Server"
-
-msgid ""
 "Once the upgrade has begun, please be patient.  If you cancel or reload the page, you may "
 "interfere with the upgrade process."
 msgstr ""
@@ -717,11 +841,13 @@ msgid ""
 "<b>Reminder</b>: Now update the permissions on config.php to make sure it is not writeable "
 "by other people.  Right now your config.php has modes of %s.  We suggest that you do this:"
 msgstr ""
+"<b>Herinnering</b> Update de rechten van config.php nu om er zeker van te zijn dat deze niet "
+"schrijfbaar is voor andere mensen. Nu heeft de config.php de modus van %s. We raden u aan om "
+"het volgende te doen:"
 
 msgid "Your Gallery Core Module is up to date!"
 msgstr "De Gallery Core Module is bijgewerkt!"
 
-#, fuzzy
 msgid ""
 "The following plugins can be automatically upgraded for you.  If you choose not to upgrade "
 "them now, you may experience problems with your Gallery.   You can always upgrade or "
@@ -729,9 +855,9 @@ msgid ""
 "decision you make here is not permanent."
 msgstr ""
 "De volgende modules kunnen automatisch voor u worden bijgewerkt. Als u ervoor kiest om ze "
-"niet nu op te waarderen, kunt u problemen krijgen met uw Gallery. U kunt ze altijd "
-"opwaarderen of deactiveren in de Site Beheer pagina, of later naar deze pagina teruggaan. "
-"Dus de beslissing die u nu neemt, is niet definitief."
+"niet te upgraden, kunt u problemen krijgen met uw Gallery. U kunt ze altijd upgraden of "
+"deactiveren in de Site Beheer pagina, of later naar deze pagina teruggaan. Dus de beslissing "
+"die u nu neemt, is niet definitief."
 
 msgid "Deactivated Plugins"
 msgstr "Inactieve Plug-ins"
@@ -813,58 +939,5 @@ msgstr "Kies Taal:"
 msgid "Go"
 msgstr "Start"
 
-#~ msgid ""
-#~ "<b>Reminder</b>: Now check the permissions on config.php and make sure it is not globally "
-#~ "writeable."
-#~ msgstr ""
-#~ "<b>Herinering</b>: Controleer nu de rechten van config.php en zorg dat deze niet globaal "
-#~ "beschrijfbaar zijn."
-
-#~ msgid "mysqldump -u%s -p -h %s --opt %s > %s.sql"
-#~ msgstr "mysqldump -u%s -p -h %s --opt %s > %s.sql"
-
-#~ msgid "pg_dump -h %s --format=t %s > %s.sql"
-#~ msgstr "pg_dump -h %s --format=t %s > %s.s"
-
-#~ msgid "Upgrade More Modules"
-#~ msgstr "Meer Modules Opwaarderen"
-
-#~ msgid "Unable to verify plugins"
-#~ msgstr "niet in staat om de plugins te controleren"
-
-#~ msgid "the Gallery website"
-#~ msgstr "Ga naar Gallery website"
-
-#~ msgid ""
-#~ "Your upgrade cannot begin because some of your active modules/themes are incompatible or "
-#~ "missing.  You must either locate more recent versions of these modules or themes, or "
-#~ "revert to your original version of Gallery.  No changes have been made so it's safe to "
-#~ "revert.  If you have many incompatible modules listed below, it's possible that you "
-#~ "downloaded a smaller distribution of Gallery than what you originally installed.  You can "
-#~ "download a larger distribution from %s."
-#~ msgstr ""
-#~ "De upgrade kan niet starten doordat niet alle geactiveerde module aanwezig zijn of "
-#~ "incompatible zijn. U moet de compatible versies van deze modules/thema verkrijgen of de "
-#~ "originele gebruiken. Er zijn geen veranderingen doorgevoerd, U kunt nu nog veilig de "
-#~ "huidige situatie gebruiken. Indien er veel modules als incompatible gemarkeerd zijn, dan "
-#~ "is het mogelijk dat U een beperkte distributie van Gallery gedownload heeft, dan de "
-#~ "distributie welke geinstalleerd is. De distributies zijn te downloaden van %s"
-
-#~ msgid "Download replacement modules from %s"
-#~ msgstr "Download de nieuwe modules vanaf %s"
-
-#~ msgid "Upgrade Other Modules"
-#~ msgstr "Andere Modules Opwaarderen"
-
-#~ msgid "Missing Code"
-#~ msgstr "Missende bestanden (%d)"
-
-#~ msgid ""
-#~ "The code for some plugins that were previously active can no longer be found. You must "
-#~ "restore code for these plugins before this upgrade can continue. Code for the plugins "
-#~ "must be the same version or newer than what was installed before."
-#~ msgstr ""
-#~ "De code voor sommige plugins die eerder actief waren kan niet langer gevonden worden. U "
-#~ "dient de code voor deze plugins te herstellen, voordat deze upgrade door kan gaan. De "
-#~ "code van de plugins dient dezelfde versie of nieuwer te zijn dan welke hiervoor "
-#~ "geïnstalleerd was."
+#~ msgid "this script"
+#~ msgstr "dit script"

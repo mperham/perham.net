@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,15 +17,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-/**
- * @package Rewrite
- * @version $Revision: 15513 $
- * @author Douglas Cau <douglas@cau.se>
- */
 
-/**
- * Required class
- */
 GalleryCoreApi::requireOnce('modules/rewrite/classes/RewriteUrlGenerator.class');
 
 /**
@@ -33,8 +25,29 @@ GalleryCoreApi::requireOnce('modules/rewrite/classes/RewriteUrlGenerator.class')
  *
  * @package Rewrite
  * @subpackage Parsers
+ * @author Douglas Cau <douglas@cau.se>
+ * @version $Revision: 17580 $
  */
 class IsapiRewriteUrlGenerator extends RewriteUrlGenerator {
+
+    /**
+     * @see GalleryUrlGenerator::init
+     */
+    function init($baseUri=null, $g2Uri=null, $embedSessionString=null) {
+	/* Verify that we're configured to work in this mode.  Else disable short-URLs. */
+	$location = GalleryUtilities::isEmbedded() ? 'embeddedLocation' : 'galleryLocation';
+	list ($ret, $configuredLocation) =
+	    GalleryCoreApi::getPluginParameter('module', 'rewrite', 'isapirewrite.' . $location);
+	if ($ret) {
+	    return $ret;
+	}
+	if (empty($configuredLocation)) {
+	    /* Disable short-URLs */
+	    $this->_error = true;
+	}
+
+	return parent::init($baseUri, $g2Uri, $embedSessionString);
+    }
 
     /**
      * @see GalleryUrlGenerator::initNavigation
@@ -73,7 +86,7 @@ class IsapiRewriteUrlGenerator extends RewriteUrlGenerator {
      * GalleryUrlGenerator::getCurrentUrlDir() because REQUEST_URI gets rewritten correctly by
      * isapi_rewrite. (REQUEST_URI is only non-empty on IIS if isapi_rewrite is used!)
      *
-     * But we want to add a check if the RewriteUrlGenerator has been configured 
+     * But we want to add a check if the RewriteUrlGenerator has been configured
      * and force a fallback if that is not the case.
      */
     function getCurrentUrlDir($forceDirect=false) {

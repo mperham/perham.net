@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 {if !$ItemAddFromBrowser.uploadsPermitted}
 <div class="gbBlock giError">
@@ -51,7 +49,7 @@
   {if $UPLOAD_BOX_COUNT > $VISIBLE_BOX_COUNT}
   <script type="text/javascript">
 	// <![CDATA[
-	document.write('<h4><a id="addOne" href="javascript:addOne()">{g->text text="More Upload Boxes..."}</a></h4>');
+	document.write('<h4><a id="addOne" href="javascript:addOne()">{g->text text="More Upload Boxes..." forJavascript=true}</a></h4>');
 	var fileIndex = {$VISIBLE_BOX_COUNT};
 	{literal}
 	function addOne() {
@@ -75,12 +73,12 @@
   &nbsp;
 
   {g->text text="Assign caption to:"}
-  <input type="checkbox" id="cbSummary"{if !empty($form.set.summary)} checked="checked"{/if}
+  <input type="checkbox" id="cbSummary" {if !empty($form.set.summary)}checked="checked" {/if}
    name="{g->formVar var="form[set][summary]"}"/>
   <label for="cbSummary"> {g->text text="Summary"} </label>
   &nbsp;
 
-  <input type="checkbox" id="cbDesc"{if !empty($form.set.description)} checked="checked"{/if}
+  <input type="checkbox" id="cbDesc" {if !empty($form.set.description)}checked="checked" {/if}
    name="{g->formVar var="form[set][description]"}"/>
   <label for="cbDesc"> {g->text text="Description"} </label>
 </div>

@@ -1,9 +1,9 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17586 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
+{include file="gallery:modules/comment/templates/ChangeComment.js.tpl"}
+
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="View Comments"} </h2>
 </div>
@@ -25,10 +25,11 @@
 {else}
 <div class="gbBlock">
 {foreach from=$ShowComments.comments item=comment}
-  <div class="one-comment gcBorder2">
+  <div id="comment-{$comment.randomId}" class="one-comment gcBorder2">
   {include file="gallery:modules/comment/templates/Comment.tpl"
 	   comment=$comment item=$ShowComments.item can=$ShowComments.can
-	   user=$ShowComments.commenters[$comment.commenterId]}
+	   user=$ShowComments.commenters[$comment.commenterId]
+           ajaxChangeCallback="changeComment" truncate=1024}
   </div>
 {/foreach}
 </div>

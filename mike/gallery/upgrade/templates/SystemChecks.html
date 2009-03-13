@@ -1,3 +1,18 @@
+    <script type="text/javascript">
+      // <![CDATA[
+      function BlockToggle(objId, togId) {
+        var o = document.getElementById(objId), t = document.getElementById(togId);
+        if (o.style.display == 'none') {
+	  o.style.display = 'inline';
+	  t.innerHTML = '-';
+        } else {
+	  o.style.display = 'none';
+	  t.innerHTML = '+';
+        }
+      }
+      // ]]>
+    </script>
+
     <h1><?php print _('System Checks') ?></h1>
 
     <div class="systemChecks">

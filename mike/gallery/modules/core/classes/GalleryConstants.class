@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15534 $
+ * @version $Revision: 17580 $
  */
 
 /*
@@ -387,4 +387,14 @@ define('ERROR_UNKNOWN', 0x80000000);
 define('EXTERNAL_ACCESS_READ', 0x00000001);
 define('EXTERNAL_ACCESS_WRITE', 0x00000002);
 define('EXTERNAL_ACCESS_FULL', 0x00000003);
+
+/*
+ * ****************************************
+ *  Export / Import Schema Version Number
+ * ****************************************
+ */
+/**
+ * Current Schema Version
+ */
+define('EXPORT_SCHEMA_VERSION', '1.1');
 ?>

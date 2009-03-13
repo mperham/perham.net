@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17678 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="General Settings"} </h2>
@@ -34,40 +32,6 @@
   {g->text text="Error sending test email, see below for details."}
 </h2></div>
 {/if}
-
-<div class="gbBlock">
-  <h3> {g->text text="Language Settings"} </h3>
-
-  <p class="giDescription">
-    {g->text text="Select language defaults for Gallery. Individual users can override this setting in their personal preferences or via the language selector block if available. Gallery will try to automatically detect the language preference of each user if the browser preference check is enabled."}
-  </p>
-
-  {if isset($AdminCore.can.translate)}
-  <table class="gbDataTable"><tr>
-    <td>
-      {g->text text="Default language"}
-    </td><td>
-      <select name="{g->formVar var="form[default][language]"}">
-	{html_options options=$AdminCore.languageList selected=$form.default.language}
-      </select>
-    </td>
-  </tr><tr>
-    <td>
-      {g->text text="Check Browser Preference"}
-    </td><td>
-      <input type="checkbox"{if $form.language.useBrowserPref} checked="checked"{/if}
-	     name="{g->formVar var="form[language][useBrowserPref]"}"/>
-    </td>
-  </tr></table>
-  {else}
-    <div class="giWarning">
-      {capture name="gettext"}
-	<a href="http://php.net/gettext">{g->text text="gettext"}</a>
-      {/capture}
-      {g->text text="Your webserver does not support localization.  Please instruct your system administrator to reconfigure PHP with the %s option enabled." arg1=$smarty.capture.gettext}
-    </div>
-  {/if}
-</div>
 
 <div class="gbBlock">
   <h3> {g->text text="Date Formats"} </h3>
@@ -155,6 +119,14 @@
     </td><td>
       <select name="{g->formVar var="form[session][inactivityTimeout]"}">
 	{html_options options=$AdminCore.sessionTimeList selected=$form.session.inactivityTimeout}
+      </select>
+    </td>
+  </tr><tr>
+    <td>
+      {g->text text="Site Administration Session Timeout"}
+    </td><td>
+      <select name="{g->formVar var="form[session][siteAdministrationTimeout]"}">
+	{html_options options=$AdminCore.sessionTimeList selected=$form.session.siteAdministrationTimeout}
       </select>
     </td>
   </tr></table>

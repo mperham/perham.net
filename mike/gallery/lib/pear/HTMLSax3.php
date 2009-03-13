@@ -6,26 +6,30 @@
 // +----------------------------------------------------------------------+
 // | Copyright (c) 1997-2002 The PHP Group                                |
 // +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/3_0.txt.                                  |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
+// | This source file is subject to either version 3.0 of the PHP license |
+// | or version 3.0 of the GNU Lesser General Public License.             |
+// | The PHP license 3.0 is bundled with this package in the file LICENSE,|
+// | and is available at  through the world-wide-web at                   |
+// | http://www.php.net/license/3_0.txt. If you did not receive a copy of |
+// | the PHP license and are unable to obtain it through the              |
+// | world-wide-web, please send a note to license@php.net so we can mail |
+// | you a copy immediately.                                              |
+// | You should have received a copy of the GNU Lesser General Public     |
+// | License along with this library.  If not, see                        |
+// | <http://www.gnu.org/licenses/>.                                      |
 // +----------------------------------------------------------------------+
 // | Authors: Alexander Zhukov <alex@veresk.ru> Original port from Python |
 // | Authors: Harry Fuecks <hfuecks@phppatterns.com> Port to PEAR + more  |
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// PEAR  Id: HTMLSax3.php,v 1.1 2004/06/02 14:09:19 hfuecks
-//   G2 $Id: HTMLSax3.php 15342 2006-12-01 21:14:46Z andy_st $
+// PEAR  Id: HTMLSax3.php,v 1.2 2007/10/29 21:41:34 hfuecks
+//   G2 $Id: HTMLSax3.php 17152 2007-11-01 22:49:28Z andy_st $
 //
 /**
 * Main parser components
 * @package XML_HTMLSax3
-* @version  Id: HTMLSax3.php,v 1.1 2004/06/02 14:09:19 hfuecks
+* @version  Id: HTMLSax3.php,v 1.2 2007/10/29 21:41:34 hfuecks
 */
 /**
 * Required classes
@@ -694,25 +698,29 @@ class XML_HTMLSax3 {
 // +----------------------------------------------------------------------+
 // | Copyright (c) 1997-2002 The PHP Group                                |
 // +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/3_0.txt.                                  |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
+// | This source file is subject to either version 3.0 of the PHP license |
+// | or version 3.0 of the GNU Lesser General Public License.             |
+// | The PHP license 3.0 is bundled with this package in the file LICENSE,|
+// | and is available at  through the world-wide-web at                   |
+// | http://www.php.net/license/3_0.txt. If you did not receive a copy of |
+// | the PHP license and are unable to obtain it through the              |
+// | world-wide-web, please send a note to license@php.net so we can mail |
+// | you a copy immediately.                                              |
+// | You should have received a copy of the GNU Lesser General Public     |
+// | License along with this library.  If not, see                        |
+// | <http://www.gnu.org/licenses/>.                                      |
 // +----------------------------------------------------------------------+
 // | Authors: Alexander Zhukov <alex@veresk.ru> Original port from Python |
 // | Authors: Harry Fuecks <hfuecks@phppatterns.com> Port to PEAR + more  |
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// PEAR  Id: States.php,v 1.2 2004/06/02 14:22:40 hfuecks
+// PEAR  Id: States.php,v 1.3 2007/10/29 21:41:35 hfuecks
 //
 /**
 * Parsing states.
 * @package XML_HTMLSax3
-* @version  Id: States.php,v 1.2 2004/06/02 14:22:40 hfuecks
+* @version  Id: States.php,v 1.3 2007/10/29 21:41:35 hfuecks
 */
 /**
 * Define parser states
@@ -981,25 +989,29 @@ class XML_HTMLSax3_PiState {
 // +----------------------------------------------------------------------+
 // | Copyright (c) 1997-2002 The PHP Group                                |
 // +----------------------------------------------------------------------+
-// | This source file is subject to version 2.02 of the PHP license,      |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available at through the world-wide-web at                           |
-// | http://www.php.net/license/3_0.txt.                                  |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
+// | This source file is subject to either version 3.0 of the PHP license |
+// | or version 3.0 of the GNU Lesser General Public License.             |
+// | The PHP license 3.0 is bundled with this package in the file LICENSE,|
+// | and is available at  through the world-wide-web at                   |
+// | http://www.php.net/license/3_0.txt. If you did not receive a copy of |
+// | the PHP license and are unable to obtain it through the              |
+// | world-wide-web, please send a note to license@php.net so we can mail |
+// | you a copy immediately.                                              |
+// | You should have received a copy of the GNU Lesser General Public     |
+// | License along with this library.  If not, see                        |
+// | <http://www.gnu.org/licenses/>.                                      |
 // +----------------------------------------------------------------------+
 // | Authors: Alexander Zhukov <alex@veresk.ru> Original port from Python |
 // | Authors: Harry Fuecks <hfuecks@phppatterns.com> Port to PEAR + more  |
 // | Authors: Many @ Sitepointforums Advanced PHP Forums                  |
 // +----------------------------------------------------------------------+
 //
-// PEAR  Id: Decorators.php,v 1.1 2004/06/02 14:09:19 hfuecks
+// PEAR  Id: Decorators.php,v 1.2 2007/10/29 21:41:35 hfuecks
 //
 /**
 * Decorators for dealing with parser options
 * @package XML_HTMLSax3
-* @version  Id: Decorators.php,v 1.1 2004/06/02 14:09:19 hfuecks
+* @version  Id: Decorators.php,v 1.2 2007/10/29 21:41:35 hfuecks
 * @see XML_HTMLSax3::set_option
 */
 /**

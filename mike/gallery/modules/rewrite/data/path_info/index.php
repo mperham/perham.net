@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,9 @@
  * Usage: index.php/test/path/info
  */
 
-if ($_SERVER['PATH_INFO'] != $_SERVER['SCRIPT_NAME'] &&
-	$_SERVER['PATH_INFO'] == '/test/path/info') {
+if (isset($_SERVER['PATH_INFO'])
+	&& (!isset($_SERVER['SCRIPT_NAME']) || $_SERVER['PATH_INFO'] != $_SERVER['SCRIPT_NAME'])
+	&& $_SERVER['PATH_INFO'] == '/test/path/info') {
     print("PASS_PATH_INFO\n");
 } else {
     print("FAIL_PATH_INFO\n");

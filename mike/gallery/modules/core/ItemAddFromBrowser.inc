@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class ItemAddFromBrowser extends ItemAddPlugin {
 
@@ -64,27 +64,14 @@ class ItemAddFromBrowser extends ItemAddPlugin {
 			$file['caption'] = GalleryUtilities::htmlSafe($file['caption'], true);
 		    }
 
-		    /* Get the mime type from the upload info. */
-		    $mimeType = $file['type'];
+		    $filename = basename($file['name']);
+		    $base = GalleryUtilities::getFileBase($filename);
 
-		    /*
-		     * If we don't get useful data from that or its a type we don't
-		     * recognize, take a swing at it using the file name.
-		     */
-		    list ($ret, $mimeExtensions) =
-			GalleryCoreApi::convertMimeToExtensions($mimeType);
-		    if ($mimeType == 'application/octet-stream' ||
-			    $mimeType == 'application/unknown' ||
-			    empty($mimeExtensions)) {
-			$extension = GalleryUtilities::getFileExtension($file['name']);
-			list ($ret, $mimeType) = GalleryCoreApi::convertExtensionToMime($extension);
-			if ($ret) {
-			    $mimeType = 'application/unknown';
-			}
+		    list ($ret, $mimeType) = GalleryCoreApi::getMimeType($filename, $file['type']);
+		    if ($ret) {
+			return array($ret, null, null);
 		    }
 
-		    $filename = basename($file['name']);
-		    list ($base, $extension) = GalleryUtilities::getFileNameComponents($filename);
 		    $title = ($form['set']['title'] == 'filename') ? $base
 			   : (($form['set']['title'] == 'caption') ? $file['caption'] : '');
 		    $summary = empty($form['set']['summary']) ? '' : $file['caption'];

@@ -100,7 +100,12 @@ function formatGPSData($type,$tag,$intel,$data) {
 		
 	} else if($type=="URATIONAL" || $type=="SRATIONAL") {
 		$data = bin2hex($data);
-		if($intel==1) $data = intel2Moto($data);
+		if($intel==1 && strlen($data)==48) {
+			// handle the three-rational case first
+			$data = intel2Moto(substr($data,0,16)) . intel2Moto(substr($data,16,16)) . intel2Moto(substr($data,32,16)); 
+		} else if ($intel==1) {
+			$data = intel2Moto($data);
+		}
 		
 		if($intel==1) $top = hexdec(substr($data,8,8)); 	//intel stores them bottom-top
 		else  $top = hexdec(substr($data,0,8));				//motorola stores them top-bottom
@@ -118,9 +123,9 @@ function formatGPSData($type,$tag,$intel,$data) {
 			
 			$data = $hour+$minutes/60+$seconds/3600;
 		} else if($tag=="0007") { //Time
-			$seconds = GPSRational(substr($data,0,16),$intel);
+			$hour = GPSRational(substr($data,0,16),$intel);
 			$minutes = GPSRational(substr($data,16,16),$intel);
-			$hour = GPSRational(substr($data,32,16),$intel);
+			$seconds = GPSRational(substr($data,32,16),$intel);
 			
 			$data = $hour.":".$minutes.":".$seconds;
 		} else {

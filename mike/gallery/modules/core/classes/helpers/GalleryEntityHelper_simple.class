@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryEntityHelper_simple {
@@ -31,7 +31,7 @@ class GalleryEntityHelper_simple {
     /**
      * @see GalleryCoreApi::loadEntitiesById
      */
-    function loadEntitiesById($ids) {
+    function loadEntitiesById($ids, $requiredEntityType=null) {
 	global $gallery;
 	$gallery->guaranteeTimeLimit(5);
 
@@ -101,6 +101,37 @@ class GalleryEntityHelper_simple {
 	    $results[] = $cached[$id];
 	}
 
+	/* Assert the entity-type if requested */
+	if ($requiredEntityType && $requiredEntityType != 'GalleryEntity') {
+	    if (!is_array($requiredEntityType)) {
+		$requiredEntityType = array($requiredEntityType);
+	    }
+
+	    /*
+	     * Assume entityType and class-names correspond 1:1 and use isA rather than
+	     * describeEntity since we'd need to build a class-hierarchy tree from entityInfo which
+	     * we get for free with isA.
+	     */
+	    foreach ($results as $entity) {
+		$match = false;
+		foreach ($requiredEntityType as $requiredType) {
+		    if (GalleryUtilities::isA($entity, $requiredType)) {
+			$match = true;
+			break;
+		    }
+		}
+		if (!$match) {
+		    $errorMessage =
+			sprintf('Entity with id [%d] is a [%s] and does not extend the required '
+				. 'entity type [%s].', $entity->getId(), $entity->getEntityType(),
+				implode(', ', $requiredEntityType));
+		    return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT, __FILE__, __LINE__,
+						       $errorMessage),
+				 null);
+		}
+	    }
+	}
+
 	if (!$returnArray) {
 	    $results = $results[0];
 	}
@@ -124,7 +155,8 @@ class GalleryEntityHelper_simple {
 					      "$externalId $entityType"), null);
 	}
 
-	list ($ret, $entity) = GalleryEntityHelper_simple::loadEntitiesById($result[0]);
+	list ($ret, $entity) =
+	    GalleryEntityHelper_simple::loadEntitiesById($result[0], $entityType);
 	if ($ret) {
 	    return array($ret, null);
 	}

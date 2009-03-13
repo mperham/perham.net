@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17614 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="FFMPEG Settings"} </h2>
@@ -26,6 +24,11 @@
   <p class="giDescription">
     {g->text text="FFMPEG is a graphics toolkit that can be used to process video files that you upload to Gallery.  You must install the FFMPEG binary on your server, then enter the path to it in the text box below.  If you're on a Unix machine, don't forget to make the binary executable (<i>chmod 755 ffmpeg</i> in the right directory should do it)"}
   </p>
+{if !$AdminFfmpeg.canExec}
+  <p class="giWarning">
+    {g->text text="The exec() function is disabled in your PHP by the <b>disabled_functions</b> parameter in php.ini.  This module cannot be used until that setting is changed."}
+  </p>
+{else}
   {if $AdminFfmpeg.canWatermark}
     <img src="{g->url href="modules/ffmpeg/images/sample.jpg"}" width="100" height="75" alt=""
      style="float: right"/>
@@ -65,7 +68,7 @@
     {if $AdminFfmpeg.canWatermark} {g->text text="See sample at right."} {/if}
   </p>
   {if $AdminFfmpeg.canWatermark}
-    <input type="checkbox" id="cbWatermark"{if $form.useWatermark} checked="checked"{/if}
+    <input type="checkbox" id="cbWatermark" {if $form.useWatermark}checked="checked"{/if}
      name="{g->formVar var="form[useWatermark]"}" style="vertical-align: -5px"/>
     <label for="cbWatermark">
       {g->text text="Watermark new movie thumbnails"}
@@ -90,6 +93,7 @@
    name="{g->formVar var="form[action][save]"}" value="{g->text text="Save Settings"}"/>
   <input type="submit" class="inputTypeSubmit"
    name="{g->formVar var="form[action][test]"}" value="{g->text text="Test Settings"}"/>
+{/if}
   {if $AdminFfmpeg.isConfigure}
     <input type="submit" class="inputTypeSubmit"
      name="{g->formVar var="form[action][cancel]"}" value="{g->text text="Cancel"}"/>
@@ -134,18 +138,52 @@
   </table>
 </div>
 
-{if $AdminFfmpeg.mimeTypes}
+{if $AdminFfmpeg.mimeTypes || $AdminFfmpeg.mimeTypesEncoder}
 <div class="gbBlock">
   <h3> {g->text text="Supported MIME Types"} </h3>
 
+  {if $AdminFfmpeg.mimeTypes}
   <p class="giDescription">
-    {g->text text="The FFMPEG module can support files with the following MIME types"}
+    {g->text text="The FFMPEG module can decode files of the following MIME types"}
   </p>
   <p class="giDescription">
   {foreach from=$AdminFfmpeg.mimeTypes item=mimeType}
     {$mimeType}<br/>
   {/foreach}
-   </p>
+  </p>
+  {/if}
+
+  {if $AdminFfmpeg.mimeTypesEncoder}
+  <p class="giDescription">
+    {g->text text="The FFMPEG module can encode files to the following MIME types"}
+  </p>
+  <p class="giDescription">
+  {foreach from=$AdminFfmpeg.mimeTypesEncoder item=mimeType}
+    {$mimeType}
+    {if isset($AdminFfmpeg.encodeWarnings.$mimeType)}
+      <div class="giWarning">
+        {if isset($AdminFfmpeg.encodeWarnings.$mimeType.mute)}
+          {g->text text="Missing required audio codec, encoded videos will not contain sound."}
+        {/if}
+      </div>
+    {else}
+      <br/>
+    {/if}
+  {/foreach}
+  </p>
+  {/if}
+
+</div>
+{/if}
+
+{if $AdminFfmpeg.version}
+<div class="gbBlock">
+  <h3> {g->text text="Version Information"} </h3>
+  <p class="giDescription">
+  {foreach from=$AdminFfmpeg.version item=ver}
+    {$ver}<br/>
+  {/foreach}
+  </p>
 </div>
 {/if}
 

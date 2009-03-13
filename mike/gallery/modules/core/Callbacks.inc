@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 /**
  * @package GalleryCore
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class CoreCallbacks {
     function callback($params, &$smarty, $callback, $userId=null) {
@@ -32,8 +32,7 @@ class CoreCallbacks {
 	switch($callback) {
 	case 'LoadLanguageSelector':
 	    $languageList = array();
-	    $translator =& $gallery->getTranslator();
-	    $supportedLanguages = $translator->getSupportedLanguages();
+	    $supportedLanguages = GalleryCoreApi::getSupportedLanguages();
 	    foreach ($supportedLanguages as $language => $countryList) {
 		foreach ($countryList as $country => $languageData) {
 		    $languageList[$language . '_' . $country] = $languageData['description'];
@@ -91,7 +90,8 @@ class CoreCallbacks {
 		    return $ret;
 		}
 		if ($canViewParent) {
-		    list ($ret, $parent) = GalleryCoreApi::loadEntitiesById($item['parentId']);
+		    list ($ret, $parent) =
+			GalleryCoreApi::loadEntitiesById($item['parentId'], 'GalleryItem');
 		    if ($ret) {
 			return $ret;
 		    }
@@ -132,7 +132,7 @@ class CoreCallbacks {
 		    $peerMap[$peerLast] = $peerIds[$peerLast];
 		}
 
-		list ($ret, $peerItems) = GalleryCoreApi::loadEntitiesById($peerMap);
+		list ($ret, $peerItems) = GalleryCoreApi::loadEntitiesById($peerMap, 'GalleryItem');
 		if ($ret) {
 		    return $ret;
 		}

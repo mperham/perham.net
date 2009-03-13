@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryChildEntity.class');
  * A GalleryChildEntity that also has data stored in the filesystem.
  * This class understands how to manage data on the filesystem in parallel to
  * the data in the persistent store.
- * 
+ *
  * Treat this class as abstract class, it is not registered in the factory.
  *
  * @g2 <class-name>GalleryFileSystemEntity</class-name>
@@ -38,7 +38,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryChildEntity.class');
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15534 $
+ * @version $Revision: 17580 $
  * @abstract
  */
 class GalleryFileSystemEntity extends GalleryChildEntity {
@@ -66,9 +66,11 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
      *
      * @param int $parentId the id of the parent GalleryChildEntity
      * @param string $pathComponent the path component of this entity
-     * @return object GalleryStatus a status code
+     * @param boolean $isDirectory (optional) Used for legal path component characters.
+     *        Defaults to false.
+     * @return GalleryStatus a status code
      */
-    function create($parentId, $pathComponent) {
+    function create($parentId, $pathComponent, $isDirectory=false) {
 	if (empty($pathComponent)) {
 	    return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 	}
@@ -83,7 +85,7 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
 	}
 
 	list ($ret, $pathComponent) =
-	    GalleryCoreApi::getLegalPathComponent($pathComponent, $parentId);
+	    GalleryCoreApi::getLegalPathComponent($pathComponent, $parentId, null, $isDirectory);
 	if ($ret) {
 	    return $ret;
 	}
@@ -103,7 +105,7 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
      * Create a new root level instance of this FileSystemEntity in the persistent store.
      * Let the parent do its work, then add any initialization specific to this class.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function createRoot() {
 	$ret = parent::createRoot();
@@ -142,13 +144,10 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
      * Rename this item
      *
      * @param string $newPathComponent the path component
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function rename($newPathComponent) {
-	if (!$this->getParentId()) {
-	    return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
-	}
-	if (empty($newPathComponent)) {
+	if (!$this->getParentId() || empty($newPathComponent)) {
 	    return GalleryCoreApi::error(ERROR_BAD_PARAMETER);
 	}
 
@@ -173,7 +172,7 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
      * Move item to a new parent
      *
      * @param int $newParentId the id of the new parent GalleryItem
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @todo Make sure that 'order' stuff is maintained, so that the moved
      *       items become the last in order in the new album if that album is marked as unordered
      */
@@ -195,7 +194,8 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
 	}
 
 	/* Get the new parent */
-	list ($ret, $newParent) = GalleryCoreApi::loadEntitiesById($newParentId);
+	list ($ret, $newParent) =
+		GalleryCoreApi::loadEntitiesById($newParentId, 'GalleryFileSystemEntity');
 	if ($ret) {
 	    return $ret;
 	}
@@ -243,7 +243,7 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
 
     /**
      * Delete this GalleryFileSystemEntity
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function delete() {
 	/*
@@ -269,7 +269,7 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
      *
      * Subclasses should specify their container-ness by overloading isContainer()
      *
-     * @return array object GalleryStatus a status code,
+     * @return array GalleryStatus a status code,
      *               string a path where children can store their data files
      */
     function fetchContainerPath() {
@@ -310,7 +310,7 @@ class GalleryFileSystemEntity extends GalleryChildEntity {
      * Return the logical path to this item.  Note that this path is only valid as
      * long as the entire tree is at least read locked.
      *
-     * @return array object GalleryStatus a status code,
+     * @return array GalleryStatus a status code,
      *         array path component names
      */
     function fetchLogicalPath() {

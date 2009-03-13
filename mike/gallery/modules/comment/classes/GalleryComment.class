@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+GalleryCoreApi::requireOnce('modules/comment/module.inc');
 GalleryCoreApi::requireOnce('modules/core/classes/GalleryChildEntity.class');
 
 /**
@@ -28,14 +29,14 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryChildEntity.class');
  * @g2 <parent-class-name>GalleryChildEntity</parent-class-name>
  * @g2 <schema>
  * @g2   <schema-major>1</schema-major>
- * @g2   <schema-minor>2</schema-minor>
+ * @g2   <schema-minor>3</schema-minor>
  * @g2 </schema>
  * @g2 <requires-id/>
  *
  * @package Comment
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15534 $
+ * @version $Revision: 17580 $
  */
 class GalleryComment extends GalleryChildEntity {
 
@@ -114,7 +115,7 @@ class GalleryComment extends GalleryChildEntity {
      * @access public
      */
     var $date;
-    
+
     /**
      * Author of the comment. Only used for guest comments.
      *
@@ -129,6 +130,24 @@ class GalleryComment extends GalleryChildEntity {
      * @access public
      */
     var $author;
+
+    /**
+     * Publication status of this comment.
+     * @see modules/comment/module.inc for possible status values.
+     *
+     * @g2 <member>
+     * @g2   <member-name>publishStatus</member-name>
+     * @g2   <member-type>INTEGER</member-type>
+     * @g2   <indexed/>
+     * @g2   <required/>
+     * @g2   <default>0</default>
+     * @g2   <member-external-access>FULL</member-external-access>
+     * @g2 </member>
+     *
+     * @var string $publishStatus
+     * @access public
+     */
+    var $publishStatus;
 
     /**
      * @see GalleryEntity::getClassName
@@ -150,8 +169,19 @@ class GalleryComment extends GalleryChildEntity {
 	$this->setHost(null);
 	$this->setSubject(null);
 	$this->setComment(null);
-	$this->setDate(null);
+	$this->setDate(time());
 	$this->setAuthor(null);
+
+	list ($ret, $moderate) =
+	    GalleryCoreApi::getPluginParameter ('module', 'comment', 'comments.moderate');
+	if ($ret) {
+	    return $ret;
+	}
+	if ($moderate) {
+	    $this->setPublishStatus(COMMENT_PUBLISH_STATUS_UNPUBLISHED);
+        } else {
+	    $this->setPublishStatus(COMMENT_PUBLISH_STATUS_PUBLISHED);
+	}
     }
 
     function getCommenterId() {
@@ -200,6 +230,14 @@ class GalleryComment extends GalleryChildEntity {
 
     function getAuthor() {
 	return $this->author;
+    }
+
+    function setPublishStatus($publishStatus) {
+	$this->publishStatus = $publishStatus;
+    }
+
+    function getPublishStatus() {
+	return $this->publishStatus;
     }
 }
 ?>

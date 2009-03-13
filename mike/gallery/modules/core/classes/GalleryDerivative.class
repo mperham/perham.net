@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryChildEntity.class');
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15534 $
+ * @version $Revision: 17580 $
  */
 class GalleryDerivative extends GalleryChildEntity {
 
@@ -162,7 +162,7 @@ class GalleryDerivative extends GalleryChildEntity {
     /**
      * Delete this GalleryEntity
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function delete() {
 	global $gallery;
@@ -177,13 +177,15 @@ class GalleryDerivative extends GalleryChildEntity {
 
 	foreach ($derivativesTable as $itemId => $derivatives) {
 	    foreach ($derivatives as $derivative) {
-		$ret = GalleryCoreApi::deleteEntityById($derivative->getId());
+		$ret = GalleryCoreApi::deleteEntityById($derivative->getId(), 'GalleryDerivative');
 		/*
 		 * Deletes can cascade in interesting ways.  For example, deleting a derivative
 		 * will get rid of any other derivatives that are sourced to it, so it's possible
 		 * that deleting children here can lead to a MISSING_OBJECT result unless we re-run
 		 * the parent/child query each time.  Easier to just ignore the MISSING_OBJECT
 		 * error since we only care that it's gone.
+		 * Note that we get a MISSING_OBJECT error as well if the requested entity isn't an
+		 * entity of type GalleryDerivative.
 		 */
 		if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
 		    return $ret;
@@ -200,9 +202,6 @@ class GalleryDerivative extends GalleryChildEntity {
 	/* Expire our cache, and don't abort if this fails */
 	$ret = $this->expireCache();
 
-	GalleryDataCache::removeFromDisk(
-	    array('type' => 'derivative-meta', 'itemId' => $this->getId()));
-
 	return null;
     }
 
@@ -210,7 +209,7 @@ class GalleryDerivative extends GalleryChildEntity {
      * Create a new GalleryDerivative
      *
      * @param int $parentId the id of the parent GalleryItem
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function create($parentId) {
 	$ret = parent::create($parentId);
@@ -267,7 +266,7 @@ class GalleryDerivative extends GalleryChildEntity {
      *
      * Rebuilds the cache and marks the derivative as broken if we failed.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function rebuildCache() {
 	global $gallery;
@@ -279,6 +278,8 @@ class GalleryDerivative extends GalleryChildEntity {
 	     * Something went wrong with the toolkit
 	     * Mark the derivative as broken for later repair attempts
 	     */
+	    GalleryCoreApi::addEventLogEntry(
+		'Image Error', 'Unable to build image', $ret->getAsText());
 	    $this->setIsBroken(true);
 	    if ($gallery->getDebug()) {
 		$gallery->debug("\n" . $ret->getAsText() . "\n");
@@ -303,8 +304,7 @@ class GalleryDerivative extends GalleryChildEntity {
 			    $this->setDerivativeSize($size);
 			    $status = null;
 			} else {
-			    $status =
-				GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
+			    $status = GalleryCoreApi::error(ERROR_PLATFORM_FAILURE);
 			}
 		    } else {
 			$status = $ret;
@@ -340,7 +340,7 @@ class GalleryDerivative extends GalleryChildEntity {
      * Rebuild the cache.  This should never be called directly; instead you
      * should call GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent($derivativeId)
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _rebuildCache() {
@@ -370,7 +370,8 @@ class GalleryDerivative extends GalleryChildEntity {
 
 	    if ($rebuild) {
 		/* Fetch the updated version back from our entity cache */
-		list ($ret, $source) = GalleryCoreApi::loadEntitiesById($source->getId());
+		list ($ret, $source) = GalleryCoreApi::loadEntitiesById(
+		    $source->getId(), array('GalleryFileSystemEntity', 'GalleryDerivative'));
 		if ($ret) {
 		    return $ret;
 		}
@@ -427,7 +428,8 @@ class GalleryDerivative extends GalleryChildEntity {
 					    "$operationName $mimeType");
 	    }
 
-	    /* Put look-ahead info in context, so toolkit can decide if it can
+	    /*
+	     * Put look-ahead info in context, so toolkit can decide if it can
 	     * queue up parameters in the context for later processing, or just do it.
 	     */
 	    if ($i + 1 == count($operations)) {
@@ -483,9 +485,6 @@ class GalleryDerivative extends GalleryChildEntity {
 	    return $ret;
 	}
 
-	GalleryDataCache::putToDisk(
-	    array('type' => 'derivative-meta', 'itemId' => $this->getId()), $data);
-
 	GalleryCoreApi::deleteFastDownloadFileById($this->getId());
 	$ret = GalleryCoreApi::createFastDownloadFile($this);
 	if ($ret) {
@@ -501,13 +500,14 @@ class GalleryDerivative extends GalleryChildEntity {
      * all the operations that must be performed in order to create the correct output
      * file, including the post filter.
      *
-     * @return array object GalleryStatus a status code
-     *               object GalleryDataItem data item or GalleryDerivative preferred derivative
+     * @return array GalleryStatus a status code
+     *               GalleryDataItem data item or GalleryDerivative preferred derivative
      *               array the operations
      */
     function fetchFinalOperations() {
 	/* Load the source */
-	list ($ret, $source) = GalleryCoreApi::loadEntitiesById($this->getDerivativeSourceId());
+	list ($ret, $source) = GalleryCoreApi::loadEntitiesById(
+	    $this->getDerivativeSourceId(), array('GalleryFileSystemEntity', 'GalleryDerivative'));
 	if ($ret) {
 	    return array($ret, null, null);
 	}
@@ -527,8 +527,9 @@ class GalleryDerivative extends GalleryChildEntity {
 	     */
 	    $sources = array($source, $this);
 	    while (GalleryUtilities::isA($sources[0], 'GalleryDerivative')) {
-		list ($ret, $tmp) =
-		    GalleryCoreApi::loadEntitiesById($sources[0]->getDerivativeSourceId());
+		list ($ret, $tmp) = GalleryCoreApi::loadEntitiesById(
+		    $sources[0]->getDerivativeSourceId(),
+		    array('GalleryFileSystemEntity', 'GalleryDerivative'));
 		if ($ret) {
 		    return array($ret, null, null);
 		}
@@ -595,7 +596,7 @@ class GalleryDerivative extends GalleryChildEntity {
      * Is the cache for this item still current?
      * If the cache is expired, it can be rebuilt with rebuildCache()
      *
-     * @return array object GalleryStatus a status code,
+     * @return array GalleryStatus a status code,
      *               boolean false if the item is expired (ie, empty cache)
      */
     function isCacheCurrent() {
@@ -613,7 +614,7 @@ class GalleryDerivative extends GalleryChildEntity {
 
     /**
      * Expire the cache.
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function expireCache() {
 	global $gallery;
@@ -636,7 +637,7 @@ class GalleryDerivative extends GalleryChildEntity {
     /**
      * Get the full path to the data file.
      *
-     * @return array object GalleryStatus a status code,
+     * @return array GalleryStatus a status code,
      *               string a path where children can store their data files
      */
     function fetchPath() {
@@ -652,7 +653,7 @@ class GalleryDerivative extends GalleryChildEntity {
      * GalleryDerivativeImage may want to render as an <img> tag in the HTML format.
      *
      * @param string $format the format (eg. HTML)
-     * @param object GalleryDataItem $item the data item
+     * @param GalleryDataItem $item the data item
      * @param array $params format specific key value pairs
      * @return string output
      */

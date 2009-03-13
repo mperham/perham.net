@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 16011 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryDataCache {
@@ -43,7 +43,8 @@ class GalleryDataCache {
     function &_getCache() {
 	static $cache;
 	if (!isset($cache)) {
-	    $cache['maxKeys'] = 300;
+	    $cache['maxKeys'] = 800;
+	    $cache['minKeys'] = 400;
 	    $cache['positions'] = array();
 	    $cache['latestPosition'] = 0;
 	    $cache['keys'] = array();
@@ -86,15 +87,15 @@ class GalleryDataCache {
 	    return;
 	}
 
+	if (count($cache['positions']) >= $cache['maxKeys']) {
+	    GalleryDataCache::_performMaintenance();
+	}
+
 	$cache['keys'][$key] = $data;
 	if ($protected) {
 	    $cache['protected'][$key] = 1;
 	} else {
 	    $cache['positions'][$key] = $cache['latestPosition']++;
-	}
-
-	if ($cache['latestPosition'] % 150 == 0) {
-	    GalleryDataCache::_performMaintenance();
 	}
     }
 
@@ -145,15 +146,15 @@ class GalleryDataCache {
 	    return;
 	}
 
+	if (count($cache['positions']) >= $cache['maxKeys']) {
+	    GalleryDataCache::_performMaintenance();
+	}
+
 	$cache['keys'][$key] =& $data;
 	if ($protected) {
 	    $cache['protected'][$key] = 1;
 	} else {
 	    $cache['positions'][$key] = $cache['latestPosition']++;
-	}
-
-	if ($cache['latestPosition'] % 150 == 0) {
-	    GalleryDataCache::_performMaintenance();
 	}
     }
 
@@ -165,15 +166,13 @@ class GalleryDataCache {
      */
     function _performMaintenance() {
 	$cache =& GalleryDataCache::_getCache();
-	$numToExpire = sizeof($cache['positions']) - $cache['maxKeys'];
-	if ($numToExpire > 0) {
-	    asort($cache['positions']);
-	    foreach ($cache['positions'] as $key => $position) {
-		unset($cache['keys'][$key]);
-		unset($cache['positions'][$key]);
-		if ($numToExpire-- == 0) {
-		    break;
-		}
+	$numToExpire = count($cache['positions']) - $cache['minKeys'];
+	asort($cache['positions']);
+	foreach ($cache['positions'] as $key => $position) {
+	    unset($cache['keys'][$key]);
+	    unset($cache['positions'][$key]);
+	    if ($numToExpire-- == 0) {
+		break;
 	    }
 	}
     }
@@ -308,10 +307,9 @@ class GalleryDataCache {
 
 	global $gallery;
 	$platform =& $gallery->getPlatform();
-	if ($pathInfo['type'] == 'entity' ||
-		$pathInfo['type'] == 'derivative-meta' ||
-		$pathInfo['type'] == 'module-data' ||
-		isset($pathInfo['id'])) {
+	if (in_array($pathInfo['type'],
+		     array('entity', 'module-data', 'local-url-map'))
+		|| isset($pathInfo['id'])) {
 	    $cacheFile = GalleryDataCache::getCachePath($pathInfo);
 	    if ($platform->file_exists($cacheFile)) {
 		if ($platform->is_dir($cacheFile)) {
@@ -320,18 +318,16 @@ class GalleryDataCache {
 		    $platform->unlink($cacheFile);
 		}
 	    }
-	} else {
-	    if ($pathInfo['type'] == 'module' || $pathInfo['type'] == 'theme') {
-		list ($ret, $pluginStatus) = GalleryCoreApi::fetchPluginStatus($pathInfo['type']);
-		if ($ret) {
-		    return $ret;
-		}
+	} else if ($pathInfo['type'] == 'module' || $pathInfo['type'] == 'theme') {
+	    list ($ret, $pluginStatus) = GalleryCoreApi::fetchPluginStatus($pathInfo['type']);
+	    if ($ret) {
+		return $ret;
+	    }
 
-		foreach (array_keys($pluginStatus) as $pluginId) {
-		    GalleryDataCache::removeFromDisk(array('type' => $pathInfo['type'],
-							   'id' => $pluginId,
-							   'itemId' => $pathInfo['itemId']));
-		}
+	    foreach (array_keys($pluginStatus) as $pluginId) {
+		GalleryDataCache::removeFromDisk(array('type' => $pathInfo['type'],
+						       'id' => $pluginId,
+						       'itemId' => $pathInfo['itemId']));
 	    }
 	}
     }
@@ -392,7 +388,8 @@ class GalleryDataCache {
      * Given a path info descriptor, return the path to the appropriate cache file.
      *
      * Path info contains the following variables:
-     *  type:    entity, derivative, derivative-meta, module, theme
+     *  type:    entity, derivative, derivative-relative, fast-download,
+     *           module, module-data, theme, local-url-map
      *  itemId:  the item id
      *  id:      (module, theme only) a refinement of the type
      *
@@ -420,12 +417,6 @@ class GalleryDataCache {
 	    list ($first, $second) = GalleryDataCache::getCacheTuple($pathInfo['itemId']);
 	    $cacheFile = sprintf('derivative/%s/%s/%d.dat',
 				 $first, $second, $pathInfo['itemId']);
-	    break;
-
-	case 'derivative-meta':
-	    list ($first, $second) = GalleryDataCache::getCacheTuple($pathInfo['itemId']);
-	    $cacheFile = sprintf('%sderivative/%s/%s/%d-meta.inc',
-				 $base, $first, $second, $pathInfo['itemId']);
 	    break;
 
 	case 'fast-download':
@@ -469,6 +460,10 @@ class GalleryDataCache {
 	    } else {
 		$cacheFile = sprintf('%s%s/%s/', $base, 'module', $pathInfo['module']);
 	    }
+	    break;
+
+	case 'local-url-map':
+	    $cacheFile = "{$base}theme/_all/localUrlMap.txt";
 	    break;
 	}
 
@@ -581,7 +576,7 @@ class GalleryDataCache {
      *
      * @param string $type the page type
      * @param mixed $keyData data to use to generate the unique key for this cache entry
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string the page data
      */
     function getPageData($type, $keyData) {
@@ -652,7 +647,7 @@ class GalleryDataCache {
      * @param int $itemId the itemId of the item this page is rendering
      * @param mixed $keyData data to use to generate the unique key for this cache entry
      * @param string $value the page data
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function putPageData($type, $itemId, $keyData, $value) {
 	global $gallery;
@@ -678,30 +673,42 @@ class GalleryDataCache {
 
 	$phpVm = $gallery->getPhpVm();
 	$now = $phpVm->time();
-	$ret = GalleryCoreApi::updateMapEntry(
-	    'GalleryCacheMap',
-	    array('key' => $key, 'userId' => $userId, 'itemId' => $itemId, 'type' => $type),
-	    array('value' => $value, 'timestamp' => $now, 'isEmpty' => 0));
-
-	$storage =& $gallery->getStorage();
-	list ($ret, $affectedRows) = $storage->getAffectedRows();
-	if ($ret) {
-	    return $ret;
-	}
-
-	if (!$affectedRows) {
-	    $ret = GalleryCoreApi::addMapEntry(
+	for ($i = 0; $i < 2; $i++) {
+	    $ret = GalleryCoreApi::updateMapEntry(
 		'GalleryCacheMap',
-		array('key' => $key, 'value' => $value, 'userId' => $userId,
-		      'itemId' => $itemId, 'type' => $type, 'timestamp' => $now, 'isEmpty' => 0));
+		array('key' => $key, 'userId' => $userId, 'itemId' => $itemId, 'type' => $type),
+		array('value' => $value, 'timestamp' => $now, 'isEmpty' => 0));
+
+	    $storage =& $gallery->getStorage();
+	    list ($ret, $affectedRows) = $storage->getAffectedRows();
 	    if ($ret) {
 		return $ret;
 	    }
+
+	    if (!$affectedRows) {
+		$ret = GalleryCoreApi::addMapEntry(
+		    'GalleryCacheMap',
+		    array('key' => $key, 'value' => $value, 'userId' => $userId, 'type' => $type,
+			  'itemId' => $itemId, 'timestamp' => $now, 'isEmpty' => 0));
+		if ($ret) {
+		    /*
+		     * Nearly always this update/insert should be OK in one pass.
+		     * However, 2 simultaneous requests may both fail to update, then both
+		     * try to insert.. the 2nd insert will fail.  In this rare case we'll
+		     * loop and try once more to update.. if it still fails we'll error out.
+		     */
+		    if ($i < 1) {
+			continue;
+		    }
+		    return $ret;
+		}
+	    }
+	    break;
 	}
 
 	/* Clear expired data only 5% of the time. */
-	$dieRoll = $phpVm->rand(1,100);
-	if($dieRoll <= 5){
+	$dieRoll = $phpVm->rand(1, 100);
+	if ($dieRoll <= 5){
 	    $ret = GalleryDataCache::_cleanPageDataCache();
 	    if ($ret) {
 		return $ret;
@@ -715,7 +722,7 @@ class GalleryDataCache {
      * Remove all cached page data for the given item ids
      *
      * @param mixed $itemIds one item id, or an array of item ids
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function removePageData($itemIds) {
 	$ret = GalleryCoreApi::removeMapEntry('GalleryCacheMap', array('itemId' => $itemIds));
@@ -732,7 +739,7 @@ class GalleryDataCache {
      *
      * @param string $action
      * @param string $type the page type
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function shouldCache($action, $type) {
 	global $gallery;
@@ -778,7 +785,7 @@ class GalleryDataCache {
      * @todo The extra key for exif module is a quick fix, not a permanent fix; it should be
      *       cached on the block level not on page level.
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string extra cache key
      */
     function _getExtraPageCacheKey() {
@@ -804,7 +811,7 @@ class GalleryDataCache {
     /**
      * Delete value of obsolete cache data.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function _cleanPageDataCache() {
 	global $gallery;
@@ -840,7 +847,7 @@ class GalleryDataCache {
 	    $userIdForSql = new GallerySqlFragment('<> ?', (int)$anonymousUserId);
 	}
 
-	list ($ret, $results) = GalleryCoreApi::updateMapEntry('GalleryCacheMap',
+	$ret = GalleryCoreApi::updateMapEntry('GalleryCacheMap',
 		array('userId' => $userIdForSql,
 		      'timestamp' => new GallerySqlFragment('< ?', (int)$cutoff), 'isEmpty' => 0),
 		array('value' => null, 'isEmpty' => 1));

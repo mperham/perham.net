@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryPlugin.class');
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 15712 $
+ * @version $Revision: 17580 $
  * @abstract
  */
 class GalleryTheme extends GalleryPlugin {
@@ -73,7 +73,7 @@ class GalleryTheme extends GalleryPlugin {
      * @return array major number, minor number
      */
     function getApiVersion() {
-	return array(2, 5);
+	return array(2, 6);
     }
 
     /**
@@ -102,7 +102,7 @@ class GalleryTheme extends GalleryPlugin {
      *   value:       the current value for this setting
      *
      * @param int $itemId (optional)
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               settings array
      *               params array (useful for a theme overriding this function)
      */
@@ -468,10 +468,10 @@ class GalleryTheme extends GalleryPlugin {
      *
      * @see isAdvancedSettings
      *
-     * @param object GalleryTemplate $template
+     * @param GalleryTemplate $template
      * @param array $form array the form values
      * @param int $itemId the item id or null for site wide settings
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               string path to the body template
      */
     function loadSettingsTemplate(&$template, &$form, $itemId=null) {
@@ -486,7 +486,7 @@ class GalleryTheme extends GalleryPlugin {
      *
      * @param array $form the form values
      * @param int $itemId the item id or null for site wide settings
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array error messages
      *               string status message (itemId!=null) or status key (itemId==null)
      */
@@ -550,7 +550,7 @@ class GalleryTheme extends GalleryPlugin {
      * Themes should not need to override this method.  Instead they should override the upgrade
      * method and put all their theme specific logic there
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function installOrUpgrade() {
 	global $gallery;
@@ -617,6 +617,11 @@ class GalleryTheme extends GalleryPlugin {
 	    }
 	}
 
+	$ret = parent::installOrUpgrade();
+	if ($ret) {
+	    return $ret;
+	}
+
 	if ($gallery->getDebug()) {
 	    $gallery->debug('GalleryTheme::installOrUpgrade finished successfully');
 	}
@@ -627,7 +632,7 @@ class GalleryTheme extends GalleryPlugin {
     /**
      * Remove this theme from all albums.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function uninstall() {
 	global $gallery;
@@ -653,7 +658,7 @@ class GalleryTheme extends GalleryPlugin {
 	    if ($ret) {
 		return $ret;
 	    }
-	    list ($ret, $albums) = GalleryCoreApi::loadEntitiesById($ids);
+	    list ($ret, $albums) = GalleryCoreApi::loadEntitiesById($ids, 'GalleryAlbumItem');
 	    if ($ret) {
 		GalleryCoreApi::releaseLocks($lockId);
 		return $ret;
@@ -712,12 +717,12 @@ class GalleryTheme extends GalleryPlugin {
     /**
      * Load the template with data from this view.
      *
-     * @param object GalleryView $view
-     * @param object GalleryTemplate $template
-     * @param object GalleryItem $item the item to display
+     * @param GalleryView $view
+     * @param GalleryTemplate $template
+     * @param GalleryItem $item the item to display
      * @param array $params theme parameters
      * @param array $viewResults results from the view
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array ('body' => string template or 'redirect' => array)
      */
     function loadTemplate($view, &$template, $item, $params, $viewResults) {
@@ -725,6 +730,7 @@ class GalleryTheme extends GalleryPlugin {
 	$theme =& $template->getVariableByReference('theme');
 
 	$urlGenerator =& $gallery->getUrlGenerator();
+        $theme['themeId'] = $this->getId();
 	$theme['themeUrl'] =
 	    $urlGenerator->generateUrl(array('href' => 'themes/' . $this->getId()));
 	if (!isset($theme['pageUrl'])) {
@@ -883,16 +889,16 @@ class GalleryTheme extends GalleryPlugin {
 			    return array($ret, null);
 			}
 
-			/*
-			 * Load up our child count so that we can figure out the max pages.  We do
-			 * this after we get the child ids because the 'childCount' common template
-			 * data also gets the child counts for the child albums.
-			 */
-			$ret = $this->loadCommonTemplateData(
-				$template, $item, $params, array('childCount'), $childIds, false);
+			/* Load up our child count so that we can figure out the max pages */
+			$itemId = $item->getId();
+			list ($ret, $childCount) = GalleryCoreApi::fetchChildCounts(
+				array($itemId), $theme['actingUserId']);
 			if ($ret) {
 			    return array($ret, null);
 			}
+			/* $childCount shouldn't be empty; check/fallback here anyway */
+			$theme['childCount'] =
+			    isset($childCount[$itemId]) ? $childCount[$itemId] : count($childIds);
 
 			/* Store the total pages in the theme */
 			$theme['totalPages'] = ceil($theme['childCount'] / $perPage);
@@ -1029,23 +1035,20 @@ class GalleryTheme extends GalleryPlugin {
     /**
      * Call preload for given block if the module is active and a preload exists.
      *
-     * @param object GalleryTemplate $template
+     * @param GalleryTemplate $template
      * @param string $blockId (module.blockName)
      * @param array $blockParams (optional) block parameters
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function preloadBlock(&$template, $blockId, $blockParams=array()) {
 	global $gallery;
-	static $g2Base;
 	static $pluginStatus;
-	if (!isset($g2Base)) {
-	    $g2Base = dirname(dirname(dirname(dirname(__FILE__))));
+	if (!isset($pluginStatus)) {
 	    list ($ret, $pluginStatus) = GalleryCoreApi::fetchPluginStatus('module');
 	    if ($ret) {
 		return $ret;
 	    }
 	}
-
 	list ($module, $blockName) = explode('.', $blockId);
 	if (empty($pluginStatus[$module]['active'])) {
 	    return null;
@@ -1053,7 +1056,7 @@ class GalleryTheme extends GalleryPlugin {
 
 	$path = "modules/$module/Preloads.inc";
 	$platform =& $gallery->getPlatform();
-	if ($platform->file_exists("$g2Base/$path")) {
+	if ($platform->file_exists(GalleryCoreApi::getCodeBasePath($path))) {
 	    GalleryCoreApi::requireOnce($path);
 	    $className = $module . 'Preloads';
 	    $instance = new $className;
@@ -1109,13 +1112,13 @@ class GalleryTheme extends GalleryPlugin {
      *               a permission in smarty you'd do:
      *                   {if isset($theme.permissions.core_addDataItem)}
      *
-     * @param object GalleryTemplate $template
-     * @param object GalleryItem $item the item to display
+     * @param GalleryTemplate $template
+     * @param GalleryItem $item the item to display
      * @param array $params theme parameters
      * @param array $dataToLoad (string data key, ..) data to load into template
      * @param array $childIds (optional) ids of child items to display
      * @param boolean $useCache (optional)
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function loadCommonTemplateData(&$template, $item, $params, $dataToLoad,
 				    $childIds=array(), $useCache=true) {
@@ -1160,7 +1163,7 @@ class GalleryTheme extends GalleryPlugin {
 	    $load[$key] = true;
 	}
 	if (!empty($childIds)) {
-	    list ($ret, $childItems) = GalleryCoreApi::loadEntitiesById($childIds);
+	    list ($ret, $childItems) = GalleryCoreApi::loadEntitiesById($childIds, 'GalleryItem');
 	    if ($ret) {
 		return $ret;
 	    }
@@ -1191,12 +1194,13 @@ class GalleryTheme extends GalleryPlugin {
 	 * --------------------------------------------------------------------------------------
 	 * Load additional required entities
 	 */
-	$ids = array();
+	$userIds = array();
+	$itemIds = array();
 	if (isset($load['owner'])) {
-	    $ids[$item->getOwnerId()] = true;
+	    $userIds[$item->getOwnerId()] = true;
 	    $childOwnerIds = array();
 	    foreach ($childItems as $child) {
-		$ids[$child->getOwnerId()] = true;
+		$userIds[$child->getOwnerId()] = true;
 		$childOwnerIds[$child->getOwnerId()] = true;
 	    }
 	    $childOwnerIds = array_keys($childOwnerIds);
@@ -1225,7 +1229,7 @@ class GalleryTheme extends GalleryPlugin {
 		}
 	    }
 	    foreach ($parentSequence as $id) {
-		$ids[$id] = true;
+		$itemIds[$id] = true;
 	    }
 	}
 	if (isset($load['itemNavigator'])) {
@@ -1244,7 +1248,8 @@ class GalleryTheme extends GalleryPlugin {
 		    return $ret;
 		}
 		if ($canViewParent) {
-		    list ($ret, $parent) = GalleryCoreApi::loadEntitiesById($item->getParentId());
+		    list ($ret, $parent) =
+			GalleryCoreApi::loadEntitiesById($item->getParentId(), 'GalleryItem');
 		    if ($ret) {
 			return $ret;
 		    }
@@ -1273,7 +1278,7 @@ class GalleryTheme extends GalleryPlugin {
 			$navigator['last'] = $peerDataItemIds[$lastIndex];
 		    }
 		    foreach ($navigator as $id) {
-			$ids[$id] = true;
+			$itemIds[$id] = true;
 		    }
 		}
 	    }
@@ -1281,8 +1286,19 @@ class GalleryTheme extends GalleryPlugin {
 		unset($load['itemNavigator']);
 	    }
 	}
-	if (!empty($ids)) {
-	    list ($ret, $list) = GalleryCoreApi::loadEntitiesById(array_keys($ids));
+	if (!empty($userIds)) {
+	    list ($ret, $list) =
+		GalleryCoreApi::loadEntitiesById(array_keys($userIds), 'GalleryUser');
+	    if ($ret) {
+		return $ret;
+	    }
+	    foreach ($list as $it) {
+		$entities[$it->getId()] = $it;
+	    }
+	}
+	if (!empty($itemIds)) {
+	    list ($ret, $list) =
+		GalleryCoreApi::loadEntitiesById(array_keys($itemIds), 'GalleryItem');
 	    if ($ret) {
 		return $ret;
 	    }
@@ -1335,7 +1351,7 @@ class GalleryTheme extends GalleryPlugin {
 	 * --------------------------------------------------------------------------------------
 	 * 'childCount'
 	 */
-	if (isset($load['childCount']) && !isset($theme['childCount'])) {
+	if (isset($load['childCount'])) {
 	    if (!empty($allAlbumIds)) {
 		list ($ret, $childCount) =
 		    GalleryCoreApi::fetchChildCounts($allAlbumIds, $theme['actingUserId']);
@@ -1427,6 +1443,26 @@ class GalleryTheme extends GalleryPlugin {
 		    return $ret;
 		}
 	    }
+	    foreach ($permissions as $permission) {
+		if (isset($permission['core.delete'])) {
+		    $template->javascript('lib/yui/utilities.js');
+		    $template->javascript('lib/yui/container-min.js');
+		    list ($ret, $lang) = $gallery->getActiveLanguageCode();
+		    if ($ret) {
+			return $ret;
+		    }
+		    $urlGenerator =& $gallery->getUrlGenerator();
+		    /*
+		     * Need forceFullUrl because values given to ->javascript() are later run thru
+		     * generateUrl(array('href'=>$path)); need full url to avoid any distortion.
+		     * (that later call will actually shorten the URL again if appropriate)
+		     */
+		    $url = $urlGenerator->generateUrl(array('view' => 'core.ItemDeleteJs', 
+			'lang' => $lang), array('forceDirect' => true, 'forceFullUrl' => true));
+		    $template->javascript($url);
+		    break;
+		}
+	    }
 
 	    if (isset($load['systemLinks'])) {
 		$theme['systemLinks'] = array();
@@ -1509,6 +1545,12 @@ class GalleryTheme extends GalleryPlugin {
 		    foreach ($links as $id => $list) {
 			foreach ($list as $link) {
 			    $link['moduleId'] = $moduleId;
+			    if (!isset($link['params'])) {
+				$link['params'] = array();
+			    }
+			    if (!isset($link['options'])) {
+				$link['options'] = array();
+			    }
 			    $itemLinks[$id][] = $link;
 			}
 		    }
@@ -1549,7 +1591,8 @@ class GalleryTheme extends GalleryPlugin {
 	    foreach (array_keys($thumbnail) as $id) {
 		if (!($thumbnail[$id]->getWidth() && $thumbnail[$id]->getHeight())) {
 		    list ($ret, $thumbnail[$id]) =
-			GalleryCoreApi::rebuildDerivativeCache($thumbnail[$id]->getId());
+			GalleryCoreApi::rebuildDerivativeCacheIfNotCurrent(
+			    $thumbnail[$id]->getId());
 		    if ($ret) {
 			return $ret;
 		    }
@@ -1827,11 +1870,11 @@ class GalleryTheme extends GalleryPlugin {
     /**
      * Load all the necessary template data to render a page for an album.
      *
-     * @param object GalleryTemplate $template
-     * @param object GalleryAlbumItem $item the album item to render
+     * @param GalleryTemplate $template
+     * @param GalleryAlbumItem $item the album item to render
      * @param array $params the theme parameters
      * @param int $childIds the child item ids
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *         string path to a template file or array(html/redirect)
      * @access private
      */
@@ -1842,10 +1885,10 @@ class GalleryTheme extends GalleryPlugin {
     /**
      * Load all the necessary template data to render a page for a single item.
      *
-     * @param object GalleryTemplate $template
-     * @param object GalleryItem $item the item to render, can be any subclass of GalleryItem
+     * @param GalleryTemplate $template
+     * @param GalleryItem $item the item to render, can be any subclass of GalleryItem
      * @param array $params the theme parameters
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *         string path to a template file or array(html/redirect)
      * @access private
      */
@@ -1856,11 +1899,11 @@ class GalleryTheme extends GalleryPlugin {
     /**
      * Load all the necessary template data to render a page for an administrative (or other) view.
      *
-     * @param object GalleryTemplate $template
-     * @param object GalleryItem $item the item to render
+     * @param GalleryTemplate $template
+     * @param GalleryItem $item the item to render
      * @param array $params the theme parameters
      * @param string $templateFile the body template file from the view
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *         string path to a template file or array(html/redirect)
      * @access private
      */
@@ -1872,11 +1915,11 @@ class GalleryTheme extends GalleryPlugin {
      * Load all the necessary template data to render a page for a module view (any views that
      * aren't user, site, or item admin eg slideshow or members list).
      *
-     * @param object GalleryTemplate $template
-     * @param object GalleryItem $item the item to render
+     * @param GalleryTemplate $template
+     * @param GalleryItem $item the item to render
      * @param array $params the theme parameters
      * @param string $templateFile the body template file from the view
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *         string path to a template file or array(html/redirect)
      * @access private
      */
@@ -1887,8 +1930,8 @@ class GalleryTheme extends GalleryPlugin {
     /**
      * Load all the necessary template data to render an error page.
      *
-     * @param object GalleryTemplate $template
-     * @return array object GalleryStatus a status code
+     * @param GalleryTemplate $template
+     * @return array GalleryStatus a status code
      *         string path to a template file or array(html/redirect)
      * @access private
      */
@@ -1899,10 +1942,10 @@ class GalleryTheme extends GalleryPlugin {
     /**
      * Load all the necessary template data to render a progress bar page.
      *
-     * @param object GalleryTemplate $template
-     * @param object GalleryItem $item the item to render
+     * @param GalleryTemplate $template
+     * @param GalleryItem $item the item to render
      * @param array $params the theme parameters
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *         string path to a template file or array(html/redirect)
      * @access private
      */
@@ -1918,9 +1961,30 @@ class GalleryTheme extends GalleryPlugin {
      * @return array('headHtml' => ..., 'bodyHtml' => ...)
      */
     function splitHtml($mainHtml, $extraHtml) {
-	if (preg_match('|<head>(.*)</head>.*?<body.*?>(.*)</body>|s', $mainHtml, $matches) == 1) {
-	    $results = array('headHtml' => $matches[1], 'bodyHtml' => $matches[2]);
-	} else {
+	/*
+	 * Avoid regular expressions on very large strings due to PHP's pcre.backtrack_limit.
+	 * It's faster (no excessive backtracking) and actually required due to PHP 5.2.0's
+	 * pcre.backtrack_limit which is reached with large pages like AdminPlugins.
+	 */
+	$results = array();
+	if (($headStart = strpos($mainHtml, '<head>')) !== false) {
+	    if (($headEnd = strpos($mainHtml, '</head>', $headStart)) !== false) {
+		$headStart += strlen('<head>');
+		$results['headHtml'] = substr($mainHtml, $headStart, $headEnd - $headStart);
+
+		if (($bodyStart = strpos($mainHtml, '<body', $headEnd)) !== false) {
+		    if (($bodyStart = strpos($mainHtml, '>', $bodyStart)) !== false) {
+			if (($bodyEnd = strpos($mainHtml, '</body>', $bodyStart)) !== false) {
+			    $results['bodyHtml'] =
+				substr($mainHtml, ++$bodyStart, $bodyEnd - $bodyStart);
+			    $mainHtml = null;
+			}
+		    }
+		}
+	    }
+	}
+
+	if (empty($results['bodyHtml'])) {
 	    $results = array('bodyHtml' => $mainHtml);
 	}
 

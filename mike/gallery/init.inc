@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
  * Perform all necessary initialization of the Gallery framework
  * @package Gallery
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15698 $
+ * @version $Revision: 17962 $
  */
 
 require_once(dirname(__FILE__) . '/modules/core/classes/GalleryUtilities.class');
@@ -66,8 +66,11 @@ function GalleryInitFirstPass($params=array()) {
 	$gallery->setConfig('data.gallery.base', $dataBase);
     }
 
-    /* Init for downloadable plugins */
-    $gallery->setConfig('repository.url', 'http://gallery.menalto.com/repository/');
+    /* Init for downloadable plugins. Allow config.php to override. */
+    $repositoryUrl = @$gallery->getConfig('repository.url');
+    if (empty($repositoryUrl)) {
+	$gallery->setConfig('repository.url', 'http://gallery.menalto.com/repository/');
+    }
     $gallery->setConfig('repository.cache', $dataBase . 'cache' . $slash . 'repository' . $slash);
 
     /* Set our various data paths */
@@ -80,6 +83,9 @@ function GalleryInitFirstPass($params=array()) {
 	$dataBase . 'smarty' . $slash . 'templates_c' . $slash);
     $gallery->setConfig('data.gallery.plugins', $galleryBase . 'plugins' . $slash);
     $gallery->setConfig('data.gallery.plugins_data', $dataBase . 'plugins_data' . $slash);
+    $gallery->setConfig('data.gallery.version', $dataBase . 'versions.dat');
+    $gallery->setConfig('data.gallery.backup', $dataBase . 'backups' . $slash);
+    $gallery->setConfig('data.gallery.locale', $dataBase . 'locale' . $slash);
 
     /* Configure our url generator */
     if (!isset($params['noDatabase'])) {
@@ -123,6 +129,19 @@ function GalleryInitFirstPass($params=array()) {
 	$gallery->initEmptySession();
     }
 
+    if (version_compare(phpversion(), '5.0') < 0 && !isset($params['noDatabase'])) {
+	/*
+	 * PHP5 requires static methods to be marked static, or it generates an error.  PHP4 cannot
+	 * parse that syntax, so we cannot modify the code.  So since setting an error handler for
+	 * PHP5 results in a measurable performance hit, we only set it for PHP4.
+	 *
+	 * The error handler relies on a database connection and a session, so don't set it before
+	 * they're initialized.
+	 */
+	set_error_handler('GalleryPhpErrorHandler');
+	$GLOBALS['gallerySetErrorHandler'] = true;
+    }
+
     /* Initialize our translator */
     $language = GalleryUtilities::getRequestVariables('language');
     if (isset($params['activeLanguage']) || !empty($language)) {
@@ -158,7 +177,7 @@ function GalleryInitSecondPass() {
 	return $ret;
     }
 
-    foreach ($pluginIds as $pluginId) {
+    foreach ($pluginIds as $pluginId => $className) {
 	list ($ret, $plugin) =
 	    GalleryCoreApi::newFactoryInstanceById('GalleryAuthPlugin', $pluginId);
 	if ($ret) {
@@ -182,7 +201,7 @@ function GalleryInitSecondPass() {
 	    return $ret;
 	}
 
-	list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId);
+	list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 	if ($ret) {
 	    return $ret;
 	}
@@ -191,5 +210,44 @@ function GalleryInitSecondPass() {
     $gallery->setActiveUser($user);
 
     return null;
+}
+
+
+/**
+ * Interceptor for the standard PHP error handler.  We log any errors in the database, then
+ * proceed with the regular error handler.
+ * @see http://www.php.net/manual/en/function.set-error-handler.php
+ *
+ * @param int $errorNumber the code for the error
+ * @param string $errorString an error message
+ * @param string $file the file where the error occurred
+ * @param int $line the line number of the error
+ * @param mixed $context the complete context at the time of the error
+ * @return boolean true if we should skip the regular PHP error handler
+ */
+function GalleryPhpErrorHandler($errorNumber, $errorString, $file, $line, $context) {
+    if (error_reporting() == 0) {
+	/* The @ error suppression operator was used, so don't log this error. */
+	return false;
+    }
+
+    $errorType = array(
+	E_ERROR => 'Error', E_WARNING => 'Warning', E_PARSE => 'Parsing Error',
+	E_NOTICE => 'Notice', E_CORE_ERROR => 'Core Error', E_CORE_WARNING => 'Core Warning',
+	E_COMPILE_ERROR => 'Compile Error', E_COMPILE_WARNING => 'Compile Warning',
+	E_USER_ERROR => 'User Error', E_USER_WARNING => 'User Warning',
+	E_USER_NOTICE => 'User Notice',
+	/* PHP5+: E_STRICT => 'Runtime Notice' */
+	/* PHP5.2+: E_RECOVERABLE_ERROR => 'Catchable Fatal Error' */
+	);
+
+    GalleryCoreApi::addEventLogEntry(
+	'PHP Error',
+	sprintf("[%s] %s in file %s on line %d", $errorType[$errorNumber],
+		$errorString, $file, $line),
+	$errorString);
+
+    /* Fall back to the internal error handler */
+    return false;
 }
 ?>
