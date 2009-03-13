@@ -65,7 +65,7 @@ $gallery->setConfig('setup.password', 'wwivnet');
  *
  * Don't make this the same as your gallery directory!
  */
-$gallery->setConfig('data.gallery.base', '/home/mike/.g2data/');
+$gallery->setConfig('data.gallery.base', '/data/mike/g2data/');
 
 /*
  * Gallery can store its data in multiple different back ends.  Currently we
