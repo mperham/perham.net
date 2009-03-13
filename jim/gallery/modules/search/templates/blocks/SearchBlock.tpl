@@ -1,21 +1,19 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17650 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 {if !isset($showAdvancedLink)} {assign var="showAdvancedLink" value="true"} {/if}
 
 {g->addToTrailer}
 <script type="text/javascript">
   // <![CDATA[
-  search_SearchBlock_init('{g->text text="Search the Gallery"}', '{g->text text="Please enter a search term."}');
+  search_SearchBlock_init('{g->text text="Search the Gallery" forJavascript=true}', '{g->text text="Please enter a search term." forJavascript=true}', '{g->text text="Searching in progress, please wait!" forJavascript=true}');
   // ]]>
 </script>
 {/g->addToTrailer}
 
 <div class="{$class}">
-  <form id="search_SearchBlock" action="{g->url}" method="post" onsubmit="return search_SearchBlock_checkForm()">
+  <form id="search_SearchBlock" action="{g->url}" method="get" onsubmit="return search_SearchBlock_checkForm()">
     <div>
       {g->hiddenFormVars}
       <input type="hidden" name="{g->formVar var="view"}" value="search.SearchScan"/>

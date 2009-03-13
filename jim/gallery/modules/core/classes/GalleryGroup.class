@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryEntity.class');
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15534 $
+ * @version $Revision: 17580 $
  */
 class GalleryGroup extends GalleryEntity {
 
@@ -73,7 +73,7 @@ class GalleryGroup extends GalleryEntity {
      *
      * @param string $groupName the name of the new group
      * @param int $groupType the type of group
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function create($groupName, $groupType=GROUP_NORMAL) {
 	global $gallery;
@@ -114,7 +114,7 @@ class GalleryGroup extends GalleryEntity {
      * Delete this GalleryGroup.
      * Do some bookkeeping, like removing any user/group mappings.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function delete() {
 	/* Don't allow to delete the special groups (admin, registered, everybody) */

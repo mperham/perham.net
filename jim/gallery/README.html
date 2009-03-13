@@ -1,8 +1,9 @@
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>README: Gallery 2.2 (Double Double)</title>
+    <title>README: Gallery 2.3 (Skidoo)</title>
     <style type="text/css">
       html {
 	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
@@ -230,12 +231,12 @@
     </div>
 
     <div>
-      <img src="images/g2Logo.gif" alt="Gallery 2" width="376" height="80" />
+      <img src="images/g2Logo.gif" alt="Gallery 2" />
     </div>
 
     <p>
-      Welcome to Gallery 2. This is the official release of Gallery 2.2,
-      code named &ldquo;<b>Double Double</b>&rdquo;.  Please read
+      Welcome to Gallery 2.  This is the official release of Gallery 2.3,
+      code named &ldquo;<b>Skidoo</b>&rdquo;.  Please read
       through this document carefully before installing Gallery 2 and
       before asking for help.  We have taken care to try to answer as
       many of your questions here as possible.  If you don't read this
@@ -292,7 +293,8 @@
 	3.x, 4.x or 5.x, <a href="http://www.postgresql.org/" target="_blank">PostgreSQL</a>
 	7.x or 8.x, <a href="http://www.oracle.com/" target="_blank">Oracle</a> 9i or 10g,
 	<a href="http://www.ibm.com/software/data/db2/" target="_blank">IBM DB2</a> 9.x,
-	<a href="http://www.microsoft.com/sql/" target="_blank">Microsoft SQL Server</a> 2005.
+	<a href="http://www.microsoft.com/sql/" target="_blank">Microsoft SQL Server</a> 2005
+        or 2008, <a href="http://www.sqlite.org/" target="_blank">SQLite (Experimental)</a> 3.x
       </li>
       <li>
 	One of the following graphics toolkits: <a href="http://netpbm.sourceforge.net/"
@@ -305,56 +307,41 @@
 
     <h2><a name="security">Security</a></h2>
     <p class="toc-link"> <a href="#toc">[table of contents]</a> </p>
-    <div style="float:right; margin:10px; border: 1px solid #ddd; padding: 3px;">
-      <img src="images/gulftech.png" alt="" width="254" height="60"/>
-    </div>
-    <p>
-      The Gallery team retained <a
-      href="http://www.gulftech.org/">James Bercegay</a> of <a
-      href="http://www.gulftech.org/">Gulftech Research and
-      Development</a> to do a complete security audit of <b>Gallery 2.2
-      Release Candidate 1</b>.
-    </p>
-
-    <p>
-      <i>Recently we have performed a very thorough audit of the
-      Gallery2 code base. Our review consisted of both a complete
-      source code audit, as well as us performing multiple "real
-      world" attack scenarios against the Gallery2 application. During
-      the audit we identified multiple minor security issues which
-      have since been resolved by the Gallery2 developers. The result
-      is a much more secure Gallery2 application with enhanced
-      security features to keep your Gallery and its users as safe
-      and secure as possible.</i>
-    </p>
 
     <div style="float:right; margin:10px;">
-      <img src="images/intershot.png" alt="" width="196" height="52"/>
+      <img src="http://www.gdssecurity.com//images/gds_logo_2.png" alt="" width="196" height="52"/>
     </div>
     <p>
-      The Gallery team retained <a href="http://www.jibble.org/">Paul
-      Mutton</a> of <a
-      href="http://www.intershot.com/security/">Intershot Limited</a>
-      to do a complete security audit of <b>Gallery 2.1 Release Candidate
-      1</b>.
+      In preparation of the Gallery 2.3 release, we retained <b>
+      <a href="http://www.gdssecurity.com/">Gotham Digital Science</a></b>
+      (GDS) to a perform security audit on Gallery 2. They are experts in application security, as 
+      this is the primary focus of their business.
     </p>
 
     <p>
-      <i>The Gallery installer and Gallery application were
-	subjected to a manual web application security test. It is
-	important to note that such tests cannot be exhaustive and may
-	not discover all vulnerabilities. All tests were carried out
-	against a standalone installation of Gallery - no integrated
-	installations were tested (e.g. with phpBB or phpnuke). The
-	security of external tools used by the Gallery application,
-	such as graphics toolkits, were not included in this test. No
-	denial of service attacks were carried out against the
-	application server.</i>
+      We recognize that hiring external consultants to perform security audits does not guarantee 
+      that our code is bug-free and by no means un-hackable, but it clearly indicates our 
+      willingness to perform due diligence to make sure our code is reasonably secure. 
+      The combination of an <b>external perspective</b> of security experts and the insight of 
+      internal experts both performing detailed audits is yielding much better results than only 
+      one of the two perspectives alone.
     </p>
 
     <p>
-      <b>The development team resolved the security issues raised by
-      auditors during the release candidate phases.</b>
+      Audits of previous releases were done by the following origanzations:
+      <dl>
+      <dt>Gallery 2.2 Release Candidate</dt>
+      <dd>
+      <a href="http://www.gulftech.org/">James Bercegay</a> of <a
+      href="http://www.gulftech.org/">Gulftech Research and
+      Development</a>.
+      </dd>
+      <dt>Gallery 2.1 Release Candidate</dt>
+      <dd>
+      <a href="http://www.jibble.org/">Paul Mutton</a> of 
+      <a href="http://www.intershot.com/security/">Intershot Limited</a>.
+      </dd>
+      </dl>
     </p>
 
     <div class="important">
@@ -381,11 +368,156 @@
     </p>
 
     <h3>
+      Highlight of changes in Gallery 2.3 (Skidoo)
+      <span id="toggle-2-3" class="toggle"
+       onclick="toggle('list-2-3', 'toggle-2-3')"> - </span>
+    </h3>
+    <ol id="list-2-3">
+      <li>
+	New version of the slideshow module now uses <a href="http://www.piclens.com/">PicLens</a>
+	to provide a rich, full screen slideshow.
+      </li>
+      <li>
+	Comment module now offers moderation and <a href="http://akismet.com"
+	target="_blank">Akismet</a>
+	support to help weed out spam comments.
+      </li>
+      <li>
+	New email <a href="http://codex.gallery2.org/Gallery2:Modules:notification"
+	target="_blank">notification</a> module allowing users to configure events they wish to get
+	notified for. You can watch albums for changes, items for new comments, etc.
+      </li>
+      <li>
+	New Jpegtran module to support rotation and cropping of jpeg images
+	with no loss in image quality.
+      </li>
+      <li>
+	New SnapGalaxy module for prints from
+	<a href="http://www.snapgalaxy.com/" target="_blank">snapgalaxy.com</a>.
+      </li>
+      <li>
+	Registration module can now send a welcome email to new users upon account activation.
+      </li>
+      <li>
+	EXIF block now uses AJAX to switch between summary and detail display.
+      </li>
+      <li>
+	External image block now has a "rawImage" mode to return a single binary image
+	instead of HTML output.
+      </li>
+      <li>
+	Support in RSS module for Media RSS format and random RSS streams.
+      </li>
+      <li>
+	Remote module now bundles the Gallery Remote client and makes it available via
+	<a href="http://java.sun.com/products/javawebstart/index.jsp"
+	target="_blank">Java Web Start</a>.  Users with a Java enabled browser can then
+	launch Gallery Remote with a single click instead of manually downloading and installing.
+      </li>
+      <li>
+	Hybrid theme now uses automatic navigation between pages in its image viewer and
+	slideshow.  This means the slideshow will show all images in the album, moving
+	between album pages as needed.  Requesting the next/previous image in the image
+	viewer will also load a new album page as needed.
+      </li>
+      <li>
+	Webcam module now accepts file:// URLs to retrieve image from local filesystem.
+      </li>
+      <li>
+	Dcraw module now supports Adobe Digital Negative (dng) files, when used with
+	dcraw v7.0 or newer.
+      </li>
+      <li>
+	Added support for Windows Vista in PublishXP module.
+      </li>
+      <li>
+	New database backup feature.  Backup at start of upgrade, or anytime from Site Admin /
+	Maintenance.  Restore a backup from lib/support interface.
+      </li>
+      <li>
+	Can now put Gallery into maintenance mode from Site Admin / Maintenance.
+	Setting in config.php file is still available too.
+      </li>
+      <li>
+	New event logging system records Gallery errors, viewable in the Site Admin interface.
+      </li>
+      <li>
+	Themes can now override module template files, allowing a themed look to
+	more aspects of the application.
+      </li>
+      <li>
+	New Language Manager that allows the addition or removal of translations.
+      </li>
+      <li>
+	User interface changes.
+	<ul><li>
+	  Use AJAX to speed up deleting comments(spam) on items/albums.
+	</li><li>
+	  Use quick DHTML confirm dialog for deleting single items.  Dialog offers link to
+	  bulk delete several items from an album.
+	</li><li>
+	  Use YUI ItemTree instead of plain select box to select target album when
+	  moving items, creating replicas or link items.
+	</li></ul>
+      </li>
+      <li>
+	Performance and stability improvements.
+	<ul><li>
+	  Smarty templates now permanently cached by default.  Turn this off in
+	  Site Admin / Performance when working on tpl files, so changes take effect
+	  immediately during development.
+	</li><li>
+	  Avoid reading EXIF data multiple times in Carbon theme.
+	</li><li>
+	  Some added caching in GalleryUrlGenerator.
+	</li><li>
+	  Use progress bar when adding items to avoid server or browser timeouts.
+	  Particularly helpful when adding many items from local server.
+	</li><li>
+	  Restructuring to greatly reduce the number of directories for language files.
+	</li><li>
+	  Refactor of translator hints to avoid some processing when translations
+	  are not used (en_US).
+	</li><li>
+	  Faster plugin and language package downloads.
+	</li><li>
+	  Refactor of event system working towards a performance improvement in the next release.
+	</li></ul>
+      </li>
+      <li>
+	New database options.
+	<ul><li>
+	  Support for <a href="http://www.sqlite.org/" target="_blank">SQLite</a> 3.x
+	</li><li>
+	  Support for <a href="http://www.postgresql.org/docs/current/static/ddl-schemas.html"
+	  target="_blank">PostgreSQL schemas</a>
+	</li></ul>
+      </li>
+      <li>
+	New install package options.
+	<ul><li>
+	  English only variants of installation downloads.  The <b>minimal</b> is English only.  In
+	  addition, <b>Typical</b> and <b>Full</b> are available in English language only 
+	  variants.
+	</li><li>
+	  Greatly reduced the number of directories for language files.
+	</li></ul>
+      </li>
+      <li>
+	Upgraded to newer versions of several bundled software packages: YUI! 2.3.1, ADOdb 4.98,
+	Smarty 2.6.20, GetID3 1.7.7, BBCode 0.3.3.
+      </li>
+      <li>
+	Many bugs fixed.
+      </li>
+    </ol>
+
+    <h3>
       Highlight of changes in Gallery 2.2 (Double Double)
       <span id="toggle-2-2" class="toggle"
-       onclick="toggle('list-2-2', 'toggle-2-2')"> - </span>
+       onclick="toggle('list-2-2', 'toggle-2-2')"> + </span>
     </h3>
-    <ol id="list-2-2">
+    <ol id="list-2-2" style="display:none">
       <li>
 	Downloadable Plugins.  This feature allows you to download and
 	install Modules and Themes directly via the Site Admin
@@ -1654,16 +1786,22 @@
     </p>
     <ul>
       <li>
-	<b>Minimal</b> - The base application, 2 themes and 3 graphics toolkits.
-	Everything you need to publish photos, and nothing more.
+	<b>Minimal</b> - The base application, 2 themes and 3 graphics toolkits and only English 
+	installed. Everything you need to publish photos, and nothing more.
       </li>
       <li>
 	<b>Typical</b> - The base application, 8 themes and a selection of popular
 	modules.  Enough to satisfy the demands of most Gallery users.
       </li>
       <li>
+	<b>Typical-en</b> - Same as <b>Typical</b> except the only language included is English.
+      </li>
+      <li>
 	<b>Full</b> - The base application, 9 themes and 68 modules.  Every cool
 	feature we've got.
+      </li>
+      <li>
+	<b>Full-en</b> - Same as <b>Full</b> except the only language installed is english.
       </li>
       <li>
 	<b>Developer</b> - Same as the full package, except it includes all the
@@ -1680,7 +1818,7 @@
     <p>
       All of our modules and themes are available separately so if you install a
       smaller package you can still add more functionality later on, either by
-      downloading yourself or using the new Downloadable Plugins feature in Gallery 2.2.
+      downloading yourself or using the Downloadable Plugins feature in the Site Admin section.
     </p>
     <p>
       Download Gallery packages, modules and themes from the
@@ -1764,8 +1902,9 @@
 	<a href="http://www.postgresql.org/mirrors-ftp.html" target="_blank">PostgreSQL</a>,
 	<a href="http://www.oracle.com/technology/software/index.html"
 	target="_blank">Oracle</a>,
-	<a href="http://www.ibm.com/software/data/db2/" target="_blank">IBM DB2</a> and
-	<a href="http://www.microsoft.com/sql/" target="_blank">Microsoft SQL Server</a>.
+	<a href="http://www.ibm.com/software/data/db2/" target="_blank">IBM DB2</a>,
+	<a href="http://www.microsoft.com/sql/" target="_blank">Microsoft SQL Server</a> and
+	<a href="http://www.sqlite.org/" target="_blank">SQLite</a>.
 	The databases most commonly used with Gallery 2 are MySQL and PostgreSQL.
 	MySQL is generally faster than PostgreSQL.
 	We require you to create the database yourself.
@@ -1888,6 +2027,14 @@
 	    target="_blank">Microsoft SQL Server documentation page</a>
 	  </li>
 	</ul>
+
+	<div class="instructions">
+	  <h3>SQLite</h3>
+	  <p>
+	    Your PHP must include <a href="http://php.net/pdo" target="_blank">PHP
+	    Data Objects</a> support, but no other setup is required.
+	  </p>
+	</div>
       </li>
 
       <li>
@@ -2155,7 +2302,7 @@
       <h3> Warning When Upgrading from Gallery 2.0! </h3>
       <p>
 	Third party modules and themes designed for Gallery 2.0 will
-	not work with Gallery 2.2.  During the upgrade process, these
+	not work with Gallery 2.3.  During the upgrade process, these
 	modules and themes will be automatically deactivated for you.
 	You can find updated versions for most of these modules and
 	themes here: <a
@@ -2353,9 +2500,9 @@
     <hr />
 
     <p class="fineprint">
-      Copyright (C) 2000-2007 Bharat Mediratta
+      Copyright (C) 2000-2008 Bharat Mediratta
       &nbsp; &nbsp; &nbsp;
-      $Id: README.html 16577 2007-06-10 20:50:34Z mindless $
+      $Id: README.html 18171 2008-10-17 04:40:36Z andy_st $
     </p>
   </body>
 </html>

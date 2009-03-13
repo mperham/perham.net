@@ -1,8 +1,6 @@
 {*
- * $Revision: 15368 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 16931 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div id="popup_details" class="gcBorder2"><object type="text/html"></object></div>
 
@@ -60,12 +58,20 @@
      /><img id="prev_img" src="{$theme.themeUrl}/images/prev.png"
        width="18" height="18" onclick="image_prev()"
        alt="{g->text text="Previous Image"}" title="{g->text text="Previous Image"}"
+     /><img id="prev_page" src="{$theme.themeUrl}/images/prevpage.png"
+       width="18" height="18" onclick="image_prev()" style="display: none"
+       alt="{g->text text="Previous Image (Load new page)"}"
+       title="{g->text text="Previous Image (Load new page)"}"
      /><img id="next_off" src="{$theme.themeUrl}/images/next-off.png"
        width="18" height="18" style="display: none"
        alt="{g->text text="No Next Image"}" title="{g->text text="No Next Image"}"
      /><img id="next_img" src="{$theme.themeUrl}/images/next.png"
        width="18" height="18" onclick="image_next()"
-       alt="{g->text text="Next Image"}" title="{g->text text="Next Image"}"/>
+       alt="{g->text text="Next Image"}" title="{g->text text="Next Image"}"
+     /><img id="next_page" src="{$theme.themeUrl}/images/nextpage.png"
+       width="18" height="18" onclick="image_next()" style="display: none"
+       alt="{g->text text="Next Image (Load new page)"}"
+       title="{g->text text="Next Image (Load new page)"}"/>
     </div>
     <div id="title" class="giTitle"></div>
     <div id="text" class="gcBackground2 gcBorder2"></div>
@@ -234,8 +240,8 @@
       {/if}
 	{if isset($it.itemLinks)}
 	  <span id="links_{$i}" style="display: none">
-	  {foreach from=$it.itemLinks item=itemLink}
-	    <a href="{g->url params=$itemLink.params}">{$itemLink.text}</a><br/>
+	  {foreach from=$it.itemLinks item=link}
+	    {g->itemLink link=$link class=null}<br/>
 	  {/foreach}
 	  </span>
 	{/if}

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Jay Rossiter <cryptographite@users.sf.net>
- * @version $Revision: 15513 $
+ * @version $Revision: 17785 $
  */
 class UserRecoverPasswordDownloadView extends GalleryView {
 
@@ -31,6 +31,13 @@ class UserRecoverPasswordDownloadView extends GalleryView {
      * @see GalleryView::isImmediate
      */
     function isImmediate() {
+	return true;
+    }
+
+    /**
+     * @see GalleryView::isAllowedInEmbedOnly
+     */
+    function isAllowedInEmbedOnly() {
 	return true;
     }
 

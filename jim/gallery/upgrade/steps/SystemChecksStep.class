@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ class SystemChecksStep extends UpgradeStep {
 		|| (version_compare(phpversion(), '5.0.0', '>=')
 		    && version_compare(phpversion(), '5.0.4', '<'))) {
 	    $templateData['check'][] =
-		array('title' => _('PHP version >= 4.3.0 or >= 5.0.4'),
+		array('title' => _('PHP version &gt;= 4.3.0 or &gt;= 5.0.4'),
 		      'error' => true,
 		      'notice' => sprintf(
 			  _("Error: Gallery 2 requires PHP version 4.3.0 or newer or 5.0.4 or " .
@@ -106,7 +106,8 @@ class SystemChecksStep extends UpgradeStep {
 	}
 
 	/* assert that __FILE__ works correctly */
-	if (!SystemChecksStep::CheckFileDirective()) {
+	$fileDirectiveWorks = SystemChecksStep::CheckFileDirective();
+	if (!$fileDirectiveWorks) {
 	    $templateData['check'][] =
 		array('title' => _('FILE directive supported'),
 		      'error' => true,
@@ -326,11 +327,13 @@ class SystemChecksStep extends UpgradeStep {
 		      'warning' => true,
 		      'notice' => sprintf(
 			  _('Warning: Your PHP is configured with Zend ze1_compatibility_mode ' .
-			    'which can cause PHP to crash.  Click <a href="%s">here</a> to test ' .
-			    'your PHP.  If you see "SUCCESS" then your PHP is ok.  If you get an ' .
+			    'which can cause PHP to crash.  Click %shere%s to test your PHP.  ' .
+			    'If you see "SUCCESS" then your PHP is ok.  If you get an ' .
 			    'error or no response then you must turn off ze1_compatibility_mode ' .
 			    'before proceeding.'),
-			  generateUrl('index.php?step=' . $this->_stepNumber . '&amp;zendtest=1')),
+			  sprintf('<a href="%s">', generateUrl('index.php?step='
+							. $this->_stepNumber . '&amp;zendtest=1')),
+			  '</a>'),
 		);
 	} /* skip showing 'success' for this one */
 
@@ -379,33 +382,37 @@ class SystemChecksStep extends UpgradeStep {
 
 	/* Check if the files and dirs in the storage dir are (still) writeable */
 	$title = _('Storage Directory Permissions');
-	if (!SystemChecksStep::CheckFileDirective() || !empty($missingFilesystemFunctions)) {
+	if (!$fileDirectiveWorks || !empty($missingFilesystemFunctions)) {
 	    $templateData['check'][] =
 		array('title' => $title,
 		      'warning' => true,
 		      'notice' => _('Test skipped due to other errors.'));
-	} else if (!SystemChecksStep::CheckStorageDirectory()) {
-	    $templateData['check'][] =
-		array('title' => $title,
-		      'error' => true,
-		      'notice' => sprintf(
+	} else {
+	    $storageFiles = SystemChecksStep::CheckStorageDirectory();
+	    if (!empty($storageFiles)) {
+		$notice = sprintf(
 			  _('Error: Some files and or directories in your storage directory are ' .
 			    'not writeable by the webserver user. Run chown -R webserverUser ' .
 			    '%s OR run chmod -R 777 %s.'),
 			  $gallery->getConfig('data.gallery.base'),
-			  $gallery->getConfig('data.gallery.base'))
-		      );
-	    $failCount++;
-	} else {
-	    $templateData['check'][] =
-		array('title' => $title, 'success' => true);
+			  $gallery->getConfig('data.gallery.base'));
+		$heading = sprintf(_('Inaccessible or missing  files (%d)'), count($storageFiles));
+		$message = $this->renderFileList($storageFiles, 'storagefiles', $heading, $notice);
+		$templateData['check'][] = array(
+		    'title' => $title,
+		    'error' => true,
+		    'notice' => $message);
+		$failCount++;
+	    } else {
+		$templateData['check'][] = array('title' => $title, 'success' => true);
+	    }
 	}
 
-	$template->renderStatusMessage(_('Performing system checks'), '', 0.09);
+	$template->renderStatusMessage(_('Performing system checks'), '', 0.07);
 
 	/* Check all files against MANIFEST */
 	$title = _('Gallery file integrity');
-	if (!SystemChecksStep::CheckFileDirective() || !empty($missingFilesystemFunctions)) {
+	if (!$fileDirectiveWorks || !empty($missingFilesystemFunctions)) {
 	    $templateData['check'][] =
 		array('title' => $title,
 		      'warning' => true,
@@ -426,18 +433,81 @@ class SystemChecksStep extends UpgradeStep {
 	    } else {
 		global $currentStep; /* needed for ManifestSystemCheck.html */
 
-		ob_start();
-		include(dirname(__FILE__) . '/../templates/ManifestSystemCheck.html');
-		$notice = ob_get_contents();
-		ob_end_clean();
+		$message = $notice = '';
+		if (!empty($manifest['missing'])) {
+		    if ($isSvnInstall) {
+			$notice = _('Note: You\'re running Gallery from SVN, so recently ' .
+			    'removed files may appear here.  It might be safe to ignore these.');
+		    }
+		    $heading = sprintf(_('Missing files (%d)'), count($manifest['missing']));
+		    $message .= $this->renderFileList($manifest['missing'], 'missing', $heading,
+						      $notice);
+		}
 
+		if (!empty($manifest['missing']) && !empty($manifest['modified'])) {
+		    $message .= '<br /> <br />';
+		}
+
+		if (!empty($manifest['modified'])) {
+		    if ($isSvnInstall) {
+			$notice = _('Note: You\'re running Gallery from SVN, so some modified ' .
+			    'files are to be expected.  You can probably ignore these, but to be ' .
+			    'safe you should make sure that you do \'svn update\' before ' .
+			    'continuing.');
+		    }
+		    $heading = sprintf(_('Modified files (%d)'), count($manifest['modified']));
+		    $message .= $this->renderFileList($manifest['modified'], 'modified', $heading,
+						      $notice);
+		}
+	
+		if ((!empty($manifest['modified']) || !empty($manifest['missing']))
+			&& !empty($manifest['shouldRemove'])) {
+		    $message .= '<br /> <br />';
+		}
+
+		if (!empty($manifest['shouldRemove'])) {
+		    $notice = sprintf(_('These files are no longer part of Gallery. They probably' .
+			' won\'t cause any problems but it is a good idea to remove them to keep ' .
+			'your install clean.  Gallery can\'t remove these files for you, but you ' .
+			'can download and run %sthis script%s in your gallery2 directory to ' .
+			'delete them for you.'), sprintf('<a href="%s">',
+			    generateUrl('index.php?step=' . $currentStep->getStepNumber()
+				. '&amp;downloadCleanupScript=1', false)), '</a>');
+		    $heading = sprintf(_('Old files (%d)'), count($manifest['shouldRemove']));
+		    $message .= $this->renderFileList($manifest['shouldRemove'], 'shouldRemove',
+						      $heading, $notice);
+		}
+  
 		$templateData['check'][] =
 		    array('title' => $title,
 			  'warning' => true,
-			  'notice' => $notice);
+			  'notice' => $message);
 		$_SESSION['fileintegrity'] =
 		    (empty($manifest['missing']) && empty($manifest['modified']))
 		     ? 'There are some old files' : 'There are missing/modified files!';
+	    }
+	}
+
+	/* Check if the db user has (all?) required db privileges to finish the upgrader */
+	$title = _('Database permissions');
+	if (!$fileDirectiveWorks || !empty($missingFilesystemFunctions)) {
+	    $templateData['check'][] =
+		array('title' => $title,
+		      'warning' => true,
+		      'notice' => _('Test skipped due to other errors.'));
+	} else {
+	    list ($ret, $error) = $this->_testPrivileges();
+	    if ($ret === false) {
+		$message = _('Error: The configured database user does not have the required '
+				    . 'database privileges to perform the upgrade.') . '<br/>'
+				    . $error;
+		$templateData['check'][] = 
+		    array('title' => $title,
+			  'error' => true,
+			  'notice' => $message);
+		$failCount++;
+	    } else {
+		$templateData['check'][] = array('title' => $title, 'success' => true);
 	    }
 	}
 
@@ -468,23 +538,24 @@ class SystemChecksStep extends UpgradeStep {
 	$storagePath = $gallery->getConfig('data.gallery.base');
 	$platform =& $gallery->getPlatform();
 	if (empty($storagePath)) {
-	    return false;
+	    return array(sprintf(_('The storage folder path is not defined in config.php (%s)'),
+				 'data.gallery.base'));
 	} else if ($storagePath{strlen($storagePath)-1} != $platform->getDirectorySeparator()) {
 	    $storagePath .= $platform->getDirectorySeparator();
 	}
 
 	/* An exhaustive test would take too long, test a few dirs / files */
-	foreach (array('.', 'versions.dat', 'albums') as $path) {
+	foreach (array('', 'versions.dat', 'albums') as $path) {
 	    $path = $storagePath . $path;
-	    if (!$platform->file_exists($path) || !$platform->is_readable($path) ||
-		    !$platform->is_writeable($path)) {
-		return false;
+	    if (!$platform->file_exists($path) || !$platform->is_readable($path)
+		    || !$platform->is_writeable($path)) {
+		return array($path);
 	    }
 	}
 
-	/* Check up to 200 other files */
+	/* Check up to 400 other files */
 	$tested = 0;
-	$max = 200;
+	$max = 400;
 	$storagePath = substr($storagePath, 0, strlen($storagePath)-1);
 	return SystemChecksStep::_checkStorageSubDirectory($storagePath, $tested, $max);
     }
@@ -495,14 +566,16 @@ class SystemChecksStep extends UpgradeStep {
      * @param string $dirname directory
      * @param int $tested number of already tested files / dirs
      * @param int $max max files/dirs to check
-     * @return boolean success
+     * @return array a list of files with insufficient permissions
      */
     function _checkStorageSubDirectory($dirname, &$tested, $max) {
 	global $gallery;
 	$platform =& $gallery->getPlatform();
 
+	$storageFiles = array();
 	if (!($fd = $platform->opendir($dirname))) {
-	    return false;
+	    $storageFiles[] = $dirname;
+	    return $storageFiles;
 	}
 
 	while (($filename = $platform->readdir($fd)) !== false && $tested < $max) {
@@ -515,19 +588,18 @@ class SystemChecksStep extends UpgradeStep {
 
 	    if (!$platform->is_link($path) &&
 		(!$platform->is_writeable($path) || !$platform->is_readable($path))) {
-		return false;
+		$storageFiles[] = $path;
 	    }
 
 	    if ($platform->is_dir($path) && $tested < $max) {
 		/* Threshold not yet reached, check subdirectory tree */
-		if (!SystemChecksStep::_checkStorageSubDirectory($path, $tested, $max)) {
-		    return false;
-		}
+		$storageFiles = array_merge($storageFiles,
+		    SystemChecksStep::_checkStorageSubDirectory($path, $tested, $max));
 	    }
 	}
 	$platform->closedir($fd);
 
-	return true;
+	return $storageFiles;
     }
 
     function CheckManifest(&$statusMonitor, $useSetTimeLimit) {
@@ -593,6 +665,157 @@ class SystemChecksStep extends UpgradeStep {
 
 	return array('missing' => $missing, 'modified' => $modified,
 		     'shouldRemove' => $shouldRemove);
+    }
+
+    /**
+     * Render a file-list in a minimizable block with a heading and an optional notice text.
+     * @param array $files
+     * @param string $blockId The HTML id for the block toggle mechanism
+     * @param string $heading Heading for the block
+     * @param string $notice (optional) A longer notice to be shown on top of the file list
+     */
+    function renderFileList($files, $blockId, $heading, $notice=null) {
+	ob_start();
+	include(dirname(__FILE__) . '/../templates/SystemCheckFileList.html');
+	$html = ob_get_contents();
+	ob_end_clean();
+
+	return $html;
+    }
+
+    /**
+     * Check if the user has the most basic database privileges required to finish the upgrade
+     * steps successfully. Check:
+     *      - CREATE TABLE, ALTER TABLE, DROP TABLE
+     *      - CREATE INDEX, DROP INDEX
+     *      - CREATE SEQUENCE, DROP SEQUENCE
+     *
+     * @return array (boolean success, string errors)
+     */
+    function _testPrivileges() {
+	global $gallery;
+	$storage =& $gallery->getStorage();
+	$storageExtras = $storage->_getExtras();
+
+	/* We might have lost our database connection (timeout) so check and reconnect */
+	$ret = $storage->validateConnection();
+	if ($ret) {
+	    $gallery->debug($ret->getAsHtml());
+	    return array(false, 
+		_('Database permission test failed. Could not connect to database.'));
+	}
+
+	list ($ret, $metatables) = $storageExtras->_metaTables();
+	if ($ret) {
+	    $gallery->debug($ret->getAsHtml());
+	    return array(false, 
+		_('Database permission test failed. Could not acquire database information.'));
+	}
+
+	/*
+	 * Execute T_InstallerTest_1.sql through T_InstallerTest_4.sql.  These create, alter and
+	 * drop a table, and create and drop index.  Because our .xml transforms (MySQL.xsl,...)
+	 * always updates the Schema table for all table create, alter, drops, we use here a test
+	 * table which also has the name and the structure of the Schema table, just with another
+	 * tablePrefix.
+	 *
+	 * Set an unused tablePrefix such that we can play with create/drop table in an
+	 * unused database "namespace". Try a few prefices, don't try to drop!
+	 */
+	$ok = false;
+	for ($i = 0; $i < 10; $i++) {
+	    $tablePrefix = 'gtst' . $i;
+	    if (empty($metatables[$tablePrefix . 'Schema'])) {
+		$ok = true;
+		break;
+	    }
+	}
+	if (!$ok) {
+	    return array(false,
+		sprintf(_('Could not find an unused table prefix similar to "%s".'),
+			$tablePrefix));
+	}
+
+	$moduleSql = $storageExtras->getModuleSql('core');
+	if (empty($moduleSql['test'])) {
+	    return array(false, 
+		_('Database permission test failed due to corrupted file integrity.'));
+	}
+
+	for ($i = 1; $i <= 4; $i++) {
+	    list ($success, $error) = 
+		$this->_executeSql($moduleSql['test']['InstallerTest'][$i], $tablePrefix);
+	    if (!$success) {
+		return array(false, 
+		    _('Failed to create, alter or drop a database test table. ') . $error);
+	    }
+	}
+
+	/* Check CREATE and DROP SEQUENCE privileges */
+	$storage->_traceStart();
+	$sequenceId = 'g2privtestseq';
+	$ret = $storage->_db->CreateSequence($tablePrefix . $sequenceId);
+	$storage->_traceStop();
+	if (!$ret) {
+	    return array(false, _('Failed to create a database test sequence. ' .
+			 'Check the returned error message and README.html ' .
+			 'for missing privileges and clean up the database.'));
+	}
+	$storage->_traceStart();
+	$ret = $storage->_db->DropSequence($tablePrefix . $sequenceId);
+	$storage->_traceStop();
+	if (!$ret) {
+	    return array(false, _('Test failed to drop a database test sequence. ' .
+			 'Check the returned error message and README.html ' .
+			 'for missing privileges and clean up the database.'));
+	}
+
+	return array(true, null);
+    }
+
+    /**
+     * Execute a series of SQL statements.
+     * @param string $buffer the SQL statements
+     * @param string $tablePrefix prefix for table names
+     * @return array(boolean success, string error message)
+     */
+    function _executeSql($buffer, $tablePrefix) {
+	global $gallery;
+	$storage =& $gallery->getStorage();
+
+	if (empty($buffer)) {
+	    return array(false, _('Missing SQL statements'));
+	}
+	/*
+	 * Split the file where semicolons are followed by a blank line..
+	 * PL/SQL blocks will have other semicolons, so we can't split on every one.
+	 * But first, remove that last semicolon such that all statements have no semicolon
+	 * (required for oracle)
+	 */
+	if ($pos = strrpos($buffer, ';')) {
+	    $buffer = substr($buffer, 0, $pos);
+	}
+	$statements = preg_split('/; *\r?\n *\r?\n/s', $buffer);
+	$storageConfig = $gallery->getConfig('storage.config');
+	$columnPrefix = $storageConfig['columnPrefix'];
+
+	foreach ($statements as $query) {
+	    $query = trim($query);
+	    if (!empty($query)) {
+		$query = str_replace('DB_TABLE_PREFIX', $tablePrefix, $query);
+		$query = str_replace('DB_COLUMN_PREFIX', $columnPrefix, $query);
+		/* For mysql, another replacement is required */
+		$query = str_replace('DB_TABLE_TYPE', '', $query);
+
+		$ret = $storage->execute($query, array());
+		if ($ret) {
+		    return array(false, _('Check the returned error message and README.html ' .
+				 'for missing privileges and clean up the database.'));
+		}
+	    }
+	}
+
+	return array(true, null);
     }
 }
 ?>

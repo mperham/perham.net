@@ -110,17 +110,17 @@
 		<?php endif; ?>
 	      </tr>
 	    </table>
-      <p id="progressStatus"><?php printf(_('Upgrade %d%% complete'), $templateData['percentComplete']); ?></p>
+            <p id="progressStatus"><?php printf(_('Upgrade %d%% complete'), $templateData['percentComplete']); ?></p>
 
 	    <?php if (!empty($templateData['errors'])): ?>
-        <div class="error">
-          <h2>
-          <?php foreach ($templateData['errors'] as $error): ?>
-          <?php print $error ?>
-          <?php if (count($templateData['errors']) > 2) print "<br/>\n" ?>
-          <?php endforeach; ?>
-          </h2>
-        </div>
+	    <div class="error">
+	      <h2>
+	        <?php foreach ($templateData['errors'] as $error): ?>
+	        <?php print $error ?>
+	        <?php if (count($templateData['errors']) > 2) print "<br/>\n" ?>
+	          <?php endforeach; ?>
+	      </h2>
+	    </div>
 	    <?php endif; ?>
 
 	    <?php if (!empty($templateData['warnings'])): ?>
@@ -136,20 +136,11 @@
 	    <?php if ($currentStep->isComplete() && !$currentStep->isLastStep()): ?>
 	    <div class="go">
 	      <?php if ($currentStep->isRedoable()): ?>
-	      <!--span class="goToNextL"-->
-	      <div class="btn btn-redo"><div><div><div><div><div><div><div><div>
-		<a href="<?php generateUrl('index.php?step=' . $stepNumber . '&amp;doOver=1') ?>">
-		  <?php print _('Redo this step'); ?>
-		</a>
-		  </div></div></div></div></div></div></div></div></div>
-	      <!--/span-->
+		  <a href="<?php generateUrl('index.php?step=' . $stepNumber . '&amp;doOver=1') ?>" class="btn redo"><i></i><span><span></span><i></i><?php print _('Redo this step'); ?></span></a>
 	      <?php endif; ?>
-
 	      <?php $nextStep = $stepNumber + 1 ?>
-		<div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-		  <a href="<?php generateUrl('index.php?step=' . $nextStep) ?>"><?php printf(_('Continue to Step %d&raquo;'), $nextStep); ?></a>
-		</div></div></div></div></div></div></div></div></div>
-	      </div>
+	      <a href="<?php generateUrl('index.php?step=' . $nextStep) ?>" class="btn continue"><i></i><span><span></span><i></i><?php printf(_('Continue to Step %d&raquo;'), $nextStep); ?></span></a>
+        </div>
 	    <?php endif; ?>
 	  </td>
 	</tr>

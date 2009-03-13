@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/helpers/MaintenanceHelper_simp
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AdminMaintenanceController extends GalleryController {
 
@@ -42,6 +42,13 @@ class AdminMaintenanceController extends GalleryController {
 
 	$results = $status = $error = array();
 	if (isset($form['action']['runTask'])) {
+	    list ($ret, $this->_module) = GalleryCoreApi::loadPlugin('module', 'core');
+	    if ($ret) {
+		return array($ret, null);
+	    }
+
+	    $mode = $gallery->getConfig('mode.maintenance');
+
 	    $taskId = GalleryUtilities::getRequestVariables('taskId');
 
 	    list ($ret, $tasks) = MaintenanceHelper_simple::fetchTasks();
@@ -52,22 +59,53 @@ class AdminMaintenanceController extends GalleryController {
 	    if (isset($tasks[$taskId])) {
 		$task =& $tasks[$taskId];
 
-		if ($task->requiresProgressBar()) {
-		    $templateAdapter =& $gallery->getTemplateAdapter();
-		    $templateAdapter->registerTrailerCallback(
-			array($this, 'runTask'), array($taskId, $task, true));
-		    $results['delegate']['view'] = 'core.ProgressBar';
-		} else {
-		    list ($ret, $success)  = $this->runTask($taskId, $task, false);
-		    if ($ret) {
-			return array($ret, null);
-		    }
+		if (!$task->requiresMaintenanceMode() || $mode) {
+		    if ($task->requiresProgressBar()) {
+			$templateAdapter =& $gallery->getTemplateAdapter();
+			$templateAdapter->registerTrailerCallback(
+					array($this, 'runTask'), array($taskId, $task, true));
+			$results['delegate']['view'] = 'core.ProgressBar';
+		    } else {
+			list ($ret, $success)  = $this->runTask($taskId, $task, false);
+			if ($ret) {
+			    return array($ret, null);
+			}
 
-		    $status['run'] = array('taskId' => $taskId, 'success' => $success);
-		    $redirect['view'] = 'core.SiteAdmin';
-		    $redirect['subView'] = 'core.AdminMaintenance';
+			$status['run'] = array('taskId' => $taskId, 'success' => $success);
+			$redirect['view'] = 'core.SiteAdmin';
+			$redirect['subView'] = 'core.AdminMaintenance';
+		    }
+		} else {
+		    $results['delegate']['view'] = 'core.SiteAdmin';
+		    $results['delegate']['subView'] = 'core.AdminMaintenance';
+		    $error[] = 'form[error][maintenanceModeRequired]';
 		}
 	    }
+	} else if (isset($form['action']['setMode'])) {
+	    $platform =& $gallery->getPlatform();
+
+	    $newMode = !empty($form['setMode']['mode']);
+	    $maintenanceUrl = $form['setMode']['url'];
+
+	    $statusMsg = $newMode ? 'setOn' : 'setOff';
+	    if ($newMode && !empty($maintenanceUrl)) {
+		$urlGenerator =& $gallery->getUrlGenerator();
+	    	$newMode = $urlGenerator->makeAbsoluteUrl($maintenanceUrl);
+	    }
+	    $ret = GalleryCoreApi::setMaintenanceMode($newMode);
+	    if ($ret) {
+		return array($ret, null);
+	    }
+
+	    $ret = GalleryCoreApi::setPluginParameter('module', 'core',
+						       'mode.maintenance.lastUrl', $maintenanceUrl);
+	    if ($ret) {
+		return array($ret, null);
+	    }
+
+	    $status['setMode'][$statusMsg] = 1;
+	    $redirect['view'] = 'core.SiteAdmin';
+	    $redirect['subView'] = 'core.AdminMaintenance';
 	}
 
 	if (!empty($redirect)) {
@@ -101,10 +139,10 @@ class AdminMaintenanceController extends GalleryController {
 	$status['run']['success'] = $success;
 	$status['run']['taskId'] = $taskId;
 	$session =& $gallery->getSession();
+	$session->putStatus($status);
 
 	$redirect['view'] = 'core.SiteAdmin';
 	$redirect['subView'] = 'core.AdminMaintenance';
-	$redirect['statusId'] = $session->putStatus($status);
 
 	if ($useProgressBar) {
 	    $templateAdapter =& $gallery->getTemplateAdapter();
@@ -119,11 +157,12 @@ class AdminMaintenanceController extends GalleryController {
  * This view will show available maintenance tasks
  */
 class AdminMaintenanceView extends GalleryView {
-
     /**
      * @see GalleryView::loadTemplate
      */
     function loadTemplate(&$template, &$form) {
+	global $gallery;
+
 	$ret = GalleryCoreApi::assertUserIsSiteAdministrator();
 	if ($ret) {
 	    return array($ret, null);
@@ -160,6 +199,23 @@ class AdminMaintenanceView extends GalleryView {
 	    }
 	}
 
+	$maintenanceMode = $gallery->getConfig('mode.maintenance');
+	list ($ret, $maintenanceModeUrl) = GalleryCoreApi::getPluginParameter('module',
+								'core', 'mode.maintenance.lastUrl');
+	if ($ret) {
+	    return array($ret, null);
+	}
+
+	if (!empty($maintenanceMode)) {
+	    if (is_string($maintenanceMode)) {
+	    	$maintenanceModeUrl = $maintenanceMode;
+		$maintenanceMode = true;
+	    }
+	} else {
+	}
+	$AdminMaintenance['setMode']['mode'] = $maintenanceMode;
+	$AdminMaintenance['setMode']['url'] = $maintenanceModeUrl;
+
 	$template->setVariable('AdminMaintenance', $AdminMaintenance);
 	$template->setVariable('controller', 'core.AdminMaintenance');
 
@@ -185,7 +241,7 @@ class MaintenanceTask {
 
     /**
      * Execute the task
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               boolean success or failure
      *               array string output text
      */
@@ -198,6 +254,14 @@ class MaintenanceTask {
      * @return true or false
      */
     function requiresProgressBar() {
+	return false;
+    }
+
+    /**
+     * This task requires that the administrator sets Gallery into maintenance mode.
+     * @return true or false
+     */
+    function requiresMaintenanceMode() {
 	return false;
     }
 }

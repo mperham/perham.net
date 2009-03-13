@@ -7,7 +7,8 @@ $entityInfo['GalleryComment'] = array(
 	'subject' => array('type' => STORAGE_TYPE_STRING, 'size' => STORAGE_SIZE_MEDIUM, 'external-access' => EXTERNAL_ACCESS_FULL),
 	'comment' => array('type' => STORAGE_TYPE_TEXT, 'size' => STORAGE_SIZE_SMALL, 'external-access' => EXTERNAL_ACCESS_FULL),
 	'date' => array('type' => STORAGE_TYPE_INTEGER, 'notNull' => 1, 'external-access' => EXTERNAL_ACCESS_READ),
-	'author' => array('type' => STORAGE_TYPE_STRING, 'size' => STORAGE_SIZE_MEDIUM, 'external-access' => EXTERNAL_ACCESS_FULL)
+	'author' => array('type' => STORAGE_TYPE_STRING, 'size' => STORAGE_SIZE_MEDIUM, 'external-access' => EXTERNAL_ACCESS_FULL),
+	'publishStatus' => array('type' => STORAGE_TYPE_INTEGER, 'notNull' => 1, 'external-access' => EXTERNAL_ACCESS_FULL)
 ),
     'parent' => 'GalleryChildEntity',
     'module' => 'comment',

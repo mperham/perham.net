@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  * @package Rewrite
  * @subpackage Classes
  * @author Douglas Cau <douglas@cau.se>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @abstract
  */
 class RewriteParser {
@@ -61,8 +61,8 @@ class RewriteParser {
      * RewriteHelper::parseActiveRules().  It returns REWRITE_STATUS_OK on success.
      *
      * @param array $activeRules (if null, or not set, it defaults to the current rules)
-     * @param object GalleryModule $upgradeModule (optional)
-     * @return array object GalleryStatus a status code
+     * @param GalleryModule $upgradeModule (optional)
+     * @return array GalleryStatus a status code
      *               int rewrite status code (REWRITE_STATUS_OK on success)
      *               array string module (on error)
      *                     int rule id (on error)
@@ -78,7 +78,7 @@ class RewriteParser {
      *
      * @param array $accessList access list of referer hosts
      * @param boolean $allowEmptyReferer true if Gallery should allow empty referrer
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int rewrite status code (REWRITE_STATUS_OK on success)
      */
     function saveAccessList($accessList, $allowEmptyReferer) {
@@ -88,7 +88,7 @@ class RewriteParser {
     /**
      * By default there's nothing to configure, so we return success.
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               boolean true if this parser needs configuration
      */
     function needsConfiguration() {
@@ -143,8 +143,8 @@ class RewriteParser {
      * made.  A valid $code is anything that $this->saveActiveRules would return if an error occurs.
      *
      * @param int $code rewrite status code
-     * @param object RewriteModule $rewriteModule (optional)
-     * @return array object GalleryStatus a status code
+     * @param RewriteModule $rewriteModule (optional)
+     * @return array GalleryStatus a status code
      *               string translated error message
      */
     function getErrorMessage($code, $rewriteModule=null) {
@@ -177,9 +177,9 @@ class RewriteParser {
      * Displays the test results if the template variable $TestResults.body is set.  It should be a
      * Gallery base dir relative path.
      *
-     * @param object GalleryTemplate $template
+     * @param GalleryTemplate $template
      * @param array $form the form values
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function loadTestResultsTemplate(&$template, &$form) {
 	return null;
@@ -189,7 +189,7 @@ class RewriteParser {
      * Handles the submitted form and should save any settings (ie. forced tests).
      *
      * @param array $form the form values
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array error codes
      *               array status codes
      */
@@ -201,9 +201,9 @@ class RewriteParser {
      * Displays the parser configuration if the template variable $AdminParser.body is set.  It
      * should be a Gallery base dir relative path.
      *
-     * @param object GalleryTemplate $template
+     * @param GalleryTemplate $template
      * @param array $form the form values
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function loadAdminParserTemplate(&$template, &$form) {
 	return null;
@@ -213,7 +213,7 @@ class RewriteParser {
      * Handles the submitted form and should save the settings.
      *
      * @param array $form the form values
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array error codes
      *               array status codes
      */

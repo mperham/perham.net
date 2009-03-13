@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 16931 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 {if !isset($links) && isset($theme.itemLinks)}
   {assign var="links" value=$theme.itemLinks}
@@ -30,18 +28,12 @@
 	  {/if}
 	</option>
 	{foreach from=$links item="link"}
-	  <option value="{if isset($link.script)}{$link.script}{else}window.location = '{g->url params=$link.params|default:null options=$link.options|default:null}'{/if}"{if !empty($link.selected)} selected="selected"{/if}>
-	    {if $lowercase}
-	      {$link.text|lower}
-	    {else}
-	      {$link.text}
-	    {/if}
-	  </option>
+	  {g->itemLink link=$link type="option" lowercase=$lowercase}
 	{/foreach}
       </select>
     {else}
       {foreach from=$links item="link"}
-	<a class="gbAdminLink {g->linkid urlParams=$link.params|default:null}" href="{g->url params=$link.params|default:null options=$link.options|default:null}"{if isset($link.script)} onclick="{$link.script}"{/if}{if isset($link.attrs)} {$link.attrs}{/if}>{if $lowercase}{$link.text|lower}{else}{$link.text}{/if}</a>
+	{g->itemLink link=$link lowercase=$lowercase}
       {/foreach}
     {/if}
   </div>

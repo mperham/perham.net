@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryUrlGenerator.class');
  * @package Rewrite
  * @subpackage Classes
  * @author Douglas Cau <douglas@cau.se>
- * @version $Revision: 16471 $
+ * @version $Revision: 17580 $
  */
 class RewriteUrlGenerator extends GalleryUrlGenerator {
 
@@ -84,7 +84,7 @@ class RewriteUrlGenerator extends GalleryUrlGenerator {
      * This function is called at the end of URL generator initialization.  If an onLoad function is
      * specified for the current view it loads the needed file and calls the function which should
      * parse any request params that wasn't parsed by the rewrite parser (e.g. %path% to itemId).
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @private
      */
     function _onLoad() {
@@ -211,7 +211,7 @@ class RewriteUrlGenerator extends GalleryUrlGenerator {
     /**
      * Load entity.
      * @param int $itemId itemId of the entity to load
-     * @return object GalleryEntity or null on failure
+     * @return GalleryEntity or null on failure
      */
     function loadEntity(&$itemId) {
 	/* Assume rootAlbum if itemId not specified */
@@ -222,7 +222,7 @@ class RewriteUrlGenerator extends GalleryUrlGenerator {
 	    }
 	}
 
-	list ($ret, $entity) = GalleryCoreApi::loadEntitiesById($itemId);
+	list ($ret, $entity) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryEntity');
 	if ($ret) {
 	    return null;
 	}

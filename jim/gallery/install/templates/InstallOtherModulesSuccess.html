@@ -1,6 +1,6 @@
     <?php if (!empty($templateData['stackTrace'])): ?>
     <div class="stack_trace">
-      <?php print $templateData['stackTrace']; ?>
+      <?php print implode('<br/>', $templateData['stackTrace']) ?>
     </div><br/>
     <?php endif; ?>
 
@@ -27,13 +27,9 @@
 
     <?php if ($templateData['anyInstallable']): ?>
     <div class="go">
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>"><?php print _('Activate More Modules'); ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>" class="btn continue"><i></i><span><span></span><i></i><?php print _('Activate More Modules'); ?></span></a>
       <?php $nextStep = $stepNumber + 1 ?>
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $nextStep)) ?>"><?php printf(_('Continue to Step %d&raquo;'), $nextStep); ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $nextStep)) ?>" class="btn continue"><i></i><span><span></span><i></i><?php printf(_('Continue to Step %d&raquo;'), $nextStep); ?></span></a>
     </div>
     <?php endif; ?>
 

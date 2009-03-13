@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 16107 $
+ * @version $Revision: 17991 $
  */
 class GalleryTemplateAdapter {
 
@@ -38,7 +38,7 @@ class GalleryTemplateAdapter {
 
     /**
      * The active theme
-     * @var object GalleryTheme
+     * @var GalleryTheme
      * @access private
      */
     var $_theme;
@@ -75,7 +75,7 @@ class GalleryTemplateAdapter {
 
     /**
      * Set the theme
-     * @param object GalleryTheme $theme
+     * @param GalleryTheme $theme
      */
     function setTheme($theme) {
 	$this->_theme = $theme;
@@ -90,7 +90,7 @@ class GalleryTemplateAdapter {
      * @see GalleryUrlGenerator::generateUrl
      *
      * @param array $params data in key/value pairs
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      * @return string a URL
      */
     function url($params, &$smarty) {
@@ -129,7 +129,7 @@ class GalleryTemplateAdapter {
      * forward, for example.
      *
      * @param array $params data in key/value pairs
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      * @return a series of XHTML 1.0 compliant <input> elements
      */
     function hiddenFormVars($params, &$smarty) {
@@ -145,25 +145,7 @@ class GalleryTemplateAdapter {
 
 	/* Remember the current url for getting back to where we came from */
 	if (empty($vars['return'])) {
-	    $currentView = $gallery->getCurrentView();
-	    list ($ret, $view) = GalleryView::loadView($currentView);
-	    if ($ret) {
-		$viewDescription = '';
-	    } else {
-		list ($ret, $viewDescription) = $view->getViewDescription();
-		if ($ret) {
-		    $viewDescription = '';
-		}
-	    }
-	    $vars['returnName'] = $viewDescription;
 	    $vars['return'] = $urlGenerator->getNavigationReturnUrl();
-	}
-
-	/* Our navigation id */
-	$navigationId = $urlGenerator->getNavigationId();
-	if (!empty($navigationId)) {
-	    $vars['navId'] = $navigationId;
-	    unset($vars['return']);
 	}
 
 	/* Remember the original URL where this form was first shown */
@@ -190,7 +172,7 @@ class GalleryTemplateAdapter {
      * @todo This needs to be refactored.
      *
      * @param array $params data in key/value pairs
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      * @return string date
      */
     function date($params, &$smarty) {
@@ -219,7 +201,7 @@ class GalleryTemplateAdapter {
     }
 
     /**
-     * @see GalleryTranslator::translate
+     * @see GalleryTranslator::translateDomain
      */
     function text($params, &$smarty) {
 	global $gallery;
@@ -232,13 +214,28 @@ class GalleryTemplateAdapter {
 	    $domain = $smarty->_tpl_vars['l10Domain'];
 	}
 	$translator =& $gallery->getTranslator();
-	list ($ret, $text) = $translator->translateDomain($domain, $params);
+	if (!empty($params['postSprintfArg1'])) {
+	    /*
+	     * Attempt to translate post-sprintf string to allow specific translations
+	     * for particular %s values.  Currently only supports a single arg.
+	     * Fallback to normal translation of given $params.
+	     */
+	    $string = sprintf($params['text'], $params['postSprintfArg1']);
+	    list ($ret, $text) = $translator->translateDomain($domain, $string);
+	    if ($ret || $text == $string) {
+		list ($ret, $text) = $translator->translateDomain($domain, $params);
+	    }
+	} else {
+	    list ($ret, $text) = $translator->translateDomain($domain, $params);
+	}
 	if ($ret) {
 	    return '[Translation error: ' . print_r($params, true) . ']';
 	}
 
 	if (!empty($params['forJavascript'])) {
-	    GalleryCoreApi::requireOnce('lib/smarty/plugins/modifier.escape.php');
+	    if (!function_exists('smarty_modifier_escape')) {
+		GalleryCoreApi::requireOnce('lib/smarty/plugins/modifier.escape.php');
+	    }
 	    $text = smarty_modifier_escape($text, 'javascript', 'UTF-8');
 	}
 
@@ -250,7 +247,7 @@ class GalleryTemplateAdapter {
      * Useful when we are trying to change a value recursively.
      *
      * @param array $params key => value attributes
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      * @return HTML content
      */
     function changeInDescendents($params, &$smarty) {
@@ -288,7 +285,7 @@ class GalleryTemplateAdapter {
      * @todo Figure out a more graceful way to deal with errors here.
      *
      * @param array $params containing item, image, maxSize, fallback, and any img attributes
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      * @return string HTML content
      */
     function image($params, &$smarty) {
@@ -313,14 +310,16 @@ class GalleryTemplateAdapter {
 	 * - Renderer can render the entity (with info from the item)
 	 */
 	if ($params['item']['id'] == $params['image']['id']) {
-	    list ($ret, $item) = GalleryCoreApi::loadEntitiesById($params['item']['id']);
+	    /* XXX: Can't be more specific than entity-type = GalleryEntity here */
+	    list ($ret, $item) =
+		GalleryCoreApi::loadEntitiesById($params['item']['id'], 'GalleryEntity');
 	    if ($ret) {
 		return array($ret, null);
 	    }
 	    $entity = null;
 	} else {
 	    list ($ret, $results) = GalleryCoreApi::loadEntitiesById(
-		array($params['item']['id'], $params['image']['id']));
+		array($params['item']['id'], $params['image']['id']), 'GalleryEntity');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -371,7 +370,7 @@ class GalleryTemplateAdapter {
      * Render head content
      *
      * @param array $params
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      * @return string HTML content
      */
     function head($params, &$smarty) {
@@ -379,24 +378,28 @@ class GalleryTemplateAdapter {
 	$urlGenerator =& $gallery->getUrlGenerator();
 	$templateVars =& $smarty->get_template_vars();
 	$head = $templateVars['head'];
-	$output = array("\n");
+	$output = array('');
 
 	/* Title */
 	if (isset($head['title'])) {
-	    $output[] = '<title>' . $head['title'] . "</title>\n";
+	    $output[] = '<title>' . $head['title'] . "</title>";
 	}
 
-	/* Style */
-	foreach ($head['style'] as $path) {
-	    $output[] = sprintf('<link rel="stylesheet" type="text/css" href="%s"/>' . "\n",
-				$urlGenerator->generateUrl(array('href' => $path)));
+	/* <link> elements (rss, css) */
+	foreach (array_keys($head['link']) as $linkHtml) {
+	    $output[] = $linkHtml;
 	}
 
 	/* Javascript */
-	if (isset($head['javascript'])) {
-	    foreach ($head['javascript'] as $path) {
-		$output[] = sprintf('<script type="text/javascript" src="%s"></script>' . "\n",
-			$urlGenerator->generateUrl(array('href' => $path)));
+	if (!empty($head['javascript'])) {
+	    $theme = $templateVars['theme'];
+	    if (empty($theme['pageType']) || $theme['pageType'] != 'error') {
+		$this->_combineJavascriptFiles(array_keys($head['javascript']), $output);
+	    } else {
+		foreach (array_keys($head['javascript']) as $file) {
+		    $output[] = sprintf('<script type="text/javascript" src="%s"></script>',
+			$urlGenerator->generateUrl(array('href' => $file)));
+		}
 	    }
 	}
 
@@ -413,7 +416,118 @@ class GalleryTemplateAdapter {
 	/* This should help out users whose browsers are confused about the character set */
 	$output[] = '<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>';
 
-	return implode('', $output);
+	/* Meta */
+	foreach ($head['meta'] as $meta) {
+	    $key = empty($meta['isHttpEquiv']) ? 'name' : 'http-equiv';
+	    $output[] = sprintf('<meta %s="%s" content="%s"/>',
+				$key, $meta['name'], $meta['content']);
+	}
+
+	return implode("\n", $output);
+    }
+
+    /**
+     * Combine as many static Javascript files as possible into a single request to
+     * core.CombinedJavascript to minimize the number of connections required by the browser to
+     * retrieve them, which improves performance on slower connections.
+     * @param array $files relative paths to javascript files
+     * @param array $output output buffer to add lines.
+     */
+    function _combineJavascriptFiles($files, &$output) {
+	global $gallery;
+	$platform =& $gallery->getPlatform();
+	$urlGenerator =& $gallery->getUrlGenerator();
+
+	$filteredFiles = array();
+	$key = '';
+	$codeBase = GalleryCoreApi::getCodeBasePath();
+	$pattern = '<script type="text/javascript" src="%s"></script>';
+
+	/* Special case utilities.js is superset of yahoo-dom-event.js */
+	/** @todo move this check into GalleryTemplate::javascript */
+	$yde = array_search('lib/yui/yahoo-dom-event.js', $files);
+	if ($yde !== false) {
+	    $util = array_search('lib/yui/utilities.js', $files);
+	    if ($util !== false) {
+		if ($yde < $util) {
+		    $files[$yde] = $files[$util];
+		    unset($files[$util]);
+		} else {
+		    unset($files[$yde]);
+		}
+	    }
+	}
+	foreach ($files as $file) {
+	    /*
+	     * Don't do caching if it's a dynamic request, for which we use the quick and dirty
+	     * approach of checking for a ? in the path.  This will fail if you register a short
+	     * url for a JS immediate view, which seems pretty unlikely.
+	     */
+	    $path = $codeBase . $file;
+	    if (strpos($file, '?') === false && $platform->file_exists($path)) {
+		/* 7 == size, 9 == mtime, see http://php.net/stat */
+		$stats = $platform->stat($path);
+		$key .= "$file $stats[7] $stats[9],";
+		$filteredFiles[] = $file;
+	    } else {
+		if ($filteredFiles) {
+		    /* Create a combined javascript file for what we have now */
+		    $output[] = sprintf($pattern,
+			$this->_buildCombinedJavascriptFileAndGenerateUrl($filteredFiles, $key));
+		    $filteredFiles = array();
+		    $key = '';
+		}
+		$output[] = sprintf(
+		    $pattern, $urlGenerator->generateUrl(array('href' => $file)));
+	    }
+	}
+
+	if ($filteredFiles) {
+	    $output[] = sprintf($pattern, $this->_buildCombinedJavascriptFileAndGenerateUrl(
+		$filteredFiles, $key));
+	}
+    }
+
+    /**
+     * Combine the specified files into a single file and store it in the disk cache with the key.
+     * @param array files to be combined
+     * @param array string to be used to generate the key
+     * @return string a url to retrieve the combined script file or null
+     */
+    function _buildCombinedJavascriptFileAndGenerateUrl($filteredFiles, $key) {
+	global $gallery;
+	$platform =& $gallery->getPlatform();
+	$urlGenerator =& $gallery->getUrlGenerator();
+	$phpVm = $gallery->getPhpVm();
+
+	$codeBase = GalleryCoreApi::getCodeBasePath();
+
+	$key = $phpVm->md5($key);
+	$cacheFile = GalleryDataCache::getCachePath(
+	    array('type' => 'module',
+		  'itemId' => 'CombinedJavascript_' . $key,
+		  'id' => '_all'));
+	if (!$platform->file_exists($cacheFile)) {
+	    $contents = '';
+	    foreach ($filteredFiles as $file) {
+		$contents .= $platform->file_get_contents($codeBase . $file);
+	    }
+	    GalleryDataCache::putToDisk(
+		array('type' => 'module',
+		      'itemId' => 'CombinedJavascript_' . $key,
+		      'id' => '_all'),
+		$contents);
+	    if ($phpVm->function_exists('gzencode')) {
+		GalleryDataCache::putToDisk(
+		    array('type' => 'module',
+			  'itemId' => 'CombinedJavascript_gzip_' . $key,
+			  'id' => '_all'),
+		    $phpVm->gzencode($contents, 9, FORCE_GZIP));
+	    }
+	}
+	return $urlGenerator->generateUrl(
+	    array('view' => 'core.CombinedJavascript', 'key' => $key),
+	    array('forceDirect' => true, 'forceFullUrl' => true));
     }
 
     /**
@@ -421,7 +535,7 @@ class GalleryTemplateAdapter {
      *
      * @param array $params params
      * @param string $content content
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function autoComplete($params, $content, &$smarty) {
 	global $gallery;
@@ -458,7 +572,7 @@ class GalleryTemplateAdapter {
      * Include form inputs for dimensions.
      *
      * @param array $params params
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function dimensions($params, &$smarty) {
 	if (!isset($this->_callCount['dimensions'])) {
@@ -484,7 +598,7 @@ class GalleryTemplateAdapter {
      * Include this before any submit buttons are added to the form.
      *
      * @param array $params params
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function defaultButton($params, &$smarty) {
 	if (!isset($this->_callCount['defaultButton'])) {
@@ -523,8 +637,8 @@ class GalleryTemplateAdapter {
 	    if (preg_match('{^core\.Item(?:Edit|Move|Delete|CreateLink)(?:Single)?$}', $subView) &&
 		    !empty($params['urlParams']['itemId'])) {
 		/* Append item type for a few subViews, with fallback class without type */
-		list ($ret, $item) =
-		    GalleryCoreApi::loadEntitiesById($params['urlParams']['itemId']);
+		list ($ret, $item) = GalleryCoreApi::loadEntitiesById(
+		    $params['urlParams']['itemId'], 'GalleryEntity');
 		if (!$ret) {
 		    $type = $item->itemTypeName(false);
 		    $fallbackLinkId = $linkId;
@@ -535,6 +649,52 @@ class GalleryTemplateAdapter {
 	return 'gbAdminLink ' . GalleryTemplateAdapter::_safeCssName($linkId) .
 	    (isset($fallbackLinkId) ?
 	     ' ' . GalleryTemplateAdapter::_safeCssName($fallbackLinkId) : '');
+    }
+
+    /**
+     * Render a single item link as an <option> or <a>.
+     * @param array $params 'link' => getItemLinks data for one link
+     *                      'type' => (optional) 'link' or 'option' (default=link)
+     *                      'lowercase' => (optional) true to convert link text to lowercase
+     *                      Other keys are used as attributes.
+     * @return string
+     */
+    function itemLink($params) {
+	global $gallery;
+	$urlGenerator =& $gallery->getUrlGenerator();
+	if (empty($params['link'])) {
+	    return '[missing link]';
+	}
+	$link = $params['link'];
+	$type = isset($params['type']) ? $params['type'] : 'link';
+	$lowercase = !empty($params['lowercase']);
+	$text = isset($params['text']) ? $params['text'] : $link['text'];
+	unset($params['link']);
+	unset($params['type']);
+	unset($params['lowercase']);
+	unset($params['text']);
+
+	if ($type == 'option') {
+	    $tag = '<option value="' . (isset($link['script']) ? $link['script']
+		: ('window.location=\''
+		   . $urlGenerator->generateUrl($link['params'], $link['options']) . '\'')) . '"';
+	    $endTag = '</option>';
+	} else {
+	    if (!array_key_exists('class', $params)) {
+		/* Use default classes */
+		$params['class'] = $this->linkId(array('urlParams' => $link['params']));
+	    }
+	    $tag = '<a href="' . $urlGenerator->generateUrl($link['params'], $link['options']) . '"'
+		. (isset($link['script']) ? ' onclick="' . $link['script'] . ';return false"' : '')
+		. (isset($link['attrs']) ? ' ' . $link['attrs'] : '');
+	    $endTag = '</a>';
+	}
+	foreach ($params as $key => $value) {
+	    if (isset($value)) {
+		$tag .= " $key=\"$value\"";
+	    }
+	}
+	return $tag . '>' . ($lowercase ? strtolower($text) : $text) . $endTag;
     }
 
     /**
@@ -598,7 +758,7 @@ class GalleryTemplateAdapter {
     /**
      * Render logo button image.
      * @param array $params ('type' => logo type)
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      * @return HTML content
      */
     function logoButton($params, &$smarty) {
@@ -685,15 +845,15 @@ class GalleryTemplateAdapter {
 	    if (!$isAdminOrShowAll) {
 		return;
 	    }
-	    return sprintf(
+	    return; /* sprintf(
 		    '%s<img src="%s" alt="%s" title="%s" style="%s" width="80" height="15"/>%s',
 		    $useLink ? '' : '',
 		    $urlGenerator->generateUrl(
-			array('href' => 'modules/core/data/g22-double_double.png')),
-		    $core->translate('G2.2: Double Double'),
-		    $core->translate('G2.2: Double Double'),
+			array('href' => 'modules/core/data/g23-skidoo.png')),
+		    $core->translate('G2.3: Skidoo'),
+		    $core->translate('G2.3: Skidoo'),
 		    'border-style: none',
-		    $useLink ? '' : '');
+		    $useLink ? '' : ''); */
 	}
     }
 
@@ -719,9 +879,11 @@ class GalleryTemplateAdapter {
 	    }
 	    $buf .= '</div>';
 	}
-	if ($debug) {
+	if ($debug == 'buffered') {
 	    /* Smarty debug console */
-	    GalleryCoreApi::requireOnce('lib/smarty/plugins/function.debug.php');
+	    if (!function_exists('smarty_function_debug')) {
+		GalleryCoreApi::requireOnce('lib/smarty/plugins/function.debug.php');
+	    }
 	    $buf .= smarty_function_debug($params, $smarty);
 	}
 	return $buf;
@@ -733,7 +895,7 @@ class GalleryTemplateAdapter {
      *   url  => url to a file inside the themes dir
      *
      * @param array $params ('include' => ..., 'url' => ...)
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function theme($params, &$smarty) {
 	global $gallery;
@@ -776,9 +938,10 @@ class GalleryTemplateAdapter {
      * eg: "core.LoginBlock".  Any other parameters get passed on to the block itself.
      *
      * @param array $params ('type' => <block descriptor>, ...)
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function block($params, &$smarty) {
+	global $gallery;
 	list ($module, $file) = explode('.', $params['type']);
 	$class = empty($params['class']) ? '' : ' ' . $params['class'];
 
@@ -794,6 +957,20 @@ class GalleryTemplateAdapter {
 
 	if (isset($params['params'])) {
 	    $params = $params['params'];
+	}
+
+	/* Verify that the requested block actually exists */
+	$tplPath = "gallery:modules/$module/templates/blocks/$file.tpl";
+	$compileCheck = GalleryTemplate::shouldDoCompileCheck();
+	if (!$compileCheck) {
+            $platform =& $gallery->getPlatform();
+            $smartyCompilePath = $smarty->_get_compile_path($tplPath);
+            $tplCompiled = $platform->file_exists($smartyCompilePath);
+        }
+        if (($compileCheck || empty($tplCompiled)) && !$smarty->template_exists($tplPath)) {
+	    /* Fall back to "missing template" block */
+	    $module = 'core';
+	    $file = 'Missing';
 	}
 
 	$params['class'] = "block-$module-$file$class";
@@ -816,7 +993,7 @@ class GalleryTemplateAdapter {
      *
      * @param array $params ('type' => <block descriptor>, ...)
      * @param string $content
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function container($params, $content, &$smarty) {
 	if (!isset($content)) {
@@ -850,7 +1027,7 @@ class GalleryTemplateAdapter {
      * Any other parameters get passed on to the block itself.
      *
      * @param array $params ('type' => <block descriptor>, ...)
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function callback($params, &$smarty) {
 	global $gallery;
@@ -886,7 +1063,7 @@ class GalleryTemplateAdapter {
      *
      * @param array $params
      * @param string $content
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function addToTrailer($params, $content, &$smarty) {
 	if (!isset($content)) {
@@ -921,6 +1098,12 @@ class GalleryTemplateAdapter {
 		global $gallery;
 		if ($gallery->getCurrentView() == 'core.ProgressBar') {
 		    $this->errorProgressBar($ret);
+		} else {
+		    $summary = $ret->getErrorMessage();
+		    if (empty($summary)) {
+			$summary = implode(', ', $ret->getErrorCodeConstants($ret->getErrorCode()));
+		    }
+		    GalleryCoreApi::addEventLogEntry('Gallery Error', $summary, $ret->getAsText());
 		}
 	    }
 	}
@@ -930,7 +1113,7 @@ class GalleryTemplateAdapter {
      * Use GalleryUtilities::shrinkDimensionsToFit to scale template vars to new target size.
      *
      * @param array $params args; should contain widthVar, heightVar, maxSize keys
-     * @param object Smarty $smarty the smarty instance
+     * @param Smarty $smarty the smarty instance
      */
     function shrinkDimensions($params, &$smarty) {
 	if (!isset($params['widthVar']) || !isset($params['heightVar']) ||
@@ -1007,9 +1190,11 @@ class GalleryTemplateAdapter {
 	$percentComplete = GalleryUtilities::roundToString($percentComplete, 2);
 
 	/* Need to escape for javascript (backslash, ..) */
-	GalleryCoreApi::requireOnce('lib/smarty/plugins/modifier.escape.php');
+	if (!function_exists('smarty_modifier_escape')) {
+	    GalleryCoreApi::requireOnce('lib/smarty/plugins/modifier.escape.php');
+	}
 	$title = smarty_modifier_escape($title, 'javascript');
-	$description = smarty_modifier_escape($description, 'javascript');
+	$description = smarty_modifier_escape($description, 'javascript', 'UTF-8');
 
 	$memoryInfo = $coreModule->translate(
 	    array('text' => 'Memory used: %s, total: %s',
@@ -1031,7 +1216,7 @@ class GalleryTemplateAdapter {
 
     /**
      * Display error progress bar.
-     * @param object GalleryStatus $status
+     * @param GalleryStatus $status
      */
     function errorProgressBar($status) {
 	global $gallery;
@@ -1039,21 +1224,55 @@ class GalleryTemplateAdapter {
 	if ($ret) {
 	    $isAdmin = false;
 	}
+
+	/* Log the error */
+	$summary = $status->getErrorMessage();
+	if (empty($summary)) {
+	    $summary = implode(', ', $status->getErrorCodeConstants($status->getErrorCode()));
+	}
+	GalleryCoreApi::addEventLogEntry('Gallery Error', $summary, $status->getAsText());
+
+	/* Display an error message */
 	if ($gallery->getDebug() || $isAdmin) {
 	    $status = $status->getAsHtml($isAdmin);
 	} else {
 	    $status = 'Error ('
 		    . implode(', ', $status->getErrorCodeConstants($status->getErrorCode())) . ')';
 	}
+	if (!function_exists('smarty_modifier_escape')) {
+	    GalleryCoreApi::requireOnce('lib/smarty/plugins/modifier.escape.php');
+	}
+	$status = smarty_modifier_escape($status, 'javascript', 'UTF-8');
 	printf('<script type="text/javascript">errorProgressBar("%s");</script>', $status);
     }
 
     /**
      * Complete progress bar.
+     * @param string $continueUrl URL shown to continue the process
+     * @param bool $doRedirect Whether to redirect automatically. Defaults to false, requiring
+     *                         user-interaction to follow the continue link.
      */
-    function completeProgressBar($continueUrl) {
+    function completeProgressBar($continueUrl, $doRedirect=false) {
+	global $gallery;
 	$continueUrl = str_replace('&amp;', '&', $continueUrl);
-	printf('<script type="text/javascript">completeProgressBar("%s");</script>', $continueUrl);
+	/* Display the continue link after a short delay to avoid bug 2031942 */
+	printf('<script type="text/javascript">'
+	     . 'setTimeout(function(){completeProgressBar("%s")}, 2000);</script>',
+	       $continueUrl);
+	if (($debug = $gallery->getDebug()) && $debug != 'logged') {
+	    /* Don't automatically redirect when in debug mode */
+	    print '<hr/>';
+	    print '<pre>';
+	    print $gallery->getDebugBuffer();
+	    print '</pre>';
+	} else if ($doRedirect) {
+	    /*
+	     * Redirect after a short delay giving the server time to store the session before
+	     * the next page is requested.
+	     */
+	    printf('<script type="text/javascript">'
+		 . 'setTimeout(\'document.location.href = "%s";\', 2000);</script>', $continueUrl);
+	}
     }
 }
 ?>

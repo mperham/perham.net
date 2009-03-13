@@ -1,4 +1,4 @@
-# $Id: strings.raw 16577 2007-06-10 20:50:34Z mindless $
+# $Id: strings.raw 18119 2008-10-08 18:23:52Z mindless $
 
 /* InstallStep.class */
 gettext("Unknown")
@@ -16,7 +16,6 @@ gettext("<b>Error:</b> your <b>login.txt</b> key does not match correctly. Pleas
 
 /* steps/CreateConfigFileStep.class */
 gettext("Create Config File")
-gettext("Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix this.")
 gettext("The config.php file does not exist in your %s directory")
 gettext("The config.php file exists but is not writeable.  If your server is Windows, you may have to disable file sharing for config.php and set its permissions manually.")
 
@@ -28,6 +27,7 @@ gettext("You must have the ibm_db2 PHP module installed")
 gettext("You must have the PostgreSQL PHP module installed")
 gettext("You must have the Oracle OCI8 PHP module installed")
 gettext("You must have the Component Object Model(COM) PHP module installed")
+gettext("You must have the PHP Data Object(PDO) PHP module installed")
 gettext("You must specify a column prefix (we recommend %s)")
 gettext("Use only letters, numbers and underscore in the column prefix")
 gettext("You must specify a table prefix (we recommend %s)")
@@ -49,11 +49,12 @@ gettext("PostgreSQL v7.x and newer")
 gettext("Oracle (9i and newer)")
 gettext("IBM DB2 (v9.x and newer)")
 gettext("Microsoft SQL Server 2005 and newer")
-gettext("Unknown DB type or no known tables information.")
+gettext("SQLite v3.x (Experimental!)")
+gettext("Unknown database type or no known tables information.")
 gettext("Could not find an unused table prefix similar to \"%s\".")
 gettext("Could not open schema file: \"%s\".")
-gettext("Failed to create a DB test sequence.Check the returned error message and README.html for missing privileges and clean up the database.")
-gettext("Test failed to drop a DB test sequence.Check the returned error message and README.html for missing privileges and clean up the database.")
+gettext("Failed to create a database test sequence. Check the returned error message and README.html for missing privileges and clean up the database.")
+gettext("Test failed to drop a database test sequence. Check the returned error message and README.html for missing privileges and clean up the database.")
 gettext("Missing SQL statements")
 gettext("Check the returned error message and README.html for missing privileges and clean up the database.")
 
@@ -93,7 +94,7 @@ gettext("Storage Setup") /* also in: templates/StorageSetupRequest.html */
 /* steps/SystemChecksStep.class */
 gettext("System Checks") /* also in: templates/SystemChecks.html */
 gettext("Performing system checks")
-gettext("PHP version >= 4.3.0 or >= 5.0.4")
+gettext("PHP version &gt;= 4.3.0 or &gt;= 5.0.4")
 gettext("Error: Gallery 2 requires PHP version 4.3.0 or newer or 5.0.4 or newer. You have PHP version %s installed. Contact your webserver administrator to request an upgrade, available at the %sPHP website%s.")
 gettext("PHP Version")
 gettext("FILE directive supported")
@@ -124,7 +125,7 @@ gettext("Your webserver does not support localization. To enable support for add
 gettext("Your PHP is missing the function %sbind_textdomain_codeset%s. This means Gallery may display extended characters for some languages incorrectly.")
 gettext("Your PHP is missing the function %sdngettext%s. This means Gallery will be unable to translate plural forms.")
 gettext("Zend compatibility mode")
-gettext("Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode before proceeding.")
+gettext("Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode before proceeding.")
 gettext("putenv() allowed")
 gettext("Warning: The putenv() function is disabled in your PHP by the <b>disabled_functions</b> parameter in php.ini.  Gallery can function with this setting, but on some rare systems Gallery will be unable to run in other languages than the system language and English.")
 gettext("Output buffering disabled")
@@ -181,6 +182,7 @@ gettext("Try Again")
 
 /* templates/CreateConfigFileInstructions.html */
 gettext("Create a config file")
+gettext("Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix this. You can also download the %sconfig.php%s file and replace the existing config.php in the %s directory yourself.")
 gettext("Now we need to write out all the information you provided into a file called <b>config.php</b> in your <b>%s</b> directory.  This is a very important file that gives Gallery all the information that it needs to operate.  After we create it, you can read through this file and make changes to it if you want.")
 gettext("Before we can proceed, you should create a file in your <b>%s</b> directory called <i>config.php</i>.  You must make sure that the webserver will be able to write to it.")
 gettext("Unix (with shell access)") /* also in: templates/StorageSetupRequest.html */
@@ -200,6 +202,8 @@ gettext("DB Hostname:")
 gettext("DB Username:")
 gettext("DB Password:")
 gettext("DB Name:")
+gettext("DB Schema:")
+gettext("(optional)")
 gettext("Table Prefix:")
 gettext("Column Prefix:")
 gettext("We received the following database related errors:")
@@ -213,7 +217,6 @@ gettext("Database set up successfully.")
 gettext("Finished!")
 gettext("Congratulations! Your Gallery 2 install is complete! See... that wasn't so hard, was it? Now it's time to upload some photos!")
 gettext("Go to my Gallery!")
-gettext("You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %s directory.")
 
 /* templates/Header.html */
 gettext("Installer Help")
@@ -267,23 +270,21 @@ gettext("These files are no longer part of Gallery. They probably won't cause an
 
 /* templates/Multisite.html */
 gettext("Errors occurred. Please see messages below.") /* also in: templates/StorageSetupRequest.html */
-gettext("Please select the installation type")
 gettext("Standard installation")
-gettext("This is the default installation type. Choose this installation type if you want to install a new Gallery in the directory %s which will be accessible with the URL %s.")
+gettext("This is the most common type of installation. Your Gallery will be in the directory %s which will be accessible at %s.")
 gettext("Multisite installation")
-gettext("Gallery can support multiple independent sites with a single installation of the code. Choose this installation type if you want to install a new Gallery on the same webserver but in a different path, subdomain or URL domain.")
-gettext("The multisites don't share albums, photos, users, or anything else. They all need their own database and their own storage directory. For more information and explanations about Multisite installations, visit the %s page.")
+gettext("This is for multiple Gallery installations on a single web server.  Each Gallery is totally independent with its own database of photos, albums, and users.  For more details, refer to the %s page.")
 gettext("You must enter a directory") /* also in: templates/StorageSetupRequest.html */
-gettext("The directory you entered is the codebase directory. If you want to install a Gallery in the codebase directory, select the standard installation type. If you want to install a multisite, choose another directory.")
+gettext("You entered the %s directory. If you want to install a Gallery there, select the standard installation type. If you want to install a multisite, choose a different directory.")
 gettext("The directory you entered either does not exist, or is prohibited by your webserver configuration.  Your webserver is configured to only allow access to the following directories.  You must choose a directory under one of these, or you must modify the <b>open_basedir</b> setting in your PHP configuration to allow a new directory.")
-gettext("If your multisite install is in a different virtual host, you should contact your system administrator and request that they configure your <b>open_basedir</b> setting so that your virtual hosts can access each other.")
+gettext("If your multisite installation is in a different virtual host, you should contact your system administrator and request that they configure your <b>open_basedir</b> setting so that your virtual hosts can access each other.")
 gettext("The directory you entered does not exist") /* also in: templates/StorageSetupRequest.html */
 gettext("The directory you entered is not accessible.  Change the permissions so that the webserver can read this directory.") /* also in: templates/StorageSetupRequest.html */
 gettext("Unable to create multisite files. Ensure the files listed below are writeable.")
-gettext("All multisites are installed from this central code repository (codebase).")
-gettext("Enter the directory for the new multisite below. The path must be different from this codebase installation's path:")
-gettext("The directory must be writeable by your webserver/php user or contain the following writeable files:")
-gettext("Select Directory")
+gettext("Directory for the new Gallery installation (example: /var/www/example.com/gallery2) ")
+gettext("You must provide the URL for your new multisite")
+gettext("URL for the new Gallery installation (example: http://example.com/gallery2/main.php) ")
+gettext("Select Directory and URL")
 
 /* templates/MultisiteSuccess.html */
 gettext("Multisite directory setup successfully.")
@@ -307,6 +308,7 @@ gettext("If you choose a randomized name or prefer to stick with the specified d
 gettext("Yes, please omit the security check:")
 gettext("This is a multisite installation. Remember that each multisite requires its own storage directory.")
 gettext("If you're using a modern browser, we'll try to autocomplete any path you enter here.  So if you're having trouble finding the right path to your g2data directory, try experimenting with paths in the text box below and see what completions it provides for you.")
+gettext("Do not use the installation directory for storage")
 gettext("The directory you entered is read only")
 gettext("There was an error creating the directory structure within the storage directory.")
 gettext("Your storage directory is %sweb accessible%s.")

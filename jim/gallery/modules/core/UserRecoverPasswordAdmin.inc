@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Jay Rossiter <cryptographite@users.sf.net>
- * @version $Revision: 15569 $
+ * @version $Revision: 17580 $
  */
 class UserRecoverPasswordAdminController extends GalleryController {
 
@@ -84,6 +84,13 @@ class UserRecoverPasswordAdminController extends GalleryController {
 		    }
 
 		    $ret = GalleryCoreApi::releaseLocks($lockId);
+		    if ($ret) {
+			return array($ret, null);
+		    }
+
+		    $ret = GalleryCoreApi::removeMapEntry(
+			'FailedLoginsMap',
+			array('userName' => $user->getUserName()));
 		    if ($ret) {
 			return array($ret, null);
 		    }

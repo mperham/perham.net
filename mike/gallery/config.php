@@ -133,7 +133,7 @@ $gallery->setConfig('storage.config', $storeConfig);
  */
 /*
 $gallery->setDebug('logged');
-$gallery->setDebugLogFile('/usr/home/mperham/gallery2.log');
+$gallery->setDebugLogFile('/data/mike/gallery2.log');
 */
 
 /*

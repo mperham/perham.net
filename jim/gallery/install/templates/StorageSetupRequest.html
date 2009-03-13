@@ -55,6 +55,9 @@
 	    <?php if (isset($templateData['error']['missing_dir'])): ?>
 	    <?php print _('The directory you entered does not exist'); ?>
 	    <?php endif; ?>
+	    <?php if (isset($templateData['error']['in_gallery_dir'])): ?>
+	    <?php print _('Do not use the installation directory for storage'); ?>
+	    <?php endif; ?>
 	    <?php if (isset($templateData['error']['inaccessible_dir'])): ?>
 	    <?php print _('The directory you entered is not accessible.  Change the permissions so that the webserver can read this directory.'); ?>
 	    <?php endif; ?>
@@ -143,7 +146,5 @@
     </div>
 
     <div class="go">
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-	  <a href="javascript:document.forms[0].submit()"><?php print _('Save') ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+	  <a href="javascript:document.forms[0].submit()" class="btn continue"><i></i><span><span></span><i></i><?php print _('Save') ?></span></a>
     </div>

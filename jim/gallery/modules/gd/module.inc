@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  *
  * @package Gd
  * @author Ernesto Baschny <ernst@baschny.de>
- * @version $Revision: 16034 $
+ * @version $Revision: 17580 $
  */
 class GdModule extends GalleryModule {
 
@@ -35,11 +35,12 @@ class GdModule extends GalleryModule {
 	$this->setId('gd');
 	$this->setName($gallery->i18n('Gd'));
 	$this->setDescription($gallery->i18n('Gd Graphics Toolkit'));
-	$this->setVersion('1.1.1');
+	$this->setVersion('1.1.5');
+	$this->_templateVersion = 1;
 	$this->setGroup('toolkits', $gallery->i18n('Graphics Toolkits'));
 	$this->setCallbacks('getSiteAdminViews');
-	$this->setRequiredCoreApi(array(7, 4));
-	$this->setRequiredModuleApi(array(3, 0));
+	$this->setRequiredCoreApi(array(7, 20));
+	$this->setRequiredModuleApi(array(3, 6));
     }
 
     /**

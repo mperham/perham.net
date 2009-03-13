@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryToolkit.class');
  * @package ArchiveUpload
  * @subpackage Classes
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17999 $
  */
 class ArchiveExtractToolkit extends GalleryToolkit {
     /**
@@ -68,11 +68,11 @@ class ArchiveExtractToolkit extends GalleryToolkit {
 	    return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 	}
 
-	if ($params['removeMeta'] && !$this->_pruneDirectory($destFilename,
+	if (!$this->_pruneDirectory($destFilename,
 		    /* Thumbs.db is Windows, the rest are MacOSX */
 		    array('file' => array('Thumbs.db', '.DS_Store', '.Trashes'),
 			  'dir' => array('__MACOSX')),
-		    $platform)) {
+		    $params['removeMeta'])) {
 	    return array(GalleryCoreApi::error(ERROR_PLATFORM_FAILURE), null, null);
 	}
 
@@ -80,14 +80,17 @@ class ArchiveExtractToolkit extends GalleryToolkit {
     }
 
     /**
-     * Remove specified patterns in a directory tree.
+     * Remove specified patterns or symlinks in a directory tree.
      * @param string $dir path
      * @param array $prune ('file' => array of filenames, 'dir' => array of dirnames)
-     * @param object GalleryPlatform
+     * @param bool $removeMeta flag to indicate that the meta files should be removed
      * @return bool true for success
      * @access private
      */
-    function _pruneDirectory($dir, $prune, &$platform) {
+    function _pruneDirectory($dir, $prune, $removeMeta) {
+	global $gallery;
+	$platform =& $gallery->getPlatform();
+
 	if (!($dh = $platform->opendir($dir))) {
 	    return false;
 	}
@@ -101,15 +104,20 @@ class ArchiveExtractToolkit extends GalleryToolkit {
 	$dir .= $platform->getDirectorySeparator();
 	foreach ($list as $file) {
 	    $path = $dir . $file;
-	    if ($platform->is_dir($path)) {
-		if (in_array($file, $prune['dir'])) {
+	    if ($platform->is_link($path)) {
+		if (!$platform->unlink($path)) {
+		    return false;
+		}
+	    } else if ($platform->is_dir($path)) {
+		if ($removeMeta && in_array($file, $prune['dir'])) {
 		    if (!$platform->recursiveRmdir($path)) {
 			return false;
 		    }
-		} else if (!$this->_pruneDirectory($path, $prune, $platform)) {
+		} else if (!$this->_pruneDirectory($path, $prune, $removeMeta)) {
 		    return false;
 		}
-	    } else if (in_array($file, $prune['file']) && !$platform->unlink($path)) {
+	    } else if ($removeMeta && in_array($file, $prune['file']) 
+		    && !$platform->unlink($path)) {
 		return false;
 	    }
 	}

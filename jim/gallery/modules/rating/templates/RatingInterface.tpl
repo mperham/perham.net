@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17082 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 {if $RatingSummary.firstCall}
 {include file="gallery:modules/rating/templates/RatingImagePreload.tpl"}
@@ -12,7 +10,8 @@
 	{foreach from=$RatingSummary.ratingValues item=ratingValue}{if $RatingData.canRate}<a
 		href="javascript:rateItem({$RatingData.itemId}, {$ratingValue}, '{g->url
 			arg1="view=rating.RatingCallback" arg2="command=rate"
-			arg3="itemId=`$RatingData.itemId`" arg4="rating=$ratingValue" useAuthToken=1}')"
+			arg3="itemId=`$RatingData.itemId`" arg4="rating=$ratingValue"
+			arg5="authToken=__AUTHTOKEN__"}')"
 		onmouseover="updateStarDisplay({$RatingData.itemId}, {$ratingValue}); return true"
 		onmouseout="resetStarDisplay({$RatingData.itemId}); return true">{/if}<img
 		src="{g->url href="modules/rating/images/transparent.gif"}"

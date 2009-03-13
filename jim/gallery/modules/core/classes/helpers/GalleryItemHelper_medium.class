@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryItemHelper_medium /* extends GalleryEventListener */ {
@@ -511,7 +511,7 @@ class GalleryItemHelper_medium /* extends GalleryEventListener */ {
 	/* Delete any old derivatives that have not been reused */
 	foreach ($derivs as $tmp) {
 	    foreach ($tmp as $derivative) {
-		$ret = GalleryCoreApi::deleteEntityById($derivative->getId());
+		$ret = GalleryCoreApi::deleteEntityById($derivative->getId(), 'GalleryDerivative');
 		if ($ret) {
 		    return $ret;
 		}
@@ -585,7 +585,7 @@ class GalleryItemHelper_medium /* extends GalleryEventListener */ {
 
 	/* 3. The item data itself */
 	if (!$sourceMimeType) {
-	    list ($ret, $fromItem) = GalleryCoreApi::loadEntitiesById($fromItemId);
+	    list ($ret, $fromItem) = GalleryCoreApi::loadEntitiesById($fromItemId, 'GalleryItem');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -672,7 +672,7 @@ class GalleryItemHelper_medium /* extends GalleryEventListener */ {
 		 * album's parent, so load the album, get its parent's id, get
 		 * that album's preferences and use those for the thumbnail.
 		 */
-		list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+		list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 		if ($ret) {
 		    if (!empty($lockIds)) {
 			/* Ignore errors -- we're already in an error handler */
@@ -810,7 +810,7 @@ class GalleryItemHelper_medium /* extends GalleryEventListener */ {
      *
      * @param mixed $userId user id or array of ids or null
      * @param mixed $itemId item id or array of ids or null
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function invalidateDescendentCountCaches($userId, $itemId) {
 	if (!empty($userId) && empty($itemId)) {

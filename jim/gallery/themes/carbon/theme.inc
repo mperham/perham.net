@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Themes
  * @subpackage Carbon
  * @author Mustafa Incel (based on Matrix by Bharat Mediratta <bharat@menalto.com>)
- * @version $Revision: 16487 $
+ * @version $Revision: 17580 $
  */
 class CarbonTheme extends GalleryTheme {
 
@@ -33,8 +33,8 @@ class CarbonTheme extends GalleryTheme {
 	$this->setId('carbon');
 	$this->setName($gallery->i18n('Carbon'));
 	$this->setDescription($gallery->i18n('Gallery2 theme by mincel.com'));
-	$this->setVersion('1.2.3.1');
-	$this->setRequiredCoreApi(array(7, 10));
+	$this->setVersion('1.2.6');
+	$this->setRequiredCoreApi(array(7, 51));
 	$this->setRequiredThemeApi(array(2, 5));
 	$this->setStandardSettings(
 	    array('rows' => 3, 'columns' => 3,

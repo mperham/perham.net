@@ -1,7 +1,7 @@
-# $Id: hu.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: hu.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: gallery-translations@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-12-20 09:38-0800\n"
 "PO-Revision-Date: 2007-03-16 15:00+0100\n"
@@ -79,15 +79,6 @@ msgid "Create Config File"
 msgstr "Konfiguréciós file létrehozása"
 
 #, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Nem írható a <b>config.php</b> konfigurációs file a %s könyvtárban. Változtasd meg a "
-"jogosultságait! Ha Unix rendszered van, használhatod a <i>chmod 666 config.php</i> parancsot."
-
-#, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "A config.php file nem létezik a %s könyvtárban."
 
@@ -117,6 +108,10 @@ msgid "You must have the Oracle OCI8 PHP module installed"
 msgstr "Az Oracle OCI8 PHP modul telepítve kell hogy legyen"
 
 msgid "You must have the Component Object Model(COM) PHP module installed"
+msgstr "A Component Object Model(COM) PHP modul telepítve kell hogy legyen"
+
+#, fuzzy
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
 msgstr "A Component Object Model(COM) PHP modul telepítve kell hogy legyen"
 
 #, c-format
@@ -228,7 +223,11 @@ msgstr "IBM DB2 (v9.x vagy újabb)"
 msgid "Microsoft SQL Server 2005 and newer"
 msgstr "Microsoft SQL Server 2005 vagy újabb"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown database type or no known tables information."
 msgstr "Ismeretlen adatbázis típus vagy nem ismert tábla információk."
 
 #, c-format
@@ -239,16 +238,18 @@ msgstr "Nem található a \"%s\"-hez hasonló használatlan tábla prefix."
 msgid "Could not open schema file: \"%s\"."
 msgstr "Nem lehet megnyitni a \"%s\" schema file-t."
 
+#, fuzzy
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "Nem sikerült DB teszt szekvenciát létrehozni. Ellenőrzd a visszakapott hibaüzenetet és a "
 "README.html-t a hiányzó�privilégiumokért és tisztsd ki az adatbáist."
 
+#, fuzzy
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "Nem sikerült tesztelni a DB teszt szekvencia eldobását. Ellenőrzd a visszakapott "
 "hibaüzenetet és a README.html-t a hiányzó�privilégiumokért és tisztsd ki az adatbáist."
@@ -335,8 +336,8 @@ msgstr "Rendszer ellenőrzés"
 msgid "Performing system checks"
 msgstr "Rendszer ellenőrzés végrehajtása"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP version >= 4.3.0 vagy >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP version &gt;= 4.3.0 vagy &gt;= 5.0.4"
 
 #, c-format
 msgid ""
@@ -517,14 +518,14 @@ msgstr "Zend kompatibilis mód"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Figyelmeztetés: a PHP változatod Zend ze1_compatibility_mode-ba van konfigurálva, amely a "
-"PHP lefagyását eredményezheti. Kattints <a href=\"%s\">ide</a> hogy leelenőrizd a PHP-d. Ha "
-"Sikeres (Success) feliratot látsz, akkor a PHP rendben van. Ha hibaüzenetet kapsz vagy nem "
-"kapsz választ, akkor kapcsold ki a ze1_compatibility_mode-ot a továbblépés előtt."
+"PHP lefagyását eredményezheti. Kattints %side%s hogy leelenőrizd a PHP-d. Ha Sikeres "
+"(Success) feliratot látsz, akkor a PHP rendben van. Ha hibaüzenetet kapsz vagy nem kapsz "
+"választ, akkor kapcsold ki a ze1_compatibility_mode-ot a továbblépés előtt."
 
 msgid "putenv() allowed"
 msgstr "putenv() engedélyezett"
@@ -700,6 +701,16 @@ msgstr "Próbáld újra"
 msgid "Create a config file"
 msgstr "Config file létrehozása"
 
+#, fuzzy, c-format
+msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Nem írható a <b>config.php</b> konfigurációs file a %s könyvtárban. Változtasd meg a "
+"jogosultságait! Ha Unix rendszered van, használhatod a <i>chmod 666 config.php</i> parancsot."
+
 #, c-format
 msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
@@ -785,6 +796,12 @@ msgstr "DB jelszó:"
 msgid "DB Name:"
 msgstr "DB neve:"
 
+msgid "DB Schema:"
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
+
 msgid "Table Prefix:"
 msgstr "Tábla prefix"
 
@@ -815,12 +832,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Irány a galériám!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr "Most meglátogathatod az új galériádat. Írd be a %smain.php%s URL-t a %s könyvtárban."
 
 msgid "Installer Help"
 msgstr "Telepítő súgó"
@@ -1002,16 +1013,13 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "Hiba történt. Olvasd el az alábbi üzenetet."
 
-msgid "Please select the installation type"
-msgstr "V�assz telepítés típust"
-
 msgid "Standard installation"
 msgstr "Standard telepítés"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 "Ez a hagyományos telepítési típus. Válaszd ezt a telepítést, ha a Gallery-t a %s könyvtárba "
 "akarod telepíteni, amely a %s URL-en lesz elérhető"
@@ -1019,32 +1027,20 @@ msgstr ""
 msgid "Multisite installation"
 msgstr "Multisite telepítés"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"A Gallery képes kezelni több független site-ot egyetlen kód telepítésével. Válaszd ezt a "
-"típust, ha több képgalériát akarsz telepíteni ugyanazon a webszerveren, de különböző "
-"elérésen, subdomain-en vagy URL-en."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"A multisite-ok nem osztoznak albumokon, képeken, felhasználókon vagy bármi máson. "
-"Mindegyiknek szüksége van saját adatbázisra és tároló könyvtárra. További információiért és "
-"telepítési leírásokért láogasd meg ezt az oldalt: %s"
 
 msgid "You must enter a directory"
 msgstr "Meg kell adnod egy könyvtárat"
 
+#, fuzzy, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
 "A könyvtár amit megadtál a kódkönyvtárban van. Ha a galériát a kódbázisba akarod telepíteni, "
 "akkor választ a standard telepési típus. Ha egy multisite-ot akarsz telepíteni, akkor "
@@ -1061,10 +1057,11 @@ msgstr ""
 "ezek közül a könyvtárak közül kell választanod, vagy módosítanod kell a <b>open_basedir</b> "
 "beállítást a PHP konfigurációjában egy új könyvtár engedélyezéséhez."
 
+#, fuzzy
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
 "Ha a multisite telepítésed egy másik virtuális hoston van, akkor érdemes megkérned a "
 "rendszer adminisztrátorát, hogy konfigurálja az <b>open_basedir</b> beállítást úgy, hogy a "
@@ -1085,24 +1082,17 @@ msgstr ""
 "Nem sikerült létrehozni a multisite fileokat. Győzdőj meg róla, hogy az alább felsorolt "
 "fileok írhatók!"
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Minden multisite ebből a központi kódtárból (kódkönyvtár) kerül telepítésre."
-
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
 msgstr ""
-"Add meg alul a könyvtárat a multisitehoz. Az elérésnek különböznie kell ett� a "
-"kódkönyvtártól:"
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
+msgid "You must provide the URL for your new multisite"
 msgstr ""
-"A könyvtár írható kell hogy legyen a webszerver/php user számára, vagy tartalmaznia kell az "
-"alábbi írható fileokat:"
 
-msgid "Select Directory"
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
+msgstr ""
+
+#, fuzzy
+msgid "Select Directory and URL"
 msgstr "Válassz könyvtárat"
 
 msgid "Multisite directory setup successfully."
@@ -1207,6 +1197,9 @@ msgstr ""
 "Ha újabb böngészőt használsz, megpróbáljuk automatikusan kiegészíteni az eléréseket amiket "
 "itt megadsz. Így ha nem találod a g2data könyvtár elérését, akkor nézd meg milyen "
 "kiegészítéseket ajánlunk számodra az alábbi szövegdobozokban."
+
+msgid "Do not use the installation directory for storage"
+msgstr ""
 
 msgid "The directory you entered is read only"
 msgstr "A könyvtár, amit megadtál, csak olvasható"
@@ -1361,3 +1354,47 @@ msgstr "Mehet"
 
 msgid "Begin Installation&raquo;"
 msgstr "Telepítés kezdése"
+
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "Most meglátogathatod az új galériádat. Írd be a %smain.php%s URL-t a %s könyvtárban."
+
+#~ msgid "Please select the installation type"
+#~ msgstr "V�assz telepítés típust"
+
+#~ msgid ""
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
+#~ msgstr ""
+#~ "A Gallery képes kezelni több független site-ot egyetlen kód telepítésével. Válaszd ezt a "
+#~ "típust, ha több képgalériát akarsz telepíteni ugyanazon a webszerveren, de különböző "
+#~ "elérésen, subdomain-en vagy URL-en."
+
+#~ msgid ""
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
+#~ msgstr ""
+#~ "A multisite-ok nem osztoznak albumokon, képeken, felhasználókon vagy bármi máson. "
+#~ "Mindegyiknek szüksége van saját adatbázisra és tároló könyvtárra. További információiért "
+#~ "és telepítési leírásokért láogasd meg ezt az oldalt: %s"
+
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr "Minden multisite ebből a központi kódtárból (kódkönyvtár) kerül telepítésre."
+
+#~ msgid ""
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
+#~ msgstr ""
+#~ "Add meg alul a könyvtárat a multisitehoz. Az elérésnek különböznie kell ett� a "
+#~ "kódkönyvtártól:"
+
+#~ msgid ""
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
+#~ msgstr ""
+#~ "A könyvtár írható kell hogy legyen a webszerver/php user számára, vagy tartalmaznia kell "
+#~ "az alábbi írható fileokat:"

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/core/AdminMaintenance.inc');
  * @package GalleryCore
  * @subpackage Classes
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17770 $
  */
 class SystemInfoTask extends MaintenanceTask {
     /**
@@ -47,6 +47,7 @@ class SystemInfoTask extends MaintenanceTask {
     function run() {
 	global $gallery;
 	$storage =& $gallery->getStorage();
+	$platform =& $gallery->getPlatform();
 
 	list ($ret, $core) = GalleryCoreApi::loadPlugin('module', 'core');
 	if ($ret) {
@@ -61,6 +62,38 @@ class SystemInfoTask extends MaintenanceTask {
 	$version = !empty($version)
 	    ? $version['gallery'] . ' ' . $core->translate('core') . ' ' . $version['core']
 	    : $core->translate('unknown');
+
+	if ($platform->is_dir(GalleryCoreApi::getCodeBasePath('.svn'))) {
+	    /* Try to determine svn revision; ignore any error */
+	    list ($success, $output) =
+		$platform->exec(array(array('svn', 'info', GalleryCoreApi::getCodeBasePath())));
+	    if ($success && is_array($output)) {
+		foreach ($output as $line) {
+		    if (!strncmp($line, 'Revision: ', 10)) {
+			$version .= ' r' . substr($line, 10);
+			break;
+		    }
+		}
+	    }
+	}
+
+	$urlGenerator =& $gallery->getUrlGenerator();
+	$baseUrl = $urlGenerator->generateUrl(
+			array(),
+			array(
+			    'forceDirect' => true,
+			    'forceFullUrl' => true,
+			    'forceSessionId' => false,
+			    'useAuthToken' => false
+			));
+
+	GalleryCoreApi::requireOnce('modules/core/classes/GalleryTheme.class');
+	GalleryCoreApi::requireOnce('modules/core/classes/GalleryEmbed.class');
+	$api = $core->translate(array('text' => 'API = Core %s, Module %s, Theme %s, Embed %s',
+		    'arg1' => implode('.', GalleryCoreApi::getApiVersion()),
+		    'arg2' => implode('.', GalleryModule::getApiVersion()),
+		    'arg3' => implode('.', GalleryTheme::getApiVersion()),
+		    'arg4' => implode('.', GalleryEmbed::getApiVersion())));
 
 	list ($ret, $list) = GalleryCoreApi::getAllFactoryImplementationIds('GalleryToolkit');
 	if (!$ret) {
@@ -99,7 +132,9 @@ class SystemInfoTask extends MaintenanceTask {
 	}
 
 	$info = array(
+	    $core->translate('Gallery URL') . ' = ' . $baseUrl,
 	    $core->translate('Gallery version') . ' = ' . $version,
+	    $api,
 	    $core->translate('PHP version') . ' = ' . phpversion() . ' ' . php_sapi_name(),
 	    $core->translate('Webserver') . ' = ' .
 		GalleryUtilities::getServerVar('SERVER_SOFTWARE'),

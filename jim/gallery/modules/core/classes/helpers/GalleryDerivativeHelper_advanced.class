@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15926 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryDerivativeHelper_advanced {
@@ -103,7 +103,7 @@ class GalleryDerivativeHelper_advanced {
 	    }
 
 	    /* Turn ids into objects */
-	    list ($ret, $derivatives) = GalleryCoreApi::loadEntitiesById($ids);
+	    list ($ret, $derivatives) = GalleryCoreApi::loadEntitiesById($ids, 'GalleryDerivative');
 	    if ($ret) {
 		GalleryCoreApi::releaseLocks($lockId);
 		return $ret;
@@ -321,7 +321,7 @@ class GalleryDerivativeHelper_advanced {
 		    return $ret;
 		}
 
-		$ret = GalleryCoreApi::deleteEntityById($preferred->getId());
+		$ret = GalleryCoreApi::deleteEntityById($preferred->getId(), 'GalleryDerivative');
 		if ($ret) {
 		    return $ret;
 		}
@@ -399,7 +399,8 @@ class GalleryDerivativeHelper_advanced {
 	    }
 
 	    /* Turn ids into objects */
-	    list ($ret, $derivatives) = GalleryCoreApi::loadEntitiesById($derivativeIds);
+	    list ($ret, $derivatives) =
+			GalleryCoreApi::loadEntitiesById($derivativeIds, 'GalleryDerivative');
 	    if ($ret) {
 		return $ret;
 	    }
@@ -683,7 +684,8 @@ class GalleryDerivativeHelper_advanced {
 
 	if (!empty($derivativeIds)) {
 	    /* Turn ids into objects */
-	    list ($ret, $derivatives) = GalleryCoreApi::loadEntitiesById($derivativeIds);
+	    list ($ret, $derivatives) =
+			GalleryCoreApi::loadEntitiesById($derivativeIds, 'GalleryDerivative');
 	    if ($ret) {
 		return $ret;
 	    }
@@ -752,7 +754,8 @@ class GalleryDerivativeHelper_advanced {
 	    }
 
 	    /* Turn ids into objects */
-	    list ($ret, $derivatives) = GalleryCoreApi::loadEntitiesById($derivativeIds);
+	    list ($ret, $derivatives) =
+		GalleryCoreApi::loadEntitiesById($derivativeIds, 'GalleryDerivativeImage');
 	    if ($ret) {
 		GalleryCoreApi::releaseLocks($lockId);
 		return $ret;
@@ -794,7 +797,8 @@ class GalleryDerivativeHelper_advanced {
 
 	$gallery->guaranteeTimeLimit(10);
 
-	list ($ret, $derivative) = GalleryCoreApi::loadEntitiesById($derivativeId);
+	list ($ret, $derivative) =
+		GalleryCoreApi::loadEntitiesById($derivativeId, 'GalleryDerivative');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -806,7 +810,8 @@ class GalleryDerivativeHelper_advanced {
 	}
 
 	/* Load the source */
-	list ($ret, $source) = GalleryCoreApi::loadEntitiesById($sourceId);
+	list ($ret, $source) = GalleryCoreApi::loadEntitiesById(
+	    $sourceId, array('GalleryFileSystemEntity', 'GalleryDerivative'));
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -883,7 +888,8 @@ class GalleryDerivativeHelper_advanced {
 	}
 
 	if (!empty($sourceId)) {
-	    list ($ret, $source) = GalleryCoreApi::loadEntitiesById($sourceId);
+	    list ($ret, $source) = GalleryCoreApi::loadEntitiesById(
+		$sourceId, array('GalleryFileSystemEntity', 'GalleryDerivative'));
 	    if ($ret) {
 		return array($ret, null);
 	    }

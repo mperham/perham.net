@@ -1,7 +1,7 @@
-# $Id: ru.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: ru.po 18149 2008-10-13 16:34:00Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,11 +22,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Upgrader 2.2.2\n"
+"Project-Id-Version: Gallery: Upgrader 2.3\n"
 "Report-Msgid-Bugs-To: gallery-translations@lists.sourceforge.net\n"
 "POT-Creation-Date: 2006-12-20 10:02-0800\n"
-"PO-Revision-Date: 2006-03-17 15:41+0300\n"
-"Last-Translator: Konstantin Ivanov <Continental@vollen.ru>\n"
+"PO-Revision-Date: 2008-10-10 11:53+0300\n"
+"Last-Translator: Ser Moro <webber@morozov-sm.ru>\n"
 "Language-Team: Russian <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,13 +48,31 @@ msgid "<b>Error:</b> invalid password."
 msgstr "<b>Ошибка:</b> пароль неверен."
 
 msgid "Empty Cache"
-msgstr "Очистка Кэша"
+msgstr "Очистка кэша"
 
 msgid "Unable to clear the page cache"
-msgstr "Невозможно очистить клэ страницы"
+msgstr "Невозможно очистить страницы кэша"
 
 msgid "Unable to commit database transaction"
 msgstr "Невозможно выполнить транзакцию базы данных"
+
+msgid "Database Backup"
+msgstr "Резервирование базы данных"
+
+msgid "Error attempting to enable maintenance mode."
+msgstr "Ошибка при попытке включить режим обслуживания."
+
+msgid "Backing up the Gallery database"
+msgstr "Резервирование базы данных Галереи"
+
+msgid "Errors occurred during the database backup"
+msgstr "Ошибка в процессе резервирования базы данных."
+
+msgid "Error attempting to disable maintenance mode."
+msgstr "Ошибка при попытке выключить режим обслуживания."
+
+msgid "Unable to determine if automated backup is available."
+msgstr "Невозможно определить доступно ли автоматическое резервирование."
 
 msgid "Finish Upgrade"
 msgstr "Обновлению завершено"
@@ -63,21 +81,20 @@ msgid "System Checks"
 msgstr "Проверка системы"
 
 msgid "Performing system checks"
-msgstr ""
+msgstr "Проверка системы"
 
-#, fuzzy
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP версия >= 4.1.0 или >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP версия &gt;= 4.3.0 или &gt;= 5.0.4"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Gallery 2 requires PHP version 4.3.0 or newer or 5.0.4 or newer. You have PHP version "
 "%s installed. Contact your webserver administrator to request an upgrade, available at the %"
 "sPHP website%s."
 msgstr ""
 "Ошибка: Галерее 2 необходим PHP версии 4.1.0 или выше или 5.0.4 или выше. У вас установлен "
-"PHP версии %s. Обратитесь к администратору Вашего веб-сервера с просьбой обновления, "
-"доступного на %sPHP website%s."
+"PHP версии %s. Обратитесь к администратору сервера с просьбой обновить сборку PHP, доступную "
+"на %sсайте PHP%s."
 
 msgid "PHP Version"
 msgstr "Версия PHP"
@@ -90,23 +107,23 @@ msgid ""
 "request with your webserver administrator or in the Gallery forums."
 msgstr ""
 "Ошибка: Ваша PHP __FILE__ директива функционирует неверно. Пожалуйста, обратитесь за "
-"поддержкой к администратору Вашего веб-сервера или на форумы Галереи."
+"поддержкой к администратору сервера или на форумы Галереи."
 
 msgid "FILE Directive"
 msgstr "Директива FILE"
 
 msgid "Safe mode disabled"
-msgstr "Safe mode disabled"
+msgstr "Безопасный режим отключён"
 
 msgid ""
 "Error: Your version of PHP is configured with safe mode enabled.  You must disable safe mode "
 "before Gallery will run."
 msgstr ""
-"Ошибка: Ваша версия PHP сконфигурирована с параметром safe mode enabled.  Вы должны "
-"отключить режим safe mode перед тем, как Галерея будет запущена."
+"Ошибка: Ваша версия PHP сконфигурирована с параметром - включён безопасный режим "
+"(safe_mode).  Вы должны отключить режим safe_mode перед запуском Галереи."
 
 msgid "Safe Mode"
-msgstr "Safe Mode"
+msgstr "Безопасный режим"
 
 msgid "Regular expressions"
 msgstr "Регулярные выражения"
@@ -116,11 +133,11 @@ msgid ""
 "Error: Your PHP is configured without support for %sPerl Compatible Regular Expressions%s. "
 "You must enable these functions before Gallery will run."
 msgstr ""
-"Ошибка: Ваша версия PHP сконфигурирована без поддержки %sPerl Compatible Regular Expressions%"
-"s.  Вы должны включить данную функцию перед тем как Галерея будет запущена."
+"Ошибка: Ваша версия PHP не поддерживает %sрегулярные выражения Perl%s.  Вы должны включить "
+"данную функцию перед запуском Галереи."
 
 msgid "exec() allowed"
-msgstr "exec() allowed"
+msgstr "функция exec() разрешена"
 
 msgid ""
 "Warning: The exec() function is disabled in your PHP by the <b>disabled_functions</b> "
@@ -128,13 +145,13 @@ msgid ""
 "ImageMagick, NetPBM or Ffmpeg). This can only be set server-wide, so you will need to change "
 "it in the global php.ini."
 msgstr ""
-"Предупреждение: Функция exec() отключена в Вашем PHP в разделе <b>disabled_functions</b> в  "
-"php.ini. Вы не сможете использовать модули, которые требуют внешних бинарных кодов "
-"(например, ImageMagick, NetPBM или Ffmpeg). Эта функция может быть установлена только на "
-"стороне сервера, поэтому Вам будет необходимо поменять ее в глобальном  php.ini."
+"Предупреждение: Функция exec() отключена в PHP, в разделе <b>disabled_functions</b> в  'php."
+"ini'. Вы не сможете использовать модули, которые требуют внешних бинарных кодов (например, "
+"ImageMagick, NetPBM или Ffmpeg). Эта функция может быть включена только на стороне сервера, "
+"поэтому вам  необходимо включить её в глобальном  'php.ini'."
 
 msgid "set_time_limit() allowed"
-msgstr "set_time_limit() allowed"
+msgstr "функция set_time_limit() разрешена"
 
 #, c-format
 msgid ""
@@ -143,27 +160,26 @@ msgid ""
 "reliably.  Any operation that takes longer than %d seconds will fail (and in some cases just "
 "return a blank page) possibly leading to data corruption."
 msgstr ""
-"Предупреждение: Функция set_time_limit() отключена в Вашем PHP в разделе "
-"<b>disabled_functions</b> в  php.ini. Галерея может функционировать с такими параметрами, но "
-"ее работа будет ненадежной. Любая операция, которая длиться дольше чем %d секунд, будет "
-"выполнена неудачно (и в некоторых случаях возвратит лишь белый экран), возможно, следуя к "
-"повреждению данных."
+"Предупреждение: Функция set_time_limit() отключена в PHP, в разделе <b>disabled_functions</"
+"b> в  'php.ini'. Галерея может функционировать с такими параметрами, но её работа будет "
+"ненадёжной. Любая операция, длящаяся дольше чем %d секунд, не будет завершена (в некоторых "
+"случаях возвратит лишь белый экран) и, возможно, приведёт к повреждению файлов."
 
 msgid "Filesystem Operations"
-msgstr ""
+msgstr "Файловые операции"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Essential filesystem operations are disabled in your PHP by the "
 "<b>disabled_functions</b> parameter in php.ini. You must allow these functions before "
 "Gallery will run. These functions are missing: %s."
 msgstr ""
-"Предупреждение: Функция putenv() отключена в Вашем PHP в разделе <b>disabled_functions</b> "
-"в  php.ini. Галерея может функционировать без данной настройки, но на некоторые редких "
-"системах Галерея не сможет быть запущена на другом языке, чем системный язык и Английский. "
+"Ошибка:  В вашей конфигурации PHP отключены важные файловые операции. Это определено в "
+"параметре <b>disabled_functions</b> в файле 'php.ini'. Вы должны разрешить выполнение этих "
+"функций перед запуском Галереи. Вот эти  функции: %s."
 
 msgid "Memory limit"
-msgstr "Memory limit"
+msgstr "Ограничение памяти"
 
 msgid "no limit"
 msgstr "без ограничений"
@@ -173,37 +189,37 @@ msgid ""
 "Warning: Your PHP is configured to limit the memory to %sb (<b>memory_limit</b> parameter in "
 "php.ini). You should raise this limit to at least <b>%sMB</b> for proper Gallery operation."
 msgstr ""
-"Предупреждение: Ваш PHP сконфигурирован с ограничением памяти %sb (параметр <b>memory_limit</"
-"b> в php.ini). Вы должны увеличить это значение по крайней мере до <b>%sMB</b> для "
-"нормального фунционирование Галереи."
+"Предупреждение: Ваш PHP сконфигурирован с ограничением памяти %sБ (параметр <b>memory_limit</"
+"b> в 'php.ini'). Вы должны увеличить это значение по крайней мере до <b>%sMB</b> для "
+"нормального функционирования Галереи."
 
 msgid "File uploads allowed"
-msgstr "File uploads allowed"
+msgstr "Добавление файлов разрешено"
 
 msgid ""
 "Warning: Your PHP is configured not to allow file uploads (<b>file_uploads</b> parameter in "
 "php.ini). You will need to enable this option if you want to upload files to your Gallery "
 "with a web browser."
 msgstr ""
-"Предупреждение: Ваш PHP сконфигурирован таким образом, что запрещает загрузку файлов. "
-"(параметр <b>file_uploads</b> в php.ini). Вы должны разрешить данную функцию, если Вы хотите "
-"загружать файлы в Вашу Галерею с помощью веб-браузера."
+"Предупреждение: Ваш PHP сконфигурирован таким образом, что запрещает загрузку файлов "
+"(параметр <b>file_uploads</b> в 'php.ini'). Вы должны разрешить данную функцию, если хотите "
+"загружать файлы в Галерею с помощью браузера."
 
 msgid "Maximum upload size"
-msgstr "Maximum upload size"
+msgstr "Максимальный размер добавляемого файла"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Your PHP is configured to limit the size of file uploads to %sb "
 "(<b>upload_max_filesize</b> parameter in php.ini). You should raise this limit to allow "
 "uploading bigger files."
 msgstr ""
-"Предупреждение: Ваш PHP сконфигурирован таким образом, чтобы ограничивать размер загружаемых "
-"файлов до %sb (параметр <b>upload_max_filesize</b> в php.ini). Вы должны увеличить "
-"предельное значение для того, чтобы разрешить загрузку файлов больших размеров."
+"Предупреждение: Ваш PHP сконфигурирован на ограничение размера загружаемых файлов до %sБ "
+"(параметр <b>upload_max_filesize</b> в файле 'php.ini'). Вы должны увеличить предельное "
+"значение для  загрузки файлов больших размеров."
 
 msgid "Maximum POST size"
-msgstr "Maximum POST size"
+msgstr "Максимальный размер передаваемых данных"
 
 #, c-format
 msgid ""
@@ -212,7 +228,7 @@ msgid ""
 "bigger files."
 msgstr ""
 "Предупреждение: Ваш PHP сконфигурирован таким образом, чтобы ограничивать размер загружаемых "
-"данных до %sb (параметр <b>post_max_size</b> в php.ini). Вы должны увеличить предельное "
+"данных до %sБ (параметр <b>post_max_size</b> в 'php.ini'). Вы должны увеличить предельное "
 "значение для того, чтобы разрешить загрузку файлов больших размеров."
 
 msgid "Translation support"
@@ -224,9 +240,8 @@ msgid ""
 "please instruct your system administrator to reconfigure PHP with the %sgettext%s option "
 "enabled."
 msgstr ""
-"Ваш Веб-сервер не поддерживает локализацию. Для получения возможности поддержки "
-"дополнительных языков обратитесь за помощью к системному администратору для реконфигурации "
-"PHP с включенной опцией %sgettext%s."
+"Ваш сервер не поддерживает локализацию. Для поддержки дополнительных языков попросите "
+"системного администратора  включить  опцию %sgettext%s в 'php.ini'."
 
 #, c-format
 msgid ""
@@ -234,7 +249,7 @@ msgid ""
 "extended characters for some languages incorrectly."
 msgstr ""
 "В вашей сборке PHP отсутствует функция %sbind_textdomain_codeset%s. Это означает, что "
-"Галерея может отображать расширенный набор символов для некоторых языков некорректно."
+"Галерея может некорректно отображать расширенный набор символов для некоторых языков."
 
 #, c-format
 msgid ""
@@ -245,37 +260,36 @@ msgstr ""
 "работать с переводом слов в форме множественного числа."
 
 msgid "Zend compatibility mode"
-msgstr "Zend compatibility mode"
+msgstr "Режим совместимости с Zend"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Предупреждение: Ваш PHP сконфигурирован с Zend ze1_compatibility_mode, что может привести к "
-"сбою PHP. Нажмите <a href=\"%s\">здесь</a>, чтобы протестировать Ваш PHP. Если Вы видите "
-"(\"УСПЕШНО\") \"SUCCESS\", значит Ваш PHP в порядке.  Если Вы получили сообщение об ошибке "
-"или остались без ответа, тогда Вы должн выключить ze1_compatibility_mode перед тем как "
-"продолжить."
+"сбою PHP. Нажмите %sздесь%s, чтобы протестировать PHP. Если вы видите  ''SUCCESS''(УСПЕШНО), "
+"значит ваш PHP в порядке.  Если вы получили сообщение об ошибке или остались без ответа, "
+"нужно выключить ze1_compatibility_mode перед тем как продолжить."
 
 msgid "putenv() allowed"
-msgstr "putenv() allowed"
+msgstr "функция putenv() разрешена"
 
 msgid ""
 "Warning: The putenv() function is disabled in your PHP by the <b>disabled_functions</b> "
 "parameter in php.ini.  Gallery can function with this setting, but on some rare systems "
 "Gallery will be unable to run in other languages than the system language and English."
 msgstr ""
-"Предупреждение: Функция putenv() отключена в Вашем PHP в разделе <b>disabled_functions</b> "
-"в  php.ini. Галерея может функционировать без данной настройки, но на некоторые редких "
-"системах Галерея не сможет быть запущена на другом языке, чем системный язык и Английский. "
+"Предупреждение: Функция putenv() отключена в PHP, в разделе <b>disabled_functions</b> в  "
+"'php.ini'. Галерея может функционировать без этой функции, но на некоторых системах Галерея "
+"не сможет быть запущена на другом языке, кроме системного и английского. "
 
 msgid "Output buffering disabled"
-msgstr "Буфферизация выходных данных отключена"
+msgstr "Буферизация выходных данных отключена"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Output buffering is enabled in your PHP by the <b>%s</b> parameter(s) in php.ini.  "
 "Gallery can function with this setting - downloading files is even faster - but Gallery "
@@ -283,40 +297,138 @@ msgid ""
 "Also, some features like the progress bars might not work correctly if output buffering is "
 "enabled unless ini_set() is allowed."
 msgstr ""
-"Внимание: буфферезация выходных данных включена в настройках PHP установкой <b>%s</b> "
-"параметра(ов) в php.ini.  Галерея может функционировать с данной опцией - загрузка файлов "
-"будет происходить даже быстрее - но Галерея не сможет обрабатывать большие файлы (например, "
-"длинные видеоролики) и будет ограничена размером памяти. Кроме того, некоторые функции такие "
-"как статусная строка процента выполнения может работать некорректно, если буфферезация "
-"выходных данных включена пока разрешен параметр ini_set()."
+"Внимание: В настройках PHP параметром(ами) <b>%s</b> из файла 'php.ini' включена буферизация "
+"выходных данных.  Галерея может функционировать с данной опцией - загрузка файлов будет "
+"происходить даже быстрее - но Галерея не сможет обрабатывать большие файлы (например, "
+"длинные видеоролики) и будет ограничена размером памяти. Кроме того, некоторые функции, "
+"такие как индикаторы выполнения могут работать некорректно, если включена буферизация "
+"выходных данных и разрешён параметр ini_set()."
 
 msgid "Storage Directory Permissions"
-msgstr "Разрешения на Директорию Хранилища"
+msgstr "Правила доступа к папке хранилища"
 
 msgid "Test skipped due to other errors."
-msgstr "Тест пропушен в виду других ошибок."
+msgstr "Тест пропущен из-за других ошибок."
 
 #, c-format
 msgid ""
 "Error: Some files and or directories in your storage directory are not writeable by the "
 "webserver user. Run chown -R webserverUser %s OR run chmod -R 777 %s."
 msgstr ""
-"Ошибка: некоторые файлы или директории в вашей директории хранилища не имеют возможности "
-"записи для пользователя webserver. Запустите команду chown -R webserverUser %s или команду "
-"chmod -R 777 %s."
+"Ошибка: некоторые папки или файлы из вашей папки хранилища не могут быть изменены "
+"пользователем сервера. Запустите команду: chown -R пользователь %s или команду chmod -R 777 %"
+"s."
+
+#, c-format
+msgid "Inaccessible or missing  files (%d)"
+msgstr "Недоступных или отсутствующих файлов (%d)"
 
 msgid "Gallery file integrity"
 msgstr "Целостность файлов Галереи"
 
 msgid "Manifest missing or inaccessible."
-msgstr "Manifest отсутствует или недоступен."
+msgstr "Файл 'Manifest' отсутствует или недоступен."
+
+msgid ""
+"Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
+"be safe to ignore these."
+msgstr ""
+"Комментарий: Вы запустили Галерею из SVN, поэтому недавно удалённые файлы могут снова "
+"появиться. Это можно игнорировать."
+
+#, c-format
+msgid "Missing files (%d)"
+msgstr "Отсутствующих файлов (%d)"
+
+msgid ""
+"Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
+"probably ignore these, but to be safe you should make sure that you do 'svn update' before "
+"continuing."
+msgstr ""
+"Замечание: Вы запустили Галерею из SVN, поэтому некоторые  файлы могут быть изменены. Вы "
+"можете игнорировать это, но для обеспечения безопасности, перед тем как продолжить, вы "
+"должны убедиться, что запускали  'svn update'."
+
+#, c-format
+msgid "Modified files (%d)"
+msgstr "Изменённых файлов (%d)"
+
+#, c-format
+msgid ""
+"These files are no longer part of Gallery. They probably won't cause any problems but it is "
+"a good idea to remove them to keep your install clean.  Gallery can't remove these files for "
+"you, but you can download and run %sthis script%s in your gallery2 directory to delete them "
+"for you."
+msgstr ""
+"Эти файлы больше не являются частью Галереи. Возможно, они не вызовут никаких проблем, но "
+"лучше будет удалить их для поддержания установки в порядке. Галерея не может удалить эти "
+"файлы за вас, однако можно скачать и запустить %sэтот скрипт%s в папке 'gallery2' для их "
+"удаления."
+
+#, c-format
+msgid "Old files (%d)"
+msgstr "Устаревших файлов  (%d)"
+
+msgid "Database permissions"
+msgstr "Правила доступа к базе данных"
+
+msgid ""
+"Error: The configured database user does not have the required database privileges to "
+"perform the upgrade."
+msgstr ""
+"Ошибка: Пользователь базы данных не имеет требуемых привилегий для проведения обновления."
+
+#, c-format
+msgid "The storage folder path is not defined in config.php (%s)"
+msgstr "В файле 'config.php' (%s) не задан путь к папке хранилища."
+
+msgid "Database permission test failed. Could not connect to database."
+msgstr "Тест правил доступа к базе данных не прошёл. Подключение к базе невозможно."
+
+msgid "Database permission test failed. Could not acquire database information."
+msgstr "Тест правил доступа к базе данных не прошёл. Получить информацию из базы невозможно."
+
+#, c-format
+msgid "Could not find an unused table prefix similar to \"%s\"."
+msgstr "Невозможно найти незанятый префикс таблицы, типа этого ''%s''."
+
+msgid "Database permission test failed due to corrupted file integrity."
+msgstr "Тест правил доступа к базе данных не проходит из-за отсутствия некоторых файлов."
+
+msgid "Failed to create, alter or drop a database test table. "
+msgstr "Невозможно создать, изменить или удалить тестовую таблицу базы данных."
+
+msgid ""
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
+msgstr ""
+"Невозможно создать тестовую последовательность для базы данных. Проверьте возвращаемое "
+"сообщение об ошибке и  посмотрите файл README.html на предмет отсутствующих привилегий, а "
+"так же очистите базу данных."
+
+msgid ""
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
+msgstr ""
+"Тест не прошёл из-за невозможности удалить (drop) тестовую последовательность базы данных. "
+"Проверьте возвращаемое сообщение об ошибке и  посмотрите файл README.html на предмет "
+"отсутствующих привилегий, а так же очистите базу данных."
+
+msgid "Missing SQL statements"
+msgstr "Отсутствующие SQL операторы"
+
+msgid ""
+"Check the returned error message and README.html for missing privileges and clean up the "
+"database."
+msgstr ""
+"Проверьте возвращаемое сообщение об ошибке, посмотрите файл README.html на предмет "
+"отсутствующих привилегий, и очистите базу данных."
 
 msgid "Upgrade Core"
 msgstr "Обновление основного модуля"
 
-#, fuzzy
 msgid "Upgrade Plugins"
-msgstr "Статус Обновления"
+msgstr "Обновление плагинов"
 
 msgid "Unable to initialize Gallery session"
 msgstr "Невозможно инициализировать сессию Галереи"
@@ -353,68 +465,72 @@ msgstr "Невозможно получить список модулей"
 msgid "Unable to get the theme list"
 msgstr "Невозможно получить список тем"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to query the %s module"
-msgstr "Невозможно обновить модуль %s"
+msgstr "Невозможно запросить модуль %s"
 
 msgid "Other"
 msgstr "Другие"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to query the %s theme"
-msgstr "Невозможно обновить тему %s"
+msgstr "Невозможно запросить тему %s"
 
 msgid "Themes"
 msgstr "Темы"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to deactivate the %s theme"
-msgstr "Невозможно загрузить тему %s"
+msgstr "Невозможно дезактивировать тему %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to deactivate the %s module"
-msgstr "Невозможно загрузить модуль %s"
+msgstr "Невозможно дезактивировать модуль %s"
 
 msgid "Welcome"
 msgstr "Добро пожаловать"
 
 #, c-format
 msgid "<b>Error:</b> could not locate %s.  Please place it in your %s directory."
-msgstr ""
+msgstr "<b>Ошибка:</b> не могу обнаружить %s. Пожалуйста, поместите его в папку %s."
 
 #, c-format
 msgid ""
 "<b>Error:</b> your %s file is not readable.  Please give Gallery read permissions on the "
 "file."
 msgstr ""
+"<b>Ошибка:</b>  Ваш файл %s не может быть прочитан. Пожалуйста, разрешите Галерее чтение "
+"этого файла."
 
 #, c-format
 msgid ""
 "<b>Error:</b> your %s key does not match correctly.  Please use the new authentication "
 "string from below and try again."
 msgstr ""
+"<b>Ошибка:</b>  Ваш %s ключ неверен. Пожалуйста, загрузите новую идентификационную строку, "
+"указанную ниже, и попробуйте ещё раз."
 
-#, fuzzy
 msgid ""
 "In order to proceed with the upgrade process, we have to verify that you are who you claim.  "
 "When you performed the install, you entered a password which went into your config.php.  "
 "Type that in now.  Refer to your config.php if you've forgotten what you entered."
 msgstr ""
-"Для того, чтобы продолжить инсталляцию, нам необходимо проверить, то Вы тот, за кого себя "
-"выдаете. Когда вы запускали инсталляцию, Вы вводили пароль, который был записан в файл "
-"config.php. Введите его теперь. Обратитесь к Вашему config.php, если Вы забыли, кто Вы "
-"вводили."
+"Для того, чтобы продолжить обновление, нам необходимо проверить, то вы тот, за кого себя "
+"выдаете. Когда вы запускали установку, вы вводили пароль, который был записан в файл 'config."
+"php'. Введите его теперь. Обратитесь к вашему 'config.php', если вы забыли, что вводили."
 
 msgid "Password:"
 msgstr "Пароль:"
 
 msgid "You have exceeded the maximum attempts to login by entering a password."
-msgstr ""
+msgstr "Вы исчерпали лимит попыток зарегистрироваться."
 
 msgid ""
 "To prevent somebody from hacking your website, we now require you to complete a stricter "
 "authentication process."
 msgstr ""
+"Чтобы предотвратить взлом вашего сайта, мы предлагаем вам завершить строгий процесс "
+"аутентификации."
 
 #, c-format
 msgid ""
@@ -424,9 +540,15 @@ msgid ""
 "new text file called %s in the %s directory on your webserver (that's the same directory "
 "where %s is located). It must contain the following randomly generated characters:"
 msgstr ""
+"Для того, чтобы продолжить обновление, нам необходимо проверить, что вы тот, за кого себя "
+"выдаете. Самым надёжным способом удостовериться в этом является просьба внести "
+"незначительные изменения в папке, где установлена Галерея, что и докажет ваши права доступа. "
+"Мы просим вас создать новый текстовый файл под названием %s в папке %s на сервере (это та же "
+"самая папка, где находится файл %s). Он должен содержать следующую последовательность "
+"случайно сгенерированных символов:"
 
 msgid "Once you've uploaded the file, click below to continue."
-msgstr ""
+msgstr "Итак, вы загрузили файл, нажмите ниже для продолжения."
 
 msgid "Authenticate Me"
 msgstr "Идентифицировать меня"
@@ -435,54 +557,132 @@ msgid "Authentication successful!"
 msgstr "Идентификация прошла успешно!"
 
 msgid "Successfully cleaned caches."
-msgstr "Кэша успешно очищен."
+msgstr "Кэш успешно очищен."
 
 msgid "Delete Caches"
-msgstr "Очистка Кэша"
+msgstr "Очистка кэша"
 
 msgid ""
 "Gallery creates temporary copies of some of your data on your hard drive.  This helps it to "
 "run faster.  But when you upgrade, some of these files might be out of date so it's a good "
 "idea to get rid of them now.  Gallery will create them again as it needs them."
 msgstr ""
-"Галерея создает временные копии некоторых данных на Вашем жестком диске. Это позволяет ей "
-"работать быстрее. Однако, когда вы производите обновление, некоторые из этих файлов могут "
-"оказаться устаревшими, поэтому лучшим способом будет избавиться от них прямо сейчас. Галерея "
-"сможет создать их снова, как только они понадобяться."
+"Галерея создает временные копии некоторых данных на жёстком диске. Это позволяет ей работать "
+"быстрее. Однако, когда вы производите обновление, некоторые из этих файлов могут оказаться "
+"устаревшими, поэтому лучшим способом будет избавиться от них прямо сейчас. Галерея сможет "
+"создать их снова, как только они понадобятся."
 
 msgid ""
 "We were unable to clean the following cache directories.  This is probably ok, but if you "
 "notice any weird behaviour, you should try to delete these directories yourself.  It's "
 "perfectly safe to get rid of them at any time."
 msgstr ""
-"Неудалось очистить следующие кэш директории (cache). Скорее всего это нормально, но если Вы "
-"заметите любое непредсказуемое поведение, Вы должны будете попытаться стереть эти директории "
-"вручную. Это абсолютно безопасно избавляться из них в любое время."
+"Не удалось очистить следующие  директории кэша. Скорее всего это нормально, но если вы "
+"заметите любое непредсказуемое поведение, вы должны будете попытаться стереть эти директории "
+"вручную. Это абсолютно безопасно."
 
 msgid ""
 "Even though there were errors, you can still continue.  Or, you can try deleting these "
 "directories yourself and then click the <b>Try Again</b> link below."
 msgstr ""
-"Несмотря на то, что присутствовали ошибки, Вы все еще можете продолжить. Или, Вы можете "
-"попытаться удалить этим директории вручную и замем кликнуть на ссылку  <b>Проверить заново</"
-"b> внизу."
+"Несмотря на то, что присутствовали ошибки, вы всё ещё можете продолжить. Или, вы можете "
+"попытаться удалить эти директории вручную и затем кликнуть на ссылку  <b>проверить заново</"
+"b>."
 
 msgid "Try Again"
 msgstr "Проверить заново"
 
+msgid ""
+"Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  "
+"If you fail to make a backup and something goes wrong, there is a strong possibility that we "
+"will not be able to help you recover your data!"
+msgstr ""
+"Перед  обновлением, мы <b>настоятельно рекомендуем</b>, чтобы вы сделали резервную копию "
+"базы данных. Если вам не удастся сделать резервную копию и что-то пойдет не так, скорее "
+"всего, мы не сможем помочь вам восстановить данные!"
+
+msgid "You have three options:"
+msgstr "У вас есть 3 условия:"
+
+msgid "You have two options:"
+msgstr "У вас есть 2 условия:"
+
+msgid "Do the automated backup (<b>recommended</b>)."
+msgstr "Провести автоматическое резервирование базы данных (<b>рекомендуется</b>)."
+
+msgid "Do a manual backup (see below)."
+msgstr "Провести резервирование базы данных вручную (см. ниже)."
+
+msgid "MySQL"
+msgstr "MySQL"
+
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+msgid "Oracle"
+msgstr "Oracle"
+
+msgid "IBM DB2"
+msgstr "IBM DB2"
+
+msgid "Microsoft SQL Server"
+msgstr "Microsoft SQL Server"
+
+msgid "Continue without a backup (<b>discouraged</b>)."
+msgstr "Продолжить без резервирования (<b>не одобряется</b>)."
+
+msgid ""
+"If you choose to perform the automated backup, please be patient.  If you cancel or reload "
+"the page, you may interfere with the backup process."
+msgstr ""
+"Если вы выбрали автоматическое резервирование, пожалуйста, запаситесь терпением. Если вы "
+"отмените или обновите страницу, вы можете помешать процессу резервирования."
+
+msgid "Begin Database Backup"
+msgstr "Начать резервирование базы данных"
+
+msgid "Skip Database Backup"
+msgstr "Пропустить  резервирование базы данных"
+
+#, c-format
+msgid "Continue to Step %d&raquo;"
+msgstr "Перейти к шагу %d&raquo;"
+
+msgid "Stack Trace:"
+msgstr "История стека:"
+
+msgid "Gallery Database Backup successful."
+msgstr "Резервирование базы данных Галереи прошло успешно."
+
+msgid "We've successfully backed up the data in your Gallery database."
+msgstr "Мы успешно зарезервировали данные вашей Галереи."
+
+msgid "The following warnings were produced during the backup process:"
+msgstr "В процессе резервирования базы данных получены следующие предупреждения:"
+
+#, c-format
+msgid "Database backup completed and the backup file is located at: %s."
+msgstr "Резервирование завершено, файл резервной копии расположен в: %s."
+
+msgid ""
+"Please note that your backup contains sensitive data (like passwords) and should not be "
+"stored online! We recommend that you download it from your server and keep it safely offline."
+msgstr ""
+"Учтите, что резервная копия содержит важную информацию (например, пароли) и не должна "
+"хранится в интернете! Мы рекомендуем скачать её и хранить в безопасном месте вне интернета."
+
 msgid "Finished!"
 msgstr "Завершено!"
 
-#, fuzzy
 msgid ""
 "Congratulations! Your Gallery 2 upgrade is complete!  To upgrade any additional Gallery 2 "
 "plugins you may use the Site Administrator interface."
 msgstr ""
-"Поздравляем! Обновление Галереи 2 успешно завершено! Для обновления любых дополнительных "
-"модулей в Галерее 2 Вы можете воспользоваться интерфейсом Администрирования."
+"Поздравляем! Обновление Gallery 2 успешно завершено! Для обновления дополнительных модулей в "
+"Галерее вы можете воспользоваться интерфейсом администратора."
 
 msgid "Go to my Gallery!"
-msgstr "Перейти в мою галерею!"
+msgstr "Зайти в мою галерею!"
 
 msgid "Upgrader Help"
 msgstr "Помощь"
@@ -498,12 +698,12 @@ msgid ""
 "Your config.php appears to use the old form of multisite support.  Please see the %sHelp File"
 "%s for instructions to update your configuration before proceeding."
 msgstr ""
-"Похоже Ваш config.php использует старую форму мультисайтовой поддержки. Пожалуйста, "
-"обратитесь к %sФайлу Помощи%s за инструкциями, как обновить конфигурацию, прежде чем "
+"Похоже ваш 'config.php' использует старую форму мультисайтовой поддержки. Пожалуйста, "
+"обратитесь к %sфайлу помощи%s за инструкциями, как обновить конфигурацию, прежде чем "
 "продолжить."
 
 msgid "Welcome to the Gallery Upgrader"
-msgstr "Добро Пожаловать в Программу Обновления Галереи."
+msgstr "Добро пожаловать в программу обновления Галереи."
 
 #, c-format
 msgid "Upgrade %d%% complete"
@@ -512,92 +712,41 @@ msgstr "Обновление завершено на %d%%"
 msgid "Redo this step"
 msgstr "Повторно выполнить этот шаг"
 
-#, c-format
-msgid "Continue to Step %d&raquo;"
-msgstr "Перейти к Шагу %d&raquo;"
-
 msgid "Gallery: <strong>your photos</strong> on <strong>your website</strong>"
-msgstr ""
-"Перевод на русский язык: <a href=\"http://www.konstantinivanov.info\" target=\"_blank"
-"\">Константин Иванов</a>. Галерея: <strong>Ваши фотографии</strong> на <strong>Вашем веб-"
-"сайте</strong> :: <a href=\"http://www.gallery2.ru\" target=\"_blank\">www.gallery2.ru</a>"
-
-#, c-format
-msgid "Missing files (%d)"
-msgstr "Отсутствуют файлов (%d)"
-
-#, fuzzy
-msgid ""
-"Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
-"be safe to ignore these."
-msgstr ""
-"Комментарий: Вы запустили Галерею из CVS, поэтому недавно удаленные файлы могут всплыть "
-"здесь. Игнорирование этого, возможно, будет безопасным."
-
-#, c-format
-msgid "Modified files (%d)"
-msgstr "Модифицированных файлов (%d)"
-
-#, fuzzy
-msgid ""
-"Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
-"probably ignore these, but to be safe you should make sure that you do 'svn update' before "
-"continuing."
-msgstr ""
-"Комментарий: Вы запустили Галерею из CVS, поэтому некоторые модификации файлов вполне "
-"ожидаемы. Возможно, Вы можете игнорировать это, но для обеспечения безопасности Вы должны "
-"убедиться, что Вы запустили  'cvs update -Pd' перед тем, как продолжить."
-
-#, c-format
-msgid "Old files (%d)"
-msgstr "Устаревших файлов  (%d)"
-
-#, c-format
-msgid ""
-"These files are no longer part of Gallery. They probably won't cause any problems but it is "
-"a good idea to remove them to keep your install clean.  Gallery can't remove these files for "
-"you, but you can download and run %s in your gallery2 directory to delete them for you."
-msgstr ""
-"Эти файлы больше не являются частью Галереи. Возможно, они не вызовут никаких проблем, но "
-"лучше будет удалить их для поддержания инсталляции в порядке. Галерея не может удалить эти "
-"файлы за Вас, однако Вы можете загрузить и запустить %s в Вашей директории gallery2 для их "
-"удаления."
-
-msgid "this script"
-msgstr "этот скрипт"
+msgstr "Галерея: <strong>Ваши фотографии</strong> на <strong>вашем веб-сайте</strong>"
 
 msgid "Upgrade Steps"
-msgstr "Шаги Обновления"
+msgstr "Шаги обновления"
 
 msgid "Missing or invalid config.php"
-msgstr "Отсутствует или неверный config.php"
+msgstr "Отсутствует или неверный 'config.php'"
 
 msgid "You tried to run the upgrade process but a valid config.php is missing."
-msgstr "Мы пытались запустить процесс обновления, но верный config.php отсутствует"
+msgstr "Мы пытались запустить процесс обновления, но верный 'config.php' отсутствует."
 
 msgid ""
 "If you've lost your config.php file when replacing the Gallery 2 files in the preparation "
 "for this upgrade, please restore it and try again."
 msgstr ""
-"Если вы утратили Ваш файл config.php при подготовке к этому обновлению во время перезаписи "
-"файлов Галереи 2, пожалуйста, восстановите его и попробуйте еще раз."
+"Если вы утратили ваш файл 'config.php' при подготовке к этому обновлению во время перезаписи "
+"файлов Gallery 2, пожалуйста, восстановите его и попробуйте ещё раз."
 
 msgid "If you actually want to run the Gallery 2 installer, please follow the link below."
 msgstr ""
-"Если Вы дейсвительно хотите запустить инсталляцию Галереи 2, пожалуйста, проследуйте по "
-"ссылки ниже."
+"Если вы действительно хотите запустить установку Gallery 2, пожалуйста, нажмите на ссылку "
+"ниже."
 
 msgid ""
 "If you want to upgrade from Gallery 1, you first need to install Gallery 2 and then use the "
 "import module to import your data from Gallery 1. Please follow the link below to install "
 "Gallery 2."
 msgstr ""
-"Если Вы хоитете обновить Галерею 1, то сначала Вам необходимо инсталлировать Галерею 2, и "
-"затем использовать модуль импорта для импорта Ваших данных из Галереи 1. Пожалуйста, "
-"проследуйте по ссылке ниже, чтобы инсталлировать Галерею 2."
+"Если вы хотите обновить Галерею 1, то сначала необходимо установить Галерею 2, и затем "
+"использовать модуль импорта для импорта ваших данных из Галереи 1. Пожалуйста, нажмите на "
+"ссылку ниже, чтобы установить Галерею 2."
 
 msgid "Go to the Gallery 2 Installer"
-msgstr "Перейти к инсталляции Галереи 2"
+msgstr "Перейти к установке Gallery 2"
 
 msgid "Success"
 msgstr "Успешно"
@@ -609,11 +758,11 @@ msgid ""
 "If you are using Apache, create a file named .htaccess in the main Gallery directory with "
 "the following content:"
 msgstr ""
-"Если Вы используете Apache, создайте файл под названием .htaccess в Вашей главной директории "
+"Если вы используете Apache, создайте файл под названием '.htaccess' в  главной директории "
 "Галереи со следующим содержанием:"
 
 msgid "An error occurred while upgrading Gallery Core Module"
-msgstr "Возникла ошибка в процессе обновления основного модуля Галереи (ядра)"
+msgstr " В процессе обновления основного модуля Галереи возникла ошибка"
 
 #, c-format
 msgid ""
@@ -621,135 +770,109 @@ msgid ""
 "find some debug information.  Report this in the %sGallery Forums%s and we'll help you "
 "diagnose the problem."
 msgstr ""
-"Что-то пошло не так, когда мы пытались обновить основной модуль (ядро). В полях ниже Вы "
-"сможете найти некоторую отладочную информацию. Сообщите ее в %sФорумах Галереи%s и мы "
-"поможем Вам разбоаться с возникшей проблемой."
-
-msgid "Stack Trace:"
-msgstr "Stack Trace:"
+"Что-то пошло не так, когда мы пытались обновить основной модуль (ядро). В полях ниже вы "
+"сможете найти некоторую отладочную информацию. Разместите её на %sфоруме Галереи%s и мы "
+"поможем разобраться с возникшей проблемой."
 
 msgid "Debug Output:"
-msgstr "Debug Output:"
+msgstr "Отладочные данные:"
 
 msgid "Upgrading the Gallery Core Module"
-msgstr "Обновление Основного Модуля Галереи"
+msgstr "Обновление основного модуля Галереи"
 
 msgid ""
 "The Gallery Core Module is the heart of the Gallery application.  You can upgrade most other "
 "modules using the Site Administration interface, but this module must be handled separately "
 "in order for the upgrade to go smoothly."
 msgstr ""
-"Основной Модуль Галереи - это ядро приложения Галерея. Вы можете обновить большинство "
-"модулей, используя интерфейс Администрирования, но этот модуль требует особенного внимания, "
-"чтобы процесс обновления прошел гладко."
+"Основной модуль Галереи - это ядро приложения Галерея. Вы можете обновить большинство "
+"модулей, используя интерфейс администратора, но этот модуль требует особого внимания, чтобы "
+"процесс обновления прошел гладко."
 
 msgid "Currently installed"
 msgstr "Текущая версия"
 
 #, c-format
 msgid "Core Module version: %s (Gallery %s)"
-msgstr ""
+msgstr "Модуль ядра версия: %s (Gallery %s)"
 
 msgid "New version"
 msgstr "Новая версия"
 
 msgid "Config.php upgrade"
-msgstr "Обновление Config.php"
+msgstr "Обновление 'config.php'"
 
 msgid "Required"
 msgstr "Обязательно"
 
 #, c-format
 msgid "Unable to write to config.php in your %s directory.  Please change its permissions."
-msgstr ""
-"Невозможно записать в config.php в Вашей %s директории. Пожалуйста, измените его разрешения."
+msgstr "Запрещена запись в файл 'config.php' в папке %s. Пожалуйста, измените к нему доступ."
 
 msgid "You can do <i>chmod 666 config.php</i> to fix this."
-msgstr "Вы можете сделать это командой <i>chmod 666 config.php</i>, чтобы исправить это."
+msgstr "Командой <i>chmod 666 config.php</i> вы можете исправить это. "
 
 msgid ""
 "The installed version is newer than the version you are trying to upgrade to. You cannot "
 "downgrade G2. Please replace the gallery2 files with files from the currently installed "
 "version or later."
 msgstr ""
-"Установленая версия является более новой, чем та, на которую Вы хотите произвести "
-"обновление. Вы не можете понизить версию G2. Пожалуйста, заметите файлы gallery2 из текущей "
-"инсталляции или более поздними."
-
-#, fuzzy
-msgid ""
-"Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  "
-"If you fail to make a backup and something goes wrong, there is a strong possibility that we "
-"will not be able to help you recover your data!  Refer to the following example:"
-msgstr ""
-"Перед тем как Вы начнете процесс обновления, мы <b>настоятельно рекомендуем</b>, чтобы Вы "
-"сделали резервную копию (backup) Вашей базы данных. Если Вам не удасться сделать резервную "
-"копию и что-то пойдет не так, существует большая вероятность того, что мы не сможем помочь "
-"Вам восстановить Ваши данные! Обратите внимание на следующие примеры:"
-
-msgid "MySQL"
-msgstr "MySQL"
-
-msgid "PostgreSQL"
-msgstr "PostgreSQL"
-
-msgid "Oracle"
-msgstr ""
-
-msgid "IBM DB2"
-msgstr ""
-
-msgid "Microsoft SQL Server"
-msgstr ""
+"Уже установленная версия является более новой, чем та, на которую вы хотите произвести "
+"обновление. Вы не можете понизить версию G2. Пожалуйста, замените файлы Gallery 2 файлами из "
+"текущей  или более поздней версии."
 
 msgid ""
 "Once the upgrade has begun, please be patient.  If you cancel or reload the page, you may "
 "interfere with the upgrade process."
 msgstr ""
-"Как только процесс обновления начался, пожалуйста, запаситесь терпением. Если вы отмените "
-"или обновите страницу, Вы можете вмешаться в процесс обновления."
+"Процесс обновления начался, пожалуйста, запаситесь терпением. Если вы отмените или обновите "
+"страницу, вы можете помешать обновлению."
 
 msgid "Begin Upgrade"
-msgstr "Приступить к Обновлению"
+msgstr "Приступить к обновлению"
 
 msgid "Recheck config.php"
-msgstr "Повторная проверка config.php"
+msgstr "Повторная проверка 'config.php'"
 
 msgid "Upgraded Gallery Core Module successfully."
-msgstr "Основной Модуль (Ядро) Галереи успешно обновлен."
+msgstr "Основной модуль Галереи успешно обновлён."
 
 msgid "We've successfully upgraded the Gallery Core Module."
-msgstr "Мы успешно обновили основной модуль (ядро) Галереи."
+msgstr "Мы успешно обновили основной модуль Галереи."
 
 #, c-format
 msgid ""
 "<b>Reminder</b>: Now update the permissions on config.php to make sure it is not writeable "
 "by other people.  Right now your config.php has modes of %s.  We suggest that you do this:"
 msgstr ""
+"<b>Напоминание</b>:Теперь измените правила доступа к 'config.php', сделайте так, чтобы "
+"другие не смогли изменить его. Сейчас ваш 'config.php' имеет CHMOD= %s. Мы предлагаем "
+"назначить: "
 
 msgid "Your Gallery Core Module is up to date!"
-msgstr "Версия Основного Модуля (ядра) является самой последней"
+msgstr "Версия основного модуля является самой последней!"
 
-#, fuzzy
 msgid ""
 "The following plugins can be automatically upgraded for you.  If you choose not to upgrade "
 "them now, you may experience problems with your Gallery.   You can always upgrade or "
 "deactivate them on the Site Administration page, or return to this page later so any "
 "decision you make here is not permanent."
 msgstr ""
-"Следующие модули могут быть обновлены автоматически. Если Вы решите не обновлять их сейчас, "
-"Вы, возможно, столкнетесь с некоторыми проблемами в Вашей Галерее. Вы всегда сможете "
-"обновить, либо деактивизировать их на странице Администрирования, или вернуться к данной "
-"странице позже, так что любое принятое Вами решение не будет являться окончательным."
+"Следующие модули могут быть обновлены автоматически. Если вы решите не обновлять их сейчас, "
+"то, возможно, столкнетесь с некоторыми проблемами в  Галерее. Вы всегда сможете их  "
+"обновить, либо дезактивировать на странице администрирования. Можно вернуться к данной "
+"странице позже, любое ваше решение допустимо."
 
 msgid "Deactivated Plugins"
-msgstr ""
+msgstr "Неактивные плагины"
 
 msgid ""
 "The following plugins were active, but they are missing or incompatible with your current "
 "version of Gallery.  They have been deactivated.  Install the latest version of these "
 "plugins to reactivate them."
 msgstr ""
+"Эти модули были активны, но теперь они отсутствуют или несовместимы с текущей версией "
+"Галереи. Они были дезактивированы. Установите последние версии этих модулей и активируйте их."
 
 msgid "Module"
 msgstr "Модуль"
@@ -770,30 +893,28 @@ msgid "Description"
 msgstr "Описание"
 
 msgid "Incompatible with this version of Gallery"
-msgstr ""
+msgstr "Несовместим с данной версией Галереи"
 
 msgid "(un)check all"
-msgstr "отметить все/снять отметку со всех"
+msgstr "отметить всё/снять отметку со всего"
 
 #, c-format
 msgid "Skip Upgrade and Continue to Step %d&raquo;"
-msgstr "Пропустить Обновление и Перейти к Шагу %d&raquo;"
+msgstr "Пропустить обновление и перейти к шагу %d&raquo;"
 
-#, fuzzy
 msgid "Upgrade Selected Plugins"
-msgstr "Обновить Отмеченные Модули"
+msgstr "Обновить выбранные модули"
 
 #, c-format
 msgid "Upgraded the %s module successfully"
-msgstr "Модуль <i>%s</i> успешно обновлен"
+msgstr "Модуль <i>%s</i> успешно обновлён"
 
 #, c-format
 msgid "Upgraded the %s theme successfully"
 msgstr "Тема <i>%s</i> успешно обновлена"
 
-#, fuzzy
 msgid "Upgrade More Plugins"
-msgstr "Статус Обновления"
+msgstr "Обновить ещё модули"
 
 #, c-format
 msgid ""
@@ -801,9 +922,9 @@ msgid ""
 "and provide assistance along the way if additional steps are required. Please read the %"
 "sHelp File%s before proceeding."
 msgstr ""
-"Для обновления Gallery 2 потребуется проделать %d шагов. Эта программа поможет Вам пройти "
+"Для обновления Gallery 2 потребуется проделать %d шагов. Эта программа поможет вам пройти "
 "эти шаги, а так же обеспечит полную поддержку во время обновления, в случае если потребуется "
-"проделать какие-либо дополнительные действия. Пожалуйста, внимательно прочитайте  %sфайл "
+"совершить какие-либо дополнительные действия. Пожалуйста, внимательно прочитайте  %sфайл "
 "справки%s перед тем, как продолжить."
 
 msgid ""
@@ -811,77 +932,14 @@ msgid ""
 "visitors a message that the site is temporarily offline, rather than showing everybody this "
 "upgrade page. Edit your config.php file to activate maintenance mode."
 msgstr ""
-"Если Вам сайт является посещаемым, рекомендуется переключить Галереию в режим обслуживания. "
-"В данном режиме посетители сайта увидят сообщение, предупреждающее о том, что сайт временно "
-"не доступен и находится на обслуживании. В противном случае, они данную увидят страницу  "
-"мастера обновления. Отредактируйте Ваш config.php чтобы активировать режим обслуживания "
-"(параметр maintenance mode)."
+"Если ваш сайт является посещаемым, рекомендуется переключить Галерею в режим обслуживания. В "
+"данном режиме посетители сайта увидят сообщение, предупреждающее о том, что сайт временно не "
+"доступен и находится на обслуживании. Это лучше, чем видеть данную страницу  мастера "
+"обновления. Отредактируйте 'config.php' чтобы активировать режим обслуживания (параметр "
+"maintenance mode)."
 
 msgid "Select Language:"
 msgstr "Выберете язык:"
 
 msgid "Go"
-msgstr "Вперед"
-
-#~ msgid ""
-#~ "<b>Reminder</b>: Now check the permissions on config.php and make sure it is not globally "
-#~ "writeable."
-#~ msgstr ""
-#~ "<b>Напоминание</b>: Теперь проверьте разрешения на config.php и удостовертесь, что они не "
-#~ "являются доступными для записи глобально."
-
-#~ msgid "mysqldump -u%s -p -h %s --opt %s > %s.sql"
-#~ msgstr "mysqldump -u%s -p -h %s --opt %s > %s.sql"
-
-#~ msgid "pg_dump -h %s --format=t %s > %s.sql"
-#~ msgstr "pg_dump -h %s --format=t %s > %s.sql"
-
-#~ msgid "Upgrade More Modules"
-#~ msgstr "Обновить больше Модулей"
-
-#~ msgid "Unable to verify plugins"
-#~ msgstr "Невозможно проверить плагины."
-
-#~ msgid "Upgrade Modules"
-#~ msgstr "Обновление других модулей"
-
-#~ msgid "the Gallery website"
-#~ msgstr "веб сайт Gallery"
-
-#~ msgid ""
-#~ "Your upgrade cannot begin because some of your active modules/themes are incompatible or "
-#~ "missing.  You must either locate more recent versions of these modules or themes, or "
-#~ "revert to your original version of Gallery.  No changes have been made so it's safe to "
-#~ "revert.  If you have many incompatible modules listed below, it's possible that you "
-#~ "downloaded a smaller distribution of Gallery than what you originally installed.  You can "
-#~ "download a larger distribution from %s."
-#~ msgstr ""
-#~ "Процесс обновления не может быть начат поскольку некторые из активизированных модулей или "
-#~ "тем являются несовместимыми или отсутствуют. Вам необходимо либо разместить более поздние "
-#~ "версии данных модулей или тем, либо вернуть их в прежнее состояние оригинальной версии "
-#~ "Галереи. Если изменения не производились, то проще будет вернуться к оригинальной версии. "
-#~ "Если список ниже содержит множество несовместимых модулей, возможно, что Вы загрузили "
-#~ "неполный пакет (тип установки) Галереи, отличный от ранее инсталированной. Вы можете "
-#~ "скачать более полный тип установки отсюда %s."
-
-#~ msgid "Download replacement modules from %s"
-#~ msgstr "Загрузите обновленные модули отсюда %s"
-
-#~ msgid "Upgrade Other Modules"
-#~ msgstr "Обновление других модулей"
-
-#~ msgid "Missing Code"
-#~ msgstr "Отсутствует Код"
-
-#~ msgid ""
-#~ "The code for some plugins that were previously active can no longer be found. You must "
-#~ "restore code for these plugins before this upgrade can continue. Code for the plugins "
-#~ "must be the same version or newer than what was installed before."
-#~ msgstr ""
-#~ "Код для некоторых плагинов, которые ранее были активны, не может быть найден. Вы должны "
-#~ "восстановить код для этих плагинов перед тем, как обновление будет продолжено. Коды для "
-#~ "этих плагинов должны быть такой же или более новой версии, чем те, которые были "
-#~ "инсталлированы ранее."
-
-#~ msgid "Finished"
-#~ msgstr "Завершение"
+msgstr "Начать"

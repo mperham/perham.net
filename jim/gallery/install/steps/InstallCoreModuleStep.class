@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
  */
 
 /**
- * Install core module
+ * Install core module.
  * @package Install
  */
 class InstallCoreModuleStep extends InstallStep {
+
     function stepName() {
 	return _('Install Gallery Core');
     }
@@ -36,6 +37,8 @@ class InstallCoreModuleStep extends InstallStep {
 	$template = new StatusTemplate();
 	$template->renderHeader(true);
 	$template->renderStatusMessage(_('Installing the core module'), null, 0);
+
+	$templateData = array();
 
 	/* We want to log all debug output in our install log */
 	global $gallery;
@@ -55,7 +58,7 @@ class InstallCoreModuleStep extends InstallStep {
 	    $gallery->debug(sprintf('Error: Unable to initialize our Gallery data, this is the ' .
 				    'error stack trace: %s', $ret->getAsText()));
 	    $templateData['errors'][] = _('Unable to initialize our Gallery data');
-	    $templateData['stackTrace'] = $ret->getAsHtml();
+	    $templateData['stackTrace'][] = $ret->getAsHtml();
 	}
 
 	$this->_addSystemInformationToDebugLog();
@@ -64,8 +67,8 @@ class InstallCoreModuleStep extends InstallStep {
 	GalleryDataCache::setFileCachingEnabled(false);
 
 	/*
-	 * Delete anything in the cache, which can be left around if we're
-	 * installing on top of an older install.
+	 * Delete anything in the cache, which can be left around if we're installing on top of an
+	 * older install
 	 */
 	$platform =& $gallery->getPlatform();
 	$gallery->debug('Clear the cache directory');
@@ -85,10 +88,9 @@ class InstallCoreModuleStep extends InstallStep {
 	if (empty($templateData['errors'])) {
 	    $gallery->debug('Check if the persistent storage is installed');
 	    /*
-	     * Check to see if the database tables already exist.  If they do then
-	     * we should assume that they said that it was ok to reuse existing tables
-	     * in the Database setup step, which means we don't have to perform an
-	     * install now.
+	     * Check to see if the database tables already exist.  If they do then we should assume
+	     * that they said that it was ok to reuse existing tables in the database setup step,
+	     * which means we don't have to perform an install now.
 	     */
 	    $storage =& $gallery->getStorage();
 	    list ($ret, $isInstalled) = $storage->isInstalled();
@@ -96,7 +98,7 @@ class InstallCoreModuleStep extends InstallStep {
 		$gallery->debug(sprintf('Error: Unable to communicate with the database, this ' .
 					'is the error stack trace; %s', $ret->getAsText()));
 		$templateData['errors'][] = _('Unable to communicate with the database');
-		$templateData['stackTrace'] = $ret->getAsHtml();
+		$templateData['stackTrace'][] = $ret->getAsHtml();
 	    }
 	}
 
@@ -108,7 +110,7 @@ class InstallCoreModuleStep extends InstallStep {
 		$gallery->debug(sprintf('Error: Unable to load the core module, this ' .
 					'is the error stack trace; %s', $ret->getAsText()));
 		$templateData['errors'][] = _('Unable to load the core module');
-		$templateData['stackTrace'] = $ret->getAsHtml();
+		$templateData['stackTrace'][] = $ret->getAsHtml();
 	    }
 	}
 
@@ -118,7 +120,7 @@ class InstallCoreModuleStep extends InstallStep {
 	$freshInstall = $galleryStub->getConfig('freshInstall');
 	if ($freshInstall) {
 	    $gallery->debug('Hand over admin user parameters');
-	    /* It's a fresh install. Hand over install config parameters */
+	    /* It's a fresh install.  Hand over install config parameters. */
 	    $gallery->setConfig('setup.admin.userName',
 				$galleryStub->getConfig('setup.admin.userName'));
 	    $gallery->setConfig('setup.admin.email',
@@ -129,6 +131,9 @@ class InstallCoreModuleStep extends InstallStep {
 
 	if (empty($templateData['errors'])) {
 	    if (!$isInstalled) {
+		/* Ensure translations for active language are available */
+		GalleryCoreApi::installTranslationsForLocale();
+
 		$gallery->debug('Install core module now!');
 		$ret = $core->installOrUpgrade(true, $template);
 		if ($ret) {
@@ -136,7 +141,7 @@ class InstallCoreModuleStep extends InstallStep {
 		    $gallery->debug(sprintf('Error: Unable to install the core module, this ' .
 					'is the error stack trace; %s', $ret->getAsText()));
 		    $templateData['errors'][] = _('Unable to install the core module');
-		    $templateData['stackTrace'] = $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		} else {
 		    $gallery->debug('Core module installed successfully');
 		}
@@ -151,7 +156,7 @@ class InstallCoreModuleStep extends InstallStep {
 		    $gallery->debug(sprintf('Error: Unable to activate the core module, this ' .
 					'is the error stack trace; %s', $ret->getAsText()));
 		    $templateData['errors'][] = _('Unable to activate the core module');
-		    $templateData['stackTrace'] = $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		} else {
 		    $gallery->debug('Core module activated successfully');
 		}
@@ -165,7 +170,7 @@ class InstallCoreModuleStep extends InstallStep {
 		    $gallery->debug(sprintf('Error: Unable to commit database transaction, this ' .
 					'is the error stack trace; %s', $ret->getAsText()));
 		    $templateData['errors'][] = _('Unable to commit database transaction');
-		    $templateData['stackTrace'] = $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		} else {
 		    $gallery->debug('Committed transaction successfully');
 		}
@@ -173,14 +178,13 @@ class InstallCoreModuleStep extends InstallStep {
 		$gallery->debug('NOT installing, rollback!');
 		$storage->rollbackTransaction(); /* Ignore any errors from this */
 		/*
-		 * Don't allow this step to complete when only partially installed.
-		 * Verify that versions.dat is up to date.
+		 * Don't allow this step to complete when only partially installed.  Verify that
+		 * versions.dat is up to date.
 		 */
 		$versions = $core->getInstalledVersions();
 		if (empty($versions['core']) || $versions['core'] != $core->getVersion()) {
 		    $gallery->debug('Error: Core module is only partially installed');
 		    $templateData['errors'][] = _('Core module is only partially installed.');
-		    $templateData['stackTrace'] = '';
 		} else {
 		    $gallery->debug('Core module version is ok');
 		}

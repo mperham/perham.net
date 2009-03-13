@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ GalleryCoreApi::requireOnce('modules/imagemagick/classes/ImageMagickToolkitHelpe
  * @subpackage Classes
  * @author Vallimar <vallimar@sexorcisto.net>
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17804 $
  */
 class ImageMagickToolkit extends GalleryToolkit {
     /**
@@ -494,7 +494,7 @@ class ImageMagickToolkit extends GalleryToolkit {
      * @param string $destFilename the path to a destination file
      * @param string $outputMimeType
      * @param string $jpegQuality (optional)
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _transformImage($mimeType, $cmd, $args, $sourceFilename, $destFilename,
@@ -523,6 +523,7 @@ class ImageMagickToolkit extends GalleryToolkit {
 		return $ret;
 	    }
 	}
+	$jpegQuality = (int)$jpegQuality;
 
 	switch ($outputMimeType) {
 	case 'image/jpeg' :
@@ -548,12 +549,30 @@ class ImageMagickToolkit extends GalleryToolkit {
 	case 'image/gif':
 	    /* In case it's an animated gif.. */
 	    if ($cmd == 'convert') {
-		$command[] = '-coalesce';
-		$command[] = '%s';
-		$args[] = '-deconstruct';
+		/**
+		 * Bug 1703410
+		 * ImageMagick 6.2.6 and later needs different arguments for best results
+		 */
+		list ($ret, $useNewCoalesceOptions) = GalleryCoreApi::getPluginParameter(
+		    'module', 'imagemagick', 'useNewCoalesceOptions');
+		if ($ret) {
+		    return $ret;
+		}
+		if ($useNewCoalesceOptions) {
+		    $command[] = '%s';
+		    $command[] = '-coalesce'; /* Needs to be _after_ the filename */
+		    $command[] = '-layers'; /* Better than -deconstruct */
+		    $command[] = 'optimize';
+		} else {
+		    $command[] = '-coalesce'; /* Needs to be _before_ the filename */
+		    $command[] = '%s';
+		    $args[] = '-deconstruct';
+		}
 	    }
-	    break;
-
+	    if ($outputMimeType == 'image/gif') {
+		break;
+	    }
+	    /* If the output format isn't gif, pick a frame assuming it's an animated GIF. */
 	case 'image/tiff':
 	case 'application/pdf':
 	case 'application/postscript':
@@ -598,18 +617,17 @@ class ImageMagickToolkit extends GalleryToolkit {
 	    $command[] = $sourceFilename;
 	}
 
-	if ($mimeType == $outputMimeType) {
-	    $command[] = $tmpFilename;
-	} else {
-	    if (preg_match('{^image/(.*)$}', $outputMimeType, $matches)) {
-		$command[] = sprintf("%s:%s", $matches[1], $tmpFilename);
-	    } else {
-		/* Don't know this type! */
-		@$platform->unlink($tmpFilename);
-		return GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE, __FILE__, __LINE__,
-					     "Can't convert to unknown mime type: $outputMimeType");
-	    }
+	list ($ret, $extensions) = GalleryCoreApi::convertMimeToExtensions($outputMimeType);
+	if ($ret) {
+	    @$platform->unlink($tmpFilename);
+	    return $ret;
 	}
+	if (empty($extensions)) {
+	    @$platform->unlink($tmpFilename);
+	    return GalleryCoreApi::error(ERROR_TOOLKIT_FAILURE, __FILE__, __LINE__,
+		"Can't convert to unknown mime type: $outputMimeType");
+	}
+	$command[] = sprintf("%s:%s", $extensions[0], $tmpFilename);
 
 	$oldCwd = $platform->getcwd();
 	$platform->chdir($gallery->getConfig('data.gallery.tmp'));

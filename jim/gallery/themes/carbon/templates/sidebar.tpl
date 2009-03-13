@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17075 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div id="sidebar" class="gcPopupBackground"
  style="position:absolute; left:-190px; top:{$theme.params.sidebarTop}px; padding:1px;">
@@ -23,7 +21,6 @@
 	  {foreach from=$theme.params.sidebarBlocks item=block}
 	    {g->block type=$block.0 params=$block.1 class="gbBlock"}
 	  {/foreach}
-	  {g->block type="core.NavigationLinks" class="gbBlock"}
 	</div>
       </td>
     </tr>

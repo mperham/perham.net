@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,11 +24,11 @@
  * @package GalleryCore
  * @subpackage Storage
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 16630 $
+ * @version $Revision: 17988 $
  */
 class GalleryStorageExtras /* the other half of GalleryStorage */ {
     /**
-     * @param object GalleryStorage $galleryStorage the database storage instance
+     * @param GalleryStorage $galleryStorage the database storage instance
      */
     function GalleryStorageExtras(&$galleryStorage) {
 	$this->_gs =& $galleryStorage;
@@ -38,8 +38,8 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
      * Return a non transactional database connection.
      * On occasion we'll need a non-transactional connection to do things like locking and
      * sequence handling, since they have to be consistent across may concurrent requests.
-     * @return array object GalleryStatus a status code
-     *               object ADOdb a database connection
+     * @return array GalleryStatus a status code
+     *               ADOdb a database connection
      */
     function _getNonTransactionalDatabaseConnection() {
 	if ($this->_gs->_isTransactional) {
@@ -61,7 +61,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 
     /**
      * Connect to database if needed and optionally guarantee db transaction.
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _dbInit($transaction=false) {
@@ -159,8 +159,6 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    $query .= implode(' AND ', $where);
 
 	    /* Execute the query */
-	    $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
-
 	    $this->_gs->_traceStart();
 	    $recordSet = $this->_gs->_db->Execute($query, $targetIds);
 	    $this->_gs->_traceStop();
@@ -445,7 +443,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    return $ret;
 	}
 
-	list ($ret, $id) = $this->_gs->getUniqueId();
+	list ($ret, $id) = $this->_gs->getUniqueId(DATABASE_SEQUENCE_ID);
 	if ($ret) {
 	    return $ret;
 	}
@@ -460,7 +458,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
     /**
      * @see GalleryStorage::getUniqueId
      */
-    function getUniqueId() {
+    function getUniqueId($sequence=DATABASE_SEQUENCE_ID) {
 	$ret = $this->_dbInit();
 	if ($ret) {
 	    return array($ret, null);
@@ -471,13 +469,17 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	 * subclasses to use a different connection if necessary, like MySQL which
 	 * wants a non-transactional connection.
 	 */
-	return $this->_getUniqueIdWithConnection($this->_gs->_db);
+	return $this->_getUniqueIdWithConnection($this->_gs->_db, $sequence);
     }
 
     /**
+     * Internal implementation of GalleryStorage::getUniqueId that additionally takes a database
+     * connection.
+     *
+     * @param string $sequence A sequence name
      * @see GalleryStorage::getUniqueId
      */
-    function _getUniqueIdWithConnection($dbConn) {
+    function _getUniqueIdWithConnection($dbConn, $sequence) {
 	/* In case we're embedded in an app that sets adodb hasGenID to false (xaraya/postnuke) */
 	if (isset($dbConn->hasGenID) && !$dbConn->hasGenID) {
 	    $dbConn->hasGenID = $setGenID = true;
@@ -485,7 +487,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 
 	/* Get the id of the next object from our sequence */
 	$this->_gs->_traceStart();
-	$id = (int)$dbConn->GenId($this->_gs->_tablePrefix . DATABASE_SEQUENCE_ID);
+	$id = (int)$dbConn->GenId($this->_gs->_tablePrefix . $sequence);
 	$this->_gs->_traceStop();
 	if (empty($id)) {
 	    return array(GalleryCoreApi::error(
@@ -573,8 +575,6 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    $query = 'SELECT COUNT(*) FROM ' . $lockTable
 		   . ' WHERE ' . $writeEntityIdCol . ' IN (' . $markers . ')';
 	    $data = $entityIds;
-
-	    $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
 
 	    $this->_gs->_traceStart();
 	    $recordSet = $db->Execute($query, $data);
@@ -696,8 +696,6 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    $data = $entityIds;
 	    $data = array_merge($data, $entityIds);
 
-	    $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
-
 	    $this->_gs->_traceStart();
 	    $recordSet = $db->Execute($query, $data);
 	    $this->_gs->_traceStop();
@@ -806,7 +804,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 
     /**
      * Delete all not-so-fresh locks.
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _expireLocks() {
@@ -964,10 +962,18 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
     /**
      * @see GalleryStorage::addMapEntry
      */
-    function addMapEntry($mapName, $entry) {
-	$ret = $this->_dbInit(true);
-	if ($ret) {
-	    return $ret;
+    function addMapEntry($mapName, $entry, $useNonTransactionalConnection=false) {
+	if ($useNonTransactionalConnection && $this->_gs->isTransactional()) {
+	    list ($ret, $db) = $this->_getNonTransactionalDatabaseConnection();
+	    if ($ret) {
+		return $ret;
+	    }
+	} else {
+	    $ret = $this->_dbInit(true);
+	    if ($ret) {
+		return $ret;
+	    }
+	    $db = $this->_gs->_db;
 	}
 
 	list ($ret, $mapInfo) = $this->_gs->describeMap($mapName);
@@ -983,7 +989,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    }
 
 	    if (is_array($entry[$memberName])) {
-		return $this->_addMapEntries($mapInfo, $tableName, $entry);
+		return $this->_addMapEntries($mapInfo, $tableName, $entry, $db);
 	    }
 	    $columns[] = $this->_gs->_translateColumnName($memberName);
 	    $data[] = $this->_gs->_normalizeValue($entry[$memberName], $memberData);
@@ -995,7 +1001,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	$query .= ') VALUES (' . $markers . ')';
 
 	$this->_gs->_traceStart();
-	$recordSet = $this->_gs->_db->Execute($query, $data);
+	$recordSet = $db->Execute($query, $data);
 	$this->_gs->_traceStop();
 	if ($recordSet === false) {
 	    return GalleryCoreApi::error(ERROR_STORAGE_FAILURE);
@@ -1014,10 +1020,11 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
      * @param string $tableName the translated table name
      * @param array $entry an associative array of data about the entry
      *              each data element is an array of values
-     * @return object GalleryStatus a status code
+     * @param ADOdb $db the database connection to use
+     * @return GalleryStatus a status code
      * @access private
      */
-    function _addMapEntries($mapInfo, $tableName, $entry) {
+    function _addMapEntries($mapInfo, $tableName, $entry, $db) {
 	$columns = array();
 	foreach ($mapInfo as $memberName => $memberData) {
 	    $columns[$memberName] = $this->_gs->_translateColumnName($memberName);
@@ -1039,7 +1046,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	}
 
 	$this->_gs->_traceStart();
-	$recordSet = $this->_gs->_db->Execute($query, $data);
+	$recordSet = $db->Execute($query, $data);
 	$this->_gs->_traceStop();
 	if ($recordSet === false) {
 	    return GalleryCoreApi::error(ERROR_STORAGE_FAILURE);
@@ -1112,17 +1119,31 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
     /**
      * @see GalleryStorage::removeAllMapEntries
      */
-    function removeAllMapEntries($mapName) {
-	$ret = $this->_dbInit(true);
-	if ($ret) {
-	    return $ret;
+    function removeAllMapEntries($mapName, $useNonTransactionalConnection=false,
+				 $useTruncate=false) {
+	if ($useNonTransactionalConnection && $this->_gs->isTransactional()) {
+	    list ($ret, $db) = $this->_getNonTransactionalDatabaseConnection();
+	    if ($ret) {
+		return $ret;
+	    }
+	} else {
+	    $ret = $this->_dbInit(true);
+	    if ($ret) {
+		return $ret;
+	    }
+	    $db = $this->_gs->_db;
 	}
 
-	list ($tableName) = $this->_gs->_translateTableName($mapName);
-	$query = 'DELETE FROM ' . $tableName;
+	list ($tableName, $unused) = $this->_gs->_translateTableName($mapName);
+	if ($useTruncate && (!$this->_gs->isTransactional() || $useNonTransactionalConnection)) {
+	    /* TRUNCATE is only safe outside of a transaction in most databases. */
+	    $query = 'TRUNCATE TABLE ' . $tableName;
+	} else {
+	    $query = 'DELETE FROM ' . $tableName;
+	}
 
 	$this->_gs->_traceStart();
-	$recordSet = $this->_gs->_db->Execute($query);
+	$recordSet = $db->Execute($query);
 	$this->_gs->_traceStop();
 	if ($recordSet === false) {
 	    return GalleryCoreApi::error(ERROR_STORAGE_FAILURE);
@@ -1131,15 +1152,17 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	return null;
     }
 
-    /*
+    /**
      * Load up the table creation and alteration SQL files for the given module
-     * @access private
+     * @param string $moduleId The id of the module of interest.
+     * @return array ('table' => array(), 'alter' => array(),
+     *		      'remove' => array(), 'test' => array())
      */
-    function _getModuleSql($moduleId) {
+    function getModuleSql($moduleId) {
 	global $gallery;
 	$platform =& $gallery->getPlatform();
 	$sqlFile = sprintf('%smodules/%s/classes/GalleryStorage/schema.tpl',
-	    GalleryCoreApi::getPluginBaseDir('module', $moduleId), $moduleId);
+	    GalleryCoreApi::getCodeBasePath(), $moduleId);
 
 	if ($platform->file_exists($sqlFile)) {
 	    $sqlData = $platform->file($sqlFile);
@@ -1149,7 +1172,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 			       'remove' => array(), 'test' => array());
 	}
 
-	return array(null, $moduleSql);
+	return $moduleSql;
     }
 
     /**
@@ -1222,29 +1245,16 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    return $ret;
 	}
 
-	list ($ret, $moduleSql) = $this->_getModuleSql($moduleId);
+	$moduleSql = $this->getModuleSql($moduleId);
+
+	list ($ret, $metatables) = $this->_metaTables();
 	if ($ret) {
 	    return $ret;
 	}
 
-	/* Get the metabase info about this database */
-	$this->_gs->_traceStart();
-	$metatables = $this->_gs->_db->MetaTables();
-	$this->_gs->_traceStop();
-
-	/*
-	 * Some databases (notably MySQL on Win32) don't support mixed case
-	 * table names.  So, when we get the meta table list back, it's lower
-	 * case.  Force all metatable listings to lower case and then expect
-	 * them to be lowercase so that we're consistent.
-	 */
-	for ($i = 0; $i < count($metatables); $i++) {
-	    $metatables[$i] = strtolower($metatables[$i]);
-	}
-
 	/* Do the schema table first */
 	list ($schemaTableName, $unused, $unused2) = $this->_gs->_translateTableName('Schema');
-	if (!in_array(strtolower($schemaTableName), $metatables)) {
+	if (!in_array(GalleryUtilities::strToLower($schemaTableName), $metatables)) {
 	    $ret = $this->_executeSql($moduleSql['table']['Schema']);
 	    if ($ret) {
 		return $ret;
@@ -1258,12 +1268,11 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    unset($moduleSql['table']['Schema']);
 
 	    /* Create our sequences now */
-	    foreach (array(DATABASE_SEQUENCE_LOCK, DATABASE_SEQUENCE_ID) as $sequenceId) {
-		$this->_gs->_traceStart();
-		$result = $this->_gs->_db->CreateSequence($this->_gs->_tablePrefix . $sequenceId);
-		$this->_gs->_traceStop();
-		if (empty($result)) {
-		    return GalleryCoreApi::error(ERROR_STORAGE_FAILURE);
+	    foreach (array(DATABASE_SEQUENCE_LOCK, DATABASE_SEQUENCE_ID,
+			   DATABASE_SEQUENCE_EVENT_LOG) as $sequenceId) {
+		$ret = $this->createSequence($sequenceId);
+		if ($ret) {
+		    return $ret;
 		}
 	    }
 	}
@@ -1277,6 +1286,16 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	list ($major, $minor) = $tableVersions['Schema'];
 	$canStoreSql = version_compare("$major.$minor", '1.1', '>=');
 	$canStoreTableInfo = version_compare("$major.$minor", '1.2', '>=');
+
+	if (!$canStoreTableInfo && $moduleId == 'core' && !in_array('Schema:1.1', $upgradeInfo)) {
+	    /* Ensure that the table info can be stored after the first configureStore() call */
+	    if (!in_array('Schema:1.0', $upgradeInfo)) {
+		$upgradeInfo[] = 'Schema:1.0';
+	    }
+	    $upgradeInfo[] = 'Schema:1.1';
+
+	    return $this->configureStore($moduleId, $upgradeInfo);
+	}
 
 	if ($canStoreTableInfo) {
 	    $mapInfo = $this->_getTableInfo($moduleId, 'map');
@@ -1381,7 +1400,8 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    }
 	}
 
-	return null;
+	/* Commit changes */
+	return $this->_gs->checkPoint();
     }
 
     /**
@@ -1396,8 +1416,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	$platform =& $gallery->getPlatform();
 
 	$fileBase = $type == 'map' ? 'Maps' : 'Entities';
-	$tableInfoFile = dirname(dirname(dirname(dirname(dirname(__FILE__)))))
-	    . "/modules/$moduleId/classes/$fileBase.inc";
+	$tableInfoFile = GalleryCoreApi::getCodeBasePath("modules/$moduleId/classes/$fileBase.inc");
 	$mapInfo = array();
 	$entityInfo = array();
 	if ($platform->file_exists($tableInfoFile)) {
@@ -1415,10 +1434,10 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
      * @param string $type (optional) An indicator for table type ('map' | 'entity').
      * @param string $info The serialized description of the map or entity.
      * @param bool $canStoreTableInfo (optional)
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function _updateSchemaTableInfo($tableNameInSchema, $tableSql, $moduleId, $type=null,
-				    $info=null, $canStoreTableInfo=false) {
+				    $info=null, $canStoreTableInfo=true) {
 	$data = array($tableSql);
 	$query = 'UPDATE [GallerySchema] SET [::createSql] = ?';
 	if ($canStoreTableInfo) {
@@ -1447,10 +1466,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
      * @see GalleryStorage::updateTableInfo
      */
     function _updateTableInfo($moduleId) {
-	list ($ret, $sql) = $this->_getModuleSql($moduleId);
-	if ($ret) {
-	    return $ret;
-	}
+	$sql = $this->getModuleSql($moduleId);
 
 	if (empty($sql['table'])){
 	    return null;
@@ -1461,8 +1477,8 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    return $ret;
 	}
 
-	$mapInfo = $this ->_getTableInfo($moduleId, 'map');
-	$entityInfo = $this ->_getTableInfo($moduleId, 'entity');
+	$mapInfo = $this->_getTableInfo($moduleId, 'map');
+	$entityInfo = $this->_getTableInfo($moduleId, 'entity');
 
 	foreach ($sql['table'] as $tableName => $tableSql) {
 	    list ($unused, $unused, $nameInSchema) = $this->_gs->_translateTableName($tableName);
@@ -1521,24 +1537,11 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    return $ret;
 	}
 
-	list ($ret, $moduleSql) = $this->_getModuleSql($moduleId);
+	$moduleSql = $this->getModuleSql($moduleId);
+
+	list ($ret, $metatables) = $this->_metaTables();
 	if ($ret) {
 	    return $ret;
-	}
-
-	/* Get the metabase info about this database */
-	$this->_gs->_traceStart();
-	$metatables = $this->_gs->_db->MetaTables();
-	$this->_gs->_traceStop();
-
-	/*
-	 * Some databases (notably MySQL on Win32) don't support mixed case
-	 * table names.  So, when we get the meta table list back, it's lower
-	 * case.  Force all metatable listings to lower case and then expect
-	 * them to be lowercase so that we're consistent.
-	 */
-	for ($i = 0; $i < count($metatables); $i++) {
-	    $metatables[$i] = strtolower($metatables[$i]);
 	}
 
 	/* Load all table versions */
@@ -1555,7 +1558,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 
 	    list ($tableName, $unused, $tableNameInSchema) =
 		$this->_gs->_translateTableName($rawTableName);
-	    if (in_array(strtolower($tableName), $metatables)) {
+	    if (in_array(GalleryUtilities::strToLower($tableName), $metatables)) {
 		/* The table exists -- see if we should delete it */
 		if (empty($tableVersions[$tableNameInSchema])) {
 		    /*
@@ -1595,24 +1598,11 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    return $ret;
 	}
 
-	list ($ret, $moduleSql) = $this->_getModuleSql($moduleId);
+	$moduleSql = $this->getModuleSql($moduleId);
+
+	list ($ret, $metatables) = $this->_metaTables();
 	if ($ret) {
 	    return $ret;
-	}
-
-	/* Get the metabase info about this database */
-	$this->_gs->_traceStart();
-	$metatables = $this->_gs->_db->MetaTables();
-	$this->_gs->_traceStop();
-
-	/*
-	 * Some databases (notably MySQL on Win32) don't support mixed case
-	 * table names.  So, when we get the meta table list back, it's lower
-	 * case.  Force all metatable listings to lower case and then expect
-	 * them to be lowercase so that we're consistent.
-	 */
-	for ($i = 0; $i < count($metatables); $i++) {
-	    $metatables[$i] = strtolower($metatables[$i]);
 	}
 
 	/*
@@ -1632,7 +1622,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    $this->_gs->_traceStart();
 	    list ($tableName, $unused, $tableNameInSchema) =
 		$this->_gs->_translateTableName($rawTableName);
-	    if (in_array(strtolower($tableName), $metatables)) {
+	    if (in_array(GalleryUtilities::strToLower($tableName), $metatables)) {
 		/* Drop the table and yank it from the schema table */
 		$dropQuery = sprintf('DROP TABLE %s', $tableName);
 		$recordSet = $this->_gs->_db->Execute($dropQuery);
@@ -1654,11 +1644,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
     }
 
     /**
-     * Examine the schema table and return the version of all the Gallery tables
-     *
-     * @return array object GalleryStatus a status code
-     *               array (name => (major, minor))
-     * @access private
+     * @see GalleryStorage::getTableVersions
      */
     function _loadTableVersions($ignoreCache=true) {
 	$cacheKey = 'GalleryStorageExtras::_loadTableVersions()';
@@ -1667,8 +1653,6 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	if (!$ignoreCache && GalleryDataCache::containsKey($cacheKey)) {
 	    return array(null, GalleryDataCache::get($cacheKey));
 	}
-
-	$GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
 
 	list ($schemaTableName) = $this->_gs->_translateTableName('Schema');
 	$query = 'SELECT ' . $this->_gs->_translateColumnName('name') . ', '
@@ -1698,8 +1682,8 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
      * Execute a given SQL against the database.  Prefix table and column names
      * as necessary.  Split multiple commands in the file into separate Execute() calls.
      *
-     * @return object GalleryStatus a status code
-     * @access private
+     * @return GalleryStatus a status code
+     * @access protected
      */
     function _executeSql($buffer) {
 	/*
@@ -1770,24 +1754,14 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    return $ret;
 	}
 
-	/* Get the metabase info about this database */
-	$this->_gs->_traceStart();
-	$metatables = $this->_gs->_db->MetaTables();
-	$this->_gs->_traceStop();
-
-	/*
-	 * Some databases (notably MySQL on Win32) don't support mixed case
-	 * table names.  So, when we get the meta table list back, it's lower
-	 * case.  Force all metatable listings to lower case and then expect
-	 * them to be lowercase so that we're consistent.
-	 */
-	for ($i = 0; $i < count($metatables); $i++) {
-	    $metatables[$i] = strtolower($metatables[$i]);
+	list ($ret, $metatables) = $this->_metaTables();
+	if ($ret) {
+	    return $ret;
 	}
 
 	/* If the schema table exists then delete all the tables it lists */
 	list ($schemaTableName, $unused) = $this->_gs->_translateTableName('Schema');
-	if (in_array(strtolower($schemaTableName), $metatables)) {
+	if (in_array(GalleryUtilities::strToLower($schemaTableName), $metatables)) {
 	    /* Load all table versions */
 	    list ($ret, $tableVersions) = $this->_loadTableVersions();
 	    if ($ret) {
@@ -1807,12 +1781,11 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    }
 
 	    /* Get rid of our sequences */
-	    foreach (array(DATABASE_SEQUENCE_LOCK, DATABASE_SEQUENCE_ID) as $sequenceId) {
-		$this->_gs->_traceStart();
-		$recordSet = $this->_gs->_db->DropSequence($this->_gs->_tablePrefix . $sequenceId);
-		$this->_gs->_traceStop();
-		if (empty($recordSet)) {
-		    return GalleryCoreApi::error(ERROR_STORAGE_FAILURE);
+	    foreach (array(DATABASE_SEQUENCE_LOCK, DATABASE_SEQUENCE_ID,
+			   DATABASE_SEQUENCE_EVENT_LOG) as $sequenceId) {
+		$ret = $this->dropSequence($sequenceId);
+		if ($ret) {
+		    return $ret;
 		}
 	    }
 	}
@@ -1844,13 +1817,14 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    return array($ret, null);
 	}
 
-	/* Get the metabase info about this database */
-	$this->_gs->_traceStart();
-	$metatables = $this->_gs->_db->MetaTables();
-	$this->_gs->_traceStop();
+	list ($ret, $metatables) = $this->_metaTables();
+	if ($ret) {
+	    return array($ret, null);
+	}
 
 	list ($schemaTableName) = $this->_gs->_translateTableName('Schema');
-	$isInstalled = preg_match("/\b$schemaTableName\b/i", implode(' ', $metatables));
+	$schemaTableName = GalleryUtilities::strToLower($schemaTableName);
+	$isInstalled = preg_match("/\b$schemaTableName\b/", implode(' ', $metatables));
 	return array(null, $isInstalled);
     }
 
@@ -1907,14 +1881,22 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
     /**
      * @see GalleryStorage::getAffectedRows
      */
-    function getAffectedRows() {
-	$ret = $this->_dbInit(true);
-	if ($ret) {
-	    return array($ret, null);
+    function getAffectedRows($useNonTransactionalConnection) {
+	if ($useNonTransactionalConnection && $this->_gs->isTransactional()) {
+	    list ($ret, $db) = $this->_getNonTransactionalDatabaseConnection();
+	    if ($ret) {
+		return array($ret, null);
+	    }
+	} else {
+	    $ret = $this->_dbInit(true);
+	    if ($ret) {
+		return array($ret, null);
+	    }
+	    $db = $this->_gs->_db;
 	}
 
 	$this->_gs->_traceStart();
-	$affectedRows = $this->_gs->_db->Affected_Rows();
+	$affectedRows = $db->Affected_Rows();
 	$this->_gs->_traceStop();
 
 	return array(null, $affectedRows);
@@ -1926,7 +1908,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
      * Request clearance to acquire locks and then wait until it's our turn.
      *
      * @param int $cutoffTime the time to stop trying to get clearance
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function _getLockClearance($cutoffTime) {
 	/* Get the true name of the lock table */
@@ -1970,7 +1952,6 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    $query = 'SELECT ' . $lockIdCol . ' FROM ' . $lockTable
 		   . ' WHERE ' . $requestCol . '=1 ORDER BY ' . $lockIdCol . ' ASC';
 
-	    $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
 	    $this->_gs->_traceStart();
 	    $recordSet = $db->SelectLimit($query, 1);
 	    $this->_gs->_traceStop();
@@ -2035,8 +2016,6 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	    $query = 'SELECT ' . $idCol . ', ' . $entityTypeCol
 		   . ' FROM ' . $table . ' WHERE ' . $idCol . ' IN (' . $markers . ')';
 
-	    $GLOBALS['ADODB_FETCH_MODE'] = ADODB_FETCH_NUM;
-
 	    $this->_gs->_traceStart();
 	    $recordSet = $this->_gs->_db->Execute($query, $checkIds);
 	    $this->_gs->_traceStop();
@@ -2088,60 +2067,27 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
      * @param string $entityName a class name
      * @param boolean $tryAllModules true if we should scan all modules, not just the active ones
      * @access protected
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               entity associative array
      */
     function describeEntity($entityName, $tryAllModules=false) {
 	global $gallery;
 
-	/* Note: keep these cache keys in sync with _clearEntityAndMapCache() */
-	$cacheKey = "GalleryStorage::describeEntity()";
-	$cacheParams = array('type' => 'module',
-			     'itemId' => 'GalleryStorage_describeEntity',
-			     'id' => '_all');
+	/* Note: keep this cache key in sync with GalleryStorageExtras::_clearEntityAndMapCache() */
+	$cacheKey = 'GalleryStorageExtras::describeEntity()';
 
 	/* We only cache the results for active modules */
-	if (!$tryAllModules) {
-	    if (!GalleryDataCache::containsKey($cacheKey)) {
-		$entityInfo =& GalleryDataCache::getFromDisk($cacheParams);
-		if (!empty($entityInfo)) {
-		    GalleryDataCache::put($cacheKey, $entityInfo);
-		}
-	    }  else {
-		$entityInfo = GalleryDataCache::get($cacheKey);
-	    }
+	if (!$tryAllModules && GalleryDataCache::containsKey($cacheKey)) {
+	    $entityInfo = GalleryDataCache::get($cacheKey);
 	}
 
 	if (!isset($entityInfo)) {
-	    list ($ret, $moduleStatus) = GalleryCoreApi::fetchPluginStatus('module');
+	    list ($ret, $entityInfo) = $this->_gs->_getEntityOrMapInfo('entity', $tryAllModules);
 	    if ($ret) {
 		return array($ret, null);
 	    }
 
-	    $entityInfo = array();
-	    foreach ($moduleStatus as $moduleId => $moduleInfo) {
-		if (!$tryAllModules && empty($moduleInfo['active'])) {
-		    continue;
-		}
-
-		/*
-		 * Don't use GalleryPlatform here because it can cause difficult-to-eliminate
-		 * issues in the testing code when we use mock platforms.  Once we have an
-		 * abstraction layer around GalleryCoreApi we can use the platform here.
-		 */
-		$moduleDir = GalleryCoreApi::getPluginBaseDir('module', $moduleId);
-		if ($ret) {
-		    return array($ret, null);
-		}
-
-		$entitiesFile = sprintf('%smodules/%s/classes/Entities.inc', $moduleDir, $moduleId);
-		if (file_exists($entitiesFile)) {
-		    include($entitiesFile);
-		}
-	    }
-
 	    if (!$tryAllModules) {
-		GalleryDataCache::putToDisk($cacheParams, $entityInfo);
 		GalleryDataCache::put($cacheKey, $entityInfo);
 	    }
 	}
@@ -2163,8 +2109,8 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	if (!isset($entityInfo[$entityName])) {
 	    $parentClass = get_parent_class($entityName);
 	    foreach (array_keys($entityInfo) as $candidate) {
-		if ($parentClass == $candidate || $parentClass == strtr($candidate,
-			    'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijlkmnopqrstuvwxyz')) {
+		if ($parentClass == $candidate
+			|| $parentClass == GalleryUtilities::strToLower($candidate)) {
 		    $entityInfo[$entityName] = array(
 			'members' => array(),
 			'parent' => $candidate,
@@ -2175,7 +2121,7 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
 	}
 
 	if (!isset($entityInfo[$entityName])) {
-	    return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER, __FILE__, __LINE__,
+	    return array(GalleryCoreApi::error(ERROR_MISSING_VALUE, __FILE__, __LINE__,
 					       "Unknown entity type: $entityName"), null);
 	}
 
@@ -2186,17 +2132,102 @@ class GalleryStorageExtras /* the other half of GalleryStorage */ {
      * Clear out the entity and map caches, which we should do any time we add or remove a table.
      */
     function _clearEntityAndMapCache() {
-	/* Note: keep these cache keys in sync with describeMap() */
-	GalleryDataCache::remove("GalleryStorage::describeMap()");
-	GalleryDataCache::removeFromDisk(array('type' => 'module',
-					       'itemId' => 'GalleryStorage_describeMap',
-					       'id' => '_all'));
+	/* Note: keep this cache key in sync with GalleryStorage::describeMap() */
+	GalleryDataCache::remove('GalleryStorage::describeMap()');
 
-	/* Note: keep these cache keys in sync with describeEntity() */
-	GalleryDataCache::remove("GalleryStorage::describeEntity()");
-	GalleryDataCache::removeFromDisk(array('type' => 'module',
-					       'itemId' => 'GalleryStorage_describeEntity',
-					       'id' => '_all'));
+	/* Note: keep this cache key in sync with GalleryStorageExtras::describeEntity() */
+	GalleryDataCache::remove('GalleryStorageExtras::describeEntity()');
+    }
+
+    /**
+     * Get a list of all database tables (not limited to our table-prefix)
+     * @return array GalleryStatus
+     *               array of table names in lower-case
+     */
+    function _metaTables() {
+	$this->_gs->_traceStart();
+	$metatables = $this->_gs->_db->MetaTables();
+	$this->_gs->_traceStop();
+	if ($metatables === false) {
+	    return array(GalleryCoreApi::error(ERROR_STORAGE_FAILURE), null);
+	}
+
+	/*
+	 * Some databases (notably MySQL on Win32) don't support mixed case
+	 * table names.  So, when we get the meta table list back, it's lower
+	 * case.  Force all metatable listings to lower case and then expect
+	 * them to be lowercase so that we're consistent.
+	 */
+	foreach ($metatables as $key => $tableName) {
+	    $metatables[$key] = GalleryUtilities::strToLower($tableName);
+	}
+
+	return array(null, $metatables);
+    }
+
+    /**
+     * Create a sequence.
+     * @param string $sequenceId Name of the sequence to create.
+     * @param integer $startId (optional) The number to initialize the sequence to. (default 1)
+     * @return GalleryStatus
+     */
+    function createSequence($sequenceId, $startId=1) {
+	$this->_gs->_traceStart();
+	$result = $this->_gs->_db->CreateSequence($this->_gs->_tablePrefix . $sequenceId, $startId);
+	$this->_gs->_traceStop();
+	if (empty($result)) {
+	    return GalleryCoreApi::error(ERROR_STORAGE_FAILURE, null, null,
+					 'Create Sequence failed for sequence: ' . $sequenceId);
+	}
+	return null;
+    }
+
+    /**
+     * Drop a sequence.
+     * @param string $sequenceId Name of the sequence to drop.
+     * @return GalleryStatus
+     */
+    function dropSequence($sequenceId) {
+	$this->_gs->_traceStart();
+	$recordSet = $this->_gs->_db->DropSequence($this->_gs->_tablePrefix . $sequenceId);
+	$this->_gs->_traceStop();
+	if ($recordSet === false) {
+	    return GalleryCoreApi::error(ERROR_STORAGE_FAILURE);
+	}
+	return null;
+    }
+
+    /**
+     * @see GalleryStorage::validateConnection
+     */
+    function validateConnection() {
+	if (isset($this->_gs->_nonTransactionalDb)) {
+	    $this->_gs->_traceStart();
+	    $time = $this->_gs->_nonTransactionalDb->Time();
+	    $this->_gs->_traceStop();
+	    if (!$time) {
+		unset($this->_gs->_nonTransactionalDb);
+		list ($ret) = $this->_getNonTransactionalDatabaseConnection();
+		if ($ret) {
+		    return $ret;
+		}
+	    }
+	}
+
+	if (isset($this->_gs->_db)) {
+	    $this->_gs->_traceStart();
+	    $time = $this->_gs->_db->Time();
+	    $this->_gs->_traceStop();
+	    if (!$time) {
+		unset($this->_gs->_db);
+		list ($ret, $this->_gs->_db) = $this->_gs->_getConnection();
+		if ($ret) {
+		    return $ret;
+		}
+	    }
+	}
+
+	return null;
     }
 }
 ?>

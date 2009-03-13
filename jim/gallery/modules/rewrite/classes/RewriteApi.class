@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,21 +23,21 @@
  * @package Rewrite
  * @subpackage Classes
  * @author Douglas Cau <douglas@cau.se>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class RewriteApi {
 
     /**
      * If this is set an error has occured where we couldn't report it.
      *
-     * @var object GalleryStatus a status code
+     * @var GalleryStatus a status code
      */
     var $_error;
 
     /**
      * Holds the active parser.
      *
-     * @var object RewriteParser active parser
+     * @var RewriteParser active parser
      */
     var $_parser;
 
@@ -53,7 +53,7 @@ class RewriteApi {
      * When using this API you should first make sure that your code is compatible with it.
      *
      * @param array $version major, minor version
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               boolean true if compatible with given version
      */
     function isCompatibleWithApi($version) {
@@ -73,7 +73,7 @@ class RewriteApi {
     /**
      * Checks if the parser needs configuration.
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               boolean true if configuration is needed
      */
     function needsEmbedConfig() {
@@ -97,7 +97,7 @@ class RewriteApi {
     /**
      * Returns the current active configuration values.
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array configuration settings (key => value)
      */
     function fetchEmbedConfig() {
@@ -122,7 +122,7 @@ class RewriteApi {
      * Saves the configuration.
      *
      * @param array $params settings to save (key => value)
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               int Rewrite Status code
      *               string translated error message
      */
@@ -148,7 +148,7 @@ class RewriteApi {
      * Fetch the active rewrite rules for a specific module which can be inactive at the time of
      * this call.
      * @param string $moduleId id of the module
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array $ruleIds list of the active rewrite rule ids
      */
     function fetchActiveRulesForModule($moduleId) {
@@ -181,7 +181,7 @@ class RewriteApi {
      *               activated
      * @param bool   $replacePatterns (optional) whether to replace active rules and patterns from
      *               the pattern history or to replace them. Defaults to false.
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               boolean true if the operation was successful, false if not (e.g. if the
      *               .htaccess could not be written or if the rules are invalid) 
      */

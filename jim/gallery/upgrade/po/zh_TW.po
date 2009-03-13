@@ -1,7 +1,7 @@
-# $Id: zh_TW.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: zh_TW.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
-# 
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Upgrader 2.2.2\n"
+"Project-Id-Version: Gallery: Upgrader 2.3\n"
 "POT-Creation-Date: 2005-08-03 23:11-0400\n"
 "PO-Revision-Date: 2005-08-03 23:11-0400\n"
 "Last-Translator: Stephen Chu <stephen@ju-ju.com>\n"
@@ -50,6 +50,24 @@ msgstr "無法清除頁面快取"
 msgid "Unable to commit database transaction"
 msgstr "無法送出資料庫異動"
 
+msgid "Database Backup"
+msgstr ""
+
+msgid "Error attempting to enable maintenance mode."
+msgstr ""
+
+msgid "Backing up the Gallery database"
+msgstr ""
+
+msgid "Errors occurred during the database backup"
+msgstr ""
+
+msgid "Error attempting to disable maintenance mode."
+msgstr ""
+
+msgid "Unable to determine if automated backup is available."
+msgstr ""
+
 msgid "Finish Upgrade"
 msgstr "升級完畢"
 
@@ -59,7 +77,7 @@ msgstr "系統檢查"
 msgid "Performing system checks"
 msgstr "進行系統檢查中"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
 msgstr "PHP 版本大於等於 4.3.0 或大於等於 5.0.4"
 
 #, c-format
@@ -230,13 +248,13 @@ msgstr "Zend 相容模式"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
-"警告：你的 PHP 設定使用可能使 PHP 當機的 Zend ze1_compatibility_mode 選項。請按<a href=\"%s"
-"\">這裡</a>測試 PHP。如果你看到「SUCCESS」表示你的 PHP 正常。如果你得到一個錯誤訊息或完全沒有"
-"反應，你需要把 ze1_compatibility_mode關掉才能繼續。"
+"警告：你的 PHP 設定使用可能使 PHP 當機的 Zend ze1_compatibility_mode 選項。請按%s這裡%s測試 "
+"PHP。如果你看到「SUCCESS」表示你的 PHP 正常。如果你得到一個錯誤訊息或完全沒有反應，你需要把 "
+"ze1_compatibility_mode關掉才能繼續。"
 
 msgid "putenv() allowed"
 msgstr "允許 putenv()"
@@ -280,11 +298,99 @@ msgstr ""
 "錯誤：在你的儲存目錄中的某些檔案或目錄無法被網頁伺服器用戶寫入。請執行 chown -R "
 "webserverUser %s 或執行 chmod -R 777 %s。"
 
+#, fuzzy, c-format
+msgid "Inaccessible or missing  files (%d)"
+msgstr "缺少的檔案（%d）"
+
 msgid "Gallery file integrity"
 msgstr "Gallery 完整性"
 
 msgid "Manifest missing or inaccessible."
 msgstr "找不到或無法存取檔案清單"
+
+msgid ""
+"Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
+"be safe to ignore these."
+msgstr ""
+"注意：你正在執行由 SVN 中下載的 Gallery，所以有些最近移除的檔案可能會出現在這裡。可能可以安全"
+"的忽略它們。"
+
+#, c-format
+msgid "Missing files (%d)"
+msgstr "缺少的檔案（%d）"
+
+msgid ""
+"Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
+"probably ignore these, but to be safe you should make sure that you do 'svn update' before "
+"continuing."
+msgstr ""
+"注意：你正在執行由 SVN 中下載的 Gallery，所以會有些修改過的檔案。你大概可以忽略這些檔案，可是"
+"為了安全起見，你最好先執行「svn update」指令再繼續。"
+
+#, c-format
+msgid "Modified files (%d)"
+msgstr "修改過的檔案（%d）"
+
+# c-format
+#, fuzzy, c-format
+msgid ""
+"These files are no longer part of Gallery. They probably won't cause any problems but it is "
+"a good idea to remove them to keep your install clean.  Gallery can't remove these files for "
+"you, but you can download and run %sthis script%s in your gallery2 directory to delete them "
+"for you."
+msgstr ""
+"Gallery 已經不再使用這些檔案。它們大概不會造成任何問題可是最好還是把它們刪除。Gallery 無法替"
+"你刪除這些檔案，可是你可以下載並在你的 gallery2 目錄中執行%s以刪除它們。"
+
+#, c-format
+msgid "Old files (%d)"
+msgstr "舊版的檔案（%d）"
+
+msgid "Database permissions"
+msgstr ""
+
+msgid ""
+"Error: The configured database user does not have the required database privileges to "
+"perform the upgrade."
+msgstr ""
+
+#, c-format
+msgid "The storage folder path is not defined in config.php (%s)"
+msgstr ""
+
+msgid "Database permission test failed. Could not connect to database."
+msgstr ""
+
+msgid "Database permission test failed. Could not acquire database information."
+msgstr ""
+
+#, c-format
+msgid "Could not find an unused table prefix similar to \"%s\"."
+msgstr ""
+
+msgid "Database permission test failed due to corrupted file integrity."
+msgstr ""
+
+msgid "Failed to create, alter or drop a database test table. "
+msgstr ""
+
+msgid ""
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
+msgstr ""
+
+msgid ""
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
+msgstr ""
+
+msgid "Missing SQL statements"
+msgstr ""
+
+msgid ""
+"Check the returned error message and README.html for missing privileges and clean up the "
+"database."
+msgstr ""
 
 msgid "Upgrade Core"
 msgstr "升級核心"
@@ -440,6 +546,84 @@ msgstr ""
 msgid "Try Again"
 msgstr "再試一次"
 
+#, fuzzy
+msgid ""
+"Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  "
+"If you fail to make a backup and something goes wrong, there is a strong possibility that we "
+"will not be able to help you recover your data!"
+msgstr ""
+"在你升級之前，我們<b>強烈建議</b>你先備份你的資料庫！如果你沒有備份而且發生了問題，很可能我們"
+"會無法幫你復原你的資料！請參考下面的範例："
+
+msgid "You have three options:"
+msgstr ""
+
+msgid "You have two options:"
+msgstr ""
+
+msgid "Do the automated backup (<b>recommended</b>)."
+msgstr ""
+
+msgid "Do a manual backup (see below)."
+msgstr ""
+
+msgid "MySQL"
+msgstr "MySQL"
+
+msgid "PostgreSQL"
+msgstr "PostgreSQL"
+
+msgid "Oracle"
+msgstr "Oracle"
+
+msgid "IBM DB2"
+msgstr "IBM DB2"
+
+msgid "Microsoft SQL Server"
+msgstr "Microsoft SQL Server"
+
+msgid "Continue without a backup (<b>discouraged</b>)."
+msgstr ""
+
+#, fuzzy
+msgid ""
+"If you choose to perform the automated backup, please be patient.  If you cancel or reload "
+"the page, you may interfere with the backup process."
+msgstr ""
+"一旦升級的動作開始後，請耐心等候。如果你取消或重新載入這個頁面，你可能會干擾升級的程序。"
+
+msgid "Begin Database Backup"
+msgstr ""
+
+msgid "Skip Database Backup"
+msgstr ""
+
+#, c-format
+msgid "Continue to Step %d&raquo;"
+msgstr "繼續到步驟 %d&raquo;"
+
+msgid "Stack Trace:"
+msgstr "堆疊記錄："
+
+msgid "Gallery Database Backup successful."
+msgstr ""
+
+#, fuzzy
+msgid "We've successfully backed up the data in your Gallery database."
+msgstr "我們成功地升級了 Gallery 核心模組。"
+
+msgid "The following warnings were produced during the backup process:"
+msgstr ""
+
+#, c-format
+msgid "Database backup completed and the backup file is located at: %s."
+msgstr ""
+
+msgid ""
+"Please note that your backup contains sensitive data (like passwords) and should not be "
+"stored online! We recommend that you download it from your server and keep it safely offline."
+msgstr ""
+
 msgid "Finished!"
 msgstr "完成了！"
 
@@ -478,52 +662,8 @@ msgstr "升級進度 %d%%"
 msgid "Redo this step"
 msgstr "重覆這個步驟"
 
-#, c-format
-msgid "Continue to Step %d&raquo;"
-msgstr "繼續到步驟 %d&raquo;"
-
 msgid "Gallery: <strong>your photos</strong> on <strong>your website</strong>"
 msgstr "Gallery：<strong>你的照片</strong>、<strong>你的網站</strong>"
-
-#, c-format
-msgid "Missing files (%d)"
-msgstr "缺少的檔案（%d）"
-
-msgid ""
-"Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
-"be safe to ignore these."
-msgstr ""
-"注意：你正在執行由 SVN 中下載的 Gallery，所以有些最近移除的檔案可能會出現在這裡。可能可以安全"
-"的忽略它們。"
-
-#, c-format
-msgid "Modified files (%d)"
-msgstr "修改過的檔案（%d）"
-
-msgid ""
-"Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
-"probably ignore these, but to be safe you should make sure that you do 'svn update' before "
-"continuing."
-msgstr ""
-"注意：你正在執行由 SVN 中下載的 Gallery，所以會有些修改過的檔案。你大概可以忽略這些檔案，可是"
-"為了安全起見，你最好先執行「svn update」指令再繼續。"
-
-#, c-format
-msgid "Old files (%d)"
-msgstr "舊版的檔案（%d）"
-
-# c-format
-#, c-format
-msgid ""
-"These files are no longer part of Gallery. They probably won't cause any problems but it is "
-"a good idea to remove them to keep your install clean.  Gallery can't remove these files for "
-"you, but you can download and run %s in your gallery2 directory to delete them for you."
-msgstr ""
-"Gallery 已經不再使用這些檔案。它們大概不會造成任何問題可是最好還是把它們刪除。Gallery 無法替"
-"你刪除這些檔案，可是你可以下載並在你的 gallery2 目錄中執行%s以刪除它們。"
-
-msgid "this script"
-msgstr "這個指令檔"
 
 msgid "Upgrade Steps"
 msgstr "升級步驟"
@@ -577,9 +717,6 @@ msgstr ""
 "當我們試著升級核心模組時發生了問題。你可以在下面找到一些除錯的資訊。請在 %sGallery 論譠%s中報"
 "告這個錯誤，我們會幫你推測這個問題。"
 
-msgid "Stack Trace:"
-msgstr "堆疊記錄："
-
 msgid "Debug Output:"
 msgstr "除蟲輸出："
 
@@ -624,29 +761,6 @@ msgid ""
 msgstr ""
 "目前安裝的版本比你要升級的版本還新。你不能把 G2 降級。請把 Gallery 2 的檔案換成目前安裝或更新"
 "的版本"
-
-msgid ""
-"Before you upgrade, we <b>strongly recommend</b> that you make a backup of your database!  "
-"If you fail to make a backup and something goes wrong, there is a strong possibility that we "
-"will not be able to help you recover your data!  Refer to the following example:"
-msgstr ""
-"在你升級之前，我們<b>強烈建議</b>你先備份你的資料庫！如果你沒有備份而且發生了問題，很可能我們"
-"會無法幫你復原你的資料！請參考下面的範例："
-
-msgid "MySQL"
-msgstr "MySQL"
-
-msgid "PostgreSQL"
-msgstr "PostgreSQL"
-
-msgid "Oracle"
-msgstr "Oracle"
-
-msgid "IBM DB2"
-msgstr "IBM DB2"
-
-msgid "Microsoft SQL Server"
-msgstr "Microsoft SQL Server"
 
 msgid ""
 "Once the upgrade has begun, please be patient.  If you cancel or reload the page, you may "
@@ -762,3 +876,6 @@ msgstr "選擇語言："
 
 msgid "Go"
 msgstr "開始"
+
+#~ msgid "this script"
+#~ msgstr "這個指令檔"

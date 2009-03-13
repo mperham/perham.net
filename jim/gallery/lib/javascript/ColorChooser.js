@@ -1,6 +1,6 @@
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,21 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
  */
-
+/*
+ * Author: Felix Rabinovich
+ *         Based in large parts on yui/examples/slider/rgb2.html
+ */
 var hue;
 var picker;
 var dd;
 
 function init() {
 	hue = YAHOO.widget.Slider.getVertSlider("Markup_hueBg", "Markup_hueThumb", 0, 180);
-	hue.onChange = function(newVal) { hueUpdate(newVal); };
+	hue.onChange = function() { hueUpdate(); };
 
 	picker = YAHOO.widget.Slider.getSliderRegion("Markup_pickerDiv", "Markup_selector", 
 			0, 180, 0, 180);
-	picker.onChange = function(newX, newY) { pickerUpdate(newX, newY); };
+	picker.onChange = function() { pickerUpdate(); };
 	hueUpdate();
 
 	dd = new YAHOO.util.DD("Markup_colorChooser");
@@ -50,44 +53,51 @@ function init() {
     }
 }
 
-function pickerUpdate(newX, newY) {
+// hue, int[0,359]
+var getH = function() {
+	var h = (180 - hue.getValue()) / 180;
+	h = Math.round(h*360);
+	return (h == 360) ? 0 : h;
+}
+
+// saturation, int[0,1], left to right
+var getS = function() {
+	return picker.getXValue() / 180;
+}
+
+// value, int[0,1], top to bottom
+var getV = function() {
+	return (180 - picker.getYValue()) / 180;
+}
+
+function pickerUpdate() {
 	swatchUpdate();
 }
 
-function hueUpdate(newVal) {
-	var h = (180 - hue.getValue()) / 180;
-	if (h == 1) { h = 0; }
-	var a = YAHOO.util.Color.hsv2rgb( h, 1, 1);
-
+function hueUpdate() {
+	var rgb = YAHOO.util.Color.hsv2rgb( getH(), 1, 1);
 	document.getElementById("Markup_pickerDiv").style.backgroundColor = 
-		"rgb(" + a[0] + ", " + a[1] + ", " + a[2] + ")";
+		"rgb(" + rgb.join(",") + ")";
 
 	swatchUpdate();
 }
 
 function swatchUpdate() {
-	var h = (180 - hue.getValue());
-	if (h == 180) { h = 0; }
-	document.getElementById("Markup_hval").value = (h*2);
-
-	h = h / 180;
-
-	var s = picker.getXValue() / 180;
+    var h=getH(), s=getS(), v=getV();
+	document.getElementById("Markup_hval").value = h;
 	document.getElementById("Markup_sval").value = Math.round(s * 100);
-
-	var v = (180 - picker.getYValue()) / 180;
 	document.getElementById("Markup_vval").value = Math.round(v * 100);
 
-	var a = YAHOO.util.Color.hsv2rgb( h, s, v );
+	var rgb = YAHOO.util.Color.hsv2rgb( h, s, v );
 
 	document.getElementById("Markup_swatch").style.backgroundColor = 
-		"rgb(" + a[0] + ", " + a[1] + ", " + a[2] + ")";
+		"rgb(" + rgb.join(",") + ")";
 
-	document.getElementById("Markup_rval").value = a[0];
-	document.getElementById("Markup_gval").value = a[1];
-	document.getElementById("Markup_bval").value = a[2];
+	document.getElementById("Markup_rval").value = rgb[0];
+	document.getElementById("Markup_gval").value = rgb[1];
+	document.getElementById("Markup_bval").value = rgb[2];
 	document.getElementById("Markup_hexval").value = 
-		YAHOO.util.Color.rgb2hex(a[0], a[1], a[2]);
+		YAHOO.util.Color.rgb2hex(rgb[0], rgb[1], rgb[2]);
 }
 
 function userUpdate() {
@@ -96,6 +106,9 @@ function userUpdate() {
 	var color = document.getElementById("Markup_hexval").value;
 	element.value = element.value + '[color=#' + color + ']';
 	colorChooser.style.display = 'none';
+	if (typeof(element.selectionStart) != "undefined") {
+	element.selectionStart = element.selectionEnd = element.value.length;
+	}
 	element.focus();
 }
 

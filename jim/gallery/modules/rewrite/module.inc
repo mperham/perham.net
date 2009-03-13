@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
  *
  * @package Rewrite
  * @author Douglas Cau <douglas@cau.se>
- * @version $Revision: 16471 $
+ * @version $Revision: 18172 $
  */
 class RewriteModule extends GalleryModule {
 
@@ -35,11 +35,12 @@ class RewriteModule extends GalleryModule {
 	$this->setName($gallery->i18n('URL Rewrite'));
 	$this->setDescription($gallery->i18n(
 	    'Enables short URLs using Apache mod_rewrite, ISAPI Rewrite, or PathInfo'));
-	$this->setVersion('1.1.13.2'); /* Update RewriteModuleExtras::upgrade too! */
+	$this->setVersion('1.1.18'); /* Update RewriteModuleExtras::upgrade too! */
+	$this->_templateVersion = 1;
 	$this->setGroup('gallery', $gallery->i18n('Gallery'));
-	$this->setCallbacks('getSiteAdminViews|registerEventListeners');
-	$this->setRequiredCoreApi(array(7, 5));
-	$this->setRequiredModuleApi(array(3, 5));
+	$this->setCallbacks('getSiteAdminViews');
+	$this->setRequiredCoreApi(array(7, 34));
+	$this->setRequiredModuleApi(array(3, 6));
     }
 
     /**
@@ -78,16 +79,6 @@ class RewriteModule extends GalleryModule {
 	}
 
 	return null;
-    }
-
-    /**
-     * @see GalleryModule::registerEventListeners
-     */
-    function registerEventListeners() {
-	$listener = new RewriteModule();
-	GalleryCoreApi::registerEventListener('Gallery::DeactivatePlugin', $listener, true);
-	GalleryCoreApi::registerEventListener('Gallery::ActivatePlugin', $listener, true);
-	GalleryCoreApi::registerEventListener('Gallery::UninstallPlugin', $listener, true);
     }
 
     /**
@@ -202,6 +193,14 @@ class RewriteModule extends GalleryModule {
      * @see GalleryModule::performFactoryRegistrations
      */
     function performFactoryRegistrations() {
+	$ret = GalleryCoreApi::registerFactoryImplementation(
+	    'GalleryEventListener', 'RewriteModule', 'RewriteModule', 
+	    'modules/rewrite/module.inc', 'rewrite', array('Gallery::DeactivatePlugin', 
+		'Gallery::ActivatePlugin', 'Gallery::UninstallPlugin'));
+	if ($ret) {
+	    return $ret;
+	}
+
 	GalleryCoreApi::requireOnce('modules/rewrite/classes/RewriteHelper.class');
 	list ($ret, $rewriteParser) = RewriteHelper::getRewriteParser();
 	if ($ret) {

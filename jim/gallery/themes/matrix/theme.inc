@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Themes
  * @subpackage Matrix
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 16034 $
+ * @version $Revision: 18172 $
  */
 class MatrixTheme extends GalleryTheme {
 
@@ -33,8 +33,8 @@ class MatrixTheme extends GalleryTheme {
 	$this->setId('matrix');
 	$this->setName($gallery->i18n('Matrix'));
 	$this->setDescription($gallery->i18n('Standard Gallery2 look and feel'));
-	$this->setVersion('1.1.4');
-	$this->setRequiredCoreApi(array(7, 10));
+	$this->setVersion('1.1.6');
+	$this->setRequiredCoreApi(array(7, 20));
 	$this->setRequiredThemeApi(array(2, 4));
 	$this->setStandardSettings(
 	    array('rows' => 3, 'columns' => 3,

@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="EXIF/IPTC Settings"} </h2>
@@ -162,14 +160,14 @@
     {g->text text="When photos are added to Gallery check for EXIF Image Description and apply to:"}
   </p>
   <p class="giDescription">
-    <input type="checkbox" id="cbItemSummary"{if $form.item.summary} checked="checked"{/if}
+    <input type="checkbox" id="cbItemSummary" {if $form.item.summary}checked="checked" {/if}
      name="{g->formVar var="form[item][summary]"}"/>
     <label for="cbItemSummary">
       {g->text text="Item Summary"}
     </label>
     <br/>
 
-    <input type="checkbox" id="cbItemDescription"{if $form.item.description} checked="checked"{/if}
+    <input type="checkbox" id="cbItemDescription" {if $form.item.description}checked="checked" {/if}
      name="{g->formVar var="form[item][description]"}"/>
     <label for="cbItemDescription">
       {g->text text="Item Description"}
@@ -179,7 +177,7 @@
     {g->text text="When photos are added to Gallery check for IPTC Keywords and apply to:"}
   </p>
   <p class="giDescription">
-    <input type="checkbox" id="cbItemKeywords"{if $form.item.keywords} checked="checked"{/if}
+    <input type="checkbox" id="cbItemKeywords" {if $form.item.keywords}checked="checked" {/if}
      name="{g->formVar var="form[item][keywords]"}"/>
     <label for="cbItemKeywords">
       {g->text text="Item Keywords"}
@@ -189,7 +187,7 @@
     {g->text text="When photos are added to Gallery check for IPTC Object Name and apply to:"}
   </p>
   <p class="giDescription">
-    <input type="checkbox" id="cbItemObjectName"{if $form.item.objectName} checked="checked"{/if}
+    <input type="checkbox" id="cbItemObjectName" {if $form.item.objectName}checked="checked" {/if}
      name="{g->formVar var="form[item][objectName]"}"/>
     <label for="cbItemObjectName">
       {g->text text="Item Title"}
@@ -199,14 +197,19 @@
     {g->text text="When photos are added should we rotate them based on EXIF orientation data?"}
   </p>
   <p class="giDescription">
-    <input type="checkbox" id="cbItemExifRotate"{if $form.item.exifrotate} checked="checked"{/if}
+    <input type="checkbox" id="cbItemExifRotate" {if $form.item.exifrotate}checked="checked" {/if}
      name="{g->formVar var="form[item][exifrotate]"}"/>
     <label for="cbItemExifRotate">
       {g->text text="Rotate pictures automatically"}
     </label>
   </p>
+  {if !$AdminExif.canRotate}
+  <p class="giWarning">
+    {g->text text="Warning: No toolkit support for rotation of JPEG images.  Make sure to activate a toolkit module if using this option."}
+  </p>
+  {/if}
   <p class="giDescription">
-    <input type="checkbox" id="cbItemExifRotatePreserve"{if $form.item.exifrotatepreserve} checked="checked"{/if}
+    <input type="checkbox" id="cbItemExifRotatePreserve" {if $form.item.exifrotatepreserve}checked="checked" {/if}
      name="{g->formVar var="form[item][exifrotatepreserve]"}"/>
     <label for="cbItemExifRotatePreserve">
       {g->text text="Preserve Original on Rotating"}

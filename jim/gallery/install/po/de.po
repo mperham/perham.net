@@ -1,7 +1,7 @@
-# $Id: de.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: de.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,19 +16,19 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
-# 
+#
 # Previous translators (as far as known, add yourself here, please):
 # - Georg Rehfeld <rehfeld@georg-rehfeld.de>
 # - Frederik Kunz <frederik.kunz@web.de>
 # - Bananeweizen <bananeweizen@gmx.de>
-# 
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-19 01:26+0100\n"
-"PO-Revision-Date: 2006-11-06 23:45+0100\n"
-"Last-Translator: Andy Staudacher <ast@gmx.ch>\n"
+"PO-Revision-Date: 2008-07-25 22:45+0100\n"
+"Last-Translator: Jens Tkotz <jens@peino.de>\n"
 "Language-Team: German <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,16 +77,6 @@ msgid "Create Config File"
 msgstr "Konfigurationsdatei erzeugen"
 
 #, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Das Schreiben der Datei <b>config.php</b> in Ihrem Ordner %s ist fehlgeschlagen.  Bitte "
-"ändern Sie die Zugriffsrechte der Datei.  Unter UNIX können Sie das Kommando <i>chmod 666 "
-"config.php</i> benutzen, um dieses Problem zu lösen."
-
-#, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "Es existiert keine Datei namens config.php im Ordner %s"
 
@@ -118,6 +108,9 @@ msgstr "Sie müssen das PHP-Modul für Oracle OCI8 installiert haben"
 
 msgid "You must have the Component Object Model(COM) PHP module installed"
 msgstr "Sie müssen das PHP-Modul für COM Support installiert haben"
+
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
+msgstr "Sie müssen das PHP-Modul für PHP Data Objects (PDO) Support installiert haben."
 
 #, c-format
 msgid "You must specify a column prefix (we recommend %s)"
@@ -232,7 +225,10 @@ msgstr "IBM DB2 (v9.x und neuer)"
 msgid "Microsoft SQL Server 2005 and newer"
 msgstr "Microsoft SQL Server 2005 und neuer"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr "SQLite v3.x (Experimentell!)"
+
+msgid "Unknown database type or no known tables information."
 msgstr "Unbekannter DB-Typ oder keine bekannte Tabellen-Information."
 
 #, c-format
@@ -244,18 +240,18 @@ msgid "Could not open schema file: \"%s\"."
 msgstr "Konnte die Schemadatei \"%s\" nicht öffnen."
 
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "Konnte keine DB-Testsequenz erstellen. Schauen Sie in die zurückgegebene Fehlermeldung und "
-"in die README.html bezüglich fehlender Privilegien und reinigen SIe die Datenbank."
+"in die README.html bezüglich fehlender Privilegien und reinigen Sie die Datenbank."
 
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "Der Test, eine DB Testsequenz auszuführen schlug fehl. Überprüfen Sie die zurückgegebenen "
-"Fehlermeldungen oder die README.html hinsichtlich fehlender Privilegien und reinigen Sie die "
+"Fehlermeldungen und die README.html hinsichtlich fehlender Privilegien und reinigen Sie die "
 "Datenbank."
 
 msgid "Missing SQL statements"
@@ -340,8 +336,8 @@ msgstr "Systemprüfungen"
 msgid "Performing system checks"
 msgstr "Führe Systemprüfungen durch"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP-Version >= 4.3.0 oder >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP-Version &gt;= 4.3.0 oder &gt;= 5.0.4"
 
 # param0 = existing php version, param1 = '<a href...>', param2 = '</a>'
 #, c-format
@@ -526,15 +522,14 @@ msgstr "Zend-Kompatibilitätsmodus"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Warnung: Ihr PHP ist für den Zend Modus <tt>ze1_compatibility_mode</tt> konfiguriert, "
-"wodurch PHP abstürzen kann.  Klicken Sie <a href=\"%s\">hier</a>, um Ihr PHP zu testen.  "
-"Wenn Sie \"SUCCESS\" (Erfolg) sehen, dann ist Ihr PHP OK. Erhalten Sie einen Fehler oder "
-"keine Antwort, dann müssen Sie den <tt>ze1_compatibility_mode</tt> abschalten, bevor Sie "
-"fortfahren."
+"wodurch PHP abstürzen kann.  Klicken Sie %shier%s, um Ihr PHP zu testen.  Wenn Sie \"SUCCESS"
+"\" (Erfolg) sehen, dann ist Ihr PHP OK. Erhalten Sie einen Fehler oder keine Antwort, dann "
+"müssen Sie den <tt>ze1_compatibility_mode</tt> abschalten, bevor Sie fortfahren."
 
 msgid "putenv() allowed"
 msgstr "putenv() erlaubt"
@@ -718,6 +713,18 @@ msgstr "Eine Konfigurationsdatei erstellen"
 
 #, c-format
 msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Das Schreiben der Datei <b>config.php</b> in Ihrem Ordner %s ist fehlgeschlagen.  Bitte "
+"ändern Sie die Zugriffsrechte der Datei.  Unter UNIX können Sie das Kommando <i>chmod 666 "
+"config.php</i> benutzen, um dieses Problem zu lösen. Alternativ können Sie die %sconfig.php "
+"herrunterladen%s und Ihre existierende Datei im Order %s damit ersetzen."
+
+#, c-format
+msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
 "b> in your <b>%s</b> directory.  This is a very important file that gives Gallery all the "
 "information that it needs to operate.  After we create it, you can read through this file "
@@ -803,6 +810,12 @@ msgstr "DB-Passwort:"
 msgid "DB Name:"
 msgstr "DB-Name:"
 
+msgid "DB Schema:"
+msgstr "DB Schema:"
+
+msgid "(optional)"
+msgstr "(optional)"
+
 msgid "Table Prefix:"
 msgstr "Tabellen-Präfix:"
 
@@ -834,14 +847,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Gehe zu meiner Gallery!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"Sie können nun Ihre neue Gallery anschauen.  Geben Sie in Ihrem Browser die URL für %smain."
-"php%s in Ihrem %s-Ordner ein."
 
 msgid "Installer Help"
 msgstr "Installationshilfe"
@@ -1032,16 +1037,13 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "Es sind Fehler aufgetreten. Bitte lesen Sie die folgenden Meldungen."
 
-msgid "Please select the installation type"
-msgstr "Bitte wählen Sie den Installationstypen aus"
-
 msgid "Standard installation"
 msgstr "Standard-Installation"
 
 #, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 "Dies ist der standardmäßige Installationstyp. Wählen Sie diese Installation, falls Sie eine "
 "neue Gallery in den Ordner %s installieren wollen, die dann unter der URL %s abrufbar sein "
@@ -1050,38 +1052,27 @@ msgstr ""
 msgid "Multisite installation"
 msgstr "Multisite-Installation"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Gallery kann mehrere unabhängige Auftritte (Fotogalerien) mit nur einer einzigen Code-"
-"Installation (Codebase) bedienen. Wählen Sie diese Installation, wenn Sie eine neue Gallery "
-"auf dem selben Webserver aber in einem anderen Pfad, einer anderen Subdomäne oder URL-Domäne "
-"installieren wollen."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"Die Multisites haben keine gemeinsamen Alben, Photos, Benutzer oder dergleichen. Jede "
-"einzelne braucht Ihre eigene Datenbank und Ihren einen Speicherordner. Für mehr "
-"Informationen und Erklärungen hinsichtlich Multisite-Installationen, besuchen Sie die %s "
-"Seite."
+"Diese Einstellungen sind für mehrere Gallery Installation auf einen Server. Jede Gallery ist "
+"vollkommen unabhängig und hat je eine eigene Datenbank für Bilder, Alben, Benutzer etc. Für "
+"mehr Details schauen Sie auf die %s Seite."
 
 msgid "You must enter a directory"
 msgstr "Sie müssen einen Ordner angeben"
 
+#, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
-"Der von Ihnen geöffnete Ordner ist der Codebase-Ordner. Falls Sie eine Gallery in das "
-"Codebase-Verzeichnis installieren wollen, wählen Sie die Standard-Installation. Wenn Sie "
-"eine Multisite installieren wollen, wählen Sie einen anderen Ordner."
+"Der von Ihnen angegeben Ordner ist der %s Ordner. Falls Sie eine Gallery in dieses  "
+"installieren wollen, wählen Sie die Standard-Installation. Wenn Sie eine Multisite "
+"installieren wollen, wählen Sie einen anderen Ordner."
 
 msgid ""
 "The directory you entered either does not exist, or is prohibited by your webserver "
@@ -1096,9 +1087,9 @@ msgstr ""
 "geändert werden, um ein neues Verzeichnis zu erlauben."
 
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
 "Falls sich Ihre Multisite-Installation auf einem anderen Virtual Host befindet, sollten Sie "
 "den Systemadministrator kontaktieren und eine Änderung der PHP <b>open_basedir</b> "
@@ -1119,25 +1110,19 @@ msgstr ""
 "Multisite-Dateien können nicht erzeugt werden. Stellen Sie sicher, dass die folgenden "
 "Dateien Schreibrechte haben."
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Alle Multisites werden von dieser einen, zentralen Codebase installiert."
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
+msgstr "Verzeichnis Ihrer neuen Gallery Installation (Beispiel: /var/www/html/gallery2)"
 
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "You must provide the URL for your new multisite"
+msgstr "Sie müssen die URL für Ihre neue Multisite Gallery angeben."
+
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
 msgstr ""
-"Geben Sie unten ein Verzeichnis für die neue Multisite ein. Der Pfad muss sich von dem "
-"dieser Codebase-Installation unterscheiden:"
+"URL unter der Ihre Gallery erreichbar ist (Beispiel: http://www.example.com/gallery2/main."
+"php)"
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
-msgstr ""
-"Der Ordner muss Schreibrechte für Ihren Web-Server/PHP-Benutzer besitzen oder die folgenden "
-"Dateien mit Schreibrechten enthalten:"
-
-msgid "Select Directory"
-msgstr "Ordner auswählen"
+msgid "Select Directory and URL"
+msgstr "Wählen Sie Ordner und URL aus"
 
 msgid "Multisite directory setup successfully."
 msgstr "Multisite-Ordner erfolgreich eingerichtet."
@@ -1244,6 +1229,9 @@ msgstr ""
 "eingegebenen Pfad automatisch zu vervollständigen. Sollten Sie also Probleme haben, den "
 "richtigen Pfad für Ihr g2data-Ordner zu finden, experimentieren Sie mit den Pfaden in der "
 "Eingabezeile unten und schauen Sie, welche Vervollständigungen Ihnen angeboten werden."
+
+msgid "Do not use the installation directory for storage"
+msgstr "Bitte wählen Sie nicht das Installationsverzeichnis als Ablage für Ihre Daten."
 
 msgid "The directory you entered is read only"
 msgstr "Der von Ihnen angegebene Ordner ist schreibgeschützt"

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Themes
  * @subpackage Siriux
  * @author Nico Kaiser <nico@siriux.net>
- * @version $Revision: 16034 $
+ * @version $Revision: 18172 $
  */
 class SiriuxTheme extends GalleryTheme {
 
@@ -33,8 +33,8 @@ class SiriuxTheme extends GalleryTheme {
 	$this->setId('siriux');
 	$this->setName($gallery->i18n('Siriux'));
 	$this->setDescription($gallery->i18n('Siriux.net Gallery theme'));
-	$this->setVersion('1.1.3');
-	$this->setRequiredCoreApi(array(7, 10));
+	$this->setVersion('1.1.5');
+	$this->setRequiredCoreApi(array(7, 20));
 	$this->setRequiredThemeApi(array(2, 4));
 	$this->setStandardSettings(
 	    array('perPage' => 9,

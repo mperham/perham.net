@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15813 $
+ * @version $Revision: 17580 $
  * @abstract
  */
 class GalleryController {
@@ -99,7 +99,7 @@ class GalleryController {
      * should return to the URL where the login link was clicked.
      *
      * @param array $form the form values
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               return-array
      */
     function handleRequest($form) {
@@ -112,8 +112,8 @@ class GalleryController {
      * Be very security conscious about checking the inputs for possible misuse
      *
      * @param string $controllerName a controller name (eg. 'core.Logout')
-     * @return array object GalleryStatus a status code
-     *               object GalleryController a controller
+     * @return array GalleryStatus a status code
+     *               GalleryController a controller
      * @static
      */
     function loadController($controllerName) {
@@ -150,7 +150,7 @@ class GalleryController {
 
 	$controllerClassName = $class . 'Controller';
 	if (!class_exists($controllerClassName)) {
-	    $moduleBaseDir = GalleryCoreApi::getPluginBaseDir('module', $module);
+	    $moduleBaseDir = GalleryCoreApi::getCodeBasePath();
 	    $fileName = 'modules/' . $module . '/' . $class . '.inc';
 
 	    $platform =& $gallery->getPlatform();
@@ -213,7 +213,7 @@ class GalleryController {
      * 
      * All requests that modify data must be signed, except the request is by a guest.
      * 
-     * @return object GalleryStatus a status code null on success, ERROR_REQUEST_FORGED on failure
+     * @return GalleryStatus a status code null on success, ERROR_REQUEST_FORGED on failure
      * @static
      */
     function assertIsGenuineRequest() {
@@ -239,6 +239,55 @@ class GalleryController {
 		return GalleryCoreApi::error(ERROR_REQUEST_FORGED);
 	    }
 	}
+    }
+
+    /**
+     * Return the current item, as specified in the itemId request variable.
+     *
+     * @param bool $checkPermissions (optional) Default true. Whether to enfore the required (view)
+     *                                          permission.
+     * @return array GalleryStatus a status code,
+     *               GalleryItem an item
+     * @throws ERROR_MISSING_VALUE if there is no itemId in the request parameters.
+     */
+    function getItem($checkPermissions=true) {
+	$itemId = (int)GalleryUtilities::getRequestVariables('itemId');
+
+	if (empty($itemId)) {
+	    return array(GalleryCoreApi::error(ERROR_MISSING_VALUE), null);
+	}
+
+	/* Load the item */
+	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
+	if ($ret) {
+	    return array($ret, null);
+	}
+
+	if ($checkPermissions) {
+	    list ($ret, $hasPermission) = GalleryCoreApi::hasItemPermission($itemId, 'core.view');
+	    if ($ret) {
+		return array($ret, null);
+	    }
+	    if (!$hasPermission) {
+		/* Avoid information disclosure by treating this as if the item didn't exist. */
+		return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+	    }
+	}
+
+	return array(null, $item);
+    }
+
+    /**
+     * @see GalleryView::_permissionCheck()
+     */
+    function permissionCheck($ret) {
+	GalleryCoreApi::requireOnce('modules/core/classes/GalleryView.class');
+	$view = new GalleryView();
+	list ($ret, $results) = $view->_permissionCheck($ret);
+	if (!empty($results['redirect'])) {
+	    $results['status'] = $results['error'] = array();
+	}
+	return array($ret, $results);
     }
 }
 ?>

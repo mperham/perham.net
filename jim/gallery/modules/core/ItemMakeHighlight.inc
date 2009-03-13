@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Ernesto Baschny <ernst@baschny.de>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class ItemMakeHighlightController extends GalleryController {
 
@@ -33,22 +33,37 @@ class ItemMakeHighlightController extends GalleryController {
     function handleRequest($form) {
 	$status = array();
 	$error = array();
+
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
+
 	if (isset($form['action']['makeHighlight'])) {
-	    $itemId = GalleryUtilities::getRequestVariables('itemId');
-	    list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+	    if (empty($form['parentId'])) {
+		return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
+	    }
+	    $parentId = (int)$form['parentId'];
+
+	    list ($ret, $canView) = GalleryCoreApi::hasItemPermission($parentId, 'core.view');
 	    if ($ret) {
 		return array($ret, null);
 	    }
+	    if (!$canView) {
+		/* Avoid information disclosure, act as if the item didn't exist. */
+		return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
+	    }
 
 	    /* Make sure we have permission to edit this item */
-	    $ret = GalleryCoreApi::assertHasItemPermission($form['parentId'], 'core.edit');
+	    $ret = GalleryCoreApi::assertHasItemPermission($parentId, 'core.edit');
 	    if ($ret) {
 		return array($ret, null);
 	    }
 
 	    /* XXX: What should we do if this fails? */
 	    list ($ret, $success) =
-		GalleryCoreApi::setThumbnailFromItem($form['parentId'], $itemId);
+		GalleryCoreApi::setThumbnailFromItem($parentId, $itemId);
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -71,12 +86,11 @@ class ItemMakeHighlightView extends GalleryView {
      * @see GalleryView::loadTemplate
      */
     function loadTemplate(&$template, &$form) {
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
-
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+	list ($ret, $item) = $this->getItem();
 	if ($ret) {
 	    return array($ret, null);
 	}
+	$itemId = $item->getId();
 	$parentId = $item->getParentId();
 
 	/* Make sure we have permission do edit the parent of this item */
@@ -89,7 +103,8 @@ class ItemMakeHighlightView extends GalleryView {
 	    $form['formName'] = 'ItemMakeHighlight';
 	}
 
-	list ($ret, $parents) = GalleryCoreApi::fetchParents($item, 'core.edit', true);
+	list ($ret, $parents) =
+	    GalleryCoreApi::fetchParents($item, array('core.edit', 'core.view'), true);
 	if ($ret) {
 	    return array($ret, null);
 	}

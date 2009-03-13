@@ -1,7 +1,7 @@
-# $Id: vi.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: vi.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "POT-Creation-Date: 2005-05-29 05:54-0400\n"
-"PO-Revision-Date: 2005-08-29 18:40+0100\n"
+"PO-Revision-Date: 2007-08-22 12:06-0000\n"
 "Last-Translator: Trung Dong Huynh <trungdong@donggiang.com>\n"
 "Language-Team: Vietnamese <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -68,16 +68,6 @@ msgstr ""
 msgid "Create Config File"
 msgstr "Tạo tập tin cấu hình"
 
-#, fuzzy, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Không thể ghi vào tập tin cấu hình <b>config.php</b> trong thư mục <tt>%s</tt> của bạn. Hãy "
-"chỉnh lại quyền truy cập tập tin này. Nếu bạn dùng Unix thì bạn có thể dùng lệnh <i>chmod "
-"666 config.php</i>."
-
 #, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "Tập tin config.php không tồn tại trong thư mục %s của bạn"
@@ -95,9 +85,8 @@ msgstr "Cài đặt Cơ sở dữ liệu"
 msgid "You must have the MySQL PHP module installed"
 msgstr "Bạn cần có module MySQL cài trong chương trình PHP"
 
-#, fuzzy
 msgid "You must have the MySQL Improved PHP module installed"
-msgstr "Bạn cần có module MySQL cài trong chương trình PHP"
+msgstr "Bạn cần có module MySQL Improved cài trong chương trình PHP"
 
 msgid "You must have the ibm_db2 PHP module installed"
 msgstr "Bạn cần có module ibm_db2 cài trong chương trình PHP"
@@ -108,9 +97,12 @@ msgstr "Bạn cần có module PostgreSQL cài trong chương trình PHP"
 msgid "You must have the Oracle OCI8 PHP module installed"
 msgstr "Bạn cần có module Oracle OCI8 cài trong chương trình PHP"
 
-#, fuzzy
 msgid "You must have the Component Object Model(COM) PHP module installed"
-msgstr "Bạn cần có module Oracle OCI8 cài trong chương trình PHP"
+msgstr "Bạn cần có module Component Object Model(COM) cài trong chương trình PHP"
+
+#, fuzzy
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
+msgstr "Bạn cần có module Component Object Model(COM) cài trong chương trình PHP"
 
 #, c-format
 msgid "You must specify a column prefix (we recommend %s)"
@@ -171,16 +163,15 @@ msgstr ""
 "bảng trong thư mục lưu trữ. Hãy chọn cài đặt mới để xóa tất cả dữ liệu trong cơ sở dữ liệu "
 "và thư mục lưu trữ và chuyển sang bước kế tiếp."
 
-#, fuzzy
 msgid ""
 "Gallery tables already exist in the database and the Gallery storage directory seems to be "
 "intact. Either choose to reuse the existing database tables and storage directory data or "
 "select a clean install to erase all existing data in the database and the storage directory."
 msgstr ""
-"Các bảng dữ liệu của Gallery đang có trong cơ sở dữ liệu và thư mục lưu trữ của Gallery có "
-"vẻ vẫn toàn vẹn. Bạn có thể chọn dùng lại các bảng đang có trong cơ sở dữ liệu và dữ liệu "
-"trong thư mục lưu trữ hoặc chọn cài đặt mới để xóa tất cả dữ liệu trong cơ sở dữ liệu và thư "
-"mục lưu trữ và chuyển sang bước kế tiếp."
+"Các bảng dữ liệu của Gallery đã đang có sẵn trong cơ sở dữ liệu và thư mục lưu trữ của "
+"Gallery có vẻ vẫn toàn vẹn. Bạn có thể chọn dùng lại các bảng đang có trong cơ sở dữ liệu và "
+"dữ liệu trong thư mục lưu trữ hoặc chọn cài đặt mới để xóa tất cả dữ liệu trong cơ sở dữ "
+"liệu và thư mục lưu trữ."
 
 msgid ""
 "Could not execute the required API to erase the storage directory. Please erase the Gallery "
@@ -203,13 +194,11 @@ msgstr ""
 "Không thể nạp các hàm API của G2. Bạn hãy tự xóa các bảng trong cơ sở dữ liệu và thư mục lưu "
 "trữ của Gallery."
 
-#, fuzzy
 msgid "MySQL (v3.23.34a and newer)"
-msgstr "MySQL với Transactions (v3.23.34a và mới hơn)"
+msgstr "MySQL (v3.23.34a và mới hơn)"
 
-#, fuzzy
 msgid "MySQL (versions before v3.23.34a)"
-msgstr "MySQL (tất cả phiên bản)"
+msgstr "MySQL (các phiên bản trước v3.23.34a)"
 
 msgid "PostgreSQL v7.x and newer"
 msgstr "PostgreSQL v7.x và mới hơn"
@@ -220,37 +209,42 @@ msgstr "Oracle (9i và mới hơn)"
 msgid "IBM DB2 (v9.x and newer)"
 msgstr "IBM DB2 (v9.x và mới hơn)"
 
-#, fuzzy
 msgid "Microsoft SQL Server 2005 and newer"
-msgstr "PostgreSQL v7.x và mới hơn"
+msgstr "Microsoft SQL Server 2005 và mới hơn"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown database type or no known tables information."
 msgstr "Không xác định được kiểu cơ sở dữ liệu hoặc thông tin về bảng."
 
 #, c-format
 msgid "Could not find an unused table prefix similar to \"%s\"."
 msgstr "Không thể xác định một tiếp đầu ngữ chưa sử dụng cho bản tương tự như \"%s\"."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open schema file: \"%s\"."
-msgstr "Không thể mở tập tin kiểm tra SQL \"%s\"."
+msgstr "Không thể mở tập tin schema: \"%s\"."
 
+#, fuzzy
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "Thử tạo CSDL thất bại. Hãy kiểm tra thông báo lỗi được trả lại và tập tin README.html về "
 "quyền bị thiếu và xóa trắng cơ sở dữ liệu."
 
+#, fuzzy
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "Thử xóa CSDL thất bại. Hãy kiểm tra thông báo lỗi được trả lại và tập tin README.html về "
 "quyền bị thiếu và xóa trắng cơ sở dữ liệu."
 
 msgid "Missing SQL statements"
-msgstr ""
+msgstr "Các lệnh SQL bị thiếu"
 
 msgid ""
 "Check the returned error message and README.html for missing privileges and clean up the "
@@ -259,16 +253,14 @@ msgstr ""
 "Hãy kiểm tra thông báo lỗi được trả lại và tập tin README.html về quyền bị thiếu và xóa "
 "trắng cơ sở dữ liệu."
 
-#, fuzzy
 msgid "Finish Installation"
-msgstr "Cài đặt cho nhiều trang web"
+msgstr "Kết thúc cài đặt"
 
 msgid "Install Gallery Core"
 msgstr "Cài đặt Lõi của Gallery"
 
-#, fuzzy
 msgid "Installing the core module"
-msgstr "Cài các module khác"
+msgstr "Đang cài đặt module lõi"
 
 msgid "Unable to initialize our Gallery data"
 msgstr "Không thể khởi tạo dữ liệu Gallery"
@@ -291,21 +283,18 @@ msgstr "Không thể thực hiện thao tác cơ sở dữ liệu"
 msgid "Core module is only partially installed."
 msgstr "Module Lõi chỉ mới được cài đặt một phần."
 
-#, fuzzy
 msgid "Install Plugins"
-msgstr "Các bước cài đặt"
+msgstr "Cài plugin"
 
-#, fuzzy
 msgid "Unable to initialize our Gallery session"
-msgstr "Không thể khởi tạo dữ liệu Gallery"
+msgstr "Không thể khởi tạo session cho Gallery"
 
 #, c-format
 msgid "Unable to load the %s module"
 msgstr "Không thể nạp module %s"
 
-#, fuzzy
 msgid "Installing modules"
-msgstr "Cài thêm module"
+msgstr "Đang cài đặt các module"
 
 #, c-format
 msgid "Unable to install the %s module"
@@ -334,19 +323,18 @@ msgid "System Checks"
 msgstr "Các kiểm tra hệ thống"
 
 msgid "Performing system checks"
-msgstr ""
+msgstr "Đang thực hiện các kiểm tra hệ thống"
 
-#, fuzzy
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "Phiên bản PHP >= 4.1.0 hoặc >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "Phiên bản PHP &gt;= 4.3.0 hoặc &gt;= 5.0.4"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Gallery 2 requires PHP version 4.3.0 or newer or 5.0.4 or newer. You have PHP version "
 "%s installed. Contact your webserver administrator to request an upgrade, available at the %"
 "sPHP website%s."
 msgstr ""
-"Lỗi: Gallery 2 cần có PHP phiên bản 4.1.0 hoặc mới hơn, hay 5.0.4 hoặc mới hơn. Bạn đang "
+"Lỗi: Gallery 2 cần có PHP phiên bản 4.3.0 hoặc mới hơn, hay 5.0.4 hoặc mới hơn. Bạn đang "
 "dùng PHP phiên bản %s. Hãy liên hệ với quản trị máy chủ web của bạn để yêu cầu nâng cấp. PHP "
 "có thể download ở %strang web PHP%s."
 
@@ -382,13 +370,13 @@ msgstr "Safe Mode"
 msgid "Regular expressions"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Your PHP is configured without support for %sPerl Compatible Regular Expressions%s. "
 "You must enable these functions before Gallery will run."
 msgstr ""
-"Lỗi: PHP bạn đang dùng đang bật chế độ safe mode. Bạn phải tắt chế độ safe mode thì Gallery "
-"mới hoạt động được."
+"Lỗi: PHP bạn dùng thiếu hỗ trợ %sPerl Compatible Regular Expressions%s. Bạn phải bật các "
+"chức năng này lên thì Gallery mới hoạt động được."
 
 msgid "exec() allowed"
 msgstr "cho phép dùng exec()"
@@ -420,18 +408,17 @@ msgstr ""
 "trường hợp chỉ hiển thị một trang trắng) và có khả năng dẫn đến hỏng dữ liệu."
 
 msgid "Filesystem Operations"
-msgstr ""
+msgstr "Các thao tác trên hệ thống tập tin"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: Essential filesystem operations are disabled in your PHP by the "
 "<b>disabled_functions</b> parameter in php.ini. You must allow these functions before "
 "Gallery will run. These functions are missing: %s."
 msgstr ""
-"Cảnh báo: Hàm set_time_limit() đang bị tắt trong chương trình PHP bằng thông số "
-"<b>disabled_functions</b> trong tập tin php.ini. Gallery tuy vẫn có thể hoạt động nhưng có "
-"thể sẽ không ổn định. Bất kỳ thao tác nào cần chạy lâu hơn %d giây sẽ thất bại (trong một số "
-"trường hợp chỉ hiển thị một trang trắng) và có khả năng dẫn đến hỏng dữ liệu."
+"Lỗi: Các thao tác thiết yếu trên hệ thống đang bị tắt trong thông số <b>disabled_functions</"
+"b> của tập tin php.ini. Bạn phải bật các thao tác này lên thì Gallery mới có thể hoạt động. "
+"Các thao tác bị thiếu là: %s."
 
 msgid "Memory limit"
 msgstr "Giới hạn bộ nhớ"
@@ -463,14 +450,14 @@ msgstr ""
 msgid "Maximum upload size"
 msgstr "Kích thước tải lên tối đa"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Your PHP is configured to limit the size of file uploads to %sb "
 "(<b>upload_max_filesize</b> parameter in php.ini). You should raise this limit to allow "
 "uploading bigger files."
 msgstr ""
 "Cảnh báo: Chương trình PHP của bạn đặt giới hạn kích thước tập tin tải lên là %sb (trong "
-"thông số <b>post_max_filesize</b> ở tập tin php.ini). Bạn nên nâng giới hạn này lên để cho "
+"thông số <b>upload_max_filesize</b> ở tập tin php.ini). Bạn nên nâng giới hạn này lên để cho "
 "phép tải các tập tin có kích thước lớn hơn."
 
 msgid "Maximum POST size"
@@ -487,7 +474,7 @@ msgstr ""
 "các tập tin có kích thước lớn hơn."
 
 msgid "Translation support"
-msgstr ""
+msgstr "Hỗ trợ bản dịch"
 
 #, c-format
 msgid ""
@@ -495,18 +482,24 @@ msgid ""
 "please instruct your system administrator to reconfigure PHP with the %sgettext%s option "
 "enabled."
 msgstr ""
+"Máy chủ web của bạn không hỗ trợ bản địa hóa. Để bật hỗ trợ cho các ngôn ngữ khác, bạn hãy "
+"yêu cầu quản trị hệ thống của bạn cấu hình lại PHP với lựa chọn %sgettext%s được bật."
 
 #, c-format
 msgid ""
 "Your PHP is missing the function %sbind_textdomain_codeset%s. This means Gallery may display "
 "extended characters for some languages incorrectly."
 msgstr ""
+"Bản PHP của bạn thiếu chức năng %sbind_textdomain_codeset%s, nghĩa là Gallery có thể sẽ hiển "
+"thị các ký tự mở rộng của một số ngôn ngữ không chính xác."
 
 #, c-format
 msgid ""
 "Your PHP is missing the function %sdngettext%s. This means Gallery will be unable to "
 "translate plural forms."
 msgstr ""
+"Bản PHP của bạn thiếu chức năng %sdngettext%s, nghĩa là Gallery sẽ không thể phiên dịch các "
+"từ số nhiều."
 
 msgid "Zend compatibility mode"
 msgstr "Chế độ tương thích với Zend"
@@ -514,31 +507,30 @@ msgstr "Chế độ tương thích với Zend"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Cảnh báo: Chương trình PHP của bạn được cài đặt chế độ Zend ze1_compatibility_mode. Chế độ "
-"này có thể làm cho PHP bị ngưng hoạt động. Bạn hãy nhấp chuột vào <a href=\"%s\">đây</a> để "
-"kiểm tra thử. Nếu kết quả là \"SUCCESS\" thì chương trình PHP của bạn không bị ảnh hưởng. "
-"Nếu bạn gặp lỗi thì bạn phải tắt chế độ ze1_compatibility_mode trước khi tiếp tục."
+"này có thể làm cho PHP bị ngưng hoạt động. Bạn hãy nhấp chuột vào %sđây%s để kiểm tra thử. "
+"Nếu kết quả là \"SUCCESS\" thì chương trình PHP của bạn không bị ảnh hưởng. Nếu bạn gặp lỗi "
+"thì bạn phải tắt chế độ ze1_compatibility_mode trước khi tiếp tục."
 
 msgid "putenv() allowed"
 msgstr "cho phép dùng putenv()"
 
-#, fuzzy
 msgid ""
 "Warning: The putenv() function is disabled in your PHP by the <b>disabled_functions</b> "
 "parameter in php.ini.  Gallery can function with this setting, but on some rare systems "
 "Gallery will be unable to run in other languages than the system language and English."
 msgstr ""
-"Cảnh báo: Hàm set_time_limit() đang bị tắt trong chương trình PHP bằng thông số "
-"<b>disabled_functions</b> trong tập tin php.ini. Gallery tuy vẫn có thể hoạt động nhưng có "
-"thể sẽ không ổn định. Bất kỳ thao tác nào cần chạy lâu hơn %d giây sẽ thất bại (trong một số "
-"trường hợp chỉ hiển thị một trang trắng) và có khả năng dẫn đến hỏng dữ liệu."
+"Cảnh báo: Hàm putenv() đang bị tắt trong chương trình PHP bằng thông số "
+"<b>disabled_functions</b> trong tập tin php.ini. Gallery tuy vẫn có thể hoạt động nhưng trên "
+"một số hệ thống Gallery có thể sẽ không dùng được ngôn ngữ nào khác ngoài ngôn ngữ của hệ "
+"thống và Tiếng Anh. "
 
 msgid "Output buffering disabled"
-msgstr ""
+msgstr "Tính năng Output buffering đang bị tắt"
 
 #, c-format
 msgid ""
@@ -548,6 +540,11 @@ msgid ""
 "Also, some features like the progress bars might not work correctly if output buffering is "
 "enabled unless ini_set() is allowed."
 msgstr ""
+"Cảnh báo: Bản PHP của bạn có bật lựa chọn output buffering trong tập tin php.ini ở các thông "
+"số <b>%s</b>. Gallery vẫn có thể hoạt động với cài đặt này - tải tập tin còn nhanh hơn - "
+"nhưng Gallery có thể sẽ không tải được các tập tin lớn (ví dụ như các tập tin video lớn) và "
+"sẽ vấp phải giới hạn bộ nhớ. Ngoài ra, một số chức năng khác như thanh tiến độ sẽ không hoạt "
+"động chính xác nếu có output buffering trừ phi PHP cho phép hàm ini_set()."
 
 msgid "Gallery file integrity"
 msgstr "Tính toàn vẹn các tập tin Gallery"
@@ -556,11 +553,11 @@ msgid "Test skipped due to other errors."
 msgstr "Kiểm tra bị bỏ qua vì một số lỗi khác."
 
 msgid "Theme available"
-msgstr ""
+msgstr "Kiểu trình bày đang có"
 
 #, c-format
 msgid "Error: There must be at least one theme in the %s folder!"
-msgstr ""
+msgstr "Lỗi: Phải có ít nhất một kiểu trình bày ở thư mục %s!"
 
 msgid "Manifest missing or inaccessible."
 msgstr "Thiếu tập tin Manifest hoặc không truy cập được."
@@ -568,9 +565,8 @@ msgstr "Thiếu tập tin Manifest hoặc không truy cập được."
 msgid "Welcome"
 msgstr "Chào mừng"
 
-#, fuzzy
 msgid "Please correct the following errors"
-msgstr "Chúng tôi nhận được các lỗi liên quan đến CSDL sau:"
+msgstr "Hãy chỉnh sửa các lỗi sau"
 
 msgid ""
 "Every Gallery will have at least one administrator user who has full access to view/modify "
@@ -695,6 +691,18 @@ msgstr "Tạo một tập tin cấu hình"
 
 #, c-format
 msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Không thể ghi vào tập tin cấu hình <b>config.php</b> trong thư mục %s của bạn. Hãy chỉnh lại "
+"quyền truy cập tập tin này. Nếu bạn dùng Unix thì bạn có thể dùng lệnh <i>chmod 666 config."
+"php</i>. Bạn cũng có thể tải tập tin %sconfig.php%s về và tự thay thể tập tin config.php "
+"đang có trong thư mục %s."
+
+#, c-format
+msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
 "b> in your <b>%s</b> directory.  This is a very important file that gives Gallery all the "
 "information that it needs to operate.  After we create it, you can read through this file "
@@ -710,17 +718,21 @@ msgid ""
 "Before we can proceed, you should create a file in your <b>%s</b> directory called <i>config."
 "php</i>.  You must make sure that the webserver will be able to write to it."
 msgstr ""
+"Trước khi tiếp tục cài đặt, bạn phải tạo tập tin <i>config.php</i> trong thư mục <b>%s</b> "
+"của bạn. Bạn phải bảo đảm là máy chủ web có thể ghi vào tập tin này."
 
 msgid "Unix (with shell access)"
 msgstr "Unix (truy cập qua shell)"
 
 msgid "On Windows, you shouldn't have to do anything special."
-msgstr ""
+msgstr "Trên Windows thì bạn không phải làm gì đặc biệt cả."
 
 msgid ""
 "When you've created this file and set the permissions properly, you can proceed.  If there's "
 "a problem, we'll tell you what to fix."
 msgstr ""
+"Khi bạn tạo tập tin này và đặt đúng quyền truy cập, bạn có thể tiếp tục cài đặt. Nếu có lỗi "
+"ở đâu thì chúng tôi sẽ báo bạn chỗ nào cần phải chỉnh sửa."
 
 msgid "Create config file"
 msgstr "Tạo tập tin cấu hình"
@@ -772,6 +784,12 @@ msgstr "Mật khẩu cho CSDL:"
 msgid "DB Name:"
 msgstr "Tên CSDL:"
 
+msgid "DB Schema:"
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
+
 msgid "Table Prefix:"
 msgstr "Tiếp đầu tố cho bảng:"
 
@@ -802,14 +820,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Vào Gallery của tôi!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"Bây giờ bạn có thể vào Gallery của bạn. Hãy nhập đường dẫn trong trình duyệt của bạn cho %"
-"smain.php%s trong thư mục %s của bạn."
 
 msgid "Installer Help"
 msgstr "Hướng dẫn Chương trình Cài đặt"
@@ -940,7 +950,7 @@ msgid "Continue to Step %d&raquo;"
 msgstr "Chuyển sang Bước %d&raquo;"
 
 msgid "Debug Output"
-msgstr ""
+msgstr "Kết xuất debug"
 
 msgid "Welcome to the Gallery Installer"
 msgstr "Chào mừng bạn đến với chương trình cài đặt Gallery"
@@ -959,27 +969,25 @@ msgstr "Gallery: <strong>ảnh của bạn</strong> trên chính <strong>trang w
 msgid "Missing files (%d)"
 msgstr "Các tập tin thiếu(%d)"
 
-#, fuzzy
 msgid ""
 "Note: You're running Gallery from SVN, so recently removed files may appear here.  It might "
 "be safe to ignore these."
 msgstr ""
-"Lưu ý: Bạn đang dùng phiên bản Gallery từ CVS và một số tập tin mới bị xóa gần đây được liệt "
+"Lưu ý: Bạn đang dùng phiên bản Gallery từ SVN và một số tập tin mới bị xóa gần đây được liệt "
 "kê dưới đây. Tuy nhiên, thường bạn có thể bỏ qua các cảnh báo này."
 
 #, c-format
 msgid "Modified files (%d)"
 msgstr "Các tập tin bị hiệu chỉnh (%d)"
 
-#, fuzzy
 msgid ""
 "Note: You're running Gallery from SVN, so some modified files are to be expected.  You can "
 "probably ignore these, but to be safe you should make sure that you do 'svn update' before "
 "continuing."
 msgstr ""
-"Lưu ý: Bạn đang dùng phiên bản Gallery từ CVS và một số tập tin mới được hiệu chỉnh được "
-"liệt kê dưới đây. Tuy bạn có thể bỏ qua các cảnh báo này, nhưng để an toàn thì bạn nên chạy "
-"lệnh 'cvs update -Pd' trước khi tiếp tục."
+"Lưu ý: Bạn đang dùng phiên bản Gallery từ SVN và một số tập tin mới hiệu chỉnh được liệt kê "
+"dưới đây. Tuy bạn có thể bỏ qua các cảnh báo này, nhưng để an toàn thì bạn nên chạy lệnh "
+"'svn update' trước khi tiếp tục."
 
 #, c-format
 msgid "Old files (%d)"
@@ -993,18 +1001,15 @@ msgstr ""
 "nhưng nói chung bạn nên xóa chúng đi để bản Gallery của bạn được sạch."
 
 msgid "Errors occurred. Please see messages below."
-msgstr ""
-
-msgid "Please select the installation type"
-msgstr "Hãy chọn kiểu cài đặt"
+msgstr "Có lỗi. Xin hãy xem các thông tin ở dưới."
 
 msgid "Standard installation"
 msgstr "Cài đặt chuẩn"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 "Đây là kiểu cài đặt chuẩn. Hãy chọn kiểu cài đặt này nếu bạn muốn cài một bản Gallery mới "
 "trong thư mục %s và được truy cập với đường dẫn (URL) %s."
@@ -1012,32 +1017,20 @@ msgstr ""
 msgid "Multisite installation"
 msgstr "Cài đặt cho nhiều trang web"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Gallery cho phép các trang web độc lập dùng chung một bản cài đặt mã nguồn. Hãy chọn kiểu "
-"cài đặt này nếu bạn muốn cài bản Gallery mới trên cùng một máy chủ web nhưng trong các đường "
-"dẫn, tên miền con khác nhau."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"Cài đặt nhiều trang không chia sẻ album, ảnh, người dùng hay bất cứ gì. Tất cả các trang này "
-"đều cần cơ sở dữ liệu riêng và thư mục lưu trữ riêng. Để biết thêm thông tin và giải thích "
-"về cài đặt nhiều trang web, hãy xem trang %s."
 
 msgid "You must enter a directory"
 msgstr "Bạn cần phải nhập một thư mục"
 
+#, fuzzy, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
 "Thư mục bạn nhập vào là thư mục của codebase. Nếu bạn muốn cài một chương trình Gallery vào "
 "thư mục codebase, hãy chọn kiểu cài đặt chuẩn. Nếu bạn muốn cài cho nhiều trang web, hãy "
@@ -1049,12 +1042,20 @@ msgid ""
 "directories.  You must choose a directory under one of these, or you must modify the "
 "<b>open_basedir</b> setting in your PHP configuration to allow a new directory."
 msgstr ""
+"Thư mục bạn nhập vào hoặc không tồn tại hoặc đang bị cấm truy cập do cài đặt của máy chủ web "
+"của bạn. Máy chủ web của bạn chỉ cho phép truy cập các thư mục dưới đây. Bạn phải chọn một "
+"thư mục nằm trong các thư mục này, hoặc bạn phải hiệu chỉnh thông số <b>open_basedir</b> "
+"trong cài đặt PHP của bạn để cho phép truy cập một thư mục mới."
 
+#, fuzzy
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
+"Nếu cài đặt cho nhiều trang web nằm trên các host ảo khác nhau, bạn cần phải liên lạc quản "
+"trị hệ thống của bạn để yêu cầu họ cấu hình thông số <b>open_basedir</b> sao cho các host ảo "
+"của bạn có thể truy cập lẫn nhau."
 
 msgid "The directory you entered does not exist"
 msgstr "Thư mục bạn nhập vào không tồn tại"
@@ -1071,23 +1072,17 @@ msgstr ""
 "Không thể tạo các tập tin cho cài đặt nhiều trang web. Hãy đảm bảo là các tập tin liệt kê "
 "dưới đây là có thể ghi được."
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Tất cả trang đều được cài từ một bản mã nguồn trung tâm (codebase)."
-
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
 msgstr ""
-"Hãy nhập thư mục cho trang mới dưới đây. Đường dẫn phải khác với đường dẫn cài codebase:"
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
+msgid "You must provide the URL for your new multisite"
 msgstr ""
-"Thư mục đó phải có thể ghi được bởi người dùng máy chủ web hoặc PHP, hoặc chứa các tập tin "
-"có thể ghi được sau:"
 
-msgid "Select Directory"
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
+msgstr ""
+
+#, fuzzy
+msgid "Select Directory and URL"
 msgstr "Chọn thư mục"
 
 msgid "Multisite directory setup successfully."
@@ -1140,6 +1135,8 @@ msgid ""
 "Please read the %1$sGallery Security Guide%3$s. For a brief overview, take a look at the %2"
 "$sshort check list%3$s within the security guide."
 msgstr ""
+"Xin bạn vui lòng đọc %1$sHướng dẫn an ninh cho Gallery%3$s. Để biết tổng quan, hãy xem phần %"
+"2$sshort check list%3$s trong hướng dẫn an ninh."
 
 msgid "Check Again"
 msgstr "Kiểm tra lại"
@@ -1151,20 +1148,28 @@ msgid ""
 "directory outside of the %sdocument root%s directory or add a random string to the end of "
 "the directory name (e.g. %s)."
 msgstr ""
+"Gallery cần có một thư mục để lưu trữ ảnh của bạn. Gallery có thể dùng thư mục chúng tôi "
+"chọn sẵn cho bạn, nhưng vị trí và tên của thư mục này không bảo đảm an ninh tối đa. Bạn có "
+"thể chọn một thư mục mới ngoài thư mục %sWeb gốc%s hoặc thêm một chuỗi ký tự ngẫu nhiên ở "
+"cuối tên thư mục đã chọn (ví dụ như %s)."
 
 #, c-format
 msgid ""
 "For maximum security you should pick a directory that is not %sweb accessible%s. If this is "
 "not possible, specify a randomized name for this directory."
 msgstr ""
+"Để có an ninh tối đa, bạn nên chọn một thư mục không thể %struy cập được từ web%s. Nếu không "
+"thể làm được thì bạn hãy chọn một tên ngẫu nhiên cho thư mục lưu trữ."
 
 msgid ""
 "If you choose a randomized name or prefer to stick with the specified directory, please "
 "confirm your choice."
 msgstr ""
+"Nếu bạn chọn một tên ngẫu nhiên hoặc muốn dùng thư mục đã chỉ định thì hãy xác nhận chọn lựa "
+"của bạn."
 
 msgid "Yes, please omit the security check:"
-msgstr ""
+msgstr "Vâng, hãy bỏ qua kiểm tra an ninh:"
 
 msgid ""
 "This is a multisite installation. Remember that each multisite requires its own storage "
@@ -1180,19 +1185,22 @@ msgstr ""
 "vào. Cho nên nếu bạn có khó khăn trong việc tìm ra đường dẫn đúng cho thư mục g2data, thử "
 "các đường dẫn khác nhau trong hộp chữ dưới đây để xem các đường dẫn được tự động điền đủ."
 
+msgid "Do not use the installation directory for storage"
+msgstr ""
+
 msgid "The directory you entered is read only"
 msgstr "Thư mục bạn nhập vào chỉ cho đọc"
 
 msgid "There was an error creating the directory structure within the storage directory."
 msgstr "Có lỗi khi tạo cấu trúc thư mục trong thư mục lưu trữ."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Your storage directory is %sweb accessible%s."
-msgstr "Thư mục lưu trữ đã được đặt"
+msgstr "Thư mục lưu trữ của bạn %scó thể được truy cập từ web%s"
 
 #, c-format
 msgid "Unable to verify that the storage directory is not %sweb accessible%s."
-msgstr ""
+msgstr "Không thể kiểm tra thư mục lưu trữ %scó thể được truy cập từ web%s hay không."
 
 msgid "Directory path:"
 msgstr "Đường dẫn thư mục:"
@@ -1201,6 +1209,8 @@ msgid ""
 "Your webserver needs to be able to write to this directory. To get it working, you can "
 "follow these examples."
 msgstr ""
+"Máy chủ web của bạn cần có quyền ghi vào thư mục này. Để chạy được, bạn hãy làm theo các ví "
+"dụ sau."
 
 msgid ""
 "Note: these are only examples!  You may find that they don't work quite right on your system."
@@ -1210,7 +1220,6 @@ msgstr ""
 msgid "Unix (with ftp access)"
 msgstr "Unix (truy cập bằng FTP)"
 
-#, fuzzy
 msgid ""
 "Note that ftp servers and clients vary so these instructions may not work for you. Consult "
 "the manual for your FTP client or talk to a system administrator for help with this if you "
@@ -1218,7 +1227,7 @@ msgid ""
 msgstr ""
 "Lưu ý là các chương trình FTP và máy chủ FTP có khả năng khác nhau nên các chỉ dẫn này có "
 "thể không chạy được. Hãy tham khảo tài liệu hướng dẫn của chương trình FTP của bạn hoặc một "
-"nhà quản trị hệ thống nếu bạn gặp khó khăn."
+"nhà quản trị hệ thống nếu bạn gặp trở ngại."
 
 msgid ""
 "In some web hosting environments, the paths that you see in the shell or via FTP are not the "
@@ -1260,6 +1269,7 @@ msgid ""
 "For information on how to secure your Gallery storage directory, please read the %sSecurity "
 "Guide%s."
 msgstr ""
+"Hãy đọc %sHướng dẫn An ninh%s để biết thông tin về cách bảo vệ thư mục lưu trữ của Gallery."
 
 msgid "Storage directory set successfully."
 msgstr "Thư mục lưu trữ đã được đặt"
@@ -1334,102 +1344,46 @@ msgstr "Đi tiếp"
 msgid "Begin Installation&raquo;"
 msgstr "Bắt đầu cài đặt&raquo;"
 
-#, fuzzy
-#~ msgid "MSSQL (2005 and newer)"
-#~ msgstr "MySQL với Transactions (v3.23.34a và mới hơn)"
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "Bây giờ bạn có thể vào Gallery của bạn. Hãy nhập đường dẫn trong trình duyệt của bạn cho %"
+#~ "smain.php%s trong thư mục %s của bạn."
 
-#~ msgid "Installed Gallery Core successfully"
-#~ msgstr "Lõi của Gallery đã được cài đặt thành công"
+#~ msgid "Please select the installation type"
+#~ msgstr "Hãy chọn kiểu cài đặt"
 
 #~ msgid ""
-#~ "Congratulations, we've successfully installed the Gallery framework.  However, most of "
-#~ "the really cool features from Gallery come from additional modules that you can install "
-#~ "and configure.  The next step will take you through the process of selecting modules to "
-#~ "install so that you can tune Gallery to do exactly what you want."
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
 #~ msgstr ""
-#~ "Chúc mừng bạn, khung chương trình Gallery đã được cài đặt thành công. Tuy nhiên, hầu hết "
-#~ "các tính năng hấp dẫn của Gallery được cung cấp bởi các module mà bạn có thể tự cài và "
-#~ "cấu hình. Trong bước tiếp theo bạn sẽ chọn các module để cài đặt và tinh chỉnh chương "
-#~ "trình Gallery theo như bạn muốn."
-
-#~ msgid "Install More Modules"
-#~ msgstr "Cài thêm module"
+#~ "Gallery cho phép các trang web độc lập dùng chung một bản cài đặt mã nguồn. Hãy chọn kiểu "
+#~ "cài đặt này nếu bạn muốn cài bản Gallery mới trên cùng một máy chủ web nhưng trong các "
+#~ "đường dẫn, tên miền con khác nhau."
 
 #~ msgid ""
-#~ "Before we can proceed, you should create a file in your <b>%s</b> directory called "
-#~ "<i>config.php</i>.  You must make sure that the webserver will be able to write to it.  "
-#~ "If you're on unix, try doing <i>chmod 666 config.php</i>.  On Windows, you shouldn't have "
-#~ "to do anything special.  When you've created this file and set the permissions properly, "
-#~ "you can proceed.  If there's a problem, we'll tell you what to fix."
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
 #~ msgstr ""
-#~ "Trước khi tiếp tục, bạn nên tạo một tập tin tên <i>config.php</i> (để lưu cấu hình)trong "
-#~ "thư mục <b>%s</b> của bạn. Bạn phải bảo đảm là máy chủ web có quyền ghi vào tập tin này. "
-#~ "Nếu bạn dùng Unix, hãy thử dùng lệnh <i>chmod 666 config.php</i>. Trên Windows thì bạn "
-#~ "không cần phải làm gì cả. Bạn có thể tiếp tục sau khi bạn đã tạo tập tin này và đặt quyền "
-#~ "cho nó. Nếu có vấn đề gì thì chúng tôi sẽ chỉ dẫn bạn tiếp."
+#~ "Cài đặt nhiều trang không chia sẻ album, ảnh, người dùng hay bất cứ gì. Tất cả các trang "
+#~ "này đều cần cơ sở dữ liệu riêng và thư mục lưu trữ riêng. Để biết thêm thông tin và giải "
+#~ "thích về cài đặt nhiều trang web, hãy xem trang %s."
 
-#~ msgid "Install Other Modules"
-#~ msgstr "Cài các module khác"
-
-#~ msgid "mkdir %s"
-#~ msgstr "mkdir %s"
-
-#~ msgid "chmod 777 %s"
-#~ msgstr "chmod 777 %s"
-
-#~ msgid "cd %s"
-#~ msgstr "cd %s"
-
-#~ msgid "PostgreSQL v6.x (not well tested)"
-#~ msgstr "PostgreSQL v6.x (chưa được kiểm tra kỹ)"
-
-#~ msgid "chmod 644 %s"
-#~ msgstr "chmod 644 %s"
-
-#~ msgid "chmod 755 %s"
-#~ msgstr "chmod 755 %s"
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr "Tất cả trang đều được cài từ một bản mã nguồn trung tâm (codebase)."
 
 #~ msgid ""
-#~ "Gallery needs to store data in a directory on your server. It will use this directory to "
-#~ "store your images as well as other important data. For security, we suggest that you "
-#~ "place this directory <b>outside</b> of your web site so that it cannot be browsed "
-#~ "directly via the web. This is necessary if you wish to have your images accessible only "
-#~ "via Gallery [%s]. Note that the default path provided below is inside the webserver area. "
-#~ "This is because we are unable to reliably guess a directory outside of your web site. You "
-#~ "should update it with a secure location, such as a path under your user home directory, "
-#~ "if possible. If you access your site via FTP, you might not have this option."
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
 #~ msgstr ""
-#~ "Gallery cần lưu dữ liệu vào một thư mục trên máy chủ của bạn. Thư mục này sẽ được dùng để "
-#~ "lưu ảnh cũng như các thông tin quan trọng khác. Để an toàn, chúng tôi khuyên bạn nên đặt "
-#~ "thư mục này <b>ngoài </b> vùng có thể truy cập qua web để người khác không thể trực tiếp "
-#~ "duyệt thư mục này được. Điều này là cần thiết nếu bạn muốn hạn chế ảnh chỉ có thể được "
-#~ "truy cập thông qua chương trình Gallery [%s]. Lưu ý rằng đường dẫn mặc định cung cấp dưới "
-#~ "đây là trong vùng truy cập của web vì chúng tôi không thể biết chắc chắn cấu trúc thư mục "
-#~ "ngoài trang web của bạn. Bạn nên đổi đường dẫn này để chỉ vào một thư mục an toàn, chẳng "
-#~ "hạn như một đường dẫn nằm trong thư mục home của bạn, nếu có thể. Tuy nhiên, nếu bạn chỉ "
-#~ "có thể truy cập máy chủ bằng FTP thì bạn có thể không làm được như vậy."
+#~ "Hãy nhập thư mục cho trang mới dưới đây. Đường dẫn phải khác với đường dẫn cài codebase:"
 
 #~ msgid ""
-#~ "Your webserver needs to be able to write to this directory. Permission systems vary from "
-#~ "host to host. You can set a very relaxed set of permissions on this directory to get "
-#~ "Gallery working, but if you're concerned about security you should consult your system "
-#~ "adminstrator to figure out how to make this as secure as possible. To get it working, you "
-#~ "can follow these examples."
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
 #~ msgstr ""
-#~ "Máy chủ web của bạn cần phải ghi vào thư mục này. Các hệ thống quyền hạn có thể khác nhau "
-#~ "tùy theo máy chủ. Bạn có thể đặt một tập quyền rất thoải mái cho thư mục này để Gallery "
-#~ "hoạt động được, nhưng nếu bạn quan ngại về an toàn thì bạn nên tham vấn quản trị hệ thống "
-#~ "của bạn để tìm hiểu cách làm an toàn nhất có thể. Để làm cho nó hoạt động được, bạn có "
-#~ "thể làm theo các ví dụ dưới đây."
-
-#~ msgid "This is sometimes known as an <b>image firewall</b>."
-#~ msgstr "Cái này có lúc được gọi là <b>bức tường lửa cho ảnh</b>."
-
-#~ msgid "Finished"
-#~ msgstr "Hoàn tất"
-
-#~ msgid "Installation Status"
-#~ msgstr "Trạng thái cài đặt"
-
-#~ msgid "SQL test file \"%s\" not found."
-#~ msgstr "Tập tin kiểm tra SQL \"%s\" không tìm thấy."
+#~ "Thư mục đó phải có thể ghi được bởi người dùng máy chủ web hoặc PHP, hoặc chứa các tập "
+#~ "tin có thể ghi được sau:"

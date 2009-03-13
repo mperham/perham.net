@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="Performance Tuning"} </h2>
@@ -21,9 +19,9 @@
 {/if}
 
 <div class="gbBlock">
-  <h1 class="giTitle">
+  <h3 class="giTitle">
     {g->text text="Acceleration"}
-  </h1>
+  </h3>
 
   <p class="giDescription">
     {g->text text="Improve your Gallery performance by storing entire web pages in the database.  This can considerably reduce the amount of webserver and database resources required to display a web page.  The tradeoff is that the web page you see may be a little bit out of date, however you can always get the most recent version of the page by forcing a refresh in your browser (typically by holding down the shift key and clicking the reload button)."}
@@ -92,6 +90,29 @@
   </table>
 </div>
 
+<div class="gbBlock">
+  <h3 class="giTitle">
+    {g->text text="Template Cache"}
+  </h3>
+
+  <p class="giDescription">
+    {g->text text="For optimal performance, Gallery caches all templates.  If you would like to %scustomize your template files%s, you should disable template caching temporarily so that changes take effect immediately without clearing the template cache." arg1="<a href=\"http://codex.gallery2.org/Gallery2:Editing_Templates\">" arg2="</a>"}
+  </p>
+
+  <table class="gbDataTable">
+    <tr>
+      <td>
+        {g->text text="Enable template caching"}
+      </td>
+      <td>
+        <input type="checkbox" {if $form.disableCompileCheck}checked="checked" {/if}
+               name="{g->formVar var="form[disableCompileCheck]"}"/>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
 <div class="gbBlock gcBackground1">
   <input type="submit" class="inputTypeSubmit"
    name="{g->formVar var="form[action][save]"}" value="{g->text text="Save"}"/>
@@ -131,5 +152,3 @@ function toggleEnabled() {
 toggleEnabled();
 {/literal}
 </script>
-
-

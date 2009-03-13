@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,6 +33,16 @@ class CreateConfigFileStep extends InstallStep {
 	return _('Create Config File');
     }
 
+    function processRequest() {
+	if (!empty($_GET['downloadConfig'])) {
+	    GallerySetupUtilities::generateTextFileForDownload(
+		'config.php', $this->_getConfigContents());
+	    return false;
+	}
+
+	return true;
+    }
+
     function loadTemplateData(&$templateData) {
 	global $galleryStub;
 
@@ -41,14 +51,16 @@ class CreateConfigFileStep extends InstallStep {
 	$templateData['OS'] = strncasecmp(PHP_OS, 'win', 3) ? 'unix' : 'winnt';
 	if (file_exists($configFilePath) && !is_writeable($configFilePath)) {
 	    /* The file exists but we can't write to it */
-	    $templateData['error'] = sprintf(
-		_('Unable to write to the <b>config.php</b> configuration file in your %s ' .
-			  'directory.  Please change its permissions.  If you\'re on ' .
-			  'Unix you can do <i>chmod 666 config.php</i> to fix this.'),
-			'<tt>' . basename($configDir) . '</tt>');
-	    $this->setInError(true);
-	    $templateData['bodyFile'] = 'CreateConfigFileInstructions.html';
-	    $templateData['galleryDir'] = basename($configDir);
+	    if (file_get_contents($configFilePath) == $this->_getConfigContents()) {
+		/* The proper contents are in the file, we can advance to the next step */
+		$this->setComplete(true);
+		$templateData['bodyFile'] = 'CreateConfigFileSuccess.html';
+	    } else {
+		$this->setInError(true);
+		$templateData['error']['configWriteError'] = 1;
+		$templateData['bodyFile'] = 'CreateConfigFileInstructions.html';
+		$templateData['galleryDir'] = basename($configDir);
+	    }
 	} else {
 	    /* Don't (overwrite) the config file, if we recommend an upgrade */
 	    $writeConfigFile = false;
@@ -101,7 +113,7 @@ class CreateConfigFileStep extends InstallStep {
 		    $templateData['recommendUpgrade'] = $upgradeRecommended;
 		    $templateData['versions'] = $versions;
 		    $templateData['isMultisite'] = $galleryStub->getConfig('isMultisite');
-		    $templateData['galleryDir'] = basename($_SESSION['configPath']);
+		    $templateData['galleryDir'] = basename($configDir);
 		    $templateData['configFileWritten'] = $writeConfigFile;
 		    $templateData['bodyFile'] = 'VersionCheckFailed.html';
 		} else {
@@ -112,7 +124,7 @@ class CreateConfigFileStep extends InstallStep {
 
 		/* Finally write the config file */
 		if ($writeConfigFile) {
-		    $this->_writeConfig($out, $configDir);
+		    fwrite($out, $this->_getConfigContents());
 		    fclose($out);
 		}
 	    }
@@ -120,13 +132,15 @@ class CreateConfigFileStep extends InstallStep {
 	$this->_firstTime = false;
     }
 
-    function _writeConfig(&$out, $configDir) {
+    function _getConfigContents() {
 	global $galleryStub;
+	$configDir = $_SESSION['configPath'];
 	$baseDir = dirname(dirname(dirname(__FILE__)));
 	require_once($baseDir . '/modules/core/classes/GalleryUrlGenerator.class');
 	$baseUrl = getBaseUrl() . preg_replace('{install/' . INDEX_PHP . '\?.*}', '',
 					       GalleryUrlGenerator::getCurrentRequestUri());
 
+	$contents = '';
 	$addslashes = array('\\' => '\\\\', "'" => "\\'");
 	$newStoreConfig = $galleryStub->getConfig('storage.config');
 	$in = @fopen($baseDir . '/install/config.php-template', 'r');
@@ -142,7 +156,7 @@ class CreateConfigFileStep extends InstallStep {
 	    }
 
 	    foreach (array('type', 'hostname', 'database', 'username',
-			   'password', 'tablePrefix', 'columnPrefix') as $key) {
+			   'password', 'schema', 'tablePrefix', 'columnPrefix') as $key) {
 		if (preg_match("/^.storeConfig\['$key'\] = '.*';/", $line)) {
 		    $newStoreConfig[$key] = strtr($newStoreConfig[$key], $addslashes);
 		    $line = "\$storeConfig['$key'] = '$newStoreConfig[$key]';\n";
@@ -156,9 +170,15 @@ class CreateConfigFileStep extends InstallStep {
 		$line = sprintf("\$gallery->setConfig('galleryBaseUrl', '%s');\n", $tmp);
 	    }
 
-	    fwrite($out, $line);
+	    if (trim($line) == '$gallery->setConfig(\'baseUri\', \'\');') {
+		$line = sprintf("\$gallery->setConfig('baseUri', '%s');\n", $_SESSION['baseUri']);
+	    }
+
+	    $contents .= $line;
 	}
 	fclose($in);
+
+	return $contents;
     }
 
     /**

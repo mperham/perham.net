@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,11 @@
  */
 
 /**
- * Setup Database
+ * Setup Database.
  * @package Install
  */
 class DatabaseSetupStep extends InstallStep {
+
     function stepName() {
 	return _('Database Setup');
     }
@@ -40,16 +41,21 @@ class DatabaseSetupStep extends InstallStep {
 		$this->_config['username'] = 'root';
 		$this->_config['password'] = '';
 		$this->_config['database'] = 'gallery2';
+		$this->_config['schema'] = '';
 		$this->_config['tablePrefix'] = 'g2_';
 		$this->_config['columnPrefix'] = 'g_';
 		$firstConfig = true;
+	    }
+	    /* All keys but 'schema' exist in all versions of G2 */
+	    if (!isset($this->_config['schema'])) {
+		$this->_config['schema'] = '';
 	    }
 	}
 
 	$templateData['password'] = strlen($this->_config['password']) ? '******' : '';
 
 	if (!empty($_POST['action']) && $_POST['action'] == 'save') {
-	    foreach (array('type', 'hostname', 'username', 'database',
+	    foreach (array('type', 'hostname', 'username', 'database', 'schema',
 			   'tablePrefix', 'columnPrefix') as $key) {
 		$this->_config[$key] = $this->sanitize($_POST[$key]);
 	    }
@@ -65,6 +71,10 @@ class DatabaseSetupStep extends InstallStep {
 	    $this->_config['type'] = 'mysqli';
 	    $mysqltType = 'mysqli';
 	}
+	if ($this->_config['type'] == 'pdo_sqlite') {    
+	    $this->_config['database'] = 
+	    	'sqlite:' . $galleryStub->getConfig('data.gallery.base') . 'gallery2.db';   
+        }
 	switch ($this->_config['type']) {
 	    case 'mysql':
 	    case 'mysqlt':
@@ -109,6 +119,17 @@ class DatabaseSetupStep extends InstallStep {
 		}
 		$dbPlatformType = 'mssql';
 		break;
+            case 'pdo_sqlite':
+                if (!$firstConfig && !class_exists('PDO')) {
+                    $templateData['error']['phpDbMissing'] =
+                        _('You must have the PHP Data Object(PDO) PHP module installed');
+                }
+                $dbPlatformType = 'sqlite';
+                break;
+            default:
+		$this->_config['type'] = 'mysqlt';
+		$dbPlatformType = 'mysql';
+		$templateData['error']['invalidDbType'] = 1;
 	}
 
 	if (!empty($_POST['action']) && $_POST['action'] == 'save') {
@@ -134,7 +155,6 @@ class DatabaseSetupStep extends InstallStep {
 
 		$this->_captureStart();
 		$this->_db =& ADONewConnection($this->_config['type']);
-		$this->_db->debug = true;
 		$this->_captureEnd();
 
 		if (empty($this->_db)) {
@@ -142,9 +162,10 @@ class DatabaseSetupStep extends InstallStep {
 			_('Unable to create a database connection of type %s'),
 			$this->_config['type']);
 		}
-
+                
 		if (empty($templateData['errors'])) {
 		    $this->_captureStart();
+		    $this->_db->debug = true;
 		    if ($dbPlatformType != 'mssql') {
 			$result = $this->_db->NConnect($this->_config['hostname'],
 						       $this->_config['username'],
@@ -157,11 +178,13 @@ class DatabaseSetupStep extends InstallStep {
 				. $this->_config['database'],
 			    $this->_config['username'], $this->_config['password'], 'MSDASQL');
 		    }
-		    $this->_captureEnd();
 		    if ($result === false) {
 			$templateData['errors'][] =
 			    _('Unable to connect to database with the information provided.');
+		    } else if ($dbPlatformType == 'postgres7' && !empty($this->_config['schema'])) {
+			$this->_db->Execute('set search_path to ' . $this->_config['schema']);
 		    }
+		    $this->_captureEnd();
 		}
 	    }
 
@@ -188,6 +211,9 @@ class DatabaseSetupStep extends InstallStep {
 
 		    /* Check the status and get the version of the Gallery database */
 		    $dbVersion = $this->_getDbVersion($result);
+
+		    /* Ensure that the user doesn't have to enter the password again */
+		    $templateData['password'] = strlen($this->_config['password']) ? '******' : '';
 		}
 
 		$this->_captureEnd();
@@ -207,7 +233,7 @@ class DatabaseSetupStep extends InstallStep {
 		    /* Advance to next step */
 		    $confirmRequired = 0;
 		} else if (!empty($dbVersion) && empty($datVersion)) {
-		    /* DB tables exist, but g2data seems to be not ok. */
+		    /* Database tables exist, but g2data seems to be not ok. */
 		    /* Explain and offer clean install. */
 		    $confirmRequired = 1;
 		    $templateData['showConfirmCleanInstall'] = 1;
@@ -220,7 +246,7 @@ class DatabaseSetupStep extends InstallStep {
 			  'storage directory.');
 
 		} else if (empty($dbVersion) && !empty($datVersion)) {
-		    /* DB tables don't exist, but g2data has versions.dat */
+		    /* Database tables don't exist, but g2data has versions.dat */
 		    /* Explain and offer clean install.  */
 		    $confirmRequired = 1;
 		    $templateData['showConfirmCleanInstall'] = 1;
@@ -284,7 +310,7 @@ class DatabaseSetupStep extends InstallStep {
 			_('Could not execute the required API to drop the Gallery database tables' .
 			  '. Please clean the Gallery database manually.');
 		    $templateData['databaseErrors'] = $gallery->getDebugBuffer();
-		    $templateData['stackTrace'] = $ret->getAsHtml();
+		    $templateData['stackTrace'][] = $ret->getAsHtml();
 		    $gallery->clearDebugBuffer();
 		} else {
 		    $dbCleaned = true;
@@ -329,7 +355,8 @@ class DatabaseSetupStep extends InstallStep {
 			   'postgres7' => _('PostgreSQL v7.x and newer'),
 			   'oci8po' => _('Oracle (9i and newer)'),
 			   'db2' => _('IBM DB2 (v9.x and newer)'),
-			   'ado_mssql' => _('Microsoft SQL Server 2005 and newer'))
+			   'ado_mssql' => _('Microsoft SQL Server 2005 and newer'),
+                           'pdo_sqlite' => _('SQLite v3.x (Experimental!)'))
 		     as $key => $value) {
 		$templateData['dbList'][$key] = $value;
 	    }
@@ -337,6 +364,7 @@ class DatabaseSetupStep extends InstallStep {
 
 	    $templateData['bodyFile'] = 'DatabaseSetupRequest.html';
 	}
+	unset($this->_db);
     }
 
     function _captureStart() {
@@ -380,7 +408,7 @@ class DatabaseSetupStep extends InstallStep {
 	global $gallery;
 
 	if (!is_array($metatables) || empty($dbType)) {
-	    return array(false, _('Unknown DB type or no known tables information.'));
+	    return array(false, _('Unknown database type or no known tables information.'));
 	}
 
 	/*
@@ -429,13 +457,13 @@ class DatabaseSetupStep extends InstallStep {
 	$sequenceId = 'g2privtestseq';
 	$result = $this->_db->CreateSequence($tablePrefix . $sequenceId);
 	if (empty($result)) {
-	    return array(false, _('Failed to create a DB test sequence.' .
+	    return array(false, _('Failed to create a database test sequence. ' .
 			 'Check the returned error message and README.html ' .
 			 'for missing privileges and clean up the database.'));
 	}
 	$result = $this->_db->DropSequence($tablePrefix . $sequenceId);
 	if (empty($result)) {
-	    return array(false, _('Test failed to drop a DB test sequence.' .
+	    return array(false, _('Test failed to drop a database test sequence. ' .
 			 'Check the returned error message and README.html ' .
 			 'for missing privileges and clean up the database.'));
 	}
@@ -444,8 +472,7 @@ class DatabaseSetupStep extends InstallStep {
     }
 
     /**
-     * Execute a series of SQL statements
-     *
+     * Execute a series of SQL statements.
      * @param string $buffer the SQL statements
      * @param string $tablePrefix prefix for table names
      * @return array(boolean success, string error message)
@@ -515,8 +542,7 @@ class DatabaseSetupStep extends InstallStep {
     }
 
     /**
-     * Get the state and the version of the Gallery database
-     *
+     * Get the state and the version of the Gallery database.
      * @param array $metaTables the meta tables info array from the database
      * @return string the db version
      */
@@ -588,6 +614,9 @@ class DatabaseSetupStep extends InstallStep {
 	    $GLOBALS['gallery']->setConfig('data.gallery.base', $configPath);
 	    $GLOBALS['gallery']->setConfig('plugins.dirname',
 					   $galleryStub->getConfig('plugins.dirname'));
+	    $GLOBALS['gallery']->setConfig('data.gallery.version', $configPath . 'versions.dat');
+	    $GLOBALS['gallery']->setConfig('data.gallery.locale', $configPath . 'locale' 
+					   . DIRECTORY_SEPARATOR);
 	}
 	global $gallery;
 
@@ -715,8 +744,9 @@ class DatabaseSetupStep extends InstallStep {
      * @return bool success status
      */
     function in_array_cin($strItem, $arItems) {
+	$strItem = GalleryUtilities::strToUpper($strItem);
 	foreach ($arItems as $strValue) {
-	    if (strtoupper($strItem) == strtoupper($strValue)) {
+	    if ($strItem == GalleryUtilities::strToUpper($strValue)) {
 		return true;
 	    }
 	}

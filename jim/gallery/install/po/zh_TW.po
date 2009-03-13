@@ -1,7 +1,7 @@
-# $Id: zh_TW.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: zh_TW.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,10 +16,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street - Fifth Floor, Boston, MA  02110-1301, USA.
-# 
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "POT-Creation-Date: 2005-08-05 21:48-0400\n"
 "PO-Revision-Date: 2005-08-05 21:48-0400\n"
 "Last-Translator: Stephen Chu <stephen@ju-ju.com>\n"
@@ -65,15 +65,6 @@ msgid "Create Config File"
 msgstr "產生設定檔案"
 
 #, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"無法寫入在你的 %s 目錄中的 <b>config.php</b> 設定檔案。請改變它的存取權限。如果你是使用 Unix "
-"你可以用「chmod 666 config.php」指令來修正。"
-
-#, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "你的 %s 目錄中沒有 config.php 檔案。"
 
@@ -103,6 +94,10 @@ msgid "You must have the Oracle OCI8 PHP module installed"
 msgstr "你必需裝有 Oracle OCI8 PHP 模組"
 
 msgid "You must have the Component Object Model(COM) PHP module installed"
+msgstr "你必需裝有 Component Object Model(COM) PHP 模組"
+
+#, fuzzy
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
 msgstr "你必需裝有 Component Object Model(COM) PHP 模組"
 
 #, c-format
@@ -202,7 +197,11 @@ msgstr "IBM DB2（v9.x 以上的版本）"
 msgid "Microsoft SQL Server 2005 and newer"
 msgstr "Microsoft SQL Server 2005 以上的版本"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown database type or no known tables information."
 msgstr "不明資料庫類型或沒有表格資訊。"
 
 #, c-format
@@ -213,15 +212,17 @@ msgstr "找不到類似「%s」的可用表格字首。"
 msgid "Could not open schema file: \"%s\"."
 msgstr "無法打開綱要（schema）檔案：「%s」。"
 
+#, fuzzy
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "無法產生 DB 測試序列。檢查傳回的錯誤訊息和 README.html 有關缺少存取權限的資訊並清理資料庫。"
 
+#, fuzzy
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "測試無法移除一個 DB 測試序列。檢查傳回的錯誤訊息和 README.html 有關缺少存取權限的資訊並清理資"
 "料庫。"
@@ -306,7 +307,7 @@ msgstr "系統檢查"
 msgid "Performing system checks"
 msgstr "進行系統檢查中"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
 msgstr "PHP 版本大於等於 4.3.0 或大於等於 5.0.4"
 
 #, c-format
@@ -477,13 +478,13 @@ msgstr "Zend 相容模式"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
-"警告：你的 PHP 設定使用可能使 PHP 當機的 Zend ze1_compatibility_mode 選項。請按<a href=\"%s"
-"\">這裡</a>測試 PHP。如果你看到「SUCCESS」表示你的 PHP 正常。如果你得到一個錯誤訊息或完全沒有"
-"反應，你需要把 ze1_compatibility_mode關掉才能繼續。"
+"警告：你的 PHP 設定使用可能使 PHP 當機的 Zend ze1_compatibility_mode 選項。請按%s這裡%s測試 "
+"PHP。如果你看到「SUCCESS」表示你的 PHP 正常。如果你得到一個錯誤訊息或完全沒有反應，你需要把 "
+"ze1_compatibility_mode關掉才能繼續。"
 
 msgid "putenv() allowed"
 msgstr "允許 putenv()"
@@ -650,6 +651,16 @@ msgstr "再試一次"
 msgid "Create a config file"
 msgstr "產生一個設定檔"
 
+#, fuzzy, c-format
+msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"無法寫入在你的 %s 目錄中的 <b>config.php</b> 設定檔案。請改變它的存取權限。如果你是使用 Unix "
+"你可以用「chmod 666 config.php」指令來修正。"
+
 #, c-format
 msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
@@ -728,6 +739,12 @@ msgstr "資料庫密碼："
 msgid "DB Name:"
 msgstr "資料庫名稱"
 
+msgid "DB Schema:"
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
+
 msgid "Table Prefix:"
 msgstr "表格字首："
 
@@ -756,13 +773,6 @@ msgstr "恭禧！你的 Gallery 2 安裝已經完成！看吧，沒有多難嘛�
 
 msgid "Go to my Gallery!"
 msgstr "前往我的 Gallery！"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"你現在可以前往你的新 Gallery。在你的瀏覽程式中輸入在你的%s目錄中的 %smain.php%s 的網址。"
 
 msgid "Installer Help"
 msgstr "安裝說明"
@@ -931,16 +941,13 @@ msgstr "Gallery 已經不再使用這些檔案。它們大概不會造成任何�
 msgid "Errors occurred. Please see messages below."
 msgstr "發生錯誤。請見下列訊息。"
 
-msgid "Please select the installation type"
-msgstr "請選擇安裝類型"
-
 msgid "Standard installation"
 msgstr "標準安裝"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 "這是預設的安裝類型。如果你要在 %s 目錄中安裝一個全新的 Gallery，並可用 %s 網址存取的話，請選"
 "這個安裝類型。"
@@ -948,30 +955,20 @@ msgstr ""
 msgid "Multisite installation"
 msgstr "多站台安裝"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Gallery 可以用一份單獨的安裝來支援多個獨立的網站。如果你要在同一個網頁伺服器上的不同路徑、子"
-"網域或網址上安裝一個全新的 Gallery 的話，請選這個安裝類型。"
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"多站台並不共用相簿、照片、用戶、或其他任何項目。它們都需要自己的資料庫和自己的儲存目錄。前參"
-"閱 %s 頁面中有關多站台安裝的資訊和解釋。"
 
 msgid "You must enter a directory"
 msgstr "你必需輸入一個目錄"
 
+#, fuzzy, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
 "你所輸入的目錄是程式所在的目錄。如果你要把一個 Gallery 安裝到程式目錄中，請選擇標準安裝類型。"
 "如果你要安裝多站台，請選一個不同的目錄。"
@@ -986,10 +983,11 @@ msgstr ""
 "你必需選用一個在這些目錄下的目錄，或者更改你的 PHP 設定中的 <b>open_basedir</b> 以允許使用新"
 "的目錄。"
 
+#, fuzzy
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
 "如果你的多站台安裝是在一個不同的虛擬主機上，你必需連絡你的系統管理員並要求他們設定你的 "
 "<b>open_basedir</b> 來讓你的虛擬主機可以互相存取彼此的檔案。"
@@ -1005,20 +1003,17 @@ msgstr "無法存取你所輸入的目錄。請改變它的存取權限讓網頁
 msgid "Unable to create multisite files. Ensure the files listed below are writeable."
 msgstr "無法產生多站台檔案。請確定下列檔案可以寫入。"
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "所有的站台都是從這個中央程式庫（基礎程式）安裝出來。"
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
+msgstr ""
 
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
-msgstr "在下面輸入新的站台的目錄。這個路徑不能和基礎程式安裝的路徑相同。"
+msgid "You must provide the URL for your new multisite"
+msgstr ""
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
-msgstr "目錄必需可以讓你的網頁伺服器或 PHP 用戶寫入或含有下列可寫入的檔案："
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
+msgstr ""
 
-msgid "Select Directory"
+#, fuzzy
+msgid "Select Directory and URL"
 msgstr "選擇目錄"
 
 msgid "Multisite directory setup successfully."
@@ -1108,6 +1103,9 @@ msgid ""
 msgstr ""
 "如果你正在使用的是最新的瀏覽程式，我們會試著自動完成你輸入的任何路徑。所以如果你無法找到指到"
 "你的 g2data 目錄的正確路徑，試著在下面的文字框中打一些可能的路徑，看看自動完成會不會找到它。"
+
+msgid "Do not use the installation directory for storage"
+msgstr ""
 
 msgid "The directory you entered is read only"
 msgstr "你輸入的目錄是唯讀的。"
@@ -1248,3 +1246,41 @@ msgstr "開始"
 
 msgid "Begin Installation&raquo;"
 msgstr "開始安裝&raquo;"
+
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "你現在可以前往你的新 Gallery。在你的瀏覽程式中輸入在你的%s目錄中的 %smain.php%s 的網址。"
+
+#~ msgid "Please select the installation type"
+#~ msgstr "請選擇安裝類型"
+
+#~ msgid ""
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
+#~ msgstr ""
+#~ "Gallery 可以用一份單獨的安裝來支援多個獨立的網站。如果你要在同一個網頁伺服器上的不同路徑、"
+#~ "子網域或網址上安裝一個全新的 Gallery 的話，請選這個安裝類型。"
+
+#~ msgid ""
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
+#~ msgstr ""
+#~ "多站台並不共用相簿、照片、用戶、或其他任何項目。它們都需要自己的資料庫和自己的儲存目錄。前"
+#~ "參閱 %s 頁面中有關多站台安裝的資訊和解釋。"
+
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr "所有的站台都是從這個中央程式庫（基礎程式）安裝出來。"
+
+#~ msgid ""
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
+#~ msgstr "在下面輸入新的站台的目錄。這個路徑不能和基礎程式安裝的路徑相同。"
+
+#~ msgid ""
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
+#~ msgstr "目錄必需可以讓你的網頁伺服器或 PHP 用戶寫入或含有下列可寫入的檔案："

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -118,6 +118,13 @@ if (GallerySetupUtilities::isSessionAuthenticated()) {
 /* Unless we're properly authenticated, this is the end of the line */
 exit;
 
+function startForm($action='', $name=null) {
+    print '<form method="POST" action="' . $action . (isset($name) ? "\" name=\"$name" : '') . '">';
+    if (!GallerySetupUtilities::areCookiesSupported()) {
+	print '<input type="hidden" name="' . session_name() . '" value="' . session_id() . '"/>';
+    }
+}
+
 function render($renderType, $options=array()) {
     global $baseUrl;
 ?>
@@ -149,14 +156,14 @@ function render($renderType, $options=array()) {
 
        <?php if ($renderType == 'missingSetupPassword'): ?>
        <div class="error">
-	 You must enter a setup password in your gallery2/config.php file in order
+	 You must enter a setup password in your gallery/config.php file in order
 	 to be able to set up Gallery. If your config.php is empty, you should run
-	 <a href="../../install">the installer</a> to install your Gallery.
+	 the <a href="../../install">installer</a> to install your Gallery.
        </div>
        <?php endif; ?>
 
        <?php if ($renderType == 'passwordForm'): ?>
-       <form action="" method="post">
+	 <?php startForm(); ?>
          <?php if (!empty($options['attempts'])): ?>
          <div class="warning">
            Failed login attempts: <?php print $options['attempts'] ?> out of a total of
@@ -187,7 +194,7 @@ function render($renderType, $options=array()) {
        <?php endif; ?>
 
        <?php if ($renderType == 'loginTxtForm'): ?>
-       <form action="" method="post">
+	 <?php startForm(); ?>
 	 <p>
            <span class="error"><b>
 	   <?php if (!empty($options['error'])): ?>

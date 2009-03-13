@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/search/classes/SearchUtilities.class');
  * @package Search
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class SearchScanController extends GalleryController {
 
@@ -191,7 +191,7 @@ class SearchScanView extends GalleryView {
 	    if (!empty($itemIds)) {
 
 		/* Fetch items */
-		list ($ret, $itemList) = GalleryCoreApi::loadEntitiesById($itemIds);
+		list ($ret, $itemList) = GalleryCoreApi::loadEntitiesById($itemIds, 'GalleryItem');
 		if ($ret) {
 		    return array($ret, null);
 		}

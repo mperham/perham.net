@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package Comment
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class DeleteCommentController extends GalleryController {
 
@@ -33,9 +33,13 @@ class DeleteCommentController extends GalleryController {
     function handleRequest($form) {
 	global $gallery;
 
-	list ($itemId, $commentId) = GalleryUtilities::getRequestVariables('itemId', 'commentId');
-	$itemId = (int) $itemId;
-	$commentId = (int) $commentId;
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
+
+	$commentId = (int)GalleryUtilities::getRequestVariables('commentId');
 
 	/* Make sure we have permission to delete a comment */
 	$ret = GalleryCoreApi::assertHasItemPermission($itemId, 'comment.delete');
@@ -47,13 +51,9 @@ class DeleteCommentController extends GalleryController {
 	$error = array();
 	if (isset($form['action']['delete'])) {
 	    /* Delete the comment */
-	    list ($ret, $comment) = GalleryCoreApi::loadEntitiesById($commentId);
+	    list ($ret, $comment) = GalleryCoreApi::loadEntitiesById($commentId, 'GalleryComment');
 	    if ($ret) {
 		return array($ret, null);
-	    }
-	    
-	    if (!GalleryUtilities::isA($comment, 'GalleryComment')) {
-		return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 	    }
 
 	    /* Make sure that the comment<->parent relationship is right */
@@ -61,7 +61,7 @@ class DeleteCommentController extends GalleryController {
 		return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 	    }
 
-	    $ret = GalleryCoreApi::deleteEntityById($comment->getId());
+	    $ret = GalleryCoreApi::deleteEntityById($comment->getId(), 'GalleryComment');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -119,17 +119,14 @@ class DeleteCommentView extends GalleryView {
 	}
 
 	/* Load the specific comment */
-	list ($ret, $comment) = GalleryCoreApi::loadEntitiesById($commentId);
+	list ($ret, $comment) = GalleryCoreApi::loadEntitiesById($commentId, 'GalleryComment');
 	if ($ret) {
 	    return array($ret, null);
-	}
-	if (!GalleryUtilities::isA($comment, 'GalleryComment')) {
-	    return array(GalleryCoreApi::error(ERROR_BAD_PARAMETER), null);
 	}
 
 	/* Associate the commenter's info */
 	$commenterId = $comment->getCommenterId();
-	list ($ret, $commenter) = GalleryCoreApi::loadEntitiesById($commenterId);
+	list ($ret, $commenter) = GalleryCoreApi::loadEntitiesById($commenterId, 'GalleryUser');
 	if ($ret) {
 	    return array($ret, null);
 	}

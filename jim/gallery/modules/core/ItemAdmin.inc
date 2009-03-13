@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class ItemAdminView extends GalleryView {
 
@@ -34,11 +34,11 @@ class ItemAdminView extends GalleryView {
 	global $gallery;
 
 	/* Figure out the item we're referring to */
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+	list ($ret, $item) = $this->getItem();
 	if ($ret) {
 	    return array($ret, null);
 	}
+	$itemId = $item->getId();
 
 	/* Find its thumbnail */
 	list ($ret, $thumbnailTable) = GalleryCoreApi::fetchThumbnailsByItemIds(array($itemId));
@@ -98,11 +98,13 @@ class ItemAdminView extends GalleryView {
 	    $name = $params['name'];
 	    unset($params['name']);
 
-	    /* Move the view -> subView and set ItemAdmin as the view */
-	    $params['subView'] = $params['view'];
-	    $params['view'] = 'core.ItemAdmin';
-	    if ($subViewName == $params['subView']) {
-		$params['active'] = true;
+	    if (isset($params['view'])) {
+		/* Move the view -> subView and set ItemAdmin as the view */
+		$params['subView'] = $params['view'];
+		$params['view'] = 'core.ItemAdmin';
+		if ($subViewName == $params['subView']) {
+		    $params['active'] = true;
+		}
 	    }
 
 	    /* Set the item id if necessary */
@@ -152,19 +154,11 @@ class ItemAdminView extends GalleryView {
 	    $ItemAdmin = array();
 	}
 
-	/* Get the links for navigating back to where we came from */
-	$urlGenerator =& $gallery->getUrlGenerator();
-	list ($ret, $navigationLinks) = $urlGenerator->getNavigationLinks();
-	if ($ret) {
-	    return array($ret, null);
-	}
-
 	list ($ret, $module) = GalleryCoreApi::loadPlugin('module', 'core');
 	if ($ret) {
 	    return array($ret, null);
 	}
 
-	$ItemAdmin['navigationLinks'] = $navigationLinks;
 	$ItemAdmin['viewBodyFile'] = $results['body'];
 	$ItemAdmin['item'] = (array)$item;
 	$ItemAdmin['parents'] = $parents;
@@ -174,6 +168,7 @@ class ItemAdminView extends GalleryView {
 	$ItemAdmin['subViewChoices'] = $subViewChoices;
 	$ItemAdmin['viewL10Domain'] = $subView->getL10Domain();
 	$ItemAdmin['isSiteAdmin'] = $isSiteAdmin;
+	$ItemAdmin['unsetCallback'] = create_function('$a,$k', 'unset($a[$k]);return $a;');
 
 	if (!isset($ItemAdmin['enctype'])) {
 	    $ItemAdmin['enctype'] = 'application/x-www-form-urlencoded';

@@ -11,7 +11,5 @@
     </p>
 
     <div class="go">
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>"><?php print _('Try Again') ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>" class="btn continue"><i></i><span><span></span><i></i><?php print _('Try Again') ?></span></a>
     </div>

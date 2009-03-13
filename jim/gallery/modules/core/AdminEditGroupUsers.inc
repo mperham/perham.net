@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AdminEditGroupUsersController extends GalleryController {
 
@@ -42,7 +42,7 @@ class AdminEditGroupUsersController extends GalleryController {
 
 	/* Load the group */
 	$groupId = GalleryUtilities::getRequestVariables('groupId');
-	list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId);
+	list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId, 'GalleryGroup');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -78,7 +78,8 @@ class AdminEditGroupUsersController extends GalleryController {
 
 		if (empty($error)) {
 		    foreach ($form['userIds'] as $userId => $dummy) {
-			list ($ret, $user) = GalleryCoreApi::loadEntitiesById($userId);
+			list ($ret, $user) =
+			    GalleryCoreApi::loadEntitiesById($userId, 'GalleryUser');
 			if ($ret) {
 			    return array($ret, null);
 			}
@@ -178,7 +179,7 @@ class AdminEditGroupUsersView extends GalleryView {
 
 	/* Load the group */
 	$groupId = GalleryUtilities::getRequestVariables('groupId');
-	list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId);
+	list ($ret, $group) = GalleryCoreApi::loadEntitiesById($groupId, 'GalleryGroup');
 	if ($ret) {
 	    return array($ret, null);
 	}

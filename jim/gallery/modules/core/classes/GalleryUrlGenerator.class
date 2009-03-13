@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ if (!defined('GALLERY_MAIN_PHP')) {
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 16471 $
+ * @version $Revision: 18158 $
  */
 class GalleryUrlGenerator {
 
@@ -124,13 +124,6 @@ class GalleryUrlGenerator {
     var $_currentUrlBaseDir;
 
     /**
-     * The navigation id of the current URL.
-     * @var string
-     * @access private
-     */
-    var $_navId = '';
-
-    /**
      * Whether the cookie path was configured by the admin.
      * @var boolean
      * @access private
@@ -151,24 +144,31 @@ class GalleryUrlGenerator {
      * @static
      */
     function getCurrentRequestUri() {
-	if ($path = GalleryUtilities::getServerVar('REQUEST_URI')) {
-	    /* Sometimes, REQUEST_URI has a host part. Remove it. */
-	    if ($path{0} != '/') {
-		$components = parse_url($path);
-		$path = $components['path'];
-		$path .= empty($components['query']) ? '' : '?' . $components['query'];
-		$path .= empty($components['fragment']) ? '' : '#' . $components['fragment'];
+	$cacheKey = 'GalleryUrlGenerator::currentRequestUri';
+	if (GalleryDataCache::containsKey($cacheKey)) {
+	    $path = GalleryDataCache::get($cacheKey);
+	} else {
+	    if ($path = GalleryUtilities::getServerVar('REQUEST_URI')) {
+		/* Sometimes, REQUEST_URI has a host part. Remove it. */
+		if ($path{0} != '/') {
+		    $components = parse_url($path);
+		    $path = $components['path'];
+		    $path .= empty($components['query']) ? '' : '?' . $components['query'];
+		    $path .= empty($components['fragment']) ? '' : '#' . $components['fragment'];
+		}
+	    } else if ($path = GalleryUtilities::getServerVar('SCRIPT_NAME')) {
+		if (($tmp = GalleryUtilities::getServerVar('PATH_INFO')) && $tmp != $path) {
+		    $path .= $tmp;
+		}
+		if ($tmp = GalleryUtilities::getServerVar('QUERY_STRING')) {
+		    $path .= '?' . $tmp;
+		}
 	    }
-	} else if ($path = GalleryUtilities::getServerVar('SCRIPT_NAME')) {
-	    if (($tmp = GalleryUtilities::getServerVar('PATH_INFO')) && $tmp != $path) {
-		$path .= $tmp;
-	    }
-	    if ($tmp = GalleryUtilities::getServerVar('QUERY_STRING')) {
-		$path .= '?' . $tmp;
-	    }
+
+	    GalleryUtilities::unsanitizeInputValues($path, false);
+	    GalleryDataCache::put($cacheKey, $path);
 	}
 
-	GalleryUtilities::unsanitizeInputValues($path, false);
 	return $path;
     }
 
@@ -314,6 +314,7 @@ class GalleryUrlGenerator {
      *        as baseUri
      * @param string $embedSessionString (optional) when embedded in CMS app that supports
      *        cookieless browsing, key=value string for CMS session key and id
+     * @return GalleryStatus a status code
      */
     function init($baseUri=null, $g2Uri=null, $embedSessionString=null) {
 	$this->_embedSessionString = $embedSessionString;
@@ -477,9 +478,7 @@ class GalleryUrlGenerator {
 	$url .= !empty($parsed['path']) ? $parsed['path'] : '';
 	if (!empty($parsed['query'])) {
 	    parse_str($parsed['query'], $components);
-	    foreach (array('statusId', 'return', 'returnName', 'navId', 'fromNavId') as $special) {
-		unset($components[GALLERY_FORM_VARIABLE_PREFIX . $special]);
-	    }
+	    unset($components[GALLERY_FORM_VARIABLE_PREFIX . 'return']);
 	    $first = true;
 	    foreach ($components as $key => $value) {
 		$url .= $first ? '?' : '&';
@@ -564,6 +563,7 @@ class GalleryUrlGenerator {
      */
     function generateUrl($params=array(), $options=array()) {
 	global $gallery;
+	$session =& $gallery->getSession();
 	$currentView = $gallery->getCurrentView();
 
 	/*
@@ -598,12 +598,7 @@ class GalleryUrlGenerator {
 		$url = $this->makeUrl($href, true);
 	    } else if ($pos > 0) {
 		/* Check for local override */
-		$override = sprintf('%s/local/%s', dirname($href), basename($href));
-		$platform =& $gallery->getPlatform();
-		if ($platform->file_exists(dirname(__FILE__) . '/../../../' . $override)) {
-		    $href = $override;
-		}
-		$url .= $href;
+		$url .= $this->_getLocalPath($href);
 	    } else {
 		$url .= $href;
 	    }
@@ -623,30 +618,12 @@ class GalleryUrlGenerator {
 
 	/* Swap in the actual URL for the 'return' placeholder */
 	if (isset($params['return'])) {
-	    list ($ret, $view) = GalleryView::loadView($currentView);
-	    if (!$ret) {
-		list ($ret, $viewDescription) = $view->getViewDescription();
-		if (!$ret) {
-		    $params['returnName'] = $viewDescription;
-		}
+	    /* Cache the return URL */
+	    if (!isset($this->_returnUrlData[$currentView])) {
+		$this->_returnUrlData[$currentView]['return'] =
+			str_replace('&amp;', '&', $this->getNavigationReturnUrl());
 	    }
-	    $params['return'] = str_replace('&amp;', '&', $this->getNavigationReturnUrl());
-	    if (!empty($this->_navId)) {
-		$params['navId'] = $this->_navId;
-	    }
-	}
-
-	/* Navigation */
-	$targetView = isset($params['view']) ? $params['view'] : '';
-	if (!empty($this->_navId) && empty($options['forceDirect'])
-		&& (empty($currentView)
-		    || $currentView == $targetView
-		    || !empty($params['controller']))) {
-	    /*
-	     * We are moving around in the same view or we are redirecting to a controller,
-	     * who knows where it will redirect to.  Let's keep the navigation.
-	     */
-	    $params['navId'] = $this->_navId;
+	    $params['return'] = $this->_returnUrlData[$currentView]['return'];
 	}
 
 	/* Replace any known tokens */
@@ -671,34 +648,26 @@ class GalleryUrlGenerator {
 	    }
 	}
 
-	if ($session =& $gallery->getSession()) {
+	if ($session) {
 	    $sessionId = $session->getId();
+	}
 
-	    /*
-	     * Remove session related parameters if requested (we're already outputting or output
-	     * without fetching the HTML (immediate view / progressbar)
-	     */
-	    if (empty($sessionId) || !$session->isPersistent()) {
-		unset($params['navId']);
-	    } else {
-		/* Add authToken to all controller URLs */
-		if (!empty($options['useAuthToken'])
-			|| (!isset($options['useAuthToken']) && !empty($params['controller']))) {
-		    $params['authToken'] = $session->getAuthToken();
-		}
-	    }
+	/* Add authToken to all controller URLs */
+	if (!empty($sessionId) && $session->isPersistent()
+		&& (!empty($options['useAuthToken'])
+		    || (!isset($options['useAuthToken']) && !empty($params['controller'])))) {
+	    $params['authToken'] = $session->getAuthToken();
+	}
 
-	    /* Add session parameters to URL */
-	    if (!empty($options['forceSessionId'])
-		|| (!isset($options['forceSessionId']) && !$session->isUsingCookies())) {
-		if (!empty($this->_embedSessionString) && !empty($appSession)) {
-		    list ($sessionKey, $sessionId) = explode(
-			'=', $this->_embedSessionString, 2);
-		    $embedSessionParams = array();
-		    $embedSessionParams[$sessionKey] = $sessionId;
-		} else if (!empty($sessionId)) {
-		    $params[$session->getKey()] = $sessionId;
-		}
+	/* Add session parameters to URL */
+	if (!empty($options['forceSessionId']) || (!isset($options['forceSessionId'])
+		&& $session && !$session->isUsingCookies())) {
+	    if (!empty($this->_embedSessionString) && !empty($appSession)) {
+		list ($sessionKey, $sessionId) = explode('=', $this->_embedSessionString, 2);
+		$embedSessionParams = array();
+		$embedSessionParams[$sessionKey] = $sessionId;
+	    } else if (!empty($sessionId)) {
+		$params[$session->getKey()] = $sessionId;
 	    }
 	}
 
@@ -745,11 +714,15 @@ class GalleryUrlGenerator {
      * @return string relative URL (or unchanged absolute URL)
      */
     function makeRelativeUrl($url, $forceServerRelativeUrl=false) {
-	$requestUri = $this->getCurrentRequestUri();
-	/* When embedded, file can be empty */
-	if ($forceServerRelativeUrl || empty($this->_file[0])
+	if (!isset($this->_hasRequestUriShortUrlPrefix)) {
+	    $requestUri = $this->getCurrentRequestUri();
+	    /* When embedded, file can be empty */
+	    $this->_hasRequestUriShortUrlPrefix = empty($this->_file[0])
 		|| ($pos = strpos($requestUri, $this->_file[0])) === false
-		|| (($qPos = strpos($requestUri, '?')) !== false && $pos >= $qPos)
+		|| (($qPos = strpos($requestUri, '?')) !== false && $pos >= $qPos);
+	}
+
+	if ($forceServerRelativeUrl || $this->_hasRequestUriShortUrlPrefix
 		|| strpos($url, $this->getCurrentUrlDir()) !== 0) {
 	    /* Don't use forceDirect, keep the URL absolute if necessary */
 	    $url = str_replace($this->makeUrl('/'), '/', $url);
@@ -806,35 +779,41 @@ class GalleryUrlGenerator {
     }
 
     /**
-     * Initialize the navigation branch.
+     * Initialize the navigation.
      *
-     * If we came here with a 'return' set, we need to branch a new navigation.  If we are just
-     * navigating through options in the same navigation level, simply pass the navId along.  If we
-     * are coming back from a navigation, clean up our mess.  In other cases we simply have no
-     * navigation support
+     * If we came here with a 'return' set, validate the given return URL.
      *
      * Note: This should be called as soon as we have access to our session and the
      * requestVariables, but before we start generating URLs with generateUrl().  Currently it's
      * called from GalleryInitSecondPass
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus a status code
      */
     function initNavigation() {
+	foreach (array('return', 'formUrl') as $param) {
+	    $url = GalleryUtilities::getRequestVariables($param);
+	    $ret = $this->assertIsInternalUrl($url);
+	    if ($ret) {
+		return $ret;
+	    }
+	}
+	return null;
+    }
+
+    /**
+     * Assert that the given URL is internal to the application
+     * @param string $url URL to check
+     * @return GalleryStatus a status code
+     */
+    function assertIsInternalUrl($url) {
 	global $gallery;
 
-	$variables =
-	    GalleryUtilities::getRequestVariables('return', 'returnName', 'navId', 'fromNavId');
-	foreach ($variables as $key  => $value) {
-	    $variables[$key] = is_string($value) ? $value : null;
-	}
-	list ($returnUrl, $returnName, $navId, $fromNavId) = $variables;
-
-	if (!empty($returnUrl)) {
+	if (!empty($url)) {
 	    /* Detect header injection attempts */
-	    if (!GalleryUtilities::isSafeHttpHeader($returnUrl)) {
+	    if (!GalleryUtilities::isSafeHttpHeader($url)) {
 		$message = sprintf('Invalid return URL! The requested URL %s contains malicious ' .
 				   'characters.',
-				   $this->makeUrl($this->getCurrentRequestUri()), $returnUrl);
+				   $this->makeUrl($this->getCurrentRequestUri()), $url);
 		return GalleryCoreApi::error(ERROR_PERMISSION_DENIED, __FILE__, __LINE__, $message);
 	    }
 
@@ -844,45 +823,25 @@ class GalleryUrlGenerator {
 	     * the path Allow all URLs that don't start with a protocol and neither with '/', eg.
 	     * v/albumname but also www.EVIL.com is fine, since it's interpreted as a relative URL
 	     */
-	    $validPath =  '/' . str_replace($this->makeUrl(''), '', $this->getCurrentUrlDir());
+	    $validPath = '/' . str_replace($this->makeUrl(''), '', $this->getCurrentUrlDir());
 	    /*
 	     * We check for ../ and /../ patterns and on windows \../ would also break out,
 	     * normalize to URL / *nix style paths to check fewer cases
 	     */
-	    $normReturnUrl = str_replace("\\", '/', $returnUrl);
-	    if (((empty($this->_file[0]) || strpos($returnUrl, $this->_file[0]) !== 0)
-			&& strpos($normReturnUrl, $validPath) !== 0
-			&& strpos($returnUrl, $this->getCurrentUrlDir()) !== 0
-			&& !( !preg_match('{^\s*\w*://}i', $normReturnUrl)
-			    && preg_match('{^\s*[^/\s]}i', $normReturnUrl)))
-		    || preg_match('{^\s*\.\./}', $normReturnUrl)
-		    || strpos($normReturnUrl, '/../') !== false) {
-		$message = sprintf('Invalid return URL! The requested URL %s tried to insert a ' .
-				   'redirection to %s which is not a part of this Gallery.',
-				   $this->makeUrl($this->getCurrentRequestUri()), $returnUrl);
+	    $normUrl = str_replace("\\", '/', $url);
+	    if (((empty($this->_file[0]) || strpos($url, $this->_file[0]) !== 0)
+			&& strpos($normUrl, $validPath) !== 0
+			&& strpos($url, $this->getCurrentUrlDir()) !== 0
+			&& !( !preg_match('{^\s*\w*://}i', $normUrl)
+			    && preg_match('{^\s*[^/\s]}i', $normUrl)))
+		    || preg_match('{^\s*\.\./}', $normUrl)
+		    || strpos($normUrl, '/../') !== false) {
+		$message = sprintf('Invalid URL! The requested URL %s tried to insert a '
+				 . 'redirection to %s which is not a part of this Gallery.',
+				   $this->makeUrl($this->getCurrentRequestUri()), $url);
 		return GalleryCoreApi::error(ERROR_PERMISSION_DENIED, __FILE__, __LINE__, $message);
 	    }
-
-	    /* Branch a new navigation */
-	    $navData = array('returnUrl' => $returnUrl,
-			     'returnName' => $returnName);
-	    if (!empty($navId)) {
-		$navData['returnNavId'] = $navId;
-	    }
-	    $session =& $gallery->getSession();
-	    $this->_navId = $session->addToNavigation($navData);
-	} else {
-	    if (!empty($fromNavId)) {
-		/* We came back from a navigational branch. Delete it */
-		$session =& $gallery->getSession();
-		$session->jumpNavigation($fromNavId, $navId);
-	    }
-	    if (!empty($navId)) {
-		/* Just continue in our current navigation level */
-		$this->_navId = $navId;
-	    }
 	}
-
 	return null;
     }
 
@@ -890,9 +849,11 @@ class GalleryUrlGenerator {
      * Get the current navigation id.
      *
      * @return string the navigation id
+     * @deprecated
+     * @todo will be removed in the next API branch
      */
     function getNavigationId() {
-	return $this->_navId;
+	return null;
     }
 
     /**
@@ -914,7 +875,7 @@ class GalleryUrlGenerator {
 	}
 
 	$params = GalleryUtilities::getUrlVariablesFiltered(
-		array('return', 'returnName', 'navId', 'fromNavId', 'authorization'), true);
+		array('return', 'authorization'), true);
 
 	return $this->generateUrl($params, array('forceServerRelativeUrl' => 1));
     }
@@ -923,60 +884,25 @@ class GalleryUrlGenerator {
      * Check if we currently have a back link to where we came from.
      *
      * @return boolean true if we can go back
+     * @deprecated
+     * @todo will be removed in the next API branch
      */
     function isNavigationBackPossible() {
-	global $gallery;
-	if (empty($this->_navId)) {
-	    return false;
-	}
-	$session =& $gallery->getSession();
-	$navData = $session->getNavigation($this->_navId);
-	return (count($navData) > 0);
+	return false;
     }
 
     /**
      * Get a list of navigation links to go back to where we came from.
      *
      * @param int $depth set this to get links back to a certain depth
-     * @return array ( object GalleryStatus a status code,
+     * @return array ( GalleryStatus a status code,
      *                 array of navigational links: array('url' => ...,
      *                                            'name' => 'Back to ...'))
+     * @deprecated
+     * @todo will be removed in the next API branch
      */
     function getNavigationLinks($depth=null) {
-	global $gallery;
-	if (empty($this->_navId)) {
-	    return array(null, array());
-	}
-
-	list ($ret, $core) = GalleryCoreApi::loadPlugin('module', 'core');
-	if ($ret) {
-	    return array($ret, null);
-	}
-
-	$session =& $gallery->getSession();
-	$navData = $session->getNavigation($this->_navId);
-	$links = array();
-	$i = 0;
-	foreach ($navData as $navItem) {
-	    $i++;
-	    if (isset($depth) && $i > $depth) {
-		break;
-	    }
-	    $url = $navItem['returnUrl'];
-	    $params = array('fromNavId' => $this->_navId);
-	    if (isset($navItem['returnNavId'])) {
-		$params['navId'] = $navItem['returnNavId'];
-	    }
-	    if (!empty($navItem['returnName'])) {
-		$name = $core->translate(array('text' => 'Back to %s',
-					       'arg1' => $navItem['returnName']));
-	    } else {
-		$name = $core->translate('Back');
-	    }
-	    $url = GalleryUrlGenerator::appendParamsToUrl($url, $params);
-	    $links[] = array('url' => $url, 'name' => $name);
-	}
-	return array(null, $links);
+	return array(null, array());
     }
 
     /**
@@ -1000,6 +926,68 @@ class GalleryUrlGenerator {
 	} else {
 	    return false;
 	}
+    }
+
+    /**
+     * Check for a local override of an href path (to override a css or js file, for example).
+     * @param string $href relative path
+     * @return string path to local override, or given path if override not found
+     * @access private
+     */
+    function _getLocalPath($href) {
+	global $gallery;
+	if (!isset($this->_localUrlMap)) {
+	    $this->_localUrlMap = GalleryDataCache::getFromDisk(array('type' => 'local-url-map'));
+	    if (!isset($this->_localUrlMap)) {
+		$this->_localUrlMap = array();
+	    }
+	}
+	$check = GalleryCoreApi::shouldDoCompileCheck();
+	if (!$check && isset($this->_localUrlMap[$href])) {
+	    $path = $this->_localUrlMap[$href];
+	} else {
+	    $override = dirname($href) . '/local/' . basename($href);
+	    $platform =& $gallery->getPlatform();
+	    $path = $platform->file_exists(GalleryCoreApi::getCodeBasePath($override))
+		  ? $override : $href;
+	    $this->_localUrlMap[$href] = $path;
+	    if (!$check && empty($this->_localUrlMapDirty)) {
+		$this->_localUrlMapDirty = true;
+		/*
+		 * Would do array(&$this, '_saveLocalUrlMap') but this triggers a bug in PHP 5.1.x
+		 * with array comparison (@see Gallery::addShutdownAction).  In PHP 5.3 that
+		 * approach doesn't work so drop the reference and call into our convenience
+		 * function instead.
+		 */
+		if (version_compare(PHP_VERSION, '5.3', '>=')) {
+		    $gallery->addShutdownAction(array($this, '_saveLocalUrlMapPhp5'), array());
+		} else {
+		    $gallery->addShutdownAction(
+			array('GalleryUrlGenerator', '_saveLocalUrlMap'), array(&$this));
+		}
+	    }
+	}
+	return $path;
+    }
+
+    /**
+     * Save changes to the local URL map.
+     * @access private
+     * @static
+     */
+    function _saveLocalUrlMap(&$urlGenerator) {
+	if (!empty($urlGenerator->_localUrlMapDirty)) {
+	    GalleryDataCache::putToDisk(array('type' => 'local-url-map'),
+					$urlGenerator->_localUrlMap);
+	    $urlGenerator->_localUrlMapDirty = false;
+	}
+    }
+
+    /**
+     * Compatibility function for PHP 5.3.  See comment in GalleryUrlGenerator::_getLocalPath.
+     */
+    function _saveLocalUrlMapPhp5() {
+	GalleryUrlGenerator::_saveLocalUrlMap($this);
     }
 }
 ?>

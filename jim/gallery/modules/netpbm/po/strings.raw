@@ -1,4 +1,4 @@
-# $Id: strings.raw 15342 2006-12-01 21:14:46Z andy_st $
+# $Id: strings.raw 17028 2007-09-03 22:08:36Z mindless $
 
 /* module.inc */
 gettext("NetPBM")
@@ -39,6 +39,7 @@ gettext("File does not exist")
 gettext("NetPBM Settings")
 gettext("Settings saved successfully")
 gettext("NetPBM is a graphics toolkit that can be used to process images that you upload to Gallery.  You must install the NetPBM binaries on your server, then enter the path to them in the text box below.  If you're on a Unix machine, don't forget to make the binaries executable (<i>chmod 755 *</i> in the NetPBM directory should do it)")
+gettext("The exec() function is disabled in your PHP by the <b>disabled_functions</b> parameter in php.ini.  This module cannot be used until that setting is changed.")
 gettext("NetPBM Directory:")
 gettext("You must enter a path to your NetPBM binaries")
 gettext("The path you entered doesn't contain valid NetPBM binaries. Use the 'test' button to check where the error is.")

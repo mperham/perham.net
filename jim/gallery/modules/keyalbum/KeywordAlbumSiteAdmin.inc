@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package KeyAlbum
  * @subpackage UserInterface
  * @author Alan Harder <alan.harder@sun.com>
- * @version $Revision: 16474 $
+ * @version $Revision: 17580 $
  */
 class KeywordAlbumSiteAdminController extends GalleryController {
 

@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryFileSystemEntityHelper_medium {
@@ -72,15 +72,15 @@ class GalleryFileSystemEntityHelper_medium {
     /**
      * @see GalleryCoreApi::getLegalPathComponent
      */
-    function getLegalPathComponent($pathComponent, $parentId, $selfId=null) {
+    function getLegalPathComponent($pathComponent, $parentId, $selfId=null, $forDirectory=false) {
 	global $gallery;
 	$platform =& $gallery->getPlatform();
 
 	/* Make sure our path component uses legal characters */
-	$pathComponent = $platform->legalizePathComponent(trim($pathComponent));
+	$pathComponent = $platform->legalizePathComponent(trim($pathComponent), $forDirectory);
 
 	/* Get the parent, just to verify id is valid */
-	list ($ret, $parent) = GalleryCoreApi::loadEntitiesById($parentId);
+	list ($ret, $parent) = GalleryCoreApi::loadEntitiesById($parentId, 'GalleryEntity');
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -108,7 +108,6 @@ class GalleryFileSystemEntityHelper_medium {
 	 */
 	$retry = 0;
 	while (true) {
-	    
 	    $newPathComponent = GalleryFileSystemEntityHelper_medium::_truncatePathComponent(
 			$fileBase, $retry > 0 ? sprintf('_%03d', $retry) : '', $extension);
 
@@ -134,12 +133,12 @@ class GalleryFileSystemEntityHelper_medium {
     /**
      * Truncate the given path component to the maximum allowed length.
      * If an extension is given, it truncates the base and then appends the extension.
-     * 
+     *
      * @param string basename of path component
      * @param string variable part (optional), e.g. '_001'
      * @param string extension (optional), e.g. '.jpg'
-     * @return string truncated path component 
-     * @acccess private
+     * @return string truncated path component
+     * @access private
      */
     function _truncatePathComponent($baseName, $variablePart='', $extension='') {
 
@@ -148,6 +147,5 @@ class GalleryFileSystemEntityHelper_medium {
 
 	return $baseName . $variablePart . $extension;
     }
-    
 }
 ?>

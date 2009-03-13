@@ -15,10 +15,6 @@
     </div>
     <?php endif; ?>
     <div class="go">
-	  <div class="btn btn-redo"><div><div><div><div><div><div><div><div>
-      <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>"><?php print _('Cancel') ?></a>
-	  </div></div></div></div></div></div></div></div></div>
-	  <div class="btn btn-warn"><div><div><div><div><div><div><div><div>
-      <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>&amp;action=clean"><?php print _('Erase all data') ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+      <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>" class="btn redo"><i></i><span><span></span><i></i><?php print _('Cancel') ?></span></a>
+      <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $currentStep->getStepNumber())) ?>&amp;action=clean" class="btn warn"><i></i><span><span></span><i></i><?php print _('Erase all data') ?></span></a>
     </div>

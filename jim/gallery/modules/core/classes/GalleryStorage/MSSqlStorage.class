@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryStorage.class');
  * @subpackage Storage
  * @author vicente
  * @author Larry Menard <larry.menard@rogers.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17997 $
  */
 class MSSqlStorage extends GalleryStorage {
 
@@ -114,7 +114,11 @@ class MSSqlStorage extends GalleryStorage {
 	    break;
 
 	case 'RAND':
-	    $sql = sprintf('NEWID()');
+	    $sql = 'NEWID()';
+	    break;
+
+	case 'RANDOM_INTEGER':
+	    $sql = 'ABS(CHECKSUM(NEWID()))';
 	    break;
 
 	case 'LIMIT':

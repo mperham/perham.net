@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="ImageMagick Settings"} </h2>
@@ -19,6 +17,11 @@
     {g->text text="ImageMagick is a graphics toolkit that can be used to process images that you upload to Gallery.  You must install the ImageMagick binaries on your server, then enter the path to them in the text box below.  If you're on a Unix machine, don't forget to make the binaries executable (<i>chmod 755 *</i> in the ImageMagick directory should do it)"}
   </p>
 
+{if !$AdminImageMagick.canExec}
+  <p class="giWarning">
+    {g->text text="The exec() function is disabled in your PHP by the <b>disabled_functions</b> parameter in php.ini.  This module cannot be used until that setting is changed."}
+  </p>
+{else}
   <table class="gbDataTable"><tr>
     <td>
       {g->text text="Directory to ImageMagick/GraphicsMagick binaries:"}
@@ -62,14 +65,14 @@
     </td>
   {if $form.cmykSupport!="none"}
   </tr><tr>
-    <td colspan=2>
+    <td colspan="2">
       {g->text text="ImageMagick can detect non-webviewable color spaces like CMYK and create a webviewable copy of such images. Only activate this option if you actually add CMYK based JPEG or TIFF images since the color space detection slows down the add item process a little bit."}
     </td>
   </tr><tr>
     <td>
       {g->text text="CMYK Support:"}
     </td><td>
-      <input type="checkbox"{if $form.cmykSupport=="on"} checked="checked"{/if}
+      <input type="checkbox" {if $form.cmykSupport=="on"}checked="checked" {/if}
        onclick="document.getElementById('cmykSupport').value = this.checked ? 'on' : 'off'"/>
     </td>
   {/if}
@@ -83,6 +86,7 @@
    name="{g->formVar var="form[action][save]"}" value="{g->text text="Save Settings"}"/>
   <input type="submit" class="inputTypeSubmit"
    name="{g->formVar var="form[action][test]"}" value="{g->text text="Test Settings"}"/>
+{/if}
   {if $AdminImageMagick.isConfigure}
     <input type="submit" class="inputTypeSubmit"
      name="{g->formVar var="form[action][cancel]"}" value="{g->text text="Cancel"}"/>
@@ -139,9 +143,9 @@
   {if !empty($form.error.version.vulnerable)}
   <p class="giWarning">
     {g->text text="Warning: This version of %s has known vulnerabilities that could be exploited to execute arbitrary commands or cause a denial of service (references: %s1%s, %s2%s, %s3%s, %s4%s). You may wish to upgrade. This determination may be inaccurate for ImageMagick packages in Linux distributions." arg1=$AdminImageMagick.version.0
-     arg2="<a href=\"http://nvd.nist.gov/nvd.cfm?cvename=CVE-2006-3744\">" arg3="</a>"
-     arg4="<a href=\"http://nvd.nist.gov/nvd.cfm?cvename=CVE-2006-3743\">" arg5="</a>"
-     arg6="<a href=\"http://nvd.nist.gov/nvd.cfm?cvename=CVE-2006-4144\">" arg7="</a>"
+     arg2="<a href=\"http://nvd.nist.gov/nvd.cfm?cvename=CVE-2007-1797\">" arg3="</a>"
+     arg4="<a href=\"http://nvd.nist.gov/nvd.cfm?cvename=CVE-2006-3744\">" arg5="</a>"
+     arg6="<a href=\"http://nvd.nist.gov/nvd.cfm?cvename=CVE-2006-3743\">" arg7="</a>"
      arg8="<a href=\"http://nvd.nist.gov/nvd.cfm?cvename=CVE-2005-1739\">" arg9="</a>"}
   </p>
   <input type="checkbox" id="cbForceSave" name="{g->formVar var="form[forceSave]"}"/>

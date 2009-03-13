@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17029 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock gcBackground1">
   <h2> {g->text text="Archive Upload Settings"} </h2>
@@ -19,6 +17,11 @@
     {g->text text="This module will enable extraction of individual files from a zip archive to add each item to Gallery.  You must locate or install an unzip binary on your server, then enter the path to it in the text box below.  If you're on a Unix machine, don't forget to make the binary executable (<i>chmod 755 unzip</i> in the right directory should do it)"}
   </p>
 
+{if !$form.canExec}
+  <p class="giWarning">
+    {g->text text="The exec() function is disabled in your PHP by the <b>disabled_functions</b> parameter in php.ini.  This module cannot be used until that setting is changed."}
+  </p>
+{else}
   {g->text text="Path to unzip:"}
   <input type="text" size="40"
    name="{g->formVar var="form[unzipPath]"}" value="{$form.unzipPath}"
@@ -62,6 +65,7 @@
    name="{g->formVar var="form[action][save]"}" value="{g->text text="Save Settings"}"/>
   <input type="submit" class="inputTypeSubmit"
    name="{g->formVar var="form[action][test]"}" value="{g->text text="Test Settings"}"/>
+{/if}
   {if $form.isConfigure}
     <input type="submit" class="inputTypeSubmit"
      name="{g->formVar var="form[action][cancel]"}" value="{g->text text="Cancel"}"/>

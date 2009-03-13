@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15709 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryFactoryHelper_simple {
@@ -44,7 +44,7 @@ class GalleryFactoryHelper_simple {
     /**
      * The single copy of the factory registry data
      *
-     * @return object GalleryStatus a status code
+     * @return array factory registry data
      * @access private
      */
     function &_getSingleton() {
@@ -112,7 +112,7 @@ class GalleryFactoryHelper_simple {
 	$hints[] = '*';
 
 	foreach ($hints as $hint) {
-	    $hint = strtolower($hint);
+	    $hint = GalleryUtilities::strToLower($hint);
 	    if (!empty($registry['hints'][$classType][$hint])) {
 		$classNames = array_values($registry['hints'][$classType][$hint]);
 		break;
@@ -166,8 +166,7 @@ class GalleryFactoryHelper_simple {
 
 	    $platform =& $gallery->getPlatform();
 	    if (!$platform->file_exists(
-		GalleryCoreApi::getPluginBaseDir(
-		'module', $registry['pluginIds'][$classType][$className]) . $relativePath)) {
+		GalleryCoreApi::getCodeBasePath($relativePath))) {
 		return array(GalleryCoreApi::error(ERROR_BAD_PATH, __FILE__, __LINE__,
 						  "Invalid path: $relativePath"),
 			     null);

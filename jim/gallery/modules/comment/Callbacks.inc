@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,18 @@
 /**
  * @package Comment
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17679 $
  */
 class CommentCallbacks {
 
     function callback($params, &$smarty, $callback, $userId) {
+	global $gallery;
+	$phpVm = $gallery->getPhpVm();
 
 	switch ($callback) {
 	case 'LoadComments':
 	    $itemId = $params['itemId'];
-	    list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
+	    list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId, 'GalleryItem');
 	    if ($ret) {
 		return $ret;
 	    }
@@ -39,10 +41,40 @@ class CommentCallbacks {
 	    if ($ret) {
 		return $ret;
 	    }
-	    if (!isset($permissions['comment.view'])) {
+	    if (empty($permissions['core.view'])) {
+		/* Avoid information disclosure, act as if the item didn't exist. */
+		return GalleryCoreApi::error(ERROR_MISSING_OBJECT);
+	    } else if (empty($permissions['comment.view'])) { 
 		return null;
 	    }
 
+	    /* Pages shouldn't be cached if comments are not accessible for anonymous */ 
+	    if (!$phpVm->headers_sent()) {
+		list ($ret, $anonymousUserId) = GalleryCoreApi::getAnonymousUserId();
+		if ($ret) {
+		    return $ret;
+		}
+		/* If !comment.view || !core.view */
+		list ($ret, $anonymousViewable) = GalleryCoreApi::hasItemPermission(
+		    $itemId, 'comment.view', $anonymousUserId, false);
+		if ($ret) {
+		    return $ret;
+		}
+		if ($anonymousViewable) {
+		    list ($ret, $anonymousViewable) = GalleryCoreApi::hasItemPermission(
+			$itemId, 'core.view', $anonymousUserId, false);
+		    if ($ret) {
+			return $ret;
+		    }
+		}
+
+		if (!$anonymousViewable) {
+		    $expires = $gallery->getHttpDate($phpVm->time() - 7*24*3600);
+		    $phpVm->header('Cache-Control: no-cache');
+		    $phpVm->header('Pragma: no-cache');
+		    $phpVm->header('Expires: ' . $expires);
+		}
+	    }
 	    $viewMax = $params['show'];
 
 	    GalleryCoreApi::requireOnce('modules/comment/classes/GalleryCommentHelper.class');
@@ -68,12 +100,13 @@ class CommentCallbacks {
 
 		    /* Extract the member data */
 		    $comments[$i] = (array)$comments[$i];
+		    $comments[$i]['randomId'] = $comments[$i]['id'] . '-' . rand() ;
 		}
 
 		/* Load all the commenters */
 		if (sizeof($commenters) > 0) {
 		    list ($ret, $commentersList) =
-			GalleryCoreApi::loadEntitiesById(array_keys($commenters));
+			GalleryCoreApi::loadEntitiesById(array_keys($commenters), 'GalleryUser');
 		    if ($ret) {
 			return $ret;
 		    }
@@ -107,7 +140,7 @@ class CommentCallbacks {
 
 	case 'AddComment':
 	    /* Load our item */
-	    list ($ret, $item) = GalleryCoreApi::loadEntitiesById($params['itemId']);
+	    list ($ret, $item) = GalleryCoreApi::loadEntitiesById($params['itemId'], 'GalleryItem');
 	    if ($ret) {
 		return $ret;
 	    }

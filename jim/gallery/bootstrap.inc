@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,8 +40,8 @@ require_once(dirname(__FILE__) . '/modules/core/classes/GalleryDataCache.class')
  * Everything else should be inside it so that we do not pollute the namespace
  * (especially important when we're embedded inside another application).
  */
-$GLOBALS['gallery'] =& new Gallery();
-$gallery =& $GLOBALS['gallery'];
+$gallery =& new Gallery();
+$GLOBALS['gallery'] =& $gallery;
 
 if (!defined('GALLERY_CONFIG_DIR')) {
     define('GALLERY_CONFIG_DIR', dirname(__FILE__));

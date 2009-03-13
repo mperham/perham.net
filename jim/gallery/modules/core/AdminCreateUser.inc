@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AdminCreateUserController extends GalleryController {
 
@@ -145,10 +145,9 @@ class AdminCreateUserView extends GalleryView {
 	    return array($ret, null);
 	}
 	$languageList = array();
-	$languageList[''] = $module->translate('<none>');
+	$languageList[''] = $module->translate('&lt;none&gt;');
 
-	$translator =& $gallery->getTranslator();
-	$supportedLanguages = $translator->getSupportedLanguages();
+	$supportedLanguages = GalleryCoreApi::getSupportedLanguages();
 	foreach ($supportedLanguages as $language => $countryList) {
 	    foreach ($countryList as $country => $languageData) {
 		$languageList[$language . '_' . $country] =

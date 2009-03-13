@@ -1,6 +1,6 @@
 li.giSelected {
   padding-right: 22px;
-  background: url(bullet_arrow.png) right center no-repeat;
+  background: url(arrow_right.png) right center no-repeat;
 }
 
 .gbAdminLink {
@@ -17,7 +17,7 @@ li.giSelected {
 .gbLink-Help {
   width: 16px;
   height: 16px;
-  background: url(help.png) left center no-repeat;
+  background: url(help.png) right center no-repeat;
 }
 
 .gbLink-Help a {
@@ -26,55 +26,61 @@ li.giSelected {
 
 /* Core */
 .gbLink-core_ItemAdmin-core_ItemAdd {
-  background: url(add_items.png) right center no-repeat;
+  background-image: url(add_items.png);
 }
 .gbLink-core_ItemAdmin-core_ItemAddAlbum {
-  background: url(add_album.png) right center no-repeat;
+  background-image: url(book_add.png);
 }
 .gbLink-core_ItemAdmin-core_ItemDelete,
 .gbLink-core_ItemAdmin-core_ItemDeleteSingle {
-  background: url(delete_photo.png) right center no-repeat;
+  background-image: url(picture_delete.png);
 }
 .gbLink-core_ItemAdmin-core_ItemDelete-album,
 .gbLink-core_ItemAdmin-core_ItemDeleteSingle-album {
-  background: url(delete_album.png) right center no-repeat;
+  background-image: url(book_delete.png);
 }
 .gbLink-core_ItemAdmin-core_ItemEdit {
-  background: url(edit_photo.png) right center no-repeat;
+  background-image: url(picture_edit.png);
 }
 .gbLink-core_ItemAdmin-core_ItemEdit-album {
-  background: url(edit_album.png) right center no-repeat;
+  background-image: url(book_edit.png);
 }
 .gbLink-core_ItemAdmin-core_ItemEditCaptions {
-  background: url(edit_captions.png) right center no-repeat;
+  background-image: url(style_edit.png);
 }
 .gbLink-core_ItemAdmin-core_ItemPermissions {
-  background: url(edit_permissions.png) right center no-repeat;
+  background-image: url(lock_edit.png);
 }
 .gbLink-core_ItemAdmin-core_ItemReorder {
-  background: url(reorder_items.png) right center no-repeat;
+  background-image: url(arrow_switch.png);
 }
 .gbLink-core_ItemAdmin-core_ItemMove,
 .gbLink-core_ItemAdmin-core_ItemMoveSingle {
-  background: url(move_photo.png) right center no-repeat;
+  background-image: url(picture_go.png);
 }
 .gbLink-core_ItemAdmin-core_ItemMakeHighlight {
-  background: url(make_highlight.png) right center no-repeat;
+  background-image: url(lightbulb.png);
 }
 .gbLink-core_AdminCore {
-  background: url(general.png) right center no-repeat;
+  background-image: url(page_white_stack.png);
 }
 .gbLink-core_AdminPlugins {
-  background: url(modules.png) right center no-repeat;
+  background-image: url(plugin.png);
+}
+.gbLink-core_AdminLanguageManager {
+  background-image: url(language_manager.png);
+}
+.gbLink-core_AdminEventLogViewer {
+  background-image: url(report_magnify.png);
 }
 .icon-plugin-active {
-  background-image: url(bullet_checked.png);
+  background-image: url(accept.png);
 }
 .icon-plugin-inactive {
   background-image: url(delete.png);
 }
 .icon-plugin-upgrade {
-  background-image: url(upgrade.png);
+  background-image: url(error_go.png);
 }
 .icon-plugin-uninstall {
   background-image: url(bullet_delete.png);
@@ -86,254 +92,369 @@ li.giSelected {
   background-image: url(lock.png);
 }
 .gbLink-core_AdminThemes {
-  background: url(layout.png) right center no-repeat;
+  background-image: url(layout.png);
 }
 .gbLink-core_AdminToolkitPriority {
-  background: url(toolkit_priority.png) right center no-repeat;
+  background-image: url(toolkit_priority.png);
 }
 .gbLink-core_AdminMaintenance {
-  background: url(site_maintenance.png) right center no-repeat;
+  background-image: url(page_white_wrench.png);
 }
 .gbLink-core_AdminPerformance {
-  background: url(admin_performance.png) right center no-repeat;
+  background-image: url(time.png);
 }
 
 /* Users */
 .gbLink-core_UserChangePassword {
-  background: url(change_password.png) right center no-repeat;
+  background-image: url(key.png);
 }
 .gbLink-core_UserPreferences {
-  background: url(account_setting.png) right center no-repeat;
+  background-image: url(account_setting.png);
 }
 .gbLink-core_AdminUsers {
-  background: url(users.png) right center no-repeat;
+  background-image: url(group.png);
 }
 .gbLink-core_AdminGroups {
-  background: url(groups.png) right center no-repeat;
+  background-image: url(groups.png);
 }
 .gbLink-core_UserLogin {
-  background: url(change_password.png) right center no-repeat;
+  background-image: url(key.png);
 }
 .gbLink-register_UserSelfRegistration {
-  background: url(registration.png) right center no-repeat;
+  background-image: url(user_add.png);
 }
-#giFormUsername, .giFormUsername {
+#giFormUsername,
+.giFormUsername {
   background-image: url(user.png);
 }
 #giFormGroupname {
   background-image: url(group.png);
 }
 #giFormPassword {
-  background-image: url(change_password.png);
+  background-image: url(key.png);
 }
 
 /* Import */
 .gbLink-archiveupload_ArchiveUploadSiteAdmin {
-  background: url(import_archive.png) right center no-repeat;
+  background-image: url(import_archive.png);
 }
 .gbLink-itemadd_ItemAddSiteAdmin {
-  background: url(webserver.png) right center no-repeat;
+  background-image: url(drive_web.png);
 }
 .gbLink-migrate_SelectGallery {
-  background: url(gallery.png) right center no-repeat;
+  background-image: url(application_view_gallery.png);
 }
 .gbLink-picasa_SelectPicasaExportPath {
-  background: url(picasa.png) right center no-repeat;
+  background-image: url(picasa.png);
 }
 .gbLink-uploadapplet_UploadAppletSiteAdmin {
-  background: url(uploadapplet.png) right center no-repeat;
+  background-image: url(page_white_get.png);
 }
 .gbLink-webcam_WebCamSiteAdmin {
-  background: url(webcam.png) right center no-repeat;
+  background-image: url(webcam.png);
 }
 
 /* Extra Data */
 .gbLink-comment_AddComment,
 .gbLink-comment_CommentSiteAdmin {
-  background: url(add_comment.png) right center no-repeat;
+  background-image: url(comment_add.png);
 }
 .gbLink-comment_ShowAllComments,
 .gbLink-core_ItemAdmin-comment_ShowComments {
-  background: url(view_comment.png) right center no-repeat;
+  background-image: url(comments.png);
+}
+.gbLink-comment_AdminModerateSpam {
+  background-image: url(comments_delete.png);
 }
 .gbLink-customfield_CustomFieldSiteAdmin {
-  background: url(custom_fields.png) right center no-repeat;
+  background-image: url(application_form.png);
 }
 .gbLink-exif_AdminExif {
-  background: url(exif_parser.png) right center no-repeat;
+  background-image: url(camera.png);
 }
 .gbLink-getid3_AdminGetid3 {
-  background: url(getid3.png) right center no-repeat;
+  background-image: url(getid3.png);
 }
 .gbLink-mime_MimeAdmin {
-  background: url(mime_types.png) right center no-repeat;
+  background-image: url(page_white_gear.png);
 }
 .gbLink-multilang_MultiLangSiteAdmin {
-  background: url(multilang.png) right center no-repeat;
+  background-image: url(multilang.png);
 }
 .gbLink-rating_RatingSiteAdmin {
-  background: url(rating.png) right center no-repeat;
+  background-image: url(award_star_bronze_3.png);
 }
 
 /* Graphics Toolkits */
 .gbLink-dcraw_AdminDcraw {
-  background: url(dcraw.png) right center no-repeat;
+  background-image: url(dcraw.png);
 }
 .gbLink-ffmpeg_AdminFfmpeg {
-  background: url(ffmpeg.png) right center no-repeat;
+  background-image: url(film.png);
 }
 .gbLink-gd_AdminGd {
-  background: url(gd.png) right center no-repeat;
+  background-image: url(gd.png);
 }
 .gbLink-imagemagick_AdminImageMagick {
-  background: url(image_magick.png) right center no-repeat;
+  background-image: url(wand.png);
 }
 .gbLink-netpbm_AdminNetPbm {
-  background: url(pbm.png) right center no-repeat;
+  background-image: url(pbm.png);
+}
+.gbLink-jpegtran_AdminJpegtran {
+  background-image: url(jpeg_tran.png);
 }
 
 /* Blocks */
 .gbLink-albumselect_AlbumSelectSiteAdmin {
-  background: url(album.png) right center no-repeat;
+  background-image: url(albumselect.png);
 }
 .gbLink-imageblock_ImageBlockSiteAdmin {
-  background: url(random_popular.png) right center no-repeat;
+  background-image: url(brick.png);
 }
 
 /* Gallery */
 .gbLink-captcha_CaptchaSiteAdmin {
-  background: url(captcha.png) right center no-repeat;
+  background-image: url(shield.png);
 }
 .gbLink-debug_ShowTree {
-  background: url(debug_tree.png) right center no-repeat;
+  background-image: url(bug.png);
 }
-.gbLink-members_AdminMembers, .gbLink-members_MembersList {
-  background: url(members.png) right center no-repeat;
+.gbLink-members_AdminMembers,
+.gbLink-members_MembersList {
+  background-image: url(members.png);
 }
 .gbLink-notification_NotificationSiteAdmin {
-  background: url(email.png) right center no-repeat;
+  background-image: url(email.png);
 }
-.gbLink-notification_NotificationUserAdmin, .gbLink-notification_NotificationItem {
-  background: url(magnifier.png) right center no-repeat;
+.gbLink-notification_NotificationUserAdmin,
+.gbLink-core_ItemAdmin-notification_NotificationItemAdmin {
+  background-image: url(magnifier.png);
 }
 .gbLink-permalinks_PermalinksSiteAdmin {
-  background: url(permalinks.png) right center no-repeat;
+  background-image: url(anchor.png);
 }
 .gbLink-quotas_AdminQuotas {
-  background: url(quotas.png) right center no-repeat;
+  background-image: url(chart_pie.png);
 }
 .gbLink-register_AdminSelfRegistration {
-  background: url(registration.png) right center no-repeat;
+  background-image: url(user_add.png);
 }
 .gbLink-rewrite_AdminRewrite {
-  background: url(url_rewrite.png) right center no-repeat;
+  background-image: url(url_rewrite.png);
 }
 .gbLink-search_SearchScan {
-  background: url(advanced_search.png) right center no-repeat;
+  background-image: url(advanced_search.png);
 }
 .gbLink-useralbum_UserAlbumSiteAdmin {
-  background: url(user_albums.png) right center no-repeat;
+  background-image: url(user_albums.png);
 }
 
 /* Display */
-.gbLink-dynamicalbum_DynamicAlbumSiteAdmin, .gbLink-dynamicalbum_UpdatesAlbum,
-.gbLink-dynamicalbum_PopularAlbum, .gbLink-dynamicalbum_RandomAlbum {
-  background: url(dynamic_album.png) right center no-repeat;
+.gbLink-dynamicalbum_DynamicAlbumSiteAdmin,
+.gbLink-dynamicalbum_UpdatesAlbum,
+.gbLink-dynamicalbum_PopularAlbum,
+.gbLink-dynamicalbum_RandomAlbum {
+  background-image: url(dynamic_album.png);
 }
 .gbLink-icons_IconsSiteAdmin {
-  background: url(icon_module.png) right center no-repeat;
+  background-image: url(color_swatch.png);
 }
 .gbLink-keyalbum_KeywordAlbumSiteAdmin {
-  background: url(keyword_album.png) right center no-repeat;
+  background-image: url(keyword_album.png);
 }
 .gbLink-linkitem_LinkItemSiteAdmin {
-  background: url(create_link.png) right center no-repeat;
+  background-image: url(link.png);
 }
 .gbLink-newitems_NewItemsSiteAdmin {
-  background: url(new_items.png) right center no-repeat;
+  background-image: url(new.png);
 }
-.gbLink-panorama_PanoramaSiteAdmin, .gbLink-panorama_Panorama {
-  background: url(panorama.png) right center no-repeat;
+.gbLink-panorama_PanoramaSiteAdmin,
+.gbLink-panorama_Panorama {
+  background-image: url(panorama.png);
 }
 .gbLink-randomhighlight_RandomHighlightSiteAdmin {
-  background: url(random_highlight.png) right center no-repeat;
+  background-image: url(images.png);
 }
 .gbLink-core_ItemAdmin-rearrange_RearrangeItems {
-  background: url(reorder_items.png) right center no-repeat;
+  background-image: url(arrow_switch.png);
 }
 .gbLink-core_ItemAdmin-replica_ItemCreateReplica,
 .gbLink-core_ItemAdmin-replica_ItemCreateReplicaSingle {
-  background: url(page_copy.png) right center no-repeat;
+  background-image: url(page_copy.png);
 }
-.gbLink-slideshow_Slideshow {
+.gbLink-slideshow_Slideshow,
+.gbLink-slideshow_AdminSlideshow {
   background: url(view_slideshow.png) right bottom no-repeat;
 }
 .gbLink-slideshowapplet_SlideshowApplet,
 .gbLink-slideshowapplet_SlideshowAppletSiteAdmin {
-  background: url(view_fullscreen_slideshow.png) right center no-repeat;
+  background-image: url(control_play.png);
 }
 .gbLink-squarethumb_SquareThumbSiteAdmin {
-  background: url(squarethumb.png) right center no-repeat;
+  background-image: url(picture_empty.png);
 }
 .gbLink-thumbnail_ThumbnailSiteAdmin {
-  background: url(thumbnails.png) right center no-repeat;
+  background-image: url(pictures.png);
 }
 .gbLink-watermark_WatermarkSiteAdmin,
 .gbLink-watermark_UserWatermarks {
-  background: url(watermark.png) right center no-repeat;
+  background-image: url(picture_key.png);
 }
 
 /* Commerce */
 .gbLink-ecard_SendEcard,
 .gbLink-ecard_AdminEcard {
-  background: url(ecard.png) right center no-repeat;
+  background-image: url(email_open_image.png);
+}
 
 .gbLink-cart_ViewCart {
-  background: url(cart.png) right center no-repeat;
+  background-image: url(cart.png);
 }
 .gbLink-cart_AddToCart {
-  background: url(add_cart.png) right center no-repeat;
+  background-image: url(cart_add.png);
 }
 .gbLink-digibug_DigibugPrintPhotos {
-  background: url(digibug-print.png) right center no-repeat;
+  background-image: url(digibug-print.png);
 }
 .gbLink-digibug_AdminDigibug {
-  background: url(digibug-admin.png) right center no-repeat;
+  background-image: url(digibug-admin.png);
 }
 .gbLink-fotokasten_PrintPhotos {
-  background: url(fotokasten-print.png) right center no-repeat;
+  background-image: url(fotokasten-print.png);
 }
 .gbLink-fotokasten_FotokastenSiteAdmin {
-  background: url(fotokasten-admin.png) right center no-repeat;
+  background-image: url(fotokasten-admin.png);
 }
 .gbLink-photoaccess_PrintPhoto {
-  background: url(print.png) right center no-repeat;
+  background-image: url(printer.png);
 }
 .gbLink-shutterfly_PrintPhotos {
-  background: url(shutterfly-print.png) right center no-repeat;
+  background-image: url(shutterfly-print.png);
+}
+.gbLink-snapgalaxy_SnapGalaxyPrintPhotos {
+  background-image: url(snapgalaxy-print.png);
+}
+.gbLink-snapgalaxy_AdminSnapGalaxy {
+  background-image: url(snapgalaxy-admin.png);
 }
 .gbLink-zipcart_ZipCartAdmin {
-  background: url(zip_download.png) right center no-repeat;
+  background-image: url(compress.png);
 }
 
 /* Authentication */
 .gbLink-httpauth_HttpAuthSiteAdmin {
-  background: url(change_password.png) right center no-repeat;
+  background-image: url(key.png);
 }
 
 /* Remote Interfaces */
 .gbLink-remote_RemoteSiteAdmin {
-  background: url(remote.png) right center no-repeat;
+  background-image: url(controller.png);
 }
-.gbLink-webdav_WebDavSiteAdmin, .gbLink-webdav_WebDavMount {
-  background: url(folder_picture.png) right center no-repeat;
+.gbLink-webdav_WebDavSiteAdmin,
+.gbLink-webdav_WebDavMount {
+  background-image: url(folder_picture.png);
 }
 
 /* Export */
-.gbLink-rss_SimpleRender, .gbLink-core_ItemAdmin-rss_EditFeed, .gbLink-rss_RssSiteAdmin {
-  background: url(rss_feed.png) right center no-repeat;
+.gbLink-rss_SimpleRender,
+.gbLink-core_ItemAdmin-rss_EditFeed,
+.gbLink-rss_RssSiteAdmin {
+  background-image: url(rss_feed.png);
 }
 .gbLink-sitemap_AdminSitemap {
-  background: url(google_sitemap.png) right center no-repeat;
+  background-image: url(sitemap.png);
 }
 
+.gbLink-icalendar_ICalendarSiteAdmin,
+.gbLink-calendar_CalendarSiteAdmin {
+  background-image: url(calendar.png);
+}
+
+
+/* Addviaemail Configure */
+.gbLink-addviaemail_Configure {
+  background-image: url(email_open_image.png);
+}
+/* Checkout Admin */
+.gbLink-checkout_Admin {
+  background-image: url(cart_go.png);
+}
+/* Checkoutauthorizenet Admin */
+.gbLink-checkoutauthorizenet_Admin {
+  background-image: url(cart_go.png);
+}
+/* Checkoutemail Admin */
+.gbLink-checkoutemail_Admin {
+  background-image: url(cart_go.png);
+}
+/* Checkoutpaypal Admin */
+.gbLink-checkoutpaypal_Admin {
+  background-image: url(cart_go.png);
+}
+/* Cmmigrate Select Coppermine Album */
+.gbLink-cmmigrate_SelectCmAlbum {
+  background-image: url(coppermine-2.png);
+}
+/* Favourites Site Admin */
+.gbLink-favourites_FavouritesSiteAdmin {
+  background-image: url(thumb_up.png);
+}
+/* Favourites Site Admin */
+.gbLink-favourites_AddFavourite {
+  background-image: url(thumb_up.png);
+}
+/* Fire Stats Config Page */
+.gbLink-firestats_FireStatsConfigPage {
+  background-image: url(firestats.png);
+}
+/* Getid3:Admin Getid3 */
+.gbLink-getid3:AdminGetid3 {
+  background-image: url(getid3.png);
+}
+/* Get Urls Site Admin */
+.gbLink-geturls_GetUrlsSiteAdmin {
+  background-image: url(page_link.png);
+}
+/* Linksinthehead Admin */
+.gbLink-linksinthehead_Admin {
+  background-image: url(layout_header.png);
+}
+/* Map Site Admin */
+.gbLink-map_MapSiteAdmin {
+  background-image: url(map_edit.png);
+}
+/* Statistics Site Admin */
+.gbLink-statistics_StatisticsSiteAdmin {
+  background-image: url(application_view_detail.png);
+}
+/* Admin Settings Tags */
+.gbLink-tags_AdminSettingsTags {
+  background-image: url(tag_blue_edit.png);
+}
+/* Admin Tags */
+.gbLink-tags_AdminTags {
+  background-image: url(tag_blue.png);
+}
+/* Userinfo */
+.gbLink-userinfo_Userinfo {
+  background-image: url(user_go.png);
+}
+
+/* Bulk Edit Tags */
+.gbLink-tags_BulkTagsEdit { 
+  background-image: url(tag_blue_edit.png);  
+}
+.gbLink-core_ItemAdmin-bulkmanage_BulkManage {
+  background-image: url(picture_edit.png);
+}
+.gbLink-tags_TagsItemEdit {
+  background-image: url(tag_blue_edit.png);
+}
+.gbLink-geturls_GetUrls {
+  background-image: url(link.png);
+}
+/* OpenID */
+.gbLink-openid_OpenIdSiteAdmin {
+  background-image: url(openid-16x16.gif);
+}

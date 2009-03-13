@@ -1,7 +1,7 @@
-# $Id: af.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: af.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 # Previous translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-08 17:49+0200\n"
 "PO-Revision-Date: 2006-03-16 09:53+0200\n"
@@ -71,16 +71,6 @@ msgstr ""
 msgid "Create Config File"
 msgstr "Skep Config L&ecirc;er"
 
-#, fuzzy, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"Kan nie na <b>config.php</b> konfigurasie l&ecirc;er in jou <tt>%s</tt> directory skryf nie. "
-"Verander die regte.  As u Unix gebruik kan u dit regstel deur <i>chmod 666 config.php</i> te "
-"gebruik."
-
 #, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "Die config.php l&ecirc;er bestaan nie in u %s directory"
@@ -114,6 +104,10 @@ msgstr "Die Oracle OCI8 PHP module moet geïnstalleer wees"
 
 #, fuzzy
 msgid "You must have the Component Object Model(COM) PHP module installed"
+msgstr "Die Oracle OCI8 PHP module moet geïnstalleer wees"
+
+#, fuzzy
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
 msgstr "Die Oracle OCI8 PHP module moet geïnstalleer wees"
 
 #, c-format
@@ -208,26 +202,34 @@ msgstr ""
 "Kan die G2 API nie laai nie. Verwyder die Gallery databasistabelle en die stoordirectory "
 "handmatig."
 
+#, fuzzy
 msgid "MySQL (v3.23.34a and newer)"
-msgstr "MySQL (v3.23.34a of nuwer)"
+msgstr "MySQL met Transaksies (v3.23.34a of nuwer)"
 
 #, fuzzy
 msgid "MySQL (versions before v3.23.34a)"
 msgstr "MySQL (alle weergawes)"
 
+#, fuzzy
 msgid "PostgreSQL v7.x and newer"
-msgstr "PostgreSQL v7.x of nuwer"
+msgstr "PostgreSQL v7.x"
 
 msgid "Oracle (9i and newer)"
 msgstr "Oracle (9i of nuwer)"
 
+#, fuzzy
 msgid "IBM DB2 (v9.x and newer)"
-msgstr "IBM DB2 (v9.x of nuwer)"
+msgstr "MySQL met Transaksies (v3.23.34a of nuwer)"
 
+#, fuzzy
 msgid "Microsoft SQL Server 2005 and newer"
-msgstr "Microsoft SQL Server 2005 of nuwer"
+msgstr "PostgreSQL v7.x"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr ""
+
+#, fuzzy
+msgid "Unknown database type or no known tables information."
 msgstr "Onbekende DB tipe of geen bekende tabelinligting."
 
 #, c-format
@@ -238,16 +240,18 @@ msgstr "Kan geen ongebruikte tabelvoorvoegsel soortgelyk aan \"%s\" vind nie."
 msgid "Could not open schema file: \"%s\"."
 msgstr "Kan SQL toetsl&ecirc;er \"%s\" nie oopmaak nie."
 
+#, fuzzy
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "Kan die DB toetsreeks nie skep nie. Gaan die foutboodskap en README.html na vir vermiste "
 "regte en maak die databasis skoon."
 
+#, fuzzy
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "Toets het misluk om 'n DB toetsreeks te verwyder.  Gaan die foutboodskap en README.html na "
 "vir vermiste regte en maak die databasis skoon."
@@ -339,7 +343,7 @@ msgid "Performing system checks"
 msgstr ""
 
 #, fuzzy
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
 msgstr "PHP weergawe >= 4.1.0 of >= 5.0.4"
 
 #, fuzzy, c-format
@@ -516,14 +520,14 @@ msgstr "Zend versoenbare modus"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "Waarskuwing: U PHP is ingestel met die Zend ze1_compatibility_mode wat kan veroorsaak dat "
-"PHP kan duik.  Kliek <a href=\"%s\">hier</a> om u PHP te toets.  As u \"SUCCES\" sien dan is "
-"u PHP in die haak.  As u 'n fout of geen reaksie krymoet u die ze1_compatability_mode "
-"afskakel alvorens u verder gaan."
+"PHP kan duik.  Kliek %shier%s om u PHP te toets.  As u \"SUCCES\" sien dan is u PHP in die "
+"haak.  As u 'n fout of geen reaksie krymoet u die ze1_compatability_mode afskakel alvorens u "
+"verder gaan."
 
 #, fuzzy
 msgid "putenv() allowed"
@@ -699,6 +703,17 @@ msgstr "Probeer Weer"
 msgid "Create a config file"
 msgstr "Skep 'n konfigurasie l&ecirc;er"
 
+#, fuzzy, c-format
+msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"Kan nie na <b>config.php</b> konfigurasie l&ecirc;er in jou <tt>%s</tt> directory skryf nie. "
+"Verander die regte.  As u Unix gebruik kan u dit regstel deur <i>chmod 666 config.php</i> te "
+"gebruik."
+
 #, c-format
 msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
@@ -780,6 +795,12 @@ msgstr "DB Wagwoord:"
 msgid "DB Name:"
 msgstr "DB Naam:"
 
+msgid "DB Schema:"
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
+
 msgid "Table Prefix:"
 msgstr "Tabelvoorvoegsel:"
 
@@ -810,14 +831,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Gaan na my Gallery!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"U kan nou na u nuwe Gallery gaan.  Tik die URL skakel in u blaaier na die %smain.php%s in u %"
-"s directory in."
 
 msgid "Installer Help"
 msgstr "Installeerderhulp"
@@ -1006,16 +1019,13 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr ""
 
-msgid "Please select the installation type"
-msgstr "Selekteer die tipe installasie"
-
 msgid "Standard installation"
 msgstr "Standaardinstallasie"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 "Dit is die standaard installasie tipe. Kies die installasie tipe as u 'n nuwe Gallery wil "
 "installeer in die %s directory wat toeganklik sal wees met die URL %s."
@@ -1023,32 +1033,20 @@ msgstr ""
 msgid "Multisite installation"
 msgstr "Multiwerf installasie"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Gallery ondersteun veeltallige onafhanklike werwe vanuit één enkele installasie van die "
-"kode. Kies die installasie tipe as u 'n nuwe Gallery wil installeer op dieselfde "
-"werfbediener, maar in 'n verskillende pad, subdomein of URL domein."
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"Die multiwerwe deel geen albums, fotos, gebruikers of enigiets anders nie.  Hulle benodig "
-"elkeen hul eie databasis en stoordirectory.  Vir meer inligting en verduidelikings oor "
-"Multiwerf installasies, besoek die %s blad."
 
 msgid "You must enter a directory"
 msgstr "U moet 'n directory verskaf"
 
+#, fuzzy, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
 "Die verskafde directory is die programkode directory. As u Gallery in die programkode "
 "directory wil installeer, kies die standaard installasie tipe. As u 'n multiwerf wil "
@@ -1062,9 +1060,9 @@ msgid ""
 msgstr ""
 
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
 
 msgid "The directory you entered does not exist"
@@ -1081,24 +1079,17 @@ msgid "Unable to create multisite files. Ensure the files listed below are write
 msgstr ""
 "Kan die multiwerf lêers nie skep nie.  Maak seker dat die lêers hieronder skryfbaar is."
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "Alle multiwerwe word geïnstalleer vanuit hierdie sentrale programkode (codebase)."
-
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
 msgstr ""
-"Sleutel die directory vir die nuwe multiwerf hieronder in.  Die pad moet anders wees as die "
-"van die installasiepad:"
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
+msgid "You must provide the URL for your new multisite"
 msgstr ""
-"Die volgende directory moet skryfbaar wees deur u werfbediener/php gebruiker of die volgende "
-"skryfbare lêers bevat:"
 
-msgid "Select Directory"
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
+msgstr ""
+
+#, fuzzy
+msgid "Select Directory and URL"
 msgstr "Kies Directory"
 
 msgid "Multisite directory setup successfully."
@@ -1193,6 +1184,9 @@ msgstr ""
 "As u 'n moderne browser gebruik sal ons probeer om elke verskafde pad outomaties in te vul.  "
 "As u dus probleme ondervind om die korrekte pad na u g2data directory te vind, "
 "eksperimenteer met die paaie in die teksboks hieronder en sien watter voorstelle dit bied."
+
+msgid "Do not use the installation directory for storage"
+msgstr ""
 
 msgid "The directory you entered is read only"
 msgstr "Die verskafde directory het lees-alleen regte"
@@ -1350,112 +1344,47 @@ msgstr "Gaan"
 msgid "Begin Installation&raquo;"
 msgstr "Begin Installasie&raquo;"
 
-#, fuzzy
-#~ msgid "MSSQL (2005 and newer)"
-#~ msgstr "MySQL met Transaksies (v3.23.34a of nuwer)"
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "U kan nou na u nuwe Gallery gaan.  Tik die URL skakel in u blaaier na die %smain.php%s in "
+#~ "u %s directory in."
 
-#~ msgid "Installed Gallery Core successfully"
-#~ msgstr "Gallery Core suksesvol geïnstalleer"
+#~ msgid "Please select the installation type"
+#~ msgstr "Selekteer die tipe installasie"
 
 #~ msgid ""
-#~ "Congratulations, we've successfully installed the Gallery framework.  However, most of "
-#~ "the really cool features from Gallery come from additional modules that you can install "
-#~ "and configure.  The next step will take you through the process of selecting modules to "
-#~ "install so that you can tune Gallery to do exactly what you want."
+#~ "Gallery can support multiple independent sites with a single installation of the code. "
+#~ "Choose this installation type if you want to install a new Gallery on the same webserver "
+#~ "but in a different path, subdomain or URL domain."
 #~ msgstr ""
-#~ "Geluk, ons het die Gallery raamwerk suksesvol geïnstalleer.  Die beste funksies van "
-#~ "Gallery kom van die addisionele modules wat u kan installeer en opstel.  Die volgende "
-#~ "stap sal u deur die proses begelei om modules te kies en te installeer sodat u Gallery na "
-#~ "u behoeftes kan aanpas."
-
-#~ msgid "Install More Modules"
-#~ msgstr "Installeer Meer Modules"
+#~ "Gallery ondersteun veeltallige onafhanklike werwe vanuit één enkele installasie van die "
+#~ "kode. Kies die installasie tipe as u 'n nuwe Gallery wil installeer op dieselfde "
+#~ "werfbediener, maar in 'n verskillende pad, subdomein of URL domein."
 
 #~ msgid ""
-#~ "Before we can proceed, you should create a file in your <b>%s</b> directory called "
-#~ "<i>config.php</i>.  You must make sure that the webserver will be able to write to it.  "
-#~ "If you're on unix, try doing <i>chmod 666 config.php</i>.  On Windows, you shouldn't have "
-#~ "to do anything special.  When you've created this file and set the permissions properly, "
-#~ "you can proceed.  If there's a problem, we'll tell you what to fix."
+#~ "The multisites don't share albums, photos, users, or anything else. They all need their "
+#~ "own database and their own storage directory. For more information and explanations about "
+#~ "Multisite installations, visit the %s page."
 #~ msgstr ""
-#~ "Voordat ons verder kan gaan moet u 'n l&ecirc;er in u <b>%s</b> directory genaamd "
-#~ "<i>config.php</i> skep. U moet seker maak dat die werfbediener daarna sal kan skryf.  As "
-#~ "u Unix gebruik kan u dit doen deur <i>chmod 666 config.php</i> uit te voer.  Onder "
-#~ "Windows behoort u nie enigiets spesiaals te hoef te doen nie.  Wanneer u die l&ecirc;er "
-#~ "geskep het en die regte korrek opgestel het, kan u voortgaan.  As daar 'n probleem is, "
-#~ "sal ons u vertel wat om reg te stel."
+#~ "Die multiwerwe deel geen albums, fotos, gebruikers of enigiets anders nie.  Hulle benodig "
+#~ "elkeen hul eie databasis en stoordirectory.  Vir meer inligting en verduidelikings oor "
+#~ "Multiwerf installasies, besoek die %s blad."
 
-#~ msgid "Install Other Modules"
-#~ msgstr "Installeer Ander Modules"
-
-#~ msgid "mkdir %s"
-#~ msgstr "mkdir %s"
-
-#~ msgid "chmod 777 %s"
-#~ msgstr "chmod 777 %s"
-
-#~ msgid "cd %s"
-#~ msgstr "cd %s"
-
-#~ msgid "PostgreSQL v6.x (not well tested)"
-#~ msgstr "PostgreSQL v6.x (nie goed getoets nie)"
-
-#~ msgid "SQL test file \"%s\" not found."
-#~ msgstr "SQL toetsl&ecirc;er  \"%s\" nie gevind nie."
-
-#~ msgid "Finished"
-#~ msgstr "Klaar"
-
-#~ msgid "Installation Status"
-#~ msgstr "Installasie Status"
-
-#~ msgid "chmod 644 %s"
-#~ msgstr "chmod 644 %s"
-
-#~ msgid "chmod 755 %s"
-#~ msgstr "chmod 755 %s"
+#~ msgid "All multisites are installed from this central code repository (codebase)."
+#~ msgstr "Alle multiwerwe word geïnstalleer vanuit hierdie sentrale programkode (codebase)."
 
 #~ msgid ""
-#~ "Gallery needs to store data in a directory on your server. It will use this directory to "
-#~ "store your images as well as other important data. For security, we suggest that you "
-#~ "place this directory <b>outside</b> of your web site so that it cannot be browse directly "
-#~ "via the web. This is necessary if you wish to have your images accessible only via "
-#~ "Gallery [%s]. Note that the default path provided below is inside the webserver area. "
-#~ "This is because we are unable to reliably guess a directory outside of your web site. You "
-#~ "should update it with a secure location, such as a path under your user home directory, "
-#~ "if possible. If you access your site via FTP, you might not have this option."
+#~ "Enter the directory for the new multisite below. The path must be different from this "
+#~ "codebase installation's path:"
 #~ msgstr ""
-#~ "Gallery moet data in 'n directory op u bediener stoor.  Hierdie directory sal gebruik "
-#~ "word om u beelde sowel as ander belangrike inligting te stoor.  Om veiligheidsredes raai "
-#~ "ons u aan om hierdie directory <b>buite</b> u webwerf te plaas sodat dit nie direk vanaf "
-#~ "die web besigtig kan word nie.  Dit is nodig as u wil hê dat u beelde slegs vanaf Gallery "
-#~ "[%s] toeganklik sal wees.  Let op dat die standaardpad hieronder verskaf in die "
-#~ "webbedienerpad lê.  Dit is omdat dit vir ons onmoontlik is om 'n betroubare raaiskoot kan "
-#~ "maak oor 'n geskikte directory buite u werf.  U moet dit verander na 'n veilige ligging, "
-#~ "soos 'n pad onder u home directory indien moontlik.  As u die werf deur FTP binnekom gaan "
-#~ "u waarskynlik  nie die opsie hê nie."
+#~ "Sleutel die directory vir die nuwe multiwerf hieronder in.  Die pad moet anders wees as "
+#~ "die van die installasiepad:"
 
 #~ msgid ""
-#~ "Your webserver needs to be able to write to this directory. Permission systems vary from "
-#~ "host to host. You can set a very relaxed set of permissions on this directory to get "
-#~ "Gallery working, but if you're concerned about security you should consult your system "
-#~ "adminstrator to figure out how to make this as secure as possible. To get it working, you "
-#~ "can follow these examples."
+#~ "The directory must be writeable by your webserver/php user or contain the following "
+#~ "writeable files:"
 #~ msgstr ""
-#~ "U webbediener moet in staat wees om na die directory te skryf.  Regtestelsels wissel van "
-#~ "bediener tot bediener.  U kan 'n baie los stel regte opstel op die directory om Gallery "
-#~ "aan die gang te kry, maar as u bekommer is oor sekuriteit behoort u, u stelsel "
-#~ "administrateur te raadpleeg oor die beste manier om die werf so veilig moontlik te maak.  "
-#~ "Om dit te maak werk kan u die volgende voorbeelde volg."
-
-#~ msgid "This is sometimes known as an <b>image firewall</b>."
-#~ msgstr "Dit staan ook bekend as 'n <b>beeld firewall</b>."
-
-#~ msgid ""
-#~ "Something went wrong when we tried to install the core module.  In the boxes below you "
-#~ "can find some debug information.  Report this in the %sGallery Forums%s and we'll help "
-#~ "you diagnose the problem."
-#~ msgstr ""
-#~ "Er is iets misgegaan tijdens het installeren van de core module. In de vakken hieronder "
-#~ "vind u wat debuginformatie. Rapporteer deze in de %sGallery Forums%s en dan kunnen wij u "
-#~ "helpen om een diagnose te stellen."
+#~ "Die volgende directory moet skryfbaar wees deur u werfbediener/php gebruiker of die "
+#~ "volgende skryfbare lêers bevat:"

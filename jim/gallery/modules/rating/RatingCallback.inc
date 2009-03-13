@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
  * This view handles calls from the javascript (AJAX) side and returns data by printing results.
  * @package Rating
  * @author  Don Seiler <don@seiler.us>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class RatingCallbackView extends GalleryView {
 
@@ -47,14 +47,19 @@ class RatingCallbackView extends GalleryView {
 	global $gallery;
 	GalleryCoreApi::requireOnce('modules/rating/classes/RatingHelper.class');
 
-	list ($command, $itemId, $rating) =
-	    GalleryUtilities::getRequestVariables('command', 'itemId', 'rating');
+	list ($command, $rating) = GalleryUtilities::getRequestVariables('command', 'rating');
+
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return $ret;
+	}
+	$itemId = $item->getId();
 
 	if (!headers_sent()) {
 	    header("Content-type: text/plain; charset=UTF-8");
 	}
 
-	switch($command) {
+	switch ($command) {
 	case 'rate':
 	    list ($ret, $permission) = GalleryCoreApi::hasItemPermission($itemId, 'rating.add');
 	    if ($ret) {
@@ -79,10 +84,17 @@ class RatingCallbackView extends GalleryView {
 					 'count' => $results['votes'], 
 					 'arg1' => $results['votes']));
 
+	    $session =& $gallery->getSession();
 	    print $results['itemId'] . "\n"
 		. $results['rating'] . "\n"
 		. $results['votesString'] . "\n"
-		. $results['userRating'];
+		. $results['userRating'] . "\n"
+		. $session->getAuthToken();
+	    /*
+	     * If this was the first rating from an anonymous user then their session just became
+	     * persistent (see RatingHelper::rateItem); return the authToken so it can be used
+	     * in future rating requests.
+	     */
 
 	    break;
 	}

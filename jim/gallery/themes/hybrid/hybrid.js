@@ -1,7 +1,7 @@
 /****************************
  * Hybrid theme for Gallery2
  * @author Alan Harder <alan.harder@sun.com>
- * $Revision: 15780 $
+ * $Revision: 16849 $
  */
 
 //Class app
@@ -50,8 +50,7 @@ function app_init() {
   }
 
   app_onresize();
-  var i = app_getcookie();
-  if (i >= 0) image_show(i);
+  app_getcookie();
 }
 function app_getwinsize() {
   if (typeof(window.innerWidth) == 'number') {
@@ -81,7 +80,7 @@ function app_setcookie() {
   document.cookie = 'G2_hybrid=' + escape(c) + ';path=' + cookie_path + ';expires=' + d.toUTCString();
 }
 function app_getcookie() {
-  var c = getcookie('G2_hybrid'), i,j,v,n,it=1,r=-1;
+  var c = getcookie('G2_hybrid'), i,j,v,n,it=1;
   if (c) {
     for (i=0, j = c.indexOf(';', 0); j >= 0; i = j+1, j = c.indexOf(';', i)) {
       v = c.substring(i,j);
@@ -98,10 +97,10 @@ function app_getcookie() {
   }
   c = getcookie('G2_hybrid_view');
   if (c) {
-    r = data_view;
     document.cookie = 'G2_hybrid_view=;expires=' + new Date().toUTCString();
+    if (c == 2 /*start slideshow*/) slide_onoff(slide_order < 0 ? data_view == 0 : data_view > 0);
+    else if (data_view >= 0) image_show(data_view);
   }
-  return r;
 }
 function app_onkeypress(event) {
   if (app_is_ie) event = window.event; //For IE
@@ -322,22 +321,30 @@ function image_precache(i) {
   }
 }
 function image_loaded() {
-  var i = slide_nextindex(); if (i < 0 || image_iscached[i]) i = slide_previndex();
-  if (i >= 0) image_precache(i);
+  var i = slide_nextindex(), j = i; if (j < 0 || image_iscached[j]) j = slide_previndex();
+  if (j >= 0) image_precache(j);
   slide_go(i);
 }
 function image_next() {
   var i = slide_nextindex(); if (i >= 0) image_show(i);
+  else { var go = (slide_on && slide_order < 0) ? prev_page : next_page;
+	 if (go) location.href = go.replace('__SLIDE__', slide_on); else return -1; }
 }
 function image_prev() {
   var i = slide_previndex(); if (i >= 0) image_show(i);
+  else { var go = (slide_on && slide_order < 0) ? next_page : prev_page;
+	 if (go) location.href = go.replace('__SLIDE__', slide_on); }
 }
 function image_setbuttons() {
-  var i = slide_nextindex(), j = slide_previndex();
+  var i = slide_nextindex(), j = slide_previndex(),
+      has_next_page = (slide_on && slide_order < 0) ? prev_page : next_page,
+      has_prev_page = (slide_on && slide_order < 0) ? next_page : prev_page;
   ui_vis('next_img', i >= 0, 1);
-  ui_vis('next_off', i < 0, 1);
+  ui_vis('next_off', i < 0 && !has_next_page, 1);
+  ui_vis('next_page', i < 0 && has_next_page, 1);
   ui_vis('prev_img', j >= 0, 1);
-  ui_vis('prev_off', j < 0, 1);
+  ui_vis('prev_off', j < 0 && !has_prev_page, 1);
+  ui_vis('prev_page', j < 0 && has_prev_page, 1);
   text_empty = document.getElementById('text_'+image_index).innerHTML ?0:1;
   if (!text_on) {
     ui_vis('text_on', !text_empty, 1);
@@ -376,7 +383,7 @@ function slide_previndex() {
   return slide_nextindex(1);
 }
 function slide_next() {
-  var i = slide_nextindex(); if (i >= 0) image_show(i); else { slide_inprog = 0; slide_onoff(); }
+  if (image_next() < 0) { slide_inprog = 0; slide_onoff(); }
 }
 function slide_setorder(o) {
   slide_order = parseInt(o);
@@ -413,11 +420,12 @@ function slide_setbuttons() {
 }
 function slide_go(i) {
   if (slide_on) {
-    if (i >= 0) slide_timer = setTimeout('slide_next()', slide_delay);
+    if (i >= 0 || (slide_order < 0 ? prev_page : next_page))
+      slide_timer = setTimeout('slide_next()', slide_delay);
     else { slide_inprog = 0; slide_onoff(); }
   }
 }
-function slide_onoff() {
+function slide_onoff(start_last) {
   if (!data_count) return;
   slide_on = slide_on?0:1;
   slide_setbuttons();
@@ -429,9 +437,9 @@ function slide_onoff() {
       if (!slide_order) slide_fillrandom(image_on);
       if (!image_on || slide_nextindex() < 0) {
 	d = 5;
-	if (slide_order > 0) t = 'image_show(0)';
-	else if (slide_order < 0) t = 'image_show(' + (data_count-1) + ')';
-	else t = 'image_show(' + slide_randomorder[0] + ')';
+	t = 'image_show(';
+	if (slide_order) t += (slide_order + (start_last?2:0) == 1 ? 0 : data_count - 1) + ')';
+	else t += (start_last ? slide_randomorder[data_count-1] : slide_randomorder[0]) + ')';
       }
     }
     slide_inprog = 1;

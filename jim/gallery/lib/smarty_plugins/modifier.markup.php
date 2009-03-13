@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ class GalleryNoMarkupParser {
 class GalleryHtmlMarkupParser {
     function parse($text) {
 	/* http://bugs.php.net/bug.php?id=22014 - TODO: remove empty check when min php is 4.3.2+ */
-	return empty($text) ? $text : html_entity_decode($text);
+	return empty($text) ? $text : GalleryUtilities::htmlSafe(html_entity_decode($text));
     }
 }
 
@@ -160,7 +160,7 @@ class GalleryBbcodeMarkupParser {
     function url($action, $attributes, $content, $params, &$node_object) {
 	if ($action == 'validate') {
 	    /* The code is like [url]http://.../[/url] */
-	    if (!isset ($attributes['default'])) {
+	    if (!isset($attributes['default'])) {
 		return preg_match('#^(https?|ftp|mailto):|^/#', $content);
 	    } else {
 		/* The code is like [url=http://.../]Text[/url] */
@@ -169,11 +169,12 @@ class GalleryBbcodeMarkupParser {
 	} else {
 	    /* Output of HTML. */
 	    /* The code is like [url]http://.../[/url] */
-	    if (!isset ($attributes['default'])) {
-		return '<a href="' . $content . '">' . $content . '</a>';
+	    if (!isset($attributes['default'])) {
+		return '<a href="' . $content . '" rel="nofollow">' . $content . '</a>';
 	    } else {
 		/* The code is like [url=http://.../]Text[/url] */
-		return '<a href="' . $attributes['default'] . '">' . $content . '</a>';
+		return '<a href="' . $attributes['default'] . '" rel="nofollow">'
+		    . $content . '</a>';
 	    }
 	}
     }
@@ -187,7 +188,7 @@ class GalleryBbcodeMarkupParser {
 		. (isset($attrs['height']) ? ' height="' . (int)$attrs['height'] . '"' : '');
 	    /* Input should have entities already, so no htmlspecialchars here */
 	    return sprintf('<img src="%s" alt=""%s/>', $content, $size);
-	}       
+	}
     }
 
     function color($action, $attrs, $content, $params, &$node_object) {
@@ -199,7 +200,7 @@ class GalleryBbcodeMarkupParser {
 	    return sprintf('<font color="%s">%s</font>', $color, $content);
 	}
     }
-    
+
     function convertLineBreaks($text) {
 	return preg_replace("/\015\012|\015|\012/", "\n", $text);
     }

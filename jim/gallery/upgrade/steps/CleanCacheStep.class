@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ class CleanCacheStep extends UpgradeStep {
 	    $attempts--;
 	} while ($attempts > 0 && !empty($templateData['unclean']));
 
-	$ret = GalleryCoreApi::removeAllMapEntries('GalleryCacheMap');
+	$ret = GalleryCoreApi::removeAllMapEntries('GalleryCacheMap', true);
 	if ($ret) {
 	    $templateData['errors'][] = _('Unable to clear the page cache');
 	    $templateData['stackTrace'] .= $ret->getAsHtml();

@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 16931 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div id="gsSidebar" class="gcBorder1">
 
@@ -34,13 +32,12 @@
   {if !empty($theme.itemLinks)}
   <div class="gbBlock">
     <h3> {g->text text="Album"} </h3>
-    <select onchange="{literal}if (this.value) { var u=this.value; this.options[0].selected=1; location.href=u; }{/literal}" style="margin-left: 1em">
+    <select onchange="{literal}if (this.value) { var a=this.value; this.options[0].selected=1; eval(a); }{/literal}" style="margin-left: 1em">
       <option label="{g->text text="&laquo; actions &raquo;"}" value="">
 	{g->text text="&laquo; actions &raquo;"}
       </option>
-      {foreach from=$theme.itemLinks item=itemLink}
-	<option label="{$itemLink.text}"
-		value="{g->url params=$itemLink.params}">{$itemLink.text}</option>
+      {foreach from=$theme.itemLinks item=link}
+	{g->itemLink link=$link type="option"}
       {/foreach}
     </select>
   </div>
@@ -49,7 +46,7 @@
   {* Item links *}
   <div id="photoActions" class="gbBlock" style="display: none">
     <h3> {g->text text="Photo"} </h3>
-    <select id="linkList" onchange="{literal}if (this.value) { var u=this.value; this.options[0].selected=1; location.href=u; }{/literal}" style="margin-left: 1em">
+    <select id="linkList" onchange="{literal}if (this.value) { var a=this.value; this.options[0].selected=1; eval(a); }{/literal}" style="margin-left: 1em">
       <option label="{g->text text="&laquo; actions &raquo;"}" value="">
 	{g->text text="&laquo; actions &raquo;"}
       </option>

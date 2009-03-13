@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,13 +26,13 @@ GalleryCoreApi::requireOnce('modules/core/classes/helpers/UserRecoverPasswordHel
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Jay Rossiter <cryptographite@users.sf.net>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class UserRecoverPasswordController extends GalleryController {
     /**
      * ValidationPlugin instances to use when handling this request.  Only used by test code.
      *
-     * @var array (pluginId => object ValidationPlugin) $_pluginInstances
+     * @var array (pluginId => ValidationPlugin) $_pluginInstances
      * @access private
      */
     var $_pluginInstances;

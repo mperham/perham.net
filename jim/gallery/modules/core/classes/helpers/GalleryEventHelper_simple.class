@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,26 +19,14 @@
  */
 
 /**
- * Helper class for GalleryItems
+ * Gallery event helper.
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryEventHelper_simple {
-
-    /**
-     * Get the static event listeners registry
-     *
-     * @staticvar array $eventListeners The event listener table
-     * @return array
-     * @access private
-     */
-    function &_getEventListeners() {
-	static $eventListeners = array();
-	return $eventListeners;
-    }
 
     /**
      * @see GalleryCoreApi::newEvent
@@ -51,30 +39,34 @@ class GalleryEventHelper_simple {
     }
 
     /**
-     * @see GalleryCoreApi::registerEventListener
-     */
-    function registerEventListener($eventName, &$listener, $disableForUnitTests=false) {
-	if ($disableForUnitTests && class_exists('GalleryTestCase')) {
-	    return;
-	}
-
-	$eventListeners =& GalleryEventHelper_simple::_getEventListeners();
-	if (empty($eventListeners[$eventName])) {
-	    $eventListeners[$eventName] = array();
-	}
-
-	$eventListeners[$eventName][] =& $listener;
-    }
-
-    /**
      * @see GalleryCoreApi::postEvent
      */
     function postEvent($event) {
+	list ($ret, $eventListeners) = GalleryCoreApi::getAllFactoryImplementationIdsWithHint(
+	    'GalleryEventListener', $event->getEventName());
+	if ($ret) {
+	    return array($ret, null);
+	}
+
+	$eventResults = array();
+	foreach ($eventListeners as $implId => $className) {
+	    list ($ret, $eventListener) = GalleryCoreApi::newFactoryInstance(
+		'GalleryEventListener', $className);
+	    if ($ret) {
+		return array($ret, null);
+	    }
+
+	    list ($ret, $data) = $eventListener->handleEvent($event);
+	    if ($ret) {
+		return array($ret, null);
+	    }
+	    if (isset($data)) {
+		$eventResults[] = $data;
+	    }
+	}
+
+	/** @todo Remove from here to comment with "--END--" on next major API bump */
 	static $allListenersRegistered;
-	/*
-	 * TODO: We should push this information into the database.  It's very costly to
-	 * load up all the modules now that there are so many of them.
-	 */
 	if (!isset($allListenersRegistered)) {
 	    list ($ret, $moduleStatus) = GalleryCoreApi::fetchPluginStatus('module');
 	    if ($ret) {
@@ -82,49 +74,76 @@ class GalleryEventHelper_simple {
 	    }
 
 	    foreach ($moduleStatus as $moduleId => $status) {
-		if (!empty($status['active'])) {
-		    if (in_array('registerEventListeners', explode('|', $status['callbacks']))) {
-			/*
-			 * Ignore version mismatches when loading the module, since we don't want
-			 * event propagation during the upgrader to lead to the plugin framework
-			 * deactivating plugins, which will in turn post more events.  All we want
-			 * to do is to ignore plugins that are not current, which we'll do below.
-			 */
-			list ($ret, $module) =
-			    GalleryCoreApi::loadPlugin('module', $moduleId, true);
-			if ($ret) {
-			    return array($ret, null);
-			}
-
-			if (!GalleryCoreApi::isPluginCompatibleWithApis($module)) {
-			    continue;
-			}
-
-			$module->registerEventListeners();
-		    }
+		if (empty($status['active']) || !in_array('registerEventListeners',
+			explode('|', $status['callbacks']))) {
+		    continue;
 		}
+
+		/*
+		 * Ignore version mismatch here because we don't want event propagation during
+		 * upgrade to lead the plugin framework to deactivate plugins, which will in turn
+		 * post more events.  All we want is to ignore plugins which aren't current, which
+		 * we do below.
+		 */
+		list ($ret, $module) = GalleryCoreApi::loadPlugin('module', $moduleId, true);
+		if ($ret) {
+		    return array($ret, null);
+		}
+		if (!GalleryCoreApi::isPluginCompatibleWithApis($module)) {
+		    continue;
+		}
+
+		$module->registerEventListeners();
 	    }
 
 	    $allListenersRegistered = true;
 	}
 
-	$eventListeners =& GalleryEventHelper_simple::_getEventListeners();
-
-	$result = array();
-	if (!empty($eventListeners[$event->getEventName()])) {
-	    $listeners = $eventListeners[$event->getEventName()];
+	$allListeners =& GalleryEventHelper_simple::_getEventListeners();
+	if (!empty($allListeners[$event->getEventName()])) {
+	    /*
+	     * Walk the loop using an index so that we're working with the original referenced
+	     * object.  If we use foreach ($array as $instance) we wind up working with a
+	     * copy of the listener on PHP4.
+	     */
+	    $listeners = $allListeners[$event->getEventName()];
 	    for ($i = 0; $i < count($listeners); $i++) {
 		list ($ret, $data) = $listeners[$i]->handleEvent($event);
 		if ($ret) {
 		    return array($ret, null);
 		}
 		if (isset($data)) {
-		    $result[] = $data;
+		    $eventResults[] = $data;
 		}
 	    }
 	}
+	/* --END-- of section to remove on next major API bump */
 
-	return array(null, $result);
+	return array(null, $eventResults);
+    }
+
+    /**
+     * Static array of registered event listeners.
+     * @return array
+     * @access private
+     * @todo Remove on next major API bump
+     */
+    function &_getEventListeners() {
+	static $allListeners = array();
+	return $allListeners;
+    }
+
+    /**
+     * @see GalleryCoreApi::registerEventListener
+     * @todo Remove on next major API bump
+     */
+    function registerEventListener($eventName, &$eventListener, $disableForTests=false) {
+	if ($disableForTests && class_exists('GalleryTestCase')) {
+	    return;
+	}
+
+	$allListeners =& GalleryEventHelper_simple::_getEventListeners();
+	$allListeners[$eventName][] =& $eventListener;
     }
 }
 ?>

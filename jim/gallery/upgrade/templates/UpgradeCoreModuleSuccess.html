@@ -14,8 +14,6 @@
       <pre> <?php printf("chmod 644 %s", $templateData['configFilePath']) ?></pre>
     </div>
     <div class="go">
-	  <div class="btn btn-redo"><div><div><div><div><div><div><div><div>
-	<a href="<?php generateUrl('index.php?step=' . $stepNumber) ?>"><?php print _('Recheck config.php') ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+	  <a href="<?php generateUrl('index.php?step=' . $stepNumber) ?>" class="btn redo"><i></i><span><span></span><i></i><?php print _('Recheck config.php') ?></span></a>
     </div>
     <?php endif; ?>

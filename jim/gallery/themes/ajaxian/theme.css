@@ -1,6 +1,6 @@
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -323,7 +323,7 @@ h2 {
 #slideshow-controls {
     position: relative;
     height: 40px;
-    margin: 0px 0 -40px;
+    margin: 0px 0 -58px;
     overflow: hidden;
     z-index: 100;
     text-align: left;
@@ -341,7 +341,7 @@ h2 {
     background-color: #000;
     opacity: 0.6;
     -moz-opacity: 0.6;
-    filter: alpha(opacity=40);	/* Lower opacity for IE since the controls don't hide */
+    filter: alpha(opacity=40);  /* Lower opacity for IE since the controls don't hide */
 }
 
 #slideshow-controls ul li {
@@ -391,6 +391,7 @@ h2 {
 #gsThumbMatrix a .giThumbnail {
     height: 40px;
     width: 40px;
+    margin: 0;
     background-color: #666;
     border: 1px solid #333;
 }
@@ -416,12 +417,14 @@ h2 {
 /* Subalbums */
 
 #subalbums-container h3 {
-    width: 75%;
+    width: 100%;
+    margin: 1em 0 !important;
     border-bottom: 1px solid #fff;
 }
 
 #gsSubAlbumMatrix {
-    width: 450px;
+    width: auto;
+    overflow: hidden;
     margin: 0 auto 1em;
 }
 
@@ -678,11 +681,11 @@ h2.giError {
 }
 
 .autoCompleteShadow {
-    background-color: #a0a0a0;
+    background-color: #503344 !important;
 }
 
 .autoCompleteContainer {
-    border: 1px solid #404040;
+    border-color: #830 #830 #f60;
     background-color: #000;
 }
 

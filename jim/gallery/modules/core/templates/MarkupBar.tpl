@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17579 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 {if $theme.markupType == 'bbcode'}
 {if !empty($firstMarkupBar)}
@@ -17,6 +15,9 @@
       element.value = element.value + '[/' + bbCodeElement + ']';
       button.value = button.value.substring(1);
     }
+    if (typeof(element.selectionStart) != "undefined") {
+      element.selectionStart = element.selectionEnd = element.value.length;
+    }
     element.focus();
     button.g2ToggleMode = !button.g2ToggleMode;
   }
@@ -24,6 +25,9 @@
   function appendTextElement(elementId, bbCodeElement, button) {
     var element = document.getElementById(elementId);
     element.value = element.value + '[' + bbCodeElement + ']';
+    if (typeof(element.selectionStart) != "undefined") {
+      element.selectionStart = element.selectionEnd = element.value.length;
+    }
     element.focus();
   }
 
@@ -57,6 +61,9 @@
       } else {
         var element = document.getElementById(elementId);
         element.value = element.value + '[/color]';
+        if (typeof(element.selectionStart) != "undefined") {
+          element.selectionStart = element.selectionEnd = element.value.length;
+        }
         element.focus();
       }
     }
@@ -73,6 +80,11 @@
       if (text.length) element.value = element.value + '[url=' + url + ']' + text + '[/url]';
       else element.value = element.value + '[url]' + url + '[/url]';
     {rdelim}      
+    {literal}
+    if (typeof(element.selectionStart) != "undefined") {
+      element.selectionStart = element.selectionEnd = element.value.length;
+    }
+    {/literal}
     element.focus();
   {rdelim}
 
@@ -80,15 +92,16 @@
     var element = document.getElementById(elementId);
     var url = prompt('{g->text text="Enter an image URL" forJavascript=true}', '');
     if (url != null) element.value = element.value + '[img]' + url + '[/img]';
+    {literal}
+    if (typeof(element.selectionStart) != "undefined") {
+      element.selectionStart = element.selectionEnd = element.value.length;
+    }
+    {/literal}
     element.focus();
   {rdelim}
   // ]]>
 </script>
-<script type="text/javascript" src="{g->url href="lib/yui/yahoo-min.js"}"></script>
-<script type="text/javascript" src="{g->url href="lib/yui/event-min.js"}"></script>
-<script type="text/javascript" src="{g->url href="lib/yui/dom-min.js"}"></script>
-<script type="text/javascript" src="{g->url href="lib/yui/animation-min.js"}"></script>
-<script type="text/javascript" src="{g->url href="lib/yui/dragdrop-min.js"}"></script>
+<script type="text/javascript" src="{g->url href="lib/yui/utilities.js"}"></script>
 <script type="text/javascript" src="{g->url href="lib/yui/color.js"}"></script>
 <script type="text/javascript" src="{g->url href="lib/yui/slider-min.js"}"></script>
 <script type="text/javascript" src="{g->url href="lib/javascript/ColorChooser.js"}"></script>
@@ -96,11 +109,11 @@
 
 <div class="gbMarkupBar">
   <input type="button" class="inputTypeButton" tabindex="32767"
-	 value="{g->text text="B <!-- Button label for Bold -->"}"
+	 value="{g->text text="B" hint="Button label for Bold"}"
 	 onclick="openOrCloseTextElement('{$element}', 'b', this)"
 	 style="font-weight: bold;"/>
   <input type="button" class="inputTypeButton" tabindex="32767"
-	 value="{g->text text="i <!-- Button label for italic -->"}"
+	 value="{g->text text="i" hint="Button label for italic"}"
 	 onclick="openOrCloseTextElement('{$element}', 'i', this)"
 	 style="font-style: italic; padding-left: 1px; padding-right: 4px"/>
   <input type="button" class="inputTypeButton" tabindex="32767"
@@ -150,7 +163,7 @@
       onclick="userUpdate()"/>
   </div>
   <div id="Markup_swatch">&nbsp;</div>
-  <div id="Markup_hint">{g->text text="You can also use the <a href=\"%s\" target=\"_new\">color name</a> for example: %s" arg1="http://www.w3.org/TR/2002/WD-css3-color-20020418/#html4" arg2="[color=red]Your Text[/color]"}</div>
+  <div id="Markup_hint">{g->text text="You can also use the %scolor name%s for example: %sYour Text%s" arg1="<a href=\"http://www.w3.org/TR/2002/WD-css3-color-20020418/#html4\" target=\"_new\">" arg2="</a>" arg3="[color=red]" arg4="[/color]"}</div>
 </div>
 {/if}
 {/if}

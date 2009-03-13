@@ -1,7 +1,7 @@
-# $Id: da.po 16607 2007-06-14 18:54:55Z mindless $
+# $Id: da.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: gallery-translations@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-06-14 11:39-0700\n"
-"PO-Revision-Date: 2006-04-03 11:30+0200\n"
-"Last-Translator: Bjorn Graabek <bjorn@graabek.com>\n"
+"POT-Creation-Date: 2006-12-20 09:51-0800\n"
+"PO-Revision-Date: 2008-05-21 16:48+0100\n"
+"Last-Translator: Jens Hyllegaard <jens.hyllegaard@gmail.com>\n"
 "Language-Team: Danish <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,7 +47,7 @@ msgid "Gallery Administrator"
 msgstr "Galleri administrator"
 
 msgid "Authenticate"
-msgstr ""
+msgstr "Godkend"
 
 #, c-format
 msgid ""
@@ -61,21 +61,18 @@ msgid ""
 "<b>Error:</b> your <b>login.txt</b> file is not readable. Please give Gallery read "
 "permissions on the file."
 msgstr ""
+"<b>Fejl:</b> din <b>login.txt</b> fil er ikke læsbar. Giv venligst Gallery læserettigheder "
+"til denne fil."
 
 msgid ""
 "<b>Error:</b> your <b>login.txt</b> key does not match correctly. Please download a new "
 "authentication string from below and try again."
 msgstr ""
+"<b>Fejl:</b> din <b>login.txt</b> nøgle stemmer ikke overens. Download venligst en ny "
+"godkendelses streng nedenfor og prøv igen."
 
 msgid "Create Config File"
 msgstr "Opret konfigurationsfil"
-
-#, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
 
 #, c-format
 msgid "The config.php file does not exist in your %s directory"
@@ -85,6 +82,8 @@ msgid ""
 "The config.php file exists but is not writeable.  If your server is Windows, you may have to "
 "disable file sharing for config.php and set its permissions manually."
 msgstr ""
+"Filen config.php eksisterer, men er ikke skrivbar. Hvis din server kører Windows, skal du "
+"muligvis deaktivere fildeling for config.php, og sætte dens rettigheder manuelt."
 
 msgid "Database Setup"
 msgstr "Database opsætning"
@@ -107,32 +106,35 @@ msgstr "Du skal have Oracle OCI8 PHP modulet installeret"
 msgid "You must have the Component Object Model(COM) PHP module installed"
 msgstr "Du skal have Component Object Model(COM) PHP modulet installeret"
 
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
+msgstr "Du skal have PHP Data Object(PDO) PHP modulet installeret"
+
 #, c-format
 msgid "You must specify a column prefix (we recommend %s)"
-msgstr ""
+msgstr "Du skal indtaste et kolonnepræfiks (vi anbefaler %s)"
 
 msgid "Use only letters, numbers and underscore in the column prefix"
-msgstr ""
+msgstr "Brug kun bogstaver, tal og understregning i kolonnepræfikset."
 
 #, c-format
 msgid "You must specify a table prefix (we recommend %s)"
-msgstr ""
+msgstr "Du skal vælge et tabelpræfiks (vi anbefaler %s)"
 
 msgid "Use only letters, numbers and underscore in the table prefix"
-msgstr ""
+msgstr "Brug kun bogstaver, tal og understregning i tabel præfikset"
 
 #, c-format
 msgid "Unable to create a database connection of type %s"
-msgstr ""
+msgstr "Kunne ikke oprette en databaseforbindelse af typen %s"
 
 msgid "Unable to connect to database with the information provided."
-msgstr ""
+msgstr "Kunne ikke tilslutte til databasen med de indtastede oplysninger."
 
 msgid "The database you specified does not exist.  Please create it."
-msgstr ""
+msgstr "Den database du valgte eksisterer ikke. Opret den venligst."
 
 msgid "The database privileges test did not complete successfully."
-msgstr ""
+msgstr "Database-privilegie testen blev ikke gennemført korrekt."
 
 msgid ""
 "Gallery tables already exist in this database!  But there is no 'versions.dat' file in your "
@@ -188,15 +190,17 @@ msgstr "PostgreSQL v7.x og nyere"
 msgid "Oracle (9i and newer)"
 msgstr "Oracle (9i og nyere)"
 
-#, fuzzy
 msgid "IBM DB2 (v9.x and newer)"
-msgstr "IBM DB2 (v8.2 og nyere)"
+msgstr "IBM DB2 (v9.x og nyere)"
 
 msgid "Microsoft SQL Server 2005 and newer"
+msgstr "Microsoft SQL Server 2005 eller nyere"
+
+msgid "SQLite v3.x (Experimental!)"
 msgstr ""
 
-msgid "Unknown DB type or no known tables information."
-msgstr ""
+msgid "Unknown database type or no known tables information."
+msgstr "Ukendt databasetype eller ingen kendte tabel-informationer."
 
 #, c-format
 msgid "Could not find an unused table prefix similar to \"%s\"."
@@ -204,20 +208,20 @@ msgstr ""
 
 #, c-format
 msgid "Could not open schema file: \"%s\"."
+msgstr "Kunne ikke åbne skemafilen: \"%s\"."
+
+msgid ""
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
-msgstr ""
-
-msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 
 msgid "Missing SQL statements"
-msgstr ""
+msgstr "Manglende SQL udtryk"
 
 msgid ""
 "Check the returned error message and README.html for missing privileges and clean up the "
@@ -234,61 +238,61 @@ msgid "Installing the core module"
 msgstr "Installerer kernemodulet"
 
 msgid "Unable to initialize our Gallery data"
-msgstr ""
+msgstr "Kunne ikke initialisere vores Gallery data"
 
 msgid "Unable to communicate with the database"
-msgstr ""
+msgstr "Kunne ikke kommunikere med databasen."
 
 msgid "Unable to load the core module"
-msgstr ""
+msgstr "Kunne ikke indlæse kernemodulet"
 
 msgid "Unable to install the core module"
-msgstr ""
+msgstr "Kunne ikke installere kernemodulet"
 
 msgid "Unable to activate the core module"
-msgstr ""
+msgstr "Kunne ikke aktivere kernemodulet"
 
 msgid "Unable to commit database transaction"
 msgstr ""
 
 msgid "Core module is only partially installed."
-msgstr ""
+msgstr "Kernemodulet er kun delvist installeret."
 
 msgid "Install Plugins"
 msgstr "Installér plugins"
 
 msgid "Unable to initialize our Gallery session"
-msgstr ""
+msgstr "Kunne ikke initialisere vores Gallery session"
 
 #, c-format
 msgid "Unable to load the %s module"
-msgstr ""
+msgstr "Kunne ikke indlæse %s modulet"
 
 msgid "Installing modules"
-msgstr ""
+msgstr "Installere moduler"
 
 #, c-format
 msgid "Unable to install the %s module"
-msgstr ""
+msgstr "Kunne ikke installere %s modulet"
 
 #, c-format
 msgid "Unable to activate the %s module"
-msgstr ""
+msgstr "Kunne ikke aktivere %s modulet"
 
 msgid "Unable to get the module list"
-msgstr ""
+msgstr "Kunne ikke hente modullisten"
 
 msgid "Other"
 msgstr "Andet"
 
 msgid "Installation Type"
-msgstr ""
+msgstr "Installationstype"
 
 msgid "Check Security"
 msgstr "Kontroller sikkerhed"
 
 msgid "Storage Setup"
-msgstr ""
+msgstr "Opbevarings opsætning"
 
 msgid "System Checks"
 msgstr "Systemcheck"
@@ -296,8 +300,8 @@ msgstr "Systemcheck"
 msgid "Performing system checks"
 msgstr "Udfører systemcheck"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr ""
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
 
 #, c-format
 msgid ""
@@ -305,12 +309,15 @@ msgid ""
 "%s installed. Contact your webserver administrator to request an upgrade, available at the %"
 "sPHP website%s."
 msgstr ""
+"Fejl: Gallery 2 kræver PHP version 4.3.0 eller nyere, eller 5.0.4 eller nyere. Du har "
+"version %s installeret. Kontakt din webserver administrator for at bede om en opgradering, "
+"der kan fås på %sPHP webstedet%s."
 
 msgid "PHP Version"
 msgstr "PHP version"
 
 msgid "FILE directive supported"
-msgstr ""
+msgstr "FILE direktiv understøttet"
 
 msgid ""
 "Error: your PHP __FILE__ directive is not functioning correctly. Please file a support "
@@ -318,7 +325,7 @@ msgid ""
 msgstr ""
 
 msgid "FILE Directive"
-msgstr ""
+msgstr "FILE direktiv"
 
 msgid "Safe mode disabled"
 msgstr "Safe mode deaktiveret"
@@ -332,7 +339,7 @@ msgid "Safe Mode"
 msgstr "Safe Mode"
 
 msgid "Regular expressions"
-msgstr ""
+msgstr "Regulære udtryk"
 
 #, c-format
 msgid ""
@@ -384,7 +391,7 @@ msgid ""
 msgstr ""
 
 msgid "File uploads allowed"
-msgstr ""
+msgstr "Filuploads er tilladt"
 
 msgid ""
 "Warning: Your PHP is configured not to allow file uploads (<b>file_uploads</b> parameter in "
@@ -393,7 +400,7 @@ msgid ""
 msgstr ""
 
 msgid "Maximum upload size"
-msgstr ""
+msgstr "Maksimum upload størrelse"
 
 #, c-format
 msgid ""
@@ -403,7 +410,7 @@ msgid ""
 msgstr ""
 
 msgid "Maximum POST size"
-msgstr ""
+msgstr "Maksimum POST størrelse"
 
 #, c-format
 msgid ""
@@ -413,7 +420,7 @@ msgid ""
 msgstr ""
 
 msgid "Translation support"
-msgstr ""
+msgstr "Oversættelses-understøttelse"
 
 #, c-format
 msgid ""
@@ -435,14 +442,14 @@ msgid ""
 msgstr ""
 
 msgid "Zend compatibility mode"
-msgstr ""
+msgstr "Zend kompabilitets-tilstand"
 
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 
 msgid "putenv() allowed"
@@ -470,23 +477,23 @@ msgid "Gallery file integrity"
 msgstr ""
 
 msgid "Test skipped due to other errors."
-msgstr ""
+msgstr "Sprang testen over på grund af andre fejl."
 
 msgid "Theme available"
-msgstr ""
+msgstr "Tema tilgængelig"
 
 #, c-format
 msgid "Error: There must be at least one theme in the %s folder!"
 msgstr "Fejl: Der skal være mindst et tema i %s mappen!"
 
 msgid "Manifest missing or inaccessible."
-msgstr ""
+msgstr "Manifest mangler eller er ikke tilgængelig."
 
 msgid "Welcome"
 msgstr "Velkommen"
 
 msgid "Please correct the following errors"
-msgstr ""
+msgstr "Ret venligst følgende fejl"
 
 msgid ""
 "Every Gallery will have at least one administrator user who has full access to view/modify "
@@ -504,7 +511,7 @@ msgid "Please enter a password"
 msgstr "Indtast venlist et kodeord"
 
 msgid "Password"
-msgstr "Adgangskode"
+msgstr "Kodeord"
 
 msgid "Setup password"
 msgstr "Indstil kodeord"
@@ -522,10 +529,10 @@ msgid "Admin full name (optional)"
 msgstr "Administrators fulde navn (valgfri)"
 
 msgid "Missing password!  Please enter the same password twice"
-msgstr ""
+msgstr "Manglende adgangskode! Indtast venligst den samme adgangskode to gange"
 
 msgid "The passwords you entered do not match!  Please try again."
-msgstr ""
+msgstr "De indtastede adgangskoder stemmer ikke overens! Prøv venligst igen."
 
 msgid ""
 "As you are reusing existing database tables, this is not a fresh install. This will only "
@@ -568,7 +575,7 @@ msgid "Authentication successful!"
 msgstr "Godkendelse lykkedes!"
 
 msgid "Erase data for a clean install"
-msgstr ""
+msgstr "Slet data for en ren installation"
 
 msgid ""
 "Are you really sure you want to delete all your data in your Gallery storage directory and "
@@ -585,13 +592,21 @@ msgid "Erase all data"
 msgstr "Slet alle data"
 
 msgid "Please fix this error and try again."
-msgstr ""
+msgstr "Ret venligst denne fejl og prøv igen."
 
 msgid "Try Again"
 msgstr "Prøv igen"
 
 msgid "Create a config file"
 msgstr "Opret en config fil"
+
+#, c-format
+msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
 
 #, c-format
 msgid ""
@@ -611,7 +626,7 @@ msgid "Unix (with shell access)"
 msgstr "Unix (med skal adgang)"
 
 msgid "On Windows, you shouldn't have to do anything special."
-msgstr ""
+msgstr "På windows, bør du ikke skulle gøre noget specielt."
 
 msgid ""
 "When you've created this file and set the permissions properly, you can proceed.  If there's "
@@ -659,6 +674,12 @@ msgstr "DB kodeord:"
 msgid "DB Name:"
 msgstr "DB navn:"
 
+msgid "DB Schema:"
+msgstr ""
+
+msgid "(optional)"
+msgstr ""
+
 msgid "Table Prefix:"
 msgstr "Table præfiks:"
 
@@ -666,16 +687,16 @@ msgid "Column Prefix:"
 msgstr "Kolonne præfiks:"
 
 msgid "We received the following database related errors:"
-msgstr ""
+msgstr "Vi fik følgende databaserelaterede fejl:"
 
 msgid "Erase Data For A Clean Install"
-msgstr ""
+msgstr "Slet data for en ren installation"
 
 msgid "Reuse Existing Tables"
 msgstr "Genbrug eksisterende tabeller"
 
 msgid "Database set up successfully."
-msgstr ""
+msgstr "Database er opsat korrekt."
 
 msgid "Finished!"
 msgstr "Færdig!"
@@ -684,15 +705,11 @@ msgid ""
 "Congratulations! Your Gallery 2 install is complete! See... that wasn't so hard, was it? Now "
 "it's time to upload some photos!"
 msgstr ""
+"Tillykke! Din Gallery 2 installation er færdig! Se... det var ikke så svært, var det? Nu er "
+"tid til at uploade nogle fotos!"
 
 msgid "Go to my Gallery!"
 msgstr "Gå til mit Gallery!"
-
-#, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
 
 msgid "Installer Help"
 msgstr "Installationshjælp"
@@ -701,7 +718,7 @@ msgid "Start Over"
 msgstr "Start forfra"
 
 msgid "Error installing Gallery Core"
-msgstr ""
+msgstr "Fejl ved installation af Gallery kernen."
 
 msgid "Something went wrong when we tried to install the core module.  What to do next?"
 msgstr ""
@@ -730,10 +747,10 @@ msgid ""
 msgstr ""
 
 msgid "Stack Trace:"
-msgstr ""
+msgstr "Stak-sporing:"
 
 msgid "Installed Gallery Core successfully."
-msgstr ""
+msgstr "Installerede Gallery kernen korrekt."
 
 msgid ""
 "We've successfully installed the core of Gallery.  Although everything will work at this "
@@ -765,14 +782,14 @@ msgid "Description"
 msgstr "Beskrivelse"
 
 msgid "(Incompatible with this Gallery version)"
-msgstr ""
+msgstr "(Ikke-kompatibel med denne Gallery version)"
 
 msgid "(un)check all"
 msgstr "(af)markér alle"
 
 #, c-format
 msgid "Continue to Step %d Without Activating&raquo;"
-msgstr ""
+msgstr "Fortsæt til trin %d uden aktivering&raquo;"
 
 msgid "Activate Selected Modules"
 msgstr "Aktiver valgte moduler"
@@ -798,7 +815,7 @@ msgid "Continue to Step %d&raquo;"
 msgstr "Fortsæt til trin %d&raquo;"
 
 msgid "Debug Output"
-msgstr ""
+msgstr "Debug output"
 
 msgid "Welcome to the Gallery Installer"
 msgstr "Velkommen til Gallery installationen"
@@ -844,41 +861,32 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "Der opstod fejl. Se venligst beskederne nedenfor."
 
-msgid "Please select the installation type"
-msgstr "Vælg venligst installationstypen"
-
 msgid "Standard installation"
 msgstr "Standard installation"
 
 #, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
 
 msgid "Multisite installation"
 msgstr "Fler-websteds installation"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
 
 msgid "You must enter a directory"
 msgstr "Du skal indtaste en mappe"
 
+#, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
 
 msgid ""
@@ -889,13 +897,13 @@ msgid ""
 msgstr ""
 
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
 
 msgid "The directory you entered does not exist"
-msgstr ""
+msgstr "Det indtastede bibliotek eksisterer ikke"
 
 msgid ""
 "The directory you entered is not accessible.  Change the permissions so that the webserver "
@@ -905,27 +913,23 @@ msgstr ""
 msgid "Unable to create multisite files. Ensure the files listed below are writeable."
 msgstr ""
 
-msgid "All multisites are installed from this central code repository (codebase)."
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
 msgstr ""
 
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
+msgid "You must provide the URL for your new multisite"
 msgstr ""
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
 msgstr ""
 
-msgid "Select Directory"
-msgstr "Vælg mappe"
+msgid "Select Directory and URL"
+msgstr "Vælg mappe og URL"
 
 msgid "Multisite directory setup successfully."
 msgstr ""
 
 msgid "Standard installation selected."
-msgstr ""
+msgstr "Standardinstallation er valgt."
 
 msgid "Install Steps"
 msgstr "Installationstrin"
@@ -976,39 +980,49 @@ msgid ""
 "For maximum security you should pick a directory that is not %sweb accessible%s. If this is "
 "not possible, specify a randomized name for this directory."
 msgstr ""
+"For maksimum sikkerhed, bør du vælge en mappe der ikke er %sweb accessible%s. Hvis dette "
+"ikke er muligt, så vælg et tilfældigt navn til denne mappe."
 
 msgid ""
 "If you choose a randomized name or prefer to stick with the specified directory, please "
 "confirm your choice."
 msgstr ""
+"Hvis du ønsker et tilfældigt navn eller foretrækker at bruge den ønskede mappe, så bekræft "
+"venligst dit ønske."
 
 msgid "Yes, please omit the security check:"
-msgstr ""
+msgstr "Ja, udelad venligst sikkerhedskontrollen:"
 
 msgid ""
 "This is a multisite installation. Remember that each multisite requires its own storage "
 "directory."
-msgstr ""
+msgstr "Dette er en flersteds installation. Husk at hvert flersted kræver sin egen datamappe."
 
 msgid ""
 "If you're using a modern browser, we'll try to autocomplete any path you enter here.  So if "
 "you're having trouble finding the right path to your g2data directory, try experimenting "
 "with paths in the text box below and see what completions it provides for you."
 msgstr ""
+"Hvis du bruger en moderne webbrowser, vil vi prøve at færdiggøre den sti du indtaster her. "
+"Har du problemer med at finde den rigtige sti til din g2data mappe, så prøv at "
+"eksperimentere med stier i tekstboksen nedenfor og se hvilken færdiggørelse den giver dig."
+
+msgid "Do not use the installation directory for storage"
+msgstr "Brug ikke installationsmappen til data"
 
 msgid "The directory you entered is read only"
-msgstr ""
+msgstr "Den mappe du har valgt er skrivebeskyttet"
 
 msgid "There was an error creating the directory structure within the storage directory."
-msgstr ""
+msgstr "Der opstod en fejl ved oprettelsen af mappestrukturen i datamappen."
 
 #, c-format
 msgid "Your storage directory is %sweb accessible%s."
-msgstr ""
+msgstr "Din datamappe er %sweb accessible%s."
 
 #, c-format
 msgid "Unable to verify that the storage directory is not %sweb accessible%s."
-msgstr ""
+msgstr "Kunne ikke verificere at datamappen ikke er %sweb accessible%s."
 
 msgid "Directory path:"
 msgstr "Mappesti:"
@@ -1017,10 +1031,12 @@ msgid ""
 "Your webserver needs to be able to write to this directory. To get it working, you can "
 "follow these examples."
 msgstr ""
+"Din webserver skal kunne skrive til denne mappe. For at få det til at virke, kan du følge "
+"disse eksempler."
 
 msgid ""
 "Note: these are only examples!  You may find that they don't work quite right on your system."
-msgstr ""
+msgstr "Bemærk: Dette er kun eksempler! De vil muligvis ikke virke korrekt på dit system."
 
 msgid "Unix (with ftp access)"
 msgstr "Unix (med ftp adgang)"
@@ -1030,6 +1046,9 @@ msgid ""
 "the manual for your FTP client or talk to a system administrator for help with this if you "
 "have problems."
 msgstr ""
+"Bemærk at ftp servere og klienter varierer, så disse instruktioner virker muligvis ikke for "
+"dig. Kig i manualen til din FTP klient eller tal med en systemadminitrator om hjælp, hvis du "
+"har problemer."
 
 msgid ""
 "In some web hosting environments, the paths that you see in the shell or via FTP are not the "
@@ -1037,12 +1056,17 @@ msgid ""
 "can try creating a PHP script called <b>dir.php</b> containing the following code in it and "
 "put it into your data directory."
 msgstr ""
+"I nogle webstedsmiljøer, er stien du ser i consollen eller via FTP ikke de samme stier som "
+"PHP ser. For at finde den rigtige sti til din datamappe, kan du oprette et PHP script kaldet "
+"<b>dir.php</b> indeholdene den følgende kode og lægge den i din datamappe."
 
 #, c-format
 msgid ""
 "then figure out the URL to dir.php and open it in your web browser (eg, %s).  This will tell "
 "you the exact path to enter here."
 msgstr ""
+"find derefter ud af URL'en til dir.php og åben den i din webbrowser (f.eks. %s). Dette vil "
+"give dig den nøjagtige sti der skal indtastes her."
 
 msgid ""
 "<b>Note</b>: This requires that your data directory is web accessible, which we don't "
@@ -1050,18 +1074,22 @@ msgid ""
 "we recommend that you move your data directory outside of your web accessible area and then "
 "update the path here accordingly."
 msgstr ""
+"<b>Bemærk</b>: Dette kræver at din datamapper er tilgængelig fra internettet, hvilket vi "
+"ikke anbefaler, da det omgår vores billedfirewall. Når du har fundet stien på denne måde, "
+"anbefaler vi at du flytter din datamappe uden for dit webtilgængelige område og derefter "
+"opdatere stien her tilsvarende."
 
 msgid "<b>Note</b>: Don't forget to delete dir.php when you're done!"
-msgstr ""
+msgstr "<b>Bemærk</b>: Husk at slette dir.php når du er færdig!"
 
 #, c-format
 msgid ""
 "For information on how to secure your Gallery storage directory, please read the %sSecurity "
 "Guide%s."
-msgstr ""
+msgstr "For oplysninger om sikring af din Gallery datamappe, læs venligst %sSecurity Guide%s."
 
 msgid "Storage directory set successfully."
-msgstr ""
+msgstr "Datamappe opsat korrekt."
 
 msgid "Success"
 msgstr "Success"
@@ -1076,20 +1104,25 @@ msgid ""
 "If you are using Apache, create a file named .htaccess in the main Gallery directory with "
 "the following content:"
 msgstr ""
+"Hvis du bruger Apache, så opret en fil med navnet .htaccess i hovedmappen for Gallery, med "
+"følgende indhold:"
 
 msgid "Version Check"
 msgstr "Versionscheck"
 
 msgid "This is not a fresh install and the installed version does not match the new version."
 msgstr ""
+"Dette er ikke en ny installation og den installerede version svarer ikke til den nye version."
 
 msgid "The installed version cannot be upgraded to the new version!"
-msgstr ""
+msgstr "Den installerede version kan ikke opgraderes til den nye version!"
 
 msgid ""
 "The installed version is older than the new version. You should run the upgrader and not the "
 "installer!"
 msgstr ""
+"Den installerede version er ældre end den nye version. Du bør køre opgraderingen og ikke "
+"installationen."
 
 msgid "Currently installed"
 msgstr "Aktuelt installeret"
@@ -1098,13 +1131,15 @@ msgid "New version"
 msgstr "Ny version"
 
 msgid "Go to the Upgrader!"
-msgstr ""
+msgstr "Gå til opgraderingen!"
 
 #, c-format
 msgid ""
 "You should go now to the upgrader.  Enter the URL in your browser for %s/upgrade/index.php%s "
 "in your %s directory."
 msgstr ""
+"Du bør nu gå til opgraderingen. Indtast URL'en i din browser for %s/upgrade/index.php%s i "
+"din %s mappe."
 
 #, c-format
 msgid ""
@@ -1113,6 +1148,10 @@ msgid ""
 "required to get your Gallery up and running. Once a step has been completed, you can go back "
 "and make changes at any time. Please read the %sInstaller Help File%s before proceeding."
 msgstr ""
+"At få Gallery 2 installeret på din webserver kræver %d trin. Denne installation vil guide "
+"dig igennem disse trin og give dig assistance undervejs hvis yderligere trin er krævet for "
+"at få Gallery til at køre. Når et trin er gennemført, kan du gå tilbage og lave ændringer "
+"når som helst. Læs venligst %sInstaller Help File%s før du fortsætter."
 
 msgid "Select Language:"
 msgstr "Vælg sprog:"
@@ -1122,3 +1161,13 @@ msgstr "Gå til"
 
 msgid "Begin Installation&raquo;"
 msgstr "Begynd installation&raquo;"
+
+#~ msgid ""
+#~ "You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in "
+#~ "your %s directory."
+#~ msgstr ""
+#~ "Du kan nu gå til dit nye Gallery. Indtast URL'en i din browser for %smain.php%s i dit %s "
+#~ "bibliotek."
+
+#~ msgid "Please select the installation type"
+#~ msgstr "Vælg venligst installationstypen"

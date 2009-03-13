@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,10 +24,20 @@
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15872 $
+ * @version $Revision: 18059 $
  * @abstract
  */
 class GalleryPlatform {
+
+    /**
+     * List of file extensions that are disallowed for server and/or client security reasons.
+     * @var array
+     * @deprecated This list will be made configurable by merging it into the mime-map data.
+     */
+    var $_blacklistedFileExtensions = array(
+	'php', 'php2', 'php3', 'php4', 'php5', 'php6', 'cgi', 'inc', 'phps', 'pwml', 'phtml',
+	'html', 'js', 'htm', 'shtml', 'vbs', 'dll', 'jsp' , 'cfm', 'reg', 'shtm', 'phtm', 'exe',
+	'bat', 'sh', 'cmd', 'install', 'pl', 'tcl', 'py', 'com', 'rb', 'asp', 'aspx', 'ascx');
 
     /**
      * Copy a file.
@@ -121,7 +131,18 @@ class GalleryPlatform {
 	    $gallery->debug("tempnam($dir, $prefix)");
 	}
 
-	return tempnam($dir, $prefix);
+	$slash = $this->getDirectorySeparator();
+	$dir = $dir{strlen($dir) - 1} == $slash ? substr($dir, 0, strlen($dir) - 1) : $dir;
+
+	$tempfile = tempnam($dir, $prefix);
+	if ($tempfile !== false) {
+	    $dirname = dirname($tempfile);
+	    if ($dirname !== $dir) {
+		$tempfile = $dir . $slash . basename($tempfile);
+	    }
+	}
+
+	return $tempfile;
     }
 
     /**
@@ -135,7 +156,7 @@ class GalleryPlatform {
 	    $gallery->debug("file_exists($filename)");
 	}
 
-	return is_uploaded_file($filename) || @file_exists($filename);
+	return is_uploaded_file($filename) || file_exists($filename);
     }
 
     /**
@@ -177,7 +198,7 @@ class GalleryPlatform {
 	    $gallery->debug("is_file($filename)");
 	}
 
-	return @file_exists($filename) && @is_file($filename);
+	return is_file($filename);
     }
 
     /**
@@ -541,11 +562,18 @@ class GalleryPlatform {
      * @param string $stringPerms permissions of the newly created directory
      * @return boolean true on success, false on failure
      */
-    function mkdir($path, $stringPerms='755') {
+    function mkdir($path, $stringPerms=null) {
 	global $gallery;
 
-	/* Convert string permission representation to octal */
-	$octalPerms = octdec($stringPerms);
+	if (empty($stringPerms)) {
+	    if (!isset($this->_filePerms) || !isset($this->_dirPerms)) {
+		$this->_loadPermissionPreferences();
+	    }
+	    $octalPerms = $this->_dirPerms;
+	} else {
+	    /* Convert string permission representation to octal */
+	    $octalPerms = octdec($stringPerms);
+	}
 	if ($gallery->getDebug()) {
 	    $gallery->debug(sprintf("mkdir(%s, %o)", $path, $octalPerms));
 	}
@@ -559,10 +587,12 @@ class GalleryPlatform {
     /**
      * Return true if the path component specified is composed of legal characters.
      * @param string $component the path component (must not contain path separators)
+     * @param boolean $forDirectory (optional) Whether the path component is for a directory.
+     *        Defaults to false. Periods are allowed anywhere in directories.
      * @return true if yes
      */
-    function isLegalPathComponent($component) {
-	return !strcmp($this->legalizePathComponent($component), $component);
+    function isLegalPathComponent($component, $forDirectory=false) {
+	return !strcmp($this->legalizePathComponent($component, $forDirectory), $component);
     }
 
     /**
@@ -582,47 +612,64 @@ class GalleryPlatform {
 
     /**
      * Remove any illegal characters from the path component.
+     * @param string $component the path component (must not contain path separators)
+     * @param boolean $forDirectory (optional) Whether the path component is for a directory.
+     *        Defaults to false. Periods are allowed anywhere in directories.
+     * @return string the legalized path component
      */
-    function legalizePathComponent($component) {
+    function legalizePathComponent($component, $forDirectory=false) {
 	global $gallery;
 	$legalChars = $this->getLegalPathCharacters();
 
 	/* Scrub out all the illegal characters */
 	$component = ereg_replace("[^$legalChars]", '_', $component);
 
-	/* Break it into filebase and extension */
-	list ($fileBase, $extension) = GalleryUtilities::getFileNameComponents($component);
+	if (!$forDirectory) {
+	    /* Break it into filebase and extension */
+	    list ($fileBase, $extension) = GalleryUtilities::getFileNameComponents($component);
 
-	/*
-	 * Convert all dots to underscores in the fileBase.  This prevents malicious users from
-	 * uploading files like 'foo.php.jpg' which will be treated like a JPEG by Gallery, but
-	 * could be treated like a .php file by Apache opening a security hole.
-	 */
-	$fileBase = str_replace('.', '_', $fileBase);
+	    /*
+	     * Convert all dots to underscores in the fileBase.  This prevents malicious users from
+	     * uploading files like 'foo.php.jpg' which will be treated like a JPEG by Gallery, but
+	     * could be treated like a .php file by Apache opening a security hole.
+	     */
+	    $fileBase = str_replace('.', '_', $fileBase);
 
-	/*
-	 * If we don't know exactly what type this file is, we have to assume that it's something
-	 * malicious.  In that case, it might be a server side script of some kind and we don't want
-	 * that to wind up in the albums directory in a pure state because it may open up a security
-	 * hole on systems that have placed the gallery data directory inside the document root.  So
-	 * mangle the extension to make sure that the webserver doesn't execute it.
-	 */
-	list ($ret, $tmp) = GalleryCoreApi::convertExtensionToMime($extension);
-	if ($ret && $gallery->getDebug()) {
-	    $gallery->debug('Error: convertExtensionToMime in ' .
-		'GalleryPlatform::legalizePathComponent');
+	    $blacklistKey = 'GalleryPlatform::blacklistedFileExtensions';
+	    if (GalleryDataCache::containsKey($blacklistKey)) {
+		$blacklistedExtensions = GalleryDataCache::get($blacklistKey);
+	    } else {
+		$blacklistedExtensions = array_flip($this->_blacklistedFileExtensions);
+		GalleryDataCache::put($blacklistKey, $blacklistedExtensions);
+	    }
+
+	    /*
+	     * If we don't know exactly what type this file is, we have to assume that it's
+	     * something malicious.  In that case, it might be a server side script of some kind and
+	     * we don't want that to wind up in the albums directory in a pure state because it may
+	     * open up a security hole on systems that have placed the gallery data directory inside
+	     * the document root.  So mangle the extension to make sure that the webserver doesn't
+	     * execute it.
+	     */
+	    list ($ret, $tmp) = GalleryCoreApi::convertExtensionToMime($extension);
+	    if ($ret && $gallery->getDebug()) {
+		$gallery->debug('Error: convertExtensionToMime in ' .
+				'GalleryPlatform::legalizePathComponent');
+	    }
+	    if (!empty($extension) && ($ret || $tmp == 'application/unknown'
+		    || isset($blacklistedExtensions[GalleryUtilities::strToLower($extension)]))) {
+		$fileBase = $fileBase . '_' . $extension;
+		$extension = null;
+	    }
+
+	    /* Rebuild the baseName according to our transforms above */
+	    if (!empty($extension)) {
+		$fileBase .= '.' . $extension;
+	    }
+	    $component = $fileBase;
 	}
-	if (($ret || $tmp == 'application/unknown') && !empty($extension)) {
-	    $fileBase = $fileBase . '_' . $extension;
-	    $extension = null;
-	}
 
-	/* Rebuild the baseName according to our transforms above */
-	if (!empty($extension)) {
-	    $fileBase .= '.' . $extension;
-	}
-
-	return $fileBase;
+	return $component;
     }
 
     /**
@@ -671,7 +718,7 @@ class GalleryPlatform {
 	    return false;
 	}
 
-	if (($realpath = $this->realpath($path)) === false) {
+	if (($realpath = @$this->realpath($path)) === false) {
 	    /*
 	     * PHP's open_basedir will actually take an invalid path, resolve relative paths, parse
 	     * out .. and . and then check against the dir list.  Here we do an ok job of doing the
@@ -910,12 +957,17 @@ class GalleryPlatform {
 	    $gallery->debug("touch($file, $time, $atime)");
 	}
 
+	$exists = $this->file_exists($file);
 	if (isset($atime)) {
 	    touch($file, $time, $atime);
 	} else if (isset($time)) {
 	    touch($file, $time);
 	} else {
 	    touch($file);
+	}
+	
+	if (empty($exists)) {
+	    $this->chmod($file);
 	}
     }
 
@@ -1033,19 +1085,29 @@ class GalleryPlatform {
      * @access private
      */
     function _loadPermissionPreferences() {
+	static $cacheKey = 'GalleryPlatform::_loadPermissionPreferences';
 	$this->_filePerms = 0644;
-	list ($ret, $filePerms) =
-	    GalleryCoreApi::getPluginParameter('module', 'core', 'permissions.file');
-	if (!$ret && !empty($filePerms)) {
-	    $this->_filePerms = octdec($filePerms);
+	$this->_dirPerms = 0755;
+
+	if (GalleryDataCache::containsKey($cacheKey)) {
+	    list ($this->_filePerms, $this->_dirPerms) = GalleryDataCache::get($cacheKey);
+	} else {
+	    /* To avoid looping if getPluginParameter calls platform functions */
+	    GalleryDataCache::put($cacheKey, array($this->_filePerms, $this->_dirPerms));
+
+	    list ($ret, $filePerms) =
+		GalleryCoreApi::getPluginParameter('module', 'core', 'permissions.file');
+	    if (!$ret && !empty($filePerms)) {
+		$this->_filePerms = octdec($filePerms);
+	    }
+	    list ($ret, $dirPerms) =
+		GalleryCoreApi::getPluginParameter('module', 'core', 'permissions.directory');
+	    if (!$ret && !empty($dirPerms)) {
+		$this->_dirPerms = octdec($dirPerms);
+	    }
+	    GalleryDataCache::put($cacheKey, array($this->_filePerms, $this->_dirPerms));
 	}
 	$this->_umask = 0777 - $this->_filePerms;
-	$this->_dirPerms = 0755;
-	list ($ret, $dirPerms) =
-	    GalleryCoreApi::getPluginParameter('module', 'core', 'permissions.directory');
-	if (!$ret && !empty($dirPerms)) {
-	    $this->_dirPerms = octdec($dirPerms);
-	}
     }
 
     /**
@@ -1219,6 +1281,7 @@ class GalleryPlatform {
 	unset($this->_umask);
 	unset($this->_filePerms);
 	unset($this->_dirPerms);
+	GalleryDataCache::remove('GalleryPlatform::_loadPermissionPreferences');
     }
 }
 ?>

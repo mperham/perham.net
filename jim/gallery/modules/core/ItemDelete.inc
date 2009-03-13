@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage UserInterface
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 18138 $
  */
 class ItemDeleteController extends GalleryController {
 
@@ -33,8 +33,13 @@ class ItemDeleteController extends GalleryController {
     function handleRequest($form) {
 	global $gallery;
 
-	$itemId = GalleryUtilities::getRequestVariables('itemId');
 	$status = $error = array();
+
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
 
 	if (isset($form['action']['delete'])) {
 	    $status['deleted']['count'] = 0;
@@ -48,19 +53,18 @@ class ItemDeleteController extends GalleryController {
 		    return array($ret, null);
 		}
 
-		$ret = GalleryCoreApi::studyPermissions($selectedIds);
+		list ($ret, $permissions) = GalleryCoreApi::fetchPermissionsForItems($selectedIds);
 		if ($ret) {
 		    return array($ret, null);
 		}
 
 		foreach ($selectedIds as $selectedId) {
-		    /* Make sure we have permission to delete this item */
-		    list ($ret, $permissions) = GalleryCoreApi::getPermissions($selectedId);
-		    if ($ret) {
-			return array($ret, null);
+		    if (!isset($permissions[$selectedId]['core.view'])) {
+			/* Avoid information disclosure, act as if the item didn't exist. */
+			return array(GalleryCoreApi::error(ERROR_MISSING_OBJECT), null);
 		    }
-
-		    if ( !isset($permissions['core.delete'])) {
+		    /* Make sure we have permission to delete this item */
+		    if (!isset($permissions[$selectedId]['core.delete'])) {
 			return array(
 			    GalleryCoreApi::error(ERROR_PERMISSION_DENIED, __FILE__, __LINE__,
 				"Don't have permission to delete this item"), null);
@@ -76,7 +80,7 @@ class ItemDeleteController extends GalleryController {
 		/* if we're still here then all are deletable */
 		$storage =& $gallery->getStorage();
 		foreach ($selectedIds as $selectedId) {
-		    $ret = GalleryCoreApi::deleteEntityById($selectedId);
+		    $ret = GalleryCoreApi::deleteEntityById($selectedId, 'GalleryItem');
 		    if ($ret) {
 			return array($ret, null);
 		    }
@@ -98,26 +102,14 @@ class ItemDeleteController extends GalleryController {
 
 	    /*
 	     * Figure out where to redirect upon success.
-	     * Can't use return url because it may be for an item we just deleted, but
-	     * check for g2_page param and include that if found (matrix theme specific..)
+	     * Can't use return url because it may be for an item we just deleted
 	     */
 	    $results['redirect'] = array('view' => 'core.ShowItem',
 					 'itemId' => $itemId);
-
-	    $urlGenerator =& $gallery->getUrlGenerator();
-	    list ($ret, $links) = $urlGenerator->getNavigationLinks(1);
-	    if ($ret) {
-		return array($ret, null);
-	    }
-	    if (count($links) > 0 &&
-		    preg_match('{' . GalleryUtilities::prefixFormVariable('page') . '=(\d+)}',
-			       $links[0]['url'], $match)) {
-		$results['redirect']['page'] = $match[1];
-	    }
 	} else if (isset($form['action']['next'])) {
 	    $page = GalleryUtilities::getRequestVariables('page');
-	    list ($ret, $peerIds) =
-		GalleryCoreApi::fetchChildItemIdsWithPermission($itemId, 'core.delete');
+	    list ($ret, $peerIds) = GalleryCoreApi::fetchChildItemIdsWithPermission(
+		$itemId, array('core.delete', 'core.view'));
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -156,28 +148,32 @@ class ItemDeleteView extends GalleryView {
     function loadTemplate(&$template, &$form) {
 	global $gallery;
 
-	$variables = GalleryUtilities::getRequestVariables('itemId', 'selectedId', 'page');
+	list ($ret, $item) = $this->getItem();
+	if ($ret) {
+	    return array($ret, null);
+	}
+	$itemId = $item->getId();
+
+	$variables = GalleryUtilities::getRequestVariables('selectedId', 'anchorId', 'page');
+
 	foreach ($variables as $key => $value) {
 	    $variables[$key] = is_numeric($value) ? (int) $value : null;
 	}
-	list ($itemId, $selectedId, $page) = $variables;
+	list ($selectedId, $anchorId, $page) = $variables;
 
 	if ($form['formName'] != 'ItemDelete') {
 	    if ($selectedId) {
 		$form['selectedIds'][$selectedId] = true;
+	    } else if ($anchorId) {
+		$selectedId = $anchorId;
 	    }
 	    $form['destination'] = '';
 	    $form['formName'] = 'ItemDelete';
-	    $form['numPerPage'] = 15;
+	    $form['numPerPage'] = 30;
 	}
 
-	list ($ret, $item) = GalleryCoreApi::loadEntitiesById($itemId);
-	if ($ret) {
-	    return array($ret, null);
-	}
-
-	list ($ret, $peerIds) =
-	    GalleryCoreApi::fetchChildItemIdsWithPermission($itemId, 'core.delete');
+	list ($ret, $peerIds) = GalleryCoreApi::fetchChildItemIdsWithPermission(
+	    $itemId, array('core.delete', 'core.view'));
 	if ($ret) {
 	    return array($ret, null);
 	}
@@ -211,7 +207,7 @@ class ItemDeleteView extends GalleryView {
 	    }
 
 	    /* load peers */
-	    list ($ret, $peerItems) = GalleryCoreApi::loadEntitiesById($peerIds);
+	    list ($ret, $peerItems) = GalleryCoreApi::loadEntitiesById($peerIds, 'GalleryItem');
 	    if ($ret) {
 		return array($ret, null);
 	    }
@@ -261,7 +257,7 @@ class ItemDeleteView extends GalleryView {
 	$urlGenerator =& $gallery->getUrlGenerator();
 
 	$ItemDelete = array();
-	$ItemDelete['canCancel'] = $urlGenerator->isNavigationBackPossible();
+	$ItemDelete['canCancel'] = (boolean)GalleryUtilities::getRequestVariables('return');
 	$ItemDelete['peers'] = $peers;
 	$ItemDelete['peerTypes'] = $peerTypes;
 	$ItemDelete['peerDescendentCounts'] = $peerDescendentCounts;
@@ -273,10 +269,7 @@ class ItemDeleteView extends GalleryView {
 
 	$template->setVariable('ItemDelete', $ItemDelete);
 	$template->setVariable('controller', 'core.ItemDelete');
-	$template->javascript('lib/yui/yahoo-min.js');
-	$template->javascript('lib/yui/dom-min.js');
-	$template->javascript('lib/yui/event-min.js');
-	$template->javascript('lib/yui/container-min.js');
+	$template->javascript('lib/yui/yahoo-dom-event.js');
 	return array(null, array('body' => 'modules/core/templates/ItemDelete.tpl'));
     }
 

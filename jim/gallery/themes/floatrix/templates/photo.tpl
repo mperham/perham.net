@@ -1,8 +1,6 @@
 {*
- * $Revision: 15690 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17175 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 {if !empty($theme.imageViews)}
 {assign var="image" value=$theme.imageViews[$theme.imageViewsIndex]}
@@ -53,6 +51,7 @@
 
 	      {if $image.viewInline}
 		{if count($theme.imageViews) > 1}
+		  {capture assign="imageViewLink"}
 		  {if $theme.imageViewsIndex==1 && count($theme.imageViews)==2}
 		    <a href="{g->url params=$theme.pageUrl arg1="itemId=`$theme.item.id`"}">
 		  {else}
@@ -63,19 +62,21 @@
 		    <a href="{g->url params=$theme.pageUrl arg1="itemId=`$theme.item.id`"
 				     arg2="imageViewsIndex=`$imageViewsLink`"}">
 		  {/if}
+		  {/capture}
 		{/if}
 		{if isset($theme.photoFrame)}
                   {g->container type="imageframe.ImageFrame" frame=$theme.photoFrame
                                 width=$image.width height=$image.height}
+                    {if isset($imageViewLink)}{$imageViewLink}{/if}
                     {g->image id="%ID%" item=$theme.item image=$image
                               fallback=$smarty.capture.fallback class="%CLASS%"}
+                    {if isset($imageViewLink)}</a>{/if}
                   {/g->container}
                 {else}
+                  {if isset($imageViewLink)}{$imageViewLink}{/if}
                   {g->image item=$theme.item image=$image fallback=$smarty.capture.fallback}
+                  {if isset($imageViewLink)}</a>{/if}
                 {/if}
-	        {if count($theme.imageViews) > 1}
-		  </a>
-		{/if}
               {else}
                 {$smarty.capture.fallback}
               {/if}
@@ -83,6 +84,14 @@
               {g->text text="There is nothing to view for this item."}
             {/if}
           </div>
+
+          {if $theme.pageUrl.view != 'core.ShowItem' && $theme.params.dynamicLinks == 'jumplink'}
+          <div class="gbBlock">
+            <a href="{g->url arg1="view=core.ShowItem" arg2="itemId=`$theme.item.id`"}">
+              {g->text text="View in original album"}
+            </a>
+          </div>
+          {/if}
 
           {* Download link for item in original format *}
           {if !empty($theme.sourceImage) && $theme.sourceImage.mimeType != $theme.item.mimeType}

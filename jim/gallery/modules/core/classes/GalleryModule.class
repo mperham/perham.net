@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryPlugin.class');
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 16630 $
+ * @version $Revision: 17580 $
  */
 class GalleryModule extends GalleryPlugin {
 
@@ -40,13 +40,13 @@ class GalleryModule extends GalleryPlugin {
     /**
      * This module's callbacks.  This is a pipe (|) delimited string containing
      * one or more of the following values:
-     *   registerEventListeners
      *   getSiteAdminViews
      *   getItemAdminViews
      *   getUserAdminViews
      *   getSystemLinks
      *   getItemLinks
      *   getItemSummaries
+     *   registerEventListeners (deprecated)
      *
      * eg. getItemAdminViews|getSystemLinks|getItemLinks
      *
@@ -62,6 +62,12 @@ class GalleryModule extends GalleryPlugin {
      */
     var $_requiredModuleApi;
 
+    /**
+     * The version of the templates associated with this plugin
+     * @var int
+     * @access private
+     */
+    var $_templateVersion;
 
     /**
      * Return the major and minor version of the GalleryModule API.
@@ -75,18 +81,22 @@ class GalleryModule extends GalleryPlugin {
      * - Drop the redirect url from GalleryPlugin::deactivate() (also requires a
      *   major bump in GalleryTheme)
      * - Remove TYPE=DB_TABLE_TYPE replacement in MySqlStorage::_getSqlReplacements
-     * - change signature of getItemlinks() in all modules (add new parameter) 
+     * - change signature of getItemlinks() in all modules (add new parameter)
      * - Remove rewrite v1.1.8 version checks in webdav, watermark, httpauth, ... (look for todo)
+     * - Change ->_templateVersion = x to ->setTemplateVersion(x) in module constructors
+     * - Remove navId and statusId related functions in GalleryUrlGenerator and GallerySession
+     * - Remove webdav related backwards-compatibility code in ItemAddController.
      *
      * @return array major number, minor number
      */
     function getApiVersion() {
-	return array(3, 5);
+	return array(3, 9);
     }
 
     /**
      * Register any event listeners that this module requires.  Each module will get a chance to
      * register its event listeners before any events are posted.
+     * @deprecated Will be removed on next major API fump
      */
     function registerEventListeners() {
     }
@@ -104,7 +114,7 @@ class GalleryModule extends GalleryPlugin {
      * Modules should not need to override this method.  Instead they should
      * override the upgrade method and put all their module specific logic there.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function installOrUpgrade($bootstrap=false, $statusMonitor=null) {
 	global $gallery;
@@ -153,6 +163,11 @@ class GalleryModule extends GalleryPlugin {
 		return $ret;
 	    }
 
+	    $ret = $storage->updateTableInfo($this->getId());
+	    if ($ret) {
+		return $ret;
+	    }
+
 	    if ($gallery->getDebug()) {
 		$gallery->debug(sprintf('Upgrade (or install) %s module', $this->getId()));
 	    }
@@ -172,7 +187,12 @@ class GalleryModule extends GalleryPlugin {
 					$this->getId()));
 	    }
 
+	    /*
+	     * @todo Adding _maps & _entities keys are not covered in tests because of the use of
+	     * the include.
+	     */
 	    $data = array('_version' => $this->getVersion(),
+			  '_templateVersion' => $this->getTemplateVersion(),
 			  '_callbacks' => $this->getCallbacks(),
 			  '_requiredCoreApi' => join(',', $this->getRequiredCoreApi()),
 			  '_requiredModuleApi' => join(',', $this->getRequiredModuleApi()));
@@ -225,7 +245,7 @@ class GalleryModule extends GalleryPlugin {
 	    if (GalleryDataCache::containsKey($cacheKey)) {
 		/*
 		 * The changes must be committed before the non-transactional optimize() can be
-		 * executed. 
+		 * executed.
 		 */
 		$ret = $storage->checkPoint();
 		if ($ret) {
@@ -241,6 +261,11 @@ class GalleryModule extends GalleryPlugin {
 	    }
 	}
 
+	$ret = parent::installOrUpgrade();
+	if ($ret) {
+	    return $ret;
+	}
+
 	if ($gallery->getDebug()) {
 	    $gallery->debug(sprintf('Successfully finished installOrUpgrade %s module',
 				    $this->getId()));
@@ -252,7 +277,7 @@ class GalleryModule extends GalleryPlugin {
     /**
      * Remove this module's plugin parameters and all of its database tables.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function uninstall() {
 	global $gallery;
@@ -288,7 +313,7 @@ class GalleryModule extends GalleryPlugin {
 
     /**
      * Delete all entities with a type registered by this module.
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _deleteModuleEntities() {
@@ -311,7 +336,7 @@ class GalleryModule extends GalleryPlugin {
 	$i = 0;
 	$storage =& $gallery->getStorage();
 	while ($result = $searchResults->nextResult()) {
-	    $ret = GalleryCoreApi::deleteEntityById($result[0]);
+	    $ret = GalleryCoreApi::deleteEntityById($result[0], $types);
 	    if ($ret && !($ret->getErrorCode() & ERROR_MISSING_OBJECT)) {
 		return $ret;
 	    }
@@ -330,15 +355,6 @@ class GalleryModule extends GalleryPlugin {
      * @see GalleryPlugin::deactivate
      */
     function deactivate($postDeactivationEvent=true) {
-	list ($ret, $redirect) = parent::deactivate($postDeactivationEvent);
-	if ($ret) {
-	    return array($ret, null);
-	}
-
-	if (!empty($redirect)) {
-	    return array(null, $redirect);
-	}
-
 	$ret = GalleryCoreApi::unregisterToolkitsByModuleId($this->getId());
 	if ($ret) {
 	    return array($ret, null);
@@ -349,7 +365,16 @@ class GalleryModule extends GalleryPlugin {
 	    return array($ret, null);
 	}
 
-	return array(null, array());
+	/*
+	 * Call parent::deactivate after our unregistrations such that listeners for the
+	 * deactivation event see the correct state of G2 without this plugin.
+	 */
+	list ($ret, $redirect) = parent::deactivate($postDeactivationEvent);
+	if ($ret) {
+	    return array($ret, null);
+	}
+
+	return array(null, $redirect);
     }
 
     /**
@@ -359,8 +384,8 @@ class GalleryModule extends GalleryPlugin {
      * to installOrUpgrade (see the TODO there).
      */
     function activate($postActivationEvent=true) {
-	global $gallery;
-	$storage =& $gallery->getStorage();
+    	global $gallery;
+    	$storage =& $gallery->getStorage();
 
 	if (!GalleryCoreApi::isPluginCompatibleWithApis($this)) {
 	    return array(GalleryCoreApi::error(ERROR_PLUGIN_VERSION_MISMATCH, __FILE__, __LINE__,
@@ -392,17 +417,18 @@ class GalleryModule extends GalleryPlugin {
 	    return array($ret, null);
 	}
 
-	if (!empty($redirect)) {
-	    return array(null, $redirect);
+	$ret = $this->_removeObsoleteThemeBlocks();
+	if ($ret) {
+	    return array($ret, null);
 	}
 
-	return array(null, array());
+	return array(null, $redirect);
     }
 
     /**
      * Does this module require configuration before it can be activated?
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               boolean
      */
     function needsConfiguration() {
@@ -416,7 +442,7 @@ class GalleryModule extends GalleryPlugin {
      * even if nothing has to be done to get a successful configuration.  This method
      * should accept all the module's defaults wherever possible.
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               boolean was module able to autoconfigure
      */
     function autoConfigure() {
@@ -429,7 +455,7 @@ class GalleryModule extends GalleryPlugin {
      * module.  Note that the text value is localized since they will be displayed directly to the
      * user.  Include group/groupLabel in data to override the values from getGroup().
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array( array('name' => name, 'view' => view,
      *                 [optional: 'group' => group, 'groupLabel' => localized label]), ...)
      */
@@ -443,8 +469,8 @@ class GalleryModule extends GalleryPlugin {
      * applicable for the authenticated user.  As with getSiteAdminViews(), the view title text
      * must be localized.
      *
-     * @param object GalleryItem $item
-     * @return array object GalleryStatus a status code
+     * @param GalleryItem $item
+     * @return array GalleryStatus a status code
      *               array( array('name' => name, 'view' => view), ...)
      */
     function getItemAdminViews($item) {
@@ -457,8 +483,8 @@ class GalleryModule extends GalleryPlugin {
      * applicable for the authenticated user.  As with getSiteAdminViews(), the view title text
      * must be localized.
      *
-     * @param object GalleryUser $user
-     * @return array object GalleryStatus a status code
+     * @param GalleryUser $user
+     * @return array GalleryStatus a status code
      *               array( array('name' => name, 'view' => view), ...)
      */
     function getUserAdminViews($user) {
@@ -481,7 +507,7 @@ class GalleryModule extends GalleryPlugin {
      * It may be one that is also listed in getSiteAdminViews().  As with getSiteAdminViews(),
      * the view title text must be localized.
      *
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array(string linkId => array('text' => 'localized text',
      *                                            'params' => array(key => value, key => value))
      *                     ...)
@@ -495,11 +521,11 @@ class GalleryModule extends GalleryPlugin {
      * These are links to item specific module views.  For example, the
      * comments module uses this to link to the "add comments" view.
      *
-     * @param array $items array of object GalleryItem
+     * @param array $items array of GalleryItem
      * @param array $wantsDetailedLinks (id => 1, id => 1) we want detailed links for these ids
      * @param array $permissions id => array(permission => 1, ...) of item permissions
      * @param int $userId id of user viewing links
-     * @return array object GalleryStatus a status code
+     * @return array GalleryStatus a status code
      *               array(itemId => array(array('text' => 'localized text',
      *                                           'params' => array(key => value, key => value))
      *                                     ...))
@@ -511,10 +537,10 @@ class GalleryModule extends GalleryPlugin {
     /**
      * Return module-specific summary content about the item
      *
-     * @param array $items array of object GalleryItem
+     * @param array $items array of GalleryItem
      * @param array $permissions id => array(permission => 1, ...) of item permissions
-     * @param object GalleryTemplate $template the master template instance
-     * @return array object GalleryStatus a status code
+     * @param GalleryTemplate $template the master template instance
+     * @return array GalleryStatus a status code
      *               array (id => string HTML content, ..)
      */
     function getItemSummaries($items, $permissions, &$template) {
@@ -525,7 +551,7 @@ class GalleryModule extends GalleryPlugin {
      * Register any factory implementations.  This is called at module activation time.
      * All implementations are unregistered when the module is deactivated.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function performFactoryRegistrations() {
 	return null;
@@ -591,6 +617,14 @@ class GalleryModule extends GalleryPlugin {
 		     'groupLabel' => $this->translate($this->_group['groupLabel']));
     }
 
+    function setTemplateVersion($version) {
+	$this->_templateVersion = $version;
+    }
+
+    function getTemplateVersion() {
+	return (int)$this->_templateVersion;
+    }
+
     function getCallbacks() {
 	return $this->_callbacks;
     }
@@ -643,6 +677,53 @@ class GalleryModule extends GalleryPlugin {
 	    GalleryDataCache::put('_translate ' . $string, $result);
 	}
 	return $result;
+    }
+
+    /**
+     * Remove obsolete blocks from existing themes (bug #1636339).
+     *
+     * @return GalleryStatus a status code
+     */
+    function _removeObsoleteThemeBlocks() {
+	/* Get all available blocks, even from inactive modules; and used blocks. */
+	list ($ret, $blocks) = GalleryCoreApi::loadAvailableBlocks(true);
+	if ($ret) {
+	    return $ret;
+	}
+	list ($ret, $searchResults) = GalleryCoreApi::getMapEntry('GalleryPluginParameterMap',
+	    array('pluginId', 'itemId', 'parameterName', 'parameterValue'),
+	    array('pluginType' => 'theme',
+		  'parameterName' => new GallerySqlFragment('LIKE ?', '%Blocks')));
+	if ($ret) {
+	    return $ret;
+	}
+
+	/* Go through each available theme and find which blocks they're using. */
+	while ($result = $searchResults->nextResult()) {
+	    $themeId = $result[0];
+	    $itemId = $result[1];
+	    $paramName = $result[2];
+	    $themeBlocks = unserialize($result[3]);
+	    if (!is_array($themeBlocks)) {
+		continue;
+	    }
+	    foreach ($themeBlocks as $key => $blockInfo) {
+		$blockInfo = explode('.', $blockInfo[0]);
+		$pluginName = $blockInfo[0];
+		$blockName = $blockInfo[1];
+
+		/* Remove used block if it is not available any more. */
+		if ($pluginName == $this->getId() && !isset($blocks[$pluginName][$blockName])) {
+		    unset($themeBlocks[$key]);
+		    $ret = GalleryCoreApi::setPluginParameter(
+			'theme', $themeId, $paramName, serialize($themeBlocks), $itemId);
+		    if ($ret) {
+			return $ret;
+		    }
+		}
+	    }
+	}
+	return null;
     }
 }
 ?>

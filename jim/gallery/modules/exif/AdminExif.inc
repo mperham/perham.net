@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ GalleryCoreApi::requireOnce('modules/exif/classes/ExifHelper.class');
  * @author Bharat Mediratta <bharat@menalto.com>
  * @author Georg Rehfeld <rehfeld@georg-rehfeld.de>
  * @author Jozsef R.Nagy <jozsef.rnagy@site.hu>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  */
 class AdminExifController extends GalleryController {
 
@@ -406,13 +406,19 @@ class AdminExifView extends GalleryView {
 
 	    $availableList[$key] = $module->translate($data[0]);
 	}
-
 	asort($availableList);
+
+	/* Check toolkit support for rotation */
+	list ($ret, $toolkit) = GalleryCoreApi::getToolkitByOperation('image/jpeg', 'rotate');
+	if ($ret) {
+	    return array($ret, null);
+	}
 
 	$AdminExif = array();
 	$AdminExif['availableList'] = $availableList;
 	$AdminExif['summaryList'] = $summaryList;
 	$AdminExif['detailedList'] = $detailedList;
+	$AdminExif['canRotate'] = isset($toolkit);
 
 	$template->setVariable('AdminExif', $AdminExif);
 	$template->setVariable('controller', 'exif.AdminExif');

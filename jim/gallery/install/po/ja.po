@@ -1,7 +1,7 @@
-# $Id: ja.po 16578 2007-06-10 20:53:13Z mindless $
+# $Id: ja.po 18119 2008-10-08 18:23:52Z mindless $
 #
 # Gallery - a web based photo album viewer and editor
-# Copyright (C) 2000-2007 Bharat Mediratta
+# Copyright (C) 2000-2008 Bharat Mediratta
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -21,11 +21,11 @@
 # - Kennichi Uehara <ken.w3m+nospam@gmail.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: Gallery: Installer 2.2.2\n"
+"Project-Id-Version: Gallery: Installer 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-08-09 01:16+0900\n"
-"PO-Revision-Date: 2007-03-14 23:02+0900\n"
-"Last-Translator: Yosuke Suzuki\n"
+"PO-Revision-Date: 2007-07-20 11:06+0900\n"
+"Last-Translator: momo-i\n"
 "Language-Team: Japanese <gallery-devel@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -72,15 +72,6 @@ msgid "Create Config File"
 msgstr "設定ファイルの作成"
 
 #, c-format
-msgid ""
-"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
-"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
-"this."
-msgstr ""
-"%s ディレクトリにある <b>config.php</b> 設定ファイルに書き込めません。パーミッションを変更し"
-"てください。Unix なら、 <i>chmod 666 config.php</i> を実行して修正できます。"
-
-#, c-format
 msgid "The config.php file does not exist in your %s directory"
 msgstr "%s ディレクトリには config.php ファイルが存在しません"
 
@@ -113,6 +104,9 @@ msgid "You must have the Component Object Model(COM) PHP module installed"
 msgstr ""
 "コンポーネントオブジェクトモデル(COM)PHPモジュールがインストールされていなければなりません"
 
+msgid "You must have the PHP Data Object(PDO) PHP module installed"
+msgstr "PHPデータオブジェクト(PDO)PHPモジュールがインストールされていなければなりません"
+
 #, c-format
 msgid "You must specify a column prefix (we recommend %s)"
 msgstr "カラムのプレフィックスを指定しなくてはなりません (推奨 %s)"
@@ -140,20 +134,17 @@ msgstr "指定されたデータベースは存在しません。作成してく
 msgid "The database privileges test did not complete successfully."
 msgstr "データベースの特権テストは完全に成功しませんでした。"
 
-#, fuzzy
 msgid ""
 "Gallery tables already exist in this database!  But there is no 'versions.dat' file in your "
 "G2 storage directory which we interpret as a broken state of G2. Either create a versions."
 "dat file with the correct format if you think your G2 should still work or select a clean "
 "install, which will erase all data in the database and in the storage directory."
 msgstr ""
-"Gallery のテーブルは既にデータベースに存在します。しかし、G2ストレージディレクトリには "
-"'versions.dat' ファイルが存在しません。which we interpret as a broken state of G2.　正しい"
-"フォーマットの\n"
-"Gallery tables already exist in this database!  But there is no 'versions.dat' file in your "
-"G2 storage directory which we interpret as a broken state of G2. Either create a versions."
-"dat file with the correct format if you think your G2 should still work or select a clean "
-"install, which will erase all data in the database and in the storage directory."
+"ギャラリーテーブルはこのデータベースに既に存在しています! しかし、私たちがG2の起伏の多い州と"
+"して解釈するあなたのG2ストレージディレクトリには'versions.dat'ファイルが全くありません。デー"
+"タベースとストレージディレクトリであなたが、あなたのG2がまだ働いているべきであると思うなら正"
+"しい形式でversions.datファイルを作成するか、またはクリーンインストールを選択します。(それは、"
+"すべてのデータを消すでしょう)。"
 
 msgid ""
 "The G2 storage directory has a versions.dat file of an old install. But the Gallery database "
@@ -225,7 +216,10 @@ msgstr "IBM DB2 for Unix/Windows, v9.x 以上"
 msgid "Microsoft SQL Server 2005 and newer"
 msgstr "Microsoft SQL Server 2005 以上"
 
-msgid "Unknown DB type or no known tables information."
+msgid "SQLite v3.x (Experimental!)"
+msgstr "SQLite v3.x (実験用！)"
+
+msgid "Unknown database type or no known tables information."
 msgstr "未知のタイプのデータベースかテーブル情報です"
 
 #, c-format
@@ -237,15 +231,15 @@ msgid "Could not open schema file: \"%s\"."
 msgstr "スキーマファイル \"%s\" が開けません"
 
 msgid ""
-"Failed to create a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Failed to create a database test sequence. Check the returned error message and README.html "
+"for missing privileges and clean up the database."
 msgstr ""
 "データベーステストシーケンスの作成に失敗しました。エラーメッセージを確認して、不足している特"
 "権とデータベースのクリーンアップのためにREADME.htmlを読んでください。"
 
 msgid ""
-"Test failed to drop a DB test sequence.Check the returned error message and README.html for "
-"missing privileges and clean up the database."
+"Test failed to drop a database test sequence. Check the returned error message and README."
+"html for missing privileges and clean up the database."
 msgstr ""
 "データベースをドロップするテストに失敗しました。エラーメッセージを確認して、不足している特権"
 "とデータベースのクリーンアップのためにREADME.htmlを読んでください。"
@@ -332,8 +326,8 @@ msgstr "システムチェック"
 msgid "Performing system checks"
 msgstr "システムチェックを実行中"
 
-msgid "PHP version >= 4.3.0 or >= 5.0.4"
-msgstr "PHP バージョン >= 4.3.0 or >= 5.0.4"
+msgid "PHP version &gt;= 4.3.0 or &gt;= 5.0.4"
+msgstr "PHP バージョン &gt;= 4.3.0 or &gt;= 5.0.4"
 
 #, c-format
 msgid ""
@@ -351,14 +345,12 @@ msgstr "PHP バージョン"
 msgid "FILE directive supported"
 msgstr "FILE ディレクティブはサポートされています"
 
-#, fuzzy
 msgid ""
 "Error: your PHP __FILE__ directive is not functioning correctly. Please file a support "
 "request with your webserver administrator or in the Gallery forums."
 msgstr ""
-"エラー: PHPの __FILE__ ディレクティブは正しく機能していません。\n"
-"directive is not functioning correctly. Please file a support request with your webserver "
-"administrator or in the Gallery forums."
+"エラー: PHPの __FILE__ ディレクティブは正しく機能していません。あなたのWebサーバ管理者か"
+"Galleryのフォーラムでサポートを依頼してください。"
 
 msgid "FILE Directive"
 msgstr "FILE ディレクティブ"
@@ -446,20 +438,19 @@ msgstr ""
 msgid "File uploads allowed"
 msgstr "ファイルのアップロード許可"
 
-#, fuzzy
 msgid ""
 "Warning: Your PHP is configured not to allow file uploads (<b>file_uploads</b> parameter in "
 "php.ini). You will need to enable this option if you want to upload files to your Gallery "
 "with a web browser."
 msgstr ""
-"警告: Your PHP is configured not to allow file uploads (<b>file_uploads</b> parameter in php."
-"ini). You will need to enable this option if you want to upload files to your Gallery with a "
-"web browser."
+"警告: あなたのPHPはファイルのアップロード設定が許可されていません。(php.iniの"
+"<b>file_uploads</b>)WebブラウザからGalleryにファイルをアップロードしたいなら、このオプション"
+"を有効にする必要があるでしょう。"
 
 msgid "Maximum upload size"
 msgstr "アップロードの最大サイズ"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Your PHP is configured to limit the size of file uploads to %sb "
 "(<b>upload_max_filesize</b> parameter in php.ini). You should raise this limit to allow "
@@ -517,27 +508,25 @@ msgstr "Zend 互換モード"
 #, c-format
 msgid ""
 "Warning: Your PHP is configured with Zend ze1_compatibility_mode which can cause PHP to "
-"crash.  Click <a href=\"%s\">here</a> to test your PHP.  If you see \"SUCCESS\" then your "
-"PHP is ok.  If you get an error or no response then you must turn off ze1_compatibility_mode "
-"before proceeding."
+"crash.  Click %shere%s to test your PHP.  If you see \"SUCCESS\" then your PHP is ok.  If "
+"you get an error or no response then you must turn off ze1_compatibility_mode before "
+"proceeding."
 msgstr ""
 "警告: あなたの使用しているPHPはクラッシュする危険のある Zend ze1_compatibility_mode が設定さ"
-"れています。 <a href=\"%s\">ここ</a>をクリックしてPHPをテストしてください。\"SUCCESS\"　と表"
-"示されれば問題ありません。エラーか無反応な場合は、先に進む前に ze1_compatibility_mode をオフ"
-"にしてください"
+"れています。 %sここ%sをクリックしてPHPをテストしてください。\"SUCCESS\"　と表示されれば問題あ"
+"りません。エラーか無反応な場合は、先に進む前に ze1_compatibility_mode をオフにしてください"
 
 msgid "putenv() allowed"
 msgstr "putenv() 許可済み"
 
-#, fuzzy
 msgid ""
 "Warning: The putenv() function is disabled in your PHP by the <b>disabled_functions</b> "
 "parameter in php.ini.  Gallery can function with this setting, but on some rare systems "
 "Gallery will be unable to run in other languages than the system language and English."
 msgstr ""
-"警告: php.ini　ファイルの <b>disabled_functions</b>パラメータによって set_time_limit() 機能が"
-"無効になっています。 Gallery はこの設定でも動作しますが、信頼性が確保されません。 %d 秒以上か"
-"かる操作は、データの衝突ですべて失敗します（場合によっては、ブランクページを表示します）"
+"警告: php.ini　ファイルの <b>disabled_functions</b>パラメータによって putenv() 機能が無効に"
+"なっています。 Gallery はこの設定でも動作しますが、いくらかのまれなシステムGalleryでシステム"
+"言語と英語以外の言語で動かすことができないでしょう。"
 
 msgid "Output buffering disabled"
 msgstr "出力バッファリングは無効"
@@ -699,6 +688,17 @@ msgstr "設定ファイルの作成"
 
 #, c-format
 msgid ""
+"Unable to write to the <b>config.php</b> configuration file in your %s directory.  Please "
+"change its permissions.  If you're on Unix you can do <i>chmod 666 config.php</i> to fix "
+"this. You can also download the %sconfig.php%s file and replace the existing config.php in "
+"the %s directory yourself."
+msgstr ""
+"%s ディレクトリにある <b>config.php</b> 設定ファイルに書き込めません。パーミッションを変更し"
+"てください。Unix なら、 <i>chmod 666 config.php</i> を実行して修正できます。%sconfig.php%s"
+"ファイルをダウンロードして、%sディレクトリの既存のconfig.phpと置き換えることができます。"
+
+#, c-format
+msgid ""
 "Now we need to write out all the information you provided into a file called <b>config.php</"
 "b> in your <b>%s</b> directory.  This is a very important file that gives Gallery all the "
 "information that it needs to operate.  After we create it, you can read through this file "
@@ -781,6 +781,12 @@ msgstr "DB パスワード:"
 msgid "DB Name:"
 msgstr "データベース名:"
 
+msgid "DB Schema:"
+msgstr "DBスキーマ:"
+
+msgid "(optional)"
+msgstr "(オプション)"
+
 msgid "Table Prefix:"
 msgstr "テーブルのプレフィックス:"
 
@@ -811,15 +817,6 @@ msgstr ""
 
 msgid "Go to my Gallery!"
 msgstr "Gallery を訪れる"
-
-#, fuzzy, c-format
-msgid ""
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
-msgstr ""
-"あなたはいますぐ\n"
-"You may now go to your new Gallery.  Enter the URL in your browser for %smain.php%s in your %"
-"s directory."
 
 msgid "Installer Help"
 msgstr "インストーラのヘルプ"
@@ -958,7 +955,7 @@ msgid "Redo this step"
 msgstr "このステップをもう一度"
 
 msgid "Gallery: <strong>your photos</strong> on <strong>your website</strong>"
-msgstr "Gallery: <strong>your photos</strong> on <strong>your website</strong>"
+msgstr "Gallery: <strong>あなたのWebサイト</strong>上の<strong>写真</strong>"
 
 #, c-format
 msgid "Missing files (%d)"
@@ -998,53 +995,41 @@ msgstr ""
 msgid "Errors occurred. Please see messages below."
 msgstr "エラーが発生しました。以下のメッセージを参照してください。"
 
-msgid "Please select the installation type"
-msgstr "インストールタイプを選択してください。"
-
 msgid "Standard installation"
 msgstr "標準インストール"
 
 #, c-format
 msgid ""
-"This is the default installation type. Choose this installation type if you want to install "
-"a new Gallery in the directory %s which will be accessible with the URL %s."
+"This is the most common type of installation. Your Gallery will be in the directory %s which "
+"will be accessible at %s."
 msgstr ""
-"これはデフォルトのインストールタイプです。%2$s のURLからアクセス可能な、新しいGalleryディレク"
-"トリ %1$s にインストールしたい場合はこちらを選択してください。"
+"これはインストールの最も一般的なタイプです。Galleryディレクトリ%sの%sでアクセス可能になりま"
+"す。"
 
 msgid "Multisite installation"
 msgstr "マルチサイトインストール"
 
-msgid ""
-"Gallery can support multiple independent sites with a single installation of the code. "
-"Choose this installation type if you want to install a new Gallery on the same webserver but "
-"in a different path, subdomain or URL domain."
-msgstr ""
-"Galleryはひとつのインストールで、複数の独立したサイトをサポートできます。同じウェブサーバだが"
-"違うパスやサブドメイン、URLドメインに新しいGalleryをインストールしたい場合は、こちらを選択し"
-"てください。"
-
 #, c-format
 msgid ""
-"The multisites don't share albums, photos, users, or anything else. They all need their own "
-"database and their own storage directory. For more information and explanations about "
-"Multisite installations, visit the %s page."
+"This is for multiple Gallery installations on a single web server.  Each Gallery is totally "
+"independent with its own database of photos, albums, and users.  For more details, refer to "
+"the %s page."
 msgstr ""
-"マルチサイトはアルバム、画像、ユーザその他一切を共有しません。それらはそれぞれデータベースと"
-"ストレージディレクトリを必要とします。マルチサイトインストールに関するさらなる情報と説明は、%"
-"s ページを参照してください。"
+"これは一つのウェブサーバ上にGalleryを複数インストールするためのものです。それぞれのGalleryは"
+"自身のユーザ、アルバム画像のデータベースを独自に持っています。詳細については%sページを参照し"
+"てください。"
 
 msgid "You must enter a directory"
 msgstr "ディレクトリを入力しなければなりません"
 
+#, c-format
 msgid ""
-"The directory you entered is the codebase directory. If you want to install a Gallery in the "
-"codebase directory, select the standard installation type. If you want to install a "
-"multisite, choose another directory."
+"You entered the %s directory. If you want to install a Gallery there, select the standard "
+"installation type. If you want to install a multisite, choose a different directory."
 msgstr ""
-"あなたが入力したディレクトリは中央コード保管場所(codebase)です。もしこのディレクトリに"
-"Gallery をインストールしたい場合は、標準のインストール方式を選択してください。マルチサイトに"
-"する場合は、別のディレクトリを選んでくさい"
+"あなたは%sディレクトリを入力しました。ここへGalleryをインストールしたいなら基本的なインストー"
+"ルタイプを選択してください。マルチサイトインストールがしたいなら異なるディレクトリを選択して"
+"ください。"
 
 msgid ""
 "The directory you entered either does not exist, or is prohibited by your webserver "
@@ -1052,12 +1037,19 @@ msgid ""
 "directories.  You must choose a directory under one of these, or you must modify the "
 "<b>open_basedir</b> setting in your PHP configuration to allow a new directory."
 msgstr ""
+"あなたの入力したディレクトリは、存在しないかWebサーバの設定で禁止されています。Webサーバは以"
+"下のディレクトリへのアクセスを許可するように設定してください。あなたはこれらの下位ディレクト"
+"リを選択するか、新しいディレクトリを許可するようにPHPの設定で<b>open_basedir</b>オプションを"
+"変更しなければなりません。"
 
 msgid ""
-"If your multisite install is in a different virtual host, you should contact your system "
-"administrator and request that they configure your <b>open_basedir</b> setting so that your "
-"virtual hosts can access each other."
+"If your multisite installation is in a different virtual host, you should contact your "
+"system administrator and request that they configure your <b>open_basedir</b> setting so "
+"that your virtual hosts can access each other."
 msgstr ""
+"マルチサイトインストールが異なるバーチャルホストにあるなら、システム管理者に連絡をしてあなた"
+"のバーチャルホストが互いにアクセスをできるように<b>open_basedir</b>を設定してもらうようにお願"
+"いしてください。"
 
 msgid "The directory you entered does not exist"
 msgstr "入力されたディレクトリは存在しません"
@@ -1074,25 +1066,17 @@ msgstr ""
 "マルチサイトのファイルを作成できません。下にリストされているファイルが書き込み可能か確認して"
 "ください"
 
-msgid "All multisites are installed from this central code repository (codebase)."
-msgstr "全てのマルチサイトは、この中央コード保管場所(codebase)からインストールされます。"
+msgid "Directory for the new Gallery installation (example: /var/www/example.com/gallery2) "
+msgstr "新しいGalleryインストール用のディレクトリ(例: /var/www/example.com/gallery2)"
 
-msgid ""
-"Enter the directory for the new multisite below. The path must be different from this "
-"codebase installation's path:"
-msgstr ""
-"新しいマルチサイトのディレクトリを以下に入力してください。パスはこのcodebaseインストールのパ"
-"スとは異なるものでなければなりません:"
+msgid "You must provide the URL for your new multisite"
+msgstr "新しいマルチサイトのURLを記入してください"
 
-msgid ""
-"The directory must be writeable by your webserver/php user or contain the following "
-"writeable files:"
-msgstr ""
-"そのディレクトリはウェブサーバーかPHPの利用者によって書き込みができなければいけません。もしく"
-"は以下の書き込み可能なファイルを含めてください"
+msgid "URL for the new Gallery installation (example: http://example.com/gallery2/main.php) "
+msgstr "新しいGalleryインストール用のURL(例: http://example.com/gallery2/main.php)"
 
-msgid "Select Directory"
-msgstr "ディレクトリを選択"
+msgid "Select Directory and URL"
+msgstr "ディレクトリとURLを選択"
 
 msgid "Multisite directory setup successfully."
 msgstr "マルチサイトディレクトリのセットアップに成功しました"
@@ -1175,7 +1159,6 @@ msgid ""
 "confirm your choice."
 msgstr ""
 "ランダムな名前を選ぶか、指定されたディレクトリを使う場合、あなたの選択を再確認してください。"
-"ランダムな名前を選ぶか、指定されたディレクトリを使う場合、あなたの選択を再確認してください。"
 
 msgid "Yes, please omit the security check:"
 msgstr "はい、セキュリティチェックを省略します:"
@@ -1195,6 +1178,9 @@ msgstr ""
 "最近のブラウザを使っている場合、パスのオートコンプリートが使えるかもしれません。正しいg2data"
 "ディレクトリのパスを見つけるのに問題がある場合は、以下のテキストボックスにパスを入力してみて"
 "どのような補完がされるか見てください。"
+
+msgid "Do not use the installation directory for storage"
+msgstr "ストレージにインストールディレクトリを使用しないでください。"
 
 msgid "The directory you entered is read only"
 msgstr "入力したディレクトリは読み込み専用です"

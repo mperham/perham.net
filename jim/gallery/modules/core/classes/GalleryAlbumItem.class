@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ GalleryCoreApi::requireOnce('modules/core/classes/GalleryItem.class');
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17589 $
  */
 class GalleryAlbumItem extends GalleryItem {
 
@@ -82,7 +82,7 @@ class GalleryAlbumItem extends GalleryItem {
      * Also create the album directory on the filesystem.
      *
      * @param int $parentId the id of the parent of this object
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function create($parentId, $albumName) {
 	global $gallery;
@@ -92,17 +92,14 @@ class GalleryAlbumItem extends GalleryItem {
 	}
 
 	/* Let our superclass take care of creation in the persistent store */
-	$ret = parent::create($parentId, $albumName);
+	$ret = parent::create($parentId, $albumName, true);
 	if ($ret) {
 	    return $ret;
 	}
 
 	$albumName = $this->getPathComponent();
 
-	/* Albums can contain children */
-	$this->setCanContainChildren(true);
-
-	list ($ret, $parent) = GalleryCoreApi::loadEntitiesById($parentId);
+	list ($ret, $parent) = GalleryCoreApi::loadEntitiesById($parentId, 'GalleryItem');
 	if ($ret) {
 	    return $ret;
 	}
@@ -164,7 +161,7 @@ class GalleryAlbumItem extends GalleryItem {
 
     /**
      * Create a new root level album
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function createRoot() {
 	global $gallery;
@@ -248,10 +245,46 @@ class GalleryAlbumItem extends GalleryItem {
     }
 
     /**
+     * @see GalleryItem::save()
+     */
+    function save($postEvent=true) {
+	global $gallery;
+	$session =& $gallery->getSession();
+
+	$isNew = $this->testPersistentFlag(STORAGE_FLAG_NEWLY_CREATED);
+
+	$ret = parent::save($postEvent);
+	if ($ret) {
+	    return $ret;
+	}
+
+	/** @todo move the setting of the owner permission to before the save event*/
+	if ($isNew) {
+	    list ($ret, $groupId) =
+		GalleryCoreApi::getPluginParameter('module', 'core', 'id.allUserGroup');
+	    if ($ret) {
+		return $ret;
+	    }
+
+	    list ($ret, $registeredUser) = 
+		GalleryCoreApi::isUserInGroup($this->getOwnerId(), $groupId);
+	    if ($registeredUser) {
+		$ret = GalleryCoreApi::addUserPermission($this->getId(), $this->getOwnerId(),
+		    'core.all', false);
+		if ($ret) {
+		    return $ret;
+		}
+	    }
+	}
+
+	return null;
+    }
+
+    /**
      * Delete this AlbumItem.
      * Delete all children and then remove the album directory.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function delete() {
 	global $gallery;
@@ -296,7 +329,7 @@ class GalleryAlbumItem extends GalleryItem {
      * Rename this album
      *
      * @param string $newName the path component
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function rename($newName) {
 	global $gallery;
@@ -373,7 +406,7 @@ class GalleryAlbumItem extends GalleryItem {
      * Move this item to a new parent
      *
      * @param int $newParentId the id of the GalleryItem parent
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      */
     function move($newParentId) {
 	/* Get the current parent sequence */

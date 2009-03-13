@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package ImageMagick
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17782 $
  * @static
  */
 class ImageMagickToolkitHelper {
@@ -32,7 +32,7 @@ class ImageMagickToolkitHelper {
      * Figure out what operations and properties are supported by the
      * ImageMagickToolkit and return them.
      *
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      *         array('operations' => ..., 'properties' => ...)
      */
     function getOperationsAndProperties() {
@@ -65,7 +65,8 @@ class ImageMagickToolkitHelper {
 	/* Scale */
 	$operations['scale'] = array(
 	    'params' => array(array('type' => 'int', 'description' =>
-		    $gallery->i18n('target width (# pixels or #% of full size)', false)),
+		    $gallery->i18n(array('text' => 'target width (# pixels or #% of full size)',
+					 'cFormat' => false))),
 			      array('type' => 'int', 'description' =>
 		    $gallery->i18n('(optional) target height, defaults to same as width'))),
 	    'description' =>
@@ -78,9 +79,11 @@ class ImageMagickToolkitHelper {
 	/* Resize */
 	$operations['resize'] = array(
 	    'params' => array(array('type' => 'int', 'description' =>
-		    $gallery->i18n('target width (# pixels or #% of full size)', false)),
+		    $gallery->i18n(array('text' => 'target width (# pixels or #% of full size)',
+					 'cFormat' => false))),
 			      array('type' => 'int', 'description' =>
-		    $gallery->i18n('target height (# pixels or #% of full size)', false))),
+		    $gallery->i18n(array('text' => 'target height (# pixels or #% of full size)',
+					 'cFormat' => false)))),
 	    'description' => $gallery->i18n('Resize the image to the target dimensions'),
 	    'mimeTypes' => $mimeTypes);
 
@@ -184,7 +187,7 @@ class ImageMagickToolkitHelper {
      *
      * @param string $cmd an ImageMagick command (eg. "convert")
      * @param string $imageMagickPath (optional) ImageMagick path (default=module configuration)
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *               array commands
      */
     function getCommand($cmd, $imageMagickPath=null) {
@@ -223,7 +226,7 @@ class ImageMagickToolkitHelper {
      *
      * @param string $imageMagickPath (optional) path to the ImageMagick we are testing;
      *	       if not given, use the 'imagemagick.path' module parameter
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *	       array supported mime-types
      */
     function discoverMimeTypes($imageMagickPath=null) {
@@ -271,7 +274,7 @@ class ImageMagickToolkitHelper {
 	$tests[] = array('mime' => array('image/wmf'), 'file' => 'test.wmf',
 			 'expected' => '(WMF.*(Pseudo|Direct)Class|(Pseudo|Direct)Class.*WMF)');
 	$tests[] = array('mime' => array('image/tga'), 'file' => 'test.tga',
-			 'expected' => '(TGA.*(Pseudo|Direct)Class|(Pseudo|Direct)Class.*TGA)');
+		'expected' => '((TGA|ICB).*(Pseudo|Direct)Class|(Pseudo|Direct)Class.*(TGA|ICB))');
 
 	$oldPwd = $platform->getcwd();
 	$platform->chdir($gallery->getConfig('data.gallery.tmp'));
@@ -326,7 +329,7 @@ class ImageMagickToolkitHelper {
      * This is done by trying to run 'identify' on a sample image.
      *
      * @param string $imageMagickPath path to the ImageMagick we are testing
-     * @return array object GalleryStatus general status of tests
+     * @return array GalleryStatus general status of tests
      *	       array ('name' => string: the name of the binary,
      *		      'success' => boolean: test successful?
      *		      'message' => string: the error message, in case of
@@ -432,7 +435,7 @@ class ImageMagickToolkitHelper {
 					   array('-size', '200x200',
 						 '-geometry', '200x200',
 						 $dataPath . 'test.gif',
-						 $tmpFilename)
+						 'gif:' . $tmpFilename)
 					  );
 		    list ($success, $results) = $platform->exec(array($command));
 		}
@@ -480,7 +483,7 @@ class ImageMagickToolkitHelper {
 				       array('-geometry', '+0+0',
 					     $dataPath . 'test.jpg',
 					     $dataPath . 'test.gif',
-					     $tmpFilename)
+					     'gif:' . $tmpFilename)
 				      );
 		list ($success, $results) = $platform->exec(array($command));
 		if (!$success) {
@@ -519,7 +522,7 @@ class ImageMagickToolkitHelper {
      * ImageMagick 5.x, 6.x: <none>
      * GraphicsMagick: "gm"
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *               string name of the binary
      */
     function discoverBinary($imageMagickPath=null) {
@@ -537,6 +540,16 @@ class ImageMagickToolkitHelper {
 	    }
 	}
 
+	/*
+	 * If the path is not restricted by open_basedir, then verify that it's legal.
+	 * Else just hope that it's valid and use it.
+	 */
+	if ($platform->isRestrictedByOpenBaseDir($imageMagickPath) 
+		|| !@$platform->is_dir($imageMagickPath)) {
+	    return array(GalleryCoreApi::error(ERROR_BAD_PATH, null, null, '"' . $imageMagickPath 
+			. '" is not a directory or is not specified in open_basedir.'), null);
+	}
+
 	$suffix = GalleryUtilities::isA($platform, 'WinNtPlatform') ? '.exe' : '';
 	$gmBinary = $imageMagickPath . 'gm' . $suffix;
 	if ($platform->file_exists($gmBinary) && $platform->is_executable($gmBinary)) {
@@ -548,11 +561,13 @@ class ImageMagickToolkitHelper {
     /**
      * Discovers the version of the installed ImageMagick/GraphicsMagick
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *               array string "ImageMagick" | "GraphicsMagick"
      *                     string version
      *               boolean true if version is vulnerable to
-     *                       http://nvd.nist.gov/nvd.cfm?cvename=CVE-2005-1739
+     *                       http://nvd.nist.gov/nvd.cfm?cvename=CVE-2007-1797
+     *                    or http://nvd.nist.gov/nvd.cfm?cvename=CVE-2006-3744
+     *                    or http://nvd.nist.gov/nvd.cfm?cvename=CVE-2005-1739
      */
     function discoverVersion($imageMagickPath=null) {
 	global $gallery;
@@ -568,7 +583,7 @@ class ImageMagickToolkitHelper {
 	    if (preg_match('/(ImageMagick|GraphicsMagick)\s+([\d\.r-]+)/', $resultLine, $matches)) {
 		$version = array($matches[1], $matches[2]);
 		$vulnerable = ($version[0] == 'ImageMagick' &&
-			       version_compare($version[1], '6.2.9-1', '<')) ||
+			       version_compare($version[1], '6.3.3-5', '<')) ||
 			      ($version[0] == 'GraphicsMagick' &&
 			       version_compare($version[1], '1.1.6-r1', '<'));
 		return array(null, $version, $vulnerable);
@@ -584,7 +599,7 @@ class ImageMagickToolkitHelper {
      * ImageMagick 5.x, 6.x: composite
      * GraphicsMagick: composite
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *               string name of the binary (defaults to composite)
      */
     function discoverCompositeCmd($imageMagickPath=null) {
@@ -629,7 +644,7 @@ class ImageMagickToolkitHelper {
      * ImageMagick 5.x, 6.x, GraphicsMagick: +profile '*'
      * ImageMagick 6.x: -strip
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *               array the needed parameters
      */
     function discoverRemoveMetaDataSwitch($imageMagickPath=null) {
@@ -671,7 +686,7 @@ class ImageMagickToolkitHelper {
     /**
      * Checks if we can detect and convert jpegs with CMYK colorspace
      *
-     * @return array object GalleryStatus
+     * @return array GalleryStatus
      *               boolean true if CMYK is supported
      */
     function discoverColorspaceSupport($imageMagickPath=null) {
@@ -723,7 +738,7 @@ class ImageMagickToolkitHelper {
      * Given a imageMagickPath, discover and store some platform-specific
      * settings in the plugins parameter map
      *
-     * @return object GalleryStatus
+     * @return GalleryStatus
      */
     function savePlatformParameters($imageMagickPath=null) {
 	/* Find out if we are GraphicsMagick, using "gm" as a binary */
@@ -756,6 +771,21 @@ class ImageMagickToolkitHelper {
 	}
 	$ret = GalleryCoreApi::setPluginParameter('module', 'imagemagick', 'removeMetaDataSwitch',
 						  implode('|', $removeMetaDataSwitch));
+	if ($ret) {
+	    return $ret;
+	}
+
+	/* Find out what parameters to use for animated GIFs */
+	list ($ret, $version) = ImageMagickToolkitHelper::discoverVersion($imageMagickPath);
+	/* Ignore the error, fallback to old / compatible code */
+	if (!empty($version) && $version[0] == 'ImageMagick'
+		&& version_compare($version[1], '6.2.6-3', '>')) {
+	    $useNewCoalesceOptions = 1;
+	} else {
+	    $useNewCoalesceOptions = 0;
+	}
+	$ret = GalleryCoreApi::setPluginParameter(
+	    'module', 'imagemagick', 'useNewCoalesceOptions', $useNewCoalesceOptions);
 	if ($ret) {
 	    return $ret;
 	}

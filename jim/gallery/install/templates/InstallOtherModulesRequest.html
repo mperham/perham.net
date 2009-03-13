@@ -1,6 +1,6 @@
-  <?php if (isset($templateData['stackTrace'])): ?>
+  <?php if (!empty($templateData['stackTrace'])): ?>
   <div class="stack_trace">
-    <?php print $templateData['stackTrace']; ?>
+    <?php print implode('<br/>', $templateData['stackTrace']) ?>
   </div><br/>
   <?php endif; ?>
 
@@ -103,12 +103,8 @@
     <?php if ($templateData['anyInstallable']): ?>
     <div class="go">
       <?php $nextStep = $stepNumber + 1 ?>
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $nextStep)) ?>"><?php printf(_('Continue to Step %d Without Activating&raquo;'), $nextStep); ?></a>
-	  </div></div></div></div></div></div></div></div></div>
-	  <div class="btn btn-continue"><div><div><div><div><div><div><div><div>
-	  <a href="javascript:document.forms[0].submit();"><?php print _('Activate Selected Modules') ?></a>
-	  </div></div></div></div></div></div></div></div></div>
+	  <a href="<?php generateUrl(sprintf('%s?step=%s', INDEX_PHP, $nextStep)) ?>" class="btn continue"><i></i><span><span></span><i></i><?php printf(_('Continue to Step %d Without Activating&raquo;'), $nextStep); ?></span></a>
+	  <a href="javascript:document.forms[0].submit();" class="btn continue"><i></i><span><span></span><i></i><?php print _('Activate Selected Modules') ?></span></a>
     </div>
     <?php endif; ?>
   <?php endif; ?>

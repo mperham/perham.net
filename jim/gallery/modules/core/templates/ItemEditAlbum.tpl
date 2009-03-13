@@ -1,8 +1,6 @@
 {*
- * $Revision: 15342 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17380 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <div class="gbBlock">
   <h2> {g->text text="Sort order"} </h2>
@@ -70,7 +68,7 @@
   {foreach from=$form.resizes item=resize}
   <tr class="{cycle values="gbEven,gbOdd"}">
     <td align="center">
-      <input type="checkbox"{if $form.resizes.$index.active} checked="checked"{/if}
+      <input type="checkbox" {if $form.resizes.$index.active}checked="checked" {/if}
        name="{g->formVar var="form[resizes][$index][active]"}"/>
     </td><td>
      {g->dimensions formVar="form[resizes][$index]" width=$form.resizes.$index.width
@@ -101,7 +99,7 @@
   </p>
 
   <table><tr><td>
-    <input type="checkbox" id="cbRecreateThumbs"{if $form.recreateThumbnails} checked="checked"{/if}
+    <input type="checkbox" id="cbRecreateThumbs" {if $form.recreateThumbnails}checked="checked" {/if}
      name="{g->formVar var="form[recreateThumbnails]"}"/>
     <label for="cbRecreateThumbs">
       {g->text text="Apply album setting to thumbnails"}
@@ -109,13 +107,13 @@
   </td><td>
     {g->changeInDescendents module="recreateThumbnails" text="... and for all subalbums"}
   </td><td>
-    <input type="checkbox" id="cbBuildThumbs"{if $form.buildThumbnails} checked="checked"{/if}
+    <input type="checkbox" id="cbBuildThumbs" {if $form.buildThumbnails}checked="checked" {/if}
      name="{g->formVar var="form[buildThumbnails]"}"/>
     <label for="cbBuildThumbs">
       {g->text text="Build thumbnails too"}
     </label>
   </td></tr><tr><td>
-    <input type="checkbox" id="cbRecreateResizes"{if $form.recreateResizes} checked="checked"{/if}
+    <input type="checkbox" id="cbRecreateResizes" {if $form.recreateResizes}checked="checked" {/if}
      name="{g->formVar var="form[recreateResizes]"}"/>
     <label for="cbRecreateResizes">
       {g->text text="Apply album setting to resized images"}
@@ -123,7 +121,7 @@
   </td><td>
     {g->changeInDescendents module="recreateResizes" text="... and for all subalbums"}
   </td><td>
-    <input type="checkbox" id="cbBuildResizes"{if $form.buildResizes} checked="checked"{/if}
+    <input type="checkbox" id="cbBuildResizes" {if $form.buildResizes}checked="checked" {/if}
      name="{g->formVar var="form[buildResizes]"}"/>
     <label for="cbBuildResizes">
       {g->text text="Build resizes too"}

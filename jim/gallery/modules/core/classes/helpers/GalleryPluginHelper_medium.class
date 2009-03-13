@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
  * @package GalleryCore
  * @subpackage Helpers
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15513 $
+ * @version $Revision: 17580 $
  * @static
  */
 class GalleryPluginHelper_medium {
@@ -127,20 +127,19 @@ class GalleryPluginHelper_medium {
 	    }
 
 	    $platform =& $gallery->getPlatform();
-	    foreach(GalleryCoreApi::getPluginBaseDirs() as $pluginsBaseDir) {
-		if ($dir = $platform->opendir($pluginsBaseDir . $pluginsDir)) {
-		    while (($file = $platform->readdir($dir)) != false) {
-			$path = $pluginsBaseDir . $pluginsDir . $file;
-			if (preg_match('/^(\.|CVS)/', $file)) {
-			    continue;
-			}
-
-			if ($platform->is_file($path . '/' . $pluginFile)) {
-			    $pluginIds[] = $file;
-			}
+	    $pluginsPath = GalleryCoreApi::getCodeBasePath($pluginsDir);
+	    if ($dir = $platform->opendir($pluginsPath)) {
+		while (($file = $platform->readdir($dir)) != false) {
+		    $path = $pluginsPath . $file;
+		    if (preg_match('/^(\.|CVS)/', $file)) {
+			continue;
 		    }
-		    $platform->closedir($dir);
+
+		    if ($platform->is_file($path . '/' . $pluginFile)) {
+			$pluginIds[] = $file;
+		    }
 		}
+		$platform->closedir($dir);
 	    }
 	    GalleryDataCache::put($cacheKey, $pluginIds);
 	}
@@ -301,7 +300,9 @@ class GalleryPluginHelper_medium {
 	    return $ret;
 	}
 
-	if (!is_array($itemId)) $itemId = array($itemId);
+	if (!is_array($itemId)) {
+	    $itemId = array($itemId);
+	}
 	foreach($itemId as $id) {
 	    if (!isset($params[$id]) || !array_key_exists($parameterName, $params[$id])) {
 		$ret = GalleryPluginHelper_medium::_addParameter(
@@ -341,7 +342,7 @@ class GalleryPluginHelper_medium {
      * @param string $parameterName the name of the parameter
      * @param string $parameterValue the value of the parameter
      * @param int $itemId the id of item (or null for a global setting)
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _addParameter($pluginType, $pluginId, $parameterName, $parameterValue, $itemId=0) {
@@ -379,7 +380,7 @@ class GalleryPluginHelper_medium {
      * @param string $parameterName the name of the parameter
      * @param string $parameterValue the value of the parameter
      * @param int $itemId the id of item (or null for a global setting)
-     * @return object GalleryStatus a status code
+     * @return GalleryStatus a status code
      * @access private
      */
     function _updateParameter($pluginType, $pluginId, $parameterName, $parameterValue, $itemId=0) {
@@ -415,7 +416,7 @@ class GalleryPluginHelper_medium {
      *
      * @param string $pluginType plugin type
      * @param string $pluginId plugin id
-     * @param object GalleryPlugin $instance
+     * @param GalleryPlugin $instance
      * @access protected
      */
     function setPluginInstance($pluginType, $pluginId, &$instance) {

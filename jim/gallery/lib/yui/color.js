@@ -1,101 +1,15 @@
-/* Copyright (c) 2006 Yahoo! Inc. All rights reserved. */
-
-YAHOO.util.Color = new function() {
-    
-    // Adapted from http://www.easyrgb.com/math.html
-    // hsv values = 0 - 1
-    // rgb values 0 - 255
-    this.hsv2rgb = function (h, s, v) {
-        var r, g, b;
-        if ( s == 0 ) {
-           r = v * 255;
-           g = v * 255;
-           b = v * 255;
-        } else {
-
-           // h must be < 1
-           var var_h = h * 6;
-           if ( var_h == 6 ) {
-               var_h = 0;
-           }
-
-           //Or ... var_i = floor( var_h )
-           var var_i = Math.floor( var_h );
-           var var_1 = v * ( 1 - s );
-           var var_2 = v * ( 1 - s * ( var_h - var_i ) );
-           var var_3 = v * ( 1 - s * ( 1 - ( var_h - var_i ) ) );
-
-           if ( var_i == 0 ) { 
-               var_r = v; 
-               var_g = var_3; 
-               var_b = var_1;
-           } else if ( var_i == 1 ) { 
-               var_r = var_2;
-               var_g = v;
-               var_b = var_1;
-           } else if ( var_i == 2 ) {
-               var_r = var_1;
-               var_g = v;
-               var_b = var_3
-           } else if ( var_i == 3 ) {
-               var_r = var_1;
-               var_g = var_2;
-               var_b = v;
-           } else if ( var_i == 4 ) {
-               var_r = var_3;
-               var_g = var_1;
-               var_b = v;
-           } else { 
-               var_r = v;
-               var_g = var_1;
-               var_b = var_2
-           }
-
-           r = var_r * 255                  //rgb results = 0 ÷ 255
-           g = var_g * 255
-           b = var_b * 255
-
-           }
-        return [Math.round(r), Math.round(g), Math.round(b)];
-    };
-
-    this.rgb2hex = function (r,g,b) {
-        return this.toHex(r) + this.toHex(g) + this.toHex(b);
-    };
-
-    this.hexchars = "0123456789ABCDEF";
-
-    this.toHex = function(n) {
-        n = n || 0;
-        n = parseInt(n, 10);
-        if (isNaN(n)) n = 0;
-        n = Math.round(Math.min(Math.max(0, n), 255));
-
-        return this.hexchars.charAt((n - n % 16) / 16) + this.hexchars.charAt(n % 16);
-    };
-
-    this.toDec = function(hexchar) {
-        return this.hexchars.indexOf(hexchar.toUpperCase());
-    };
-
-    this.hex2rgb = function(str) { 
-        var rgb = [];
-        rgb[0] = (this.toDec(str.substr(0, 1)) * 16) + 
-                        this.toDec(str.substr(1, 1));
-        rgb[1] = (this.toDec(str.substr(2, 1)) * 16) + 
-                        this.toDec(str.substr(3, 1));
-        rgb[2] = (this.toDec(str.substr(4, 1)) * 16) + 
-                        this.toDec(str.substr(5, 1));
-        // gLogger.debug("hex2rgb: " + str + ", " + rgb.toString());
-        return rgb;
-    };
-
-    this.isValidRGB = function(a) { 
-        if ((!a[0] && a[0] !=0) || isNaN(a[0]) || a[0] < 0 || a[0] > 255) return false;
-        if ((!a[1] && a[1] !=0) || isNaN(a[1]) || a[1] < 0 || a[1] > 255) return false;
-        if ((!a[2] && a[2] !=0) || isNaN(a[2]) || a[2] < 0 || a[2] > 255) return false;
-
-        return true;
-    };
-}
-
+/*
+Copyright (c) 2007, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+*/
+YAHOO.util.Color=function(){var HCHARS="0123456789ABCDEF",lang=YAHOO.lang;return{real2dec:function(n){return Math.min(255,Math.round(n*256));},hsv2rgb:function(h,s,v){if(lang.isArray(h)){return this.hsv2rgb.call(this,h[0],h[1],h[2]);}
+var r,g,b,i,f,p,q,t;i=Math.floor((h/60)%6);f=(h/60)-i;p=v*(1-s);q=v*(1-f*s);t=v*(1-(1-f)*s);switch(i){case 0:r=v;g=t;b=p;break;case 1:r=q;g=v;b=p;break;case 2:r=p;g=v;b=t;break;case 3:r=p;g=q;b=v;break;case 4:r=t;g=p;b=v;break;case 5:r=v;g=p;b=q;break;}
+var fn=this.real2dec;return[fn(r),fn(g),fn(b)];},rgb2hsv:function(r,g,b){if(lang.isArray(r)){return this.rgb2hsv.call(this,r[0],r[1],r[2]);}
+r=r/255;g=g/255;b=b/255;var min,max,delta,h,s,v;min=Math.min(Math.min(r,g),b);max=Math.max(Math.max(r,g),b);delta=max-min;switch(max){case min:h=0;break;case r:h=60*(g-b)/delta;if(g<b){h+=360;}
+break;case g:h=(60*(b-r)/delta)+120;break;case b:h=(60*(r-g)/delta)+240;break;}
+s=(max===0)?0:1-(min/max);var hsv=[Math.round(h),s,max];return hsv;},rgb2hex:function(r,g,b){if(lang.isArray(r)){return this.rgb2hex.call(this,r[0],r[1],r[2]);}
+var f=this.dec2hex;return f(r)+f(g)+f(b);},dec2hex:function(n){n=parseInt(n,10);n=(lang.isNumber(n))?n:0;n=(n>255||n<0)?0:n;return HCHARS.charAt((n-n%16)/16)+HCHARS.charAt(n%16);},hex2dec:function(str){var f=function(c){return HCHARS.indexOf(c.toUpperCase());};var s=str.split('');return((f(s[0])*16)+f(s[1]));},hex2rgb:function(s){var f=this.hex2dec;return[f(s.substr(0,2)),f(s.substr(2,2)),f(s.substr(4,2))];},websafe:function(r,g,b){if(lang.isArray(r)){return this.websafe.call(this,r[0],r[1],r[2]);}
+var f=function(v){if(lang.isNumber(v)){v=Math.min(Math.max(0,v),255);var i,next;for(i=0;i<256;i=i+51){next=i+51;if(v>=i&&v<=next){return(v-i>25)?next:i;}}
+YAHOO.log("Error calculating the websafe value for "+v,"warn");}
+return v;};return[f(r),f(g),f(b)];}};}();

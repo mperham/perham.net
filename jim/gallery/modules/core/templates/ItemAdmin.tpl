@@ -1,8 +1,6 @@
 {*
- * $Revision: 15905 $
- * If you want to customize this file, do not edit it directly since future upgrades
- * may overwrite it.  Instead, copy it into a new directory called "local" and edit that
- * version.  Gallery will look for that file first and use it if it exists.
+ * $Revision: 17075 $
+ * Read this before changing templates!  http://codex.gallery2.org/Gallery2:Editing_Templates
  *}
 <form action="{g->url}" method="post" enctype="{$ItemAdmin.enctype}" id="itemAdminForm">
   <div>
@@ -38,15 +36,17 @@
 	    {if isset($choiceParams.active)}
 	      {$choiceName}
 	    {else}
-	      <a href="{g->url params=$choiceParams}"> {$choiceName} </a>
+	      {assign var=script value=$choiceParams.script|default:""}
+	      {if isset($choiceParams.script)}
+		{assign var=choiceParams
+			value=$ItemAdmin.unsetCallback|@call_user_func:$choiceParams:"script"}
+	      {/if}
+	      <a href="{g->url params=$choiceParams}"{if !empty($script)} onclick="{$script}"{/if}> {$choiceName} </a>
 	    {/if}
 	    </li>
 	  {/foreach}
 	</ul>
       </div>
-
-      {g->block type="core.NavigationLinks" class="gbBlock"
-		navigationLinks=$ItemAdmin.navigationLinks}
     </div></td>
 
     <td>

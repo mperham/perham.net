@@ -1,7 +1,7 @@
 <?php
 /*
  * Gallery - a web based photo album viewer and editor
- * Copyright (C) 2000-2007 Bharat Mediratta
+ * Copyright (C) 2000-2008 Bharat Mediratta
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@
  * @package GalleryCore
  * @subpackage Classes
  * @author Bharat Mediratta <bharat@menalto.com>
- * @version $Revision: 15988 $
+ * @version $Revision: 17580 $
  */
 class GalleryPhpVm {
 
@@ -246,8 +246,8 @@ class GalleryPhpVm {
     /**
      * Inflate a deflated string
      *
-     * @param string data compresed by gzdeflate
-     * @param int (optional) maximum length to decode
+     * @param string $data data compresed by gzdeflate
+     * @param int $length (optional) maximum length to decode
      * @return string uncompressed data
      */
     function gzinflate($data, $length=null) {
@@ -265,6 +265,57 @@ class GalleryPhpVm {
      */
     function class_exists($class_name) {
 	return class_exists($class_name);
+    }
+
+    /**
+     * Create a gzip compressed string
+     * @param string $data The data to encode
+     * @param int $level The level of compression
+     * @param int $encodingMode The encoding mode. Can be FORCE_GZIP (default) or FORCE_DEFLATE.
+     */
+    function gzencode($data, $level=null, $encodingMode=null) {
+	if (isset($level) && isset($encodingMode)) {
+	    return gzencode($data, $level, $encodingMode);
+	} else if (isset($level)) {
+	    return gzencode($data, $level);
+	} else {
+	    return gzencode($data);
+	}
+    }
+
+    /**
+     * Returns the IP address of the Internet host specified by hostname.
+     *
+     * @param string $hostname
+     * @return string ip address
+     */
+    function gethostbyname($hostname) {
+	return gethostbyname($hostname);
+    }
+
+    /**
+     * Checks whether the given constant exists and is defined.
+     *
+     * @param string $name the name of the constant
+     * @return bool returns TRUE if the named constant has been defined, FALSE otherwise
+     */
+    function defined($name) {
+	return defined($name);
+    }
+
+    /**
+     * Format a local time/date
+     *
+     * @param string $format the string format
+     * @param int timestamp the timestamp
+     * @see http://us.php.net/manual/en/function.date.php
+     */
+    function date($format, $timestamp=null) {
+	if (isset($timestamp)) {
+	    return date($format, $timestamp);
+	} else {
+	    return date($format);
+	}
     }
 }
 ?>
