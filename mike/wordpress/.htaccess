@@ -21,7 +21,12 @@ RewriteRule ^(.*) /wp-content/cache/supercache/%{HTTP_HOST}/mike/log/$1/index.ht
 # END WPSuperCache
 
 # BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /mike/log/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.php [L]
+RewriteRule . /mike/log/index.php [L]
+</IfModule>
+
 # END WordPress
