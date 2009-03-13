@@ -425,7 +425,6 @@ jQuery(document).ready( function($) {
 					$('#commentstatusdiv .widefat').show();
 					$('.waiting').hide();
 
-
 					if ( 'object' == typeof r && r.responses[0] ) {
 						$('#the-comment-list').append( r.responses[0].data );
 						$('#the-comment-list .hide-if-no-js').removeClass('hide-if-no-js');

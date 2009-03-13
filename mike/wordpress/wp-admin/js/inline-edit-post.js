@@ -169,7 +169,6 @@ inlineEditPost = {
 				if (nextPage.length == 0) break;
 				var nextLevel = nextPage[0].className.split('-')[1];
 				if ( nextLevel <= pageLevel ) {
-
 					pageLoop = false;
 				} else {
 					nextPage.remove();

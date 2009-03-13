@@ -1,5 +1,5 @@
 
-wpCookies = {
+var wpCookies = {
 // The following functions are from Cookie.js class in TinyMCE, Moxiecode, used under LGPL.
 
 	each : function(o, cb, s) {
@@ -211,7 +211,6 @@ jQuery(document).ready( function($) {
 			toggleWithKeyboard = false;
 		var toggle = e.shiftKey || toggleWithKeyboard;
 		$(this).parents( 'form:first' ).find( 'table tbody:visible').find( '.check-column :checkbox' ).attr( 'checked', function() {
-
 			if ( $(this).parents('tr').is(':hidden') )
 				return '';
 			if ( toggle )
@@ -350,7 +349,6 @@ columns = {
 				$('.column-' + column).hide();
 			}
 			columns.save_manage_columns_state(page);
-
 		} );
 	},
 
