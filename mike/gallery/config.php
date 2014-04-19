@@ -100,8 +100,8 @@ $gallery->setConfig('data.gallery.base', '/data/mike/g2data/');
 $storeConfig['type'] = 'mysql';
 $storeConfig['hostname'] = 'localhost';
 $storeConfig['database'] = 'mikegallery';
-$storeConfig['username'] = 'mike';
-$storeConfig['password'] = 'Password';
+$storeConfig['username'] = 'root';
+$storeConfig['password'] = '';
 $storeConfig['tablePrefix'] = 'g2_';
 $storeConfig['columnPrefix'] = 'g_';
 $storeConfig['usePersistentConnections'] = false;
@@ -131,10 +131,8 @@ $gallery->setConfig('storage.config', $storeConfig);
  * $gallery->setDebug('buffered');
  *
  */
-/*
 $gallery->setDebug('logged');
 $gallery->setDebugLogFile('/data/mike/gallery2.log');
-*/
 
 /*
  * Profiling mode.  You can enable profiling for different parts of G2 to get an

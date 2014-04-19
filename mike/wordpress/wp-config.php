@@ -1,8 +1,8 @@
 <?php
 // ** MySQL settings ** //
 define('DB_NAME', 'perham');     // The name of the database^M
-define('DB_USER', 'mike');     // Your MySQL username^M
-define('DB_PASSWORD', 'Password'); // ...and password^M
+define('DB_USER', 'root');     // Your MySQL username^M
+define('DB_PASSWORD', ''); // ...and password^M
 define('DB_HOST', 'localhost');     // 99% chance you won't need to change this value^M
 define('DB_CHARSET', 'utf8');
 define('DB_COLLATE', '');
