@@ -1,3 +1,0 @@
-name = "Notification"
-description = "Send notifications to users when changes are made to watched albums."
-version = 2
