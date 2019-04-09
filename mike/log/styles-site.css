@@ -1,0 +1,309 @@
+body{
+	font-family: Arial,sans-serif;
+	color:#000000;
+        background-color: #FFFFFF;
+	line-height: 1.166;	
+	margin: 0px;
+	padding: 5px;
+}
+
+a:link, a:visited, a:hover {
+	color: #000080;
+	text-decoration: underline;
+}
+
+/* overrides decoration from previous rule for hovered links */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: Arial,sans-serif;
+	margin: 0px;
+	padding: 0px;
+}
+
+h1{
+ font-family: Verdana,Arial,sans-serif;
+ font-size: 140%;
+}
+
+h2{
+ font-size: 120%;
+}
+
+h3{
+ font-size: 100%;
+}
+
+h4{
+ font-size: 100%;
+ font-weight: normal;
+}
+
+h5{
+ font-size: 100%;
+}
+
+ul{
+ list-style-type: square;
+}
+
+ul ul{
+ list-style-type: disc;
+}
+
+ul ul ul{
+ list-style-type: none;
+}
+
+label{
+	font: bold 100% Arial,sans-serif;
+	color: #404040;
+}
+
+#left {
+	float: left;
+    width: 75%;
+	padding: 0px 3% 0px 5px;
+}
+
+#right {
+	float: right;
+    width: 21%
+}
+
+#masthead {
+	margin: 0;
+    font-size: 200%;
+}
+
+#masthead h1 {
+    font-size: 120%;
+    letter-spacing: .3em;
+    color: #8080a0;
+}
+
+#navBar {
+	padding-top: 10px;
+	background-color: #c0c0FF;
+    color:#000000;
+    border: solid 1px #000000;
+    border-right: 0px;
+    border-top: 0px;
+    -moz-border-radius-bottomleft: 10px;
+}
+
+#content {
+	margin: 0;
+}
+
+#navBar a {
+	color: #8080a0;
+	text-decoration: underline;
+}
+
+/***********************************************/
+/*Component Divs                               */
+/***********************************************/
+
+#siteName{
+	margin: 0px;
+	padding: 0px 0px 10px 10px;
+	font-size: 160%;
+    font-family: palatino,georgia;
+}
+
+
+/************* #siteInfo styles ***************/
+
+#siteInfo{
+	clear: both;
+	font-size: 75%;
+	color: #000000;
+	padding: 10px 10px 10px 10px;
+	margin-top: 0px;
+}
+/* negative top margin pulls siteinfo up so its top border overlaps (and thus lines up with)
+   the bottom border of the navBar in cases where they "touch" */
+
+#siteInfo img{
+	padding: 4px 4px 4px 0px;
+	vertical-align: middle;
+}
+
+
+/************* #search styles ***************/
+
+#search {
+    padding: 0px 0px 10px 10px;
+}
+
+#search form {
+    margin: 0px;
+    padding: 0px;
+}
+
+#search label{
+	margin: 0px;
+	padding: 0px;
+	color:#000000;
+}
+
+
+/*********** #navBar link styles ***********/
+
+#navBar ul li {padding: 0px 0px 3px 0px;}
+
+#navBar ul {list-style: none; margin: 0; padding: 0;}
+
+/* fix for browsers that don't need the hack */
+html>body #navBar li {border-bottom: none;}
+
+
+/*********** .relatedLinks styles ***********/
+
+.relatedLinks {
+	margin: 0px;
+	padding: 0px 0px 10px 10px;
+}
+
+.relatedLinks h3 {
+    color: #000000;
+    padding: 10px 0px 2px 0px;
+}
+
+
+/************** #headlines styles **************/
+
+#headlines {
+	margin: 0px;
+	padding: 10px 0px 20px 10px;
+}
+
+#headlines h3 {
+    color: #000000;
+}
+
+/* Previous styles */
+
+img {
+   border: 0px;
+}
+
+#banner {
+    font-family:palatino,  georgia, verdana, arial, sans-serif;
+    color:#C0C0FF;
+    font-size:x-large;
+    font-weight:normal;    
+    padding-bottom: 15px;
+}
+
+                
+.rssfeeds {
+    color:#000;
+    font-size: x-small;
+    font-weight:normal;
+}
+
+#menu {
+    margin-bottom:15px;
+    text-align:center;
+}        
+
+.date {
+    background-color: #C0C0FF;
+    color: #000000;
+    border: 1px solid #000000;
+    margin-bottom: 20px;
+    padding: 5px;
+    -moz-border-radius: 10px;
+}
+    
+.posted { 
+    font-size: small; 
+    margin-bottom:25px;
+}
+    
+    
+.calendar {
+    font-size:x-small;
+    font-weight:normal;
+    line-height:140%;
+    padding:2px;
+    text-align:left;
+    margin-bottom: 15px;
+}
+
+.calendarhead {    
+    font-size:small;
+    font-weight:bold;
+    padding:2px;
+    letter-spacing: .3em;
+    text-transform:uppercase;
+    text-align:left;
+    color: #000000;
+    text-align: center;
+}    
+
+
+.powered {
+	font-size:x-small;        
+	line-height:140%;
+	text-transform:uppercase; 
+	letter-spacing: .2em;
+    padding: 0px 0px 10px 10px                    
+}    
+	
+
+.comments-body {
+	font-size:small;
+	font-weight:normal;
+	line-height:140%;
+	padding-bottom:10px;
+	padding-top:10px;        
+	border-bottom:1px dotted #999;                     
+}
+
+.comments-post {
+	font-size:x-small;
+	font-weight:normal;
+}    
+		
+
+.trackback-url {
+	font-size:small;
+	font-weight:normal;
+	line-height:140%;
+	padding:5px;        
+	border:1px dotted #999;                     
+}
+
+
+.trackback-body {
+	font-size:small;
+	font-weight:normal;
+	line-height:140%;
+	padding-bottom:10px;
+	padding-top:10px;        
+	border-bottom:1px dotted #999;                     
+}        
+
+.trackback-post {
+	font-size:x-small;
+	font-weight:normal;
+}    
+
+	
+.comments-head    { 
+	font-size:small; 
+	border-bottom:1px solid #999;
+	margin-top:20px;
+	font-weight:bold;
+}        
+
+#banner-commentspop {
+	font-size:large;
+	font-weight:bold;
+	padding-left:15px;
+	padding-right:15px;
+	padding-top:5px;
+	padding-bottom:5px;                                   
+}

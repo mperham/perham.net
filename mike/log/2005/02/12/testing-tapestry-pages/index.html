@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>  Testing Tapestry pages</title>
+	
+	<meta name="generator" content="WordPress 2.7.1" /> <!-- leave this for stats -->
+	
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/style.css" type="text/css" media="screen" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie7.css" media="screen" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie6.css" media="screen" />
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/feed/" />
+	<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.perham.net/mike/log/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7.1" />
+
+</head>
+<body class="custom">
+
+<div id="container">
+
+	<div id="masthead">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		<h3>Life in the Slow Lane</h3>
+	</div>
+
+	<ul id="nav">
+		<li><a href="http://www.perham.net/mike/log">front page</a></li>
+		<li><a href="/">perham.net</a></li>
+		<li><a href="/mike/">mike</a></li>
+		<!-- li class="rss"><a href="http://www.perham.net/mike/log/feed/">RSS</a></li-->
+		<li class="rss"><a href="http://feeds.feedburner.com/perham/log">RSS</a></li>
+
+	</ul>
+	
+	<!--div id="header_img">
+	<img src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/header_3.jpg" width="970" height="140" alt="header image" title="header image" />
+	</div-->
+
+	<div id="content_box">
+	
+		<!--?php include (TEMPLATEPATH . '/l_sidebar.php'); ?-->
+		
+		<div id="content" class="posts">
+			
+				
+		
+<div class="navigation">
+	<span class="previous">&larr; <a href="http://www.perham.net/mike/log/2005/02/09/google-maps-technical-info/">Google Maps technical info</a></span>
+	<span class="next"><a href="http://www.perham.net/mike/log/2005/02/16/the-online-menu/">The Online Menu</a> &rarr;</span>
+</div>
+<div class="clear whitespace"></div>
+
+						
+			<h2>Testing Tapestry pages</h2>
+			<h4>February 12th, 2005<!-- by mperham --> &middot; <a href="http://www.perham.net/mike/log/2005/02/12/testing-tapestry-pages/#comments">3 Comments</a></h4>
+			<div class="entry">
+				<p>At Webify, we have three main subsystems of our applications: Hibernate for the database layer, Spring for the component container layer and Tapestry for the Web UI layer.</p>
+<p>It&#8217;s relatively easy to unit test Hibernate and Spring code via JUnit, they both provide hooks so you can start them up by hand.  Tapestry, on the other hand, is meant to run within an application server - it requires a container to run.  Well, mock objects have recently become popular as a way of testing code which requires a container to run; you just create the container objects which are used by this code so that it thinks it is running within a container:</p>
+<pre>
+        MockServletContext servCtx = new MockServletContext("/webroot");
+        MockServletConfig servCfg = new MockServletConfig(servCtx, "tapestry");
+        ApplicationServlet servlet = new ApplicationServlet();
+        servlet.init(servCfg);
+
+        MockHttpServletRequest req = new MockHttpServletRequest(servCtx, "GET", "/");
+        MockHttpServletResponse resp = new MockHttpServletResponse();
+        servlet.service(req, resp);
+        if (!pageRequested) {
+            fail("Home page was not executed");
+        }
+</pre>
+<p>The ApplicationServlet is the method of entry into the Tapestry system.  On the filesystem, you create a &#8220;tapestry.application&#8221; file in webroot/WEB-INF which contains the page definitions.  In this case, this just tests that the Home page is rendered.</p>
+<pre>
+public class HomePage extends BasePage implements PageRenderListener {
+    public void pageBeginRender(PageEvent arg0) {
+        RequestTest.setPageRequested();
+    }
+}
+</pre>
+<p>Pretty simple, huh?  Now we can do basic login testing as part of our unit tests to ensure that the Web UI actually works, rather than needing to run a container and testing it by hand!</p>
+							</div>
+			<p class="tagged"><strong>Tags:</strong> <a href="http://www.perham.net/mike/log/category/business/" title="View all posts in Business" rel="category tag">Business</a></p>
+			<div class="clear"></div>
+			
+			
+<!-- You can start editing here. -->
+
+
+<div id="comments">
+
+	<h3 class="comments_headers">3 responses so far &darr;</h3>
+	
+	<ul id="comment_list">
+
+	
+			
+		<li class="comment " id="comment-80">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-80" title="Permalink to this comment">1</a></span>
+				<strong>Yo Daddy </strong>
+				<span class="comment_time">// Feb 13, 2005 at 12:39 pm</span>
+			</p>
+			<div class="entry">
+				<p>Uh&#8230;&#8230; ok.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-81">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-81" title="Permalink to this comment">2</a></span>
+				<strong><a href='http://www.bloglife.net/users/rsingh' rel='external nofollow' class='url'>Raj</a> </strong>
+				<span class="comment_time">// Feb 17, 2005 at 10:11 am</span>
+			</p>
+			<div class="entry">
+				<p>Oh, this is useful. I had no idea mock objects were &#8220;popular&#8221; these days ..</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-140">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-140" title="Permalink to this comment">3</a></span>
+				<strong>Herm </strong>
+				<span class="comment_time">// Nov 17, 2005 at 10:25 am</span>
+			</p>
+			<div class="entry">
+				<p>Really nice but how would you know what to put as parameters in your request? Tapestry hides the servlet api and you don&#8217;t have control over the parameters&#8217; names as they are generated on-the-fly.</p>
+<p>This really bugs me because I would want to use Tapestry at work, but the inability to make simple (but valuable) unit tests is something my bosses won&#8217;t allow. Tapestry Test Assist won&#8217;t be enough to convince them (and me neither).</p>
+ 
+							</div>
+		</li>
+		
+			
+	</ul>
+		
+	
+
+	<!-- Comment Form -->
+	</div> <!-- Close #comments container -->
+<div class="clear flat"></div>
+			
+				
+		</div>
+		
+		<div id="sidebar">
+	<ul class="sidebar_list">
+		<li class="widget">
+			<h2>Contact Me</h2>
+<ul>
+<li>Email: mperham AT gmail.com</li>
+<li>Twitter: <a href="http://twitter.com/mperham">mperham</a></li>
+</ul>
+		</li>
+				<!--li class="widget">
+			<h2>Search It!</h2>
+			<form method="get" id="search_form" action="http://www.perham.net/mike/log/">
+	<input type="text" class="search_input" value="To search, type and hit enter" name="s" id="s" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" />
+	<input type="hidden" id="searchsubmit" value="Search" />
+</form>
+		</li>
+		<li class="widget">
+			<h2>Recent Entries</h2>
+			<ul>
+												<li><a href="http://www.perham.net/mike/log/2009/10/22/trackday-2009-10-18/">Trackday 2009-10-18</a><span class="recent_date">10.22</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/09/09/panther-city-leather/">Panther City Leather</a><span class="recent_date">9.9</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/05/14/harris-hill-road-track-day-2/">Harris Hill Road Track Day</a><span class="recent_date">5.14</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/04/18/pest-control/">Pest Control</a><span class="recent_date">4.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/04/11/april-notes/">April Notes</a><span class="recent_date">4.11</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/27/dell-g2410t-review/">Dell G2410t review</a><span class="recent_date">3.27</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/19/the-new-prohibition/">The New Prohibition</a><span class="recent_date">3.19</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/18/let-it-die-on-the-economy/">LET IT DIE: On the economy</a><span class="recent_date">3.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/12/welcome/">Welcome!</a><span class="recent_date">3.12</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/02/08/next-generation-av/">Next Generation AV</a><span class="recent_date">2.8</span></li>
+								<li><a href="http://www.perham.net/mike/log/archives" title="Visit the archives!">Visit the archives for more!</a></li>
+			</ul>
+		</li-->
+				  <li id="linkcat-6" class="linkcat"><h2>Blog</h2>
+	<ul>
+<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://www.mikeperham.com" title="My Professional Site">mikeperham</a></li>
+<li><a href="http://nsputnik.com">Nick</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://reqfd.net/stack/" rel="friend">Sharon</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+	</ul>
+</li>
+  <li id="linkcat-7" class="linkcat"><h2>Home Page</h2>
+	<ul>
+<li><a href="http://nsputnik.com">Nick</a></li>
+
+	</ul>
+</li>
+			</ul>
+</div>			
+	</div>
+
+	<div id="footer">
+		<p>&copy; 2006&ndash;2007 Mutterings &mdash; <a href="http://www.perham.net/mike/log/sitemap/">Sitemap</a> &mdash; <a href="http://cutline.tubetorial.com/">Cutline</a> by <a href="http://www.tubetorial.com">Chris Pearson</a></p>
+			</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2569989-1";
+urchinTracker();
+</script>
+</body>
+</html>

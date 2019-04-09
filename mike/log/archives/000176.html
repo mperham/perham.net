@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title>Mutterings: Avoiding the Fuzz</title>
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/styles-site.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.perham.net/mike/log/index.rdf" />
+
+<link rel="start" href="http://www.perham.net/mike/log/" title="Home" />
+<link rel="prev" href="http://www.perham.net/mike/log/archives/000175.html" title="Fun with .NET Web Service Clients" />
+
+<link rel="next" href="http://www.perham.net/mike/log/archives/000177.html" title="Linksys NSLU2" />
+
+
+<script type="text/javascript" language="javascript">
+<!--
+
+function OpenTrackback (c) {
+    window.open(c,
+                    'trackback',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+
+var HOST = 'www.perham.net';
+
+// Copyright (c) 1996-1997 Athenia Associates.
+// http://www.webreference.com/js/
+// License is granted if and only if this entire
+// copyright notice is included. By Tomer Shiran.
+
+function setCookie (name, value, expires, path, domain, secure) {
+    var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "") + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
+    document.cookie = curCookie;
+}
+
+function getCookie (name) {
+    var prefix = name + '=';
+    var c = document.cookie;
+    var nullstring = '';
+    var cookieStartIndex = c.indexOf(prefix);
+    if (cookieStartIndex == -1)
+        return nullstring;
+    var cookieEndIndex = c.indexOf(";", cookieStartIndex + prefix.length);
+    if (cookieEndIndex == -1)
+        cookieEndIndex = c.length;
+    return unescape(c.substring(cookieStartIndex + prefix.length, cookieEndIndex));
+}
+
+function deleteCookie (name, path, domain) {
+    if (getCookie(name))
+        document.cookie = name + "=" + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+}
+
+function fixDate (date) {
+    var base = new Date(0);
+    var skew = base.getTime();
+    if (skew > 0)
+        date.setTime(date.getTime() - skew);
+}
+
+function rememberMe (f) {
+    var now = new Date();
+    fixDate(now);
+    now.setTime(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+    setCookie('mtcmtauth', f.author.value, now, '', HOST, '');
+    setCookie('mtcmtmail', f.email.value, now, '', HOST, '');
+    setCookie('mtcmthome', f.url.value, now, '', HOST, '');
+}
+
+function forgetMe (f) {
+    deleteCookie('mtcmtmail', '', HOST);
+    deleteCookie('mtcmthome', '', HOST);
+    deleteCookie('mtcmtauth', '', HOST);
+    f.email.value = '';
+    f.author.value = '';
+    f.url.value = '';
+}
+
+//-->
+</script>
+
+
+
+</head>
+
+<body>
+
+<div id="banner">
+<h1><a href="http://www.perham.net/mike/log/" accesskey="1">Mutterings</a></h1>
+<span class="description">Mike Perham's blog</span>
+</div>
+
+<div id="container">
+
+<div class="blog">
+
+<div id="menu">
+<a href="http://www.perham.net/mike/log/archives/000175.html">&laquo; Fun with .NET Web Service Clients</a> |
+
+<a href="http://www.perham.net/mike/log/">Main</a>
+| <a href="http://www.perham.net/mike/log/archives/000177.html">Linksys NSLU2 &raquo;</a>
+
+</div>
+
+</div>
+
+
+<div class="blog">
+
+<h2 class="date">August 11, 2004</h2>
+
+<div class="blogbody">
+
+<h3 class="title">Avoiding the Fuzz</h3>
+
+<p>The switch to Webify's new office space has been fantastic in all but one way: I now have to commute on my sportbike through the biggest speed trap in Austin, FM 2222.  On the third day in our offices I got a speeding ticket.  Ever since then I have been trying to figure out how to avoid a massive amount of tickets.</p>
+
+<p>Mind you, folks, I'm not trying to ride at twice the limit or something ridiculous like that.  I want to be able to ride a comfortable rate (i.e. 10 over) without having to scan behind every bush.</p>
+
+<p>Some data:<br />
+<i><br />
+1) I got my ticket at 8:20am (for 55 in a 45)<br />
+2) On monday I saw a pair of bike cops at the corner convenience store at 8:00am. <br />
+</i><br />
+An assumption:<br />
+<i><br />
+a) The job of a police officer is like any other job with regular shifts and work patterns.<br />
+</i><br />
+My current theory is they get to 2222 around 8am and start ticketing soon after.  For the last few days I have gotten up 15-30 minutes earlier so that I can test out this theory and so far I have seen no LEOs.  I'm crossing my fingers that my commute will remain reasonably fun without undue expense.</p>
+
+<a name="more"></a>
+
+
+<span class="posted">Posted by mike at August 11, 2004 09:21 AM
+
+<br /></span>
+
+</div>
+
+
+<div class="comments-head"><a name="comments"></a>Comments</div>
+
+<div class="comments-body">
+<p>Let’s think this through. Looking at a map, it would seem that the distance from your house to work is.. um.. 5 miles (plug in the actual mileage in the following calculations for a more precise result). At 45 miles per hour, you are going to travel that 5 miles in 6 minutes and 40 seconds. Speed up to 55 MPH and blaze to your cubicle in 5 minutes and 27 seconds (stoplights don’t exist in this perfect world). So, you are getting up 15-30 minutes early so that you can save one minute and 13 seconds travel time??? Must be quite an adrenalin rush at 55 vs 45. :-)</p>
+<span class="comments-post">Posted by: <a href="mailto&#58;jim&#64;perham&#46;net">Yo daddy</a> on August 12, 2004 01:54 AM</span>
+</div>
+<div class="comments-body">
+<p>heh. What he said, though I've no idea how close / far work is from your home. Dude, can't you joyride on weekends (at 6am if you must)?</p>
+
+<p>I guess half the fun is in figuring out how to slide around the system.</p>
+<span class="comments-post">Posted by: <a target="_blank" title="http://greythistle.livejournal.com" href="http://www.perham.net/mike/log/mt-comments.cgi?__mode=red;id=55">gthistle</a> on August 19, 2004 02:16 AM</span>
+</div>
+<div class="comments-body">
+<p>yeah, slow down!  punk kids...  get caught again, and your insurance on that plastic missle of yours will go through the roof. ;)</p>
+<span class="comments-post">Posted by: <a href="mailto&#58;jarod7736&#64;mac&#46;com">jrod</a> on August 19, 2004 02:20 AM</span>
+</div>
+
+
+<div class="comments-head">Post a comment</div>
+
+<div class="comments-body">
+<form method="post" action="http://www.perham.net/mike/log/mt-comments.cgi" name="comments_form" onsubmit="if (this.bakecookie.checked) rememberMe(this)">
+<input type="hidden" name="static" value="1" />
+<input type="hidden" name="entry_id" value="176" />
+
+<label for="author">Name:</label><br />
+<input id="author" name="author" /><br /><br />
+
+<label for="email">Email Address:</label><br />
+<input id="email" name="email" /><br /><br />
+
+<label for="url">URL:</label><br />
+<input id="url" name="url" /><br /><br />
+
+<label for="text">Comments:</label><br />
+<textarea id="text" name="text" rows="10" cols="50"></textarea><br /><br />
+
+<input type="checkbox" id="bakecookie" name="bakecookie" /><label for="bakecookie">Remember info?</label><br /><br />
+
+<input type="submit" name="preview" value="&nbsp;PREVIEW&nbsp;" />
+<input type="submit" name="post" value="&nbsp;POST&nbsp;" /><br /><br />
+
+<input type="button" onclick="forgetMe(this.form)" value="FORGET PERSONAL INFORMATION" />
+</form>
+
+<script type="text/javascript" language="javascript">
+<!--
+document.comments_form.email.value = getCookie("mtcmtmail");
+document.comments_form.author.value = getCookie("mtcmtauth");
+document.comments_form.url.value = getCookie("mtcmthome");
+//-->
+</script>
+
+
+</div>
+</div>
+</body>
+</html>

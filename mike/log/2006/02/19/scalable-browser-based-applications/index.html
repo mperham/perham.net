@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>  Scalable Browser-based Applications</title>
+	
+	<meta name="generator" content="WordPress 2.7.1" /> <!-- leave this for stats -->
+	
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/style.css" type="text/css" media="screen" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie7.css" media="screen" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie6.css" media="screen" />
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/feed/" />
+	<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.perham.net/mike/log/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7.1" />
+
+</head>
+<body class="custom">
+
+<div id="container">
+
+	<div id="masthead">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		<h3>Life in the Slow Lane</h3>
+	</div>
+
+	<ul id="nav">
+		<li><a href="http://www.perham.net/mike/log">front page</a></li>
+		<li><a href="/">perham.net</a></li>
+		<li><a href="/mike/">mike</a></li>
+		<!-- li class="rss"><a href="http://www.perham.net/mike/log/feed/">RSS</a></li-->
+		<li class="rss"><a href="http://feeds.feedburner.com/perham/log">RSS</a></li>
+
+	</ul>
+	
+	<!--div id="header_img">
+	<img src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/header_2.jpg" width="970" height="140" alt="header image" title="header image" />
+	</div-->
+
+	<div id="content_box">
+	
+		<!--?php include (TEMPLATEPATH . '/l_sidebar.php'); ?-->
+		
+		<div id="content" class="posts">
+			
+				
+		
+<div class="navigation">
+	<span class="previous">&larr; <a href="http://www.perham.net/mike/log/2006/02/19/curling/">Curling</a></span>
+	<span class="next"><a href="http://www.perham.net/mike/log/2006/02/19/your-visited-states/">Your Visited States?</a> &rarr;</span>
+</div>
+<div class="clear whitespace"></div>
+
+						
+			<h2>Scalable Browser-based Applications</h2>
+			<h4>February 19th, 2006<!-- by mperham --> &middot; <a href="http://www.perham.net/mike/log/2006/02/19/scalable-browser-based-applications/#comments">2 Comments</a></h4>
+			<div class="entry">
+				<p>The Web Browser has been a phenomenally successful platform for content deliverly.  HTML/CSS is a relatively simple method to create cross-platform user interfaces and the PULL model is great when you want to simply create a content repository which users can browse (e.g. www.cnn.com or any other news site).</p>
+<p>Unfortunately the browser is not designed for applications which require a PUSH content delivery model.  Consider group messging - how do you create an application where 4 people can chat together?  Browsers talk to servers so you can&#8217;t link them directly to each other (ignoring the issue of firewalls).  Instead you provide a central server and all 4 users connect to that server.  This is traditionally how IM clients work.  So User 1 types a message into his browser and hits return.  The browser sends the message to the server.  But how do the other three users get notified of the new message?  The simple answer is they poll.  They contact the server every X seconds asking if there are new messages.  Effectively they are pulling new messages from the server rather than the server pushing new messages to them.<br />
+But this is not scalable - the client and the server are doing extra work when there are no new messages.  So the obvious question becomes - &#8220;Is there a way to push content to the browser?&#8221;</p>
+<p>As it turns out, there is but it requires some hacking.  Google has been leading this effort - they recently integrated their Google Talk service with Gmail and so now it requires more resources.  Instead of polling the mail server every 5 minutes for new mail, you need to poll the chat server every 3-5 seconds.  So they discovered <a href="http://alex.dojotoolkit.org/?p=538">how to use the PUSH model in modern browsers</a>.  Incredible.</p>
+<p>I discovered this while researching a new Ruby on Rails application, <a href="http://www.campfirenow.com/">Campfire</a>.  If Rails can integrate this push model, it can truly become a framework for building novel browser-applications applications which were simply impossible a year ago.</p>
+							</div>
+			<p class="tagged"><strong>Tags:</strong> <a href="http://www.perham.net/mike/log/category/general/" title="View all posts in General" rel="category tag">General</a></p>
+			<div class="clear"></div>
+			
+			
+<!-- You can start editing here. -->
+
+
+<div id="comments">
+
+	<h3 class="comments_headers">2 responses so far &darr;</h3>
+	
+	<ul id="comment_list">
+
+	
+			
+		<li class="comment " id="comment-179">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-179" title="Permalink to this comment">1</a></span>
+				<strong><a href='http://alex.dojotoolkit.org' rel='external nofollow' class='url'>Alex Russell</a> </strong>
+				<span class="comment_time">// Feb 19, 2006 at 3:48 pm</span>
+			</p>
+			<div class="entry">
+				<p>Actually, the push model has been around for a very long time. What&#8217;s new is the server side tools (things like Twisted, POE, and apache event MPM) that make it scalable.</p>
+<p>Google did not invent the technique. They did, however, figure out how to make it scale well (the details of which are still unknown) and they fixed a major usability issue.</p>
+<p>Regards</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment trackback" id="comment-183">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-183" title="Permalink to this comment">2</a></span>
+				<strong><a href='http://rajblog.com/blog/?p=443' rel='external nofollow' class='url'>Rajblog &raquo; JavaScript ascendant</a> </strong>
+				<span class="comment_time">// Feb 21, 2006 at 11:21 pm</span>
+			</p>
+			<div class="entry">
+				<p>[...] Yahoo has recently released a library of JavaScript functionality that is really impressive in terms of design, maturity and functionality. All of a sudden, doing formerly black-magic stuff like drag-and-drop in the browser is just a matter of coding against the API. There&#8217;s a ton of great stuff out there, including Prototype, and the Dojo toolkit (link from Mike). [...]</p>
+ 
+							</div>
+		</li>
+		
+			
+	</ul>
+		
+	
+
+	<!-- Comment Form -->
+	</div> <!-- Close #comments container -->
+<div class="clear flat"></div>
+			
+				
+		</div>
+		
+		<div id="sidebar">
+	<ul class="sidebar_list">
+		<li class="widget">
+			<h2>Contact Me</h2>
+<ul>
+<li>Email: mperham AT gmail.com</li>
+<li>Twitter: <a href="http://twitter.com/mperham">mperham</a></li>
+</ul>
+		</li>
+				<!--li class="widget">
+			<h2>Search It!</h2>
+			<form method="get" id="search_form" action="http://www.perham.net/mike/log/">
+	<input type="text" class="search_input" value="To search, type and hit enter" name="s" id="s" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" />
+	<input type="hidden" id="searchsubmit" value="Search" />
+</form>
+		</li>
+		<li class="widget">
+			<h2>Recent Entries</h2>
+			<ul>
+												<li><a href="http://www.perham.net/mike/log/2009/10/22/trackday-2009-10-18/">Trackday 2009-10-18</a><span class="recent_date">10.22</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/09/09/panther-city-leather/">Panther City Leather</a><span class="recent_date">9.9</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/05/14/harris-hill-road-track-day-2/">Harris Hill Road Track Day</a><span class="recent_date">5.14</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/04/18/pest-control/">Pest Control</a><span class="recent_date">4.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/04/11/april-notes/">April Notes</a><span class="recent_date">4.11</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/27/dell-g2410t-review/">Dell G2410t review</a><span class="recent_date">3.27</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/19/the-new-prohibition/">The New Prohibition</a><span class="recent_date">3.19</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/18/let-it-die-on-the-economy/">LET IT DIE: On the economy</a><span class="recent_date">3.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/12/welcome/">Welcome!</a><span class="recent_date">3.12</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/02/08/next-generation-av/">Next Generation AV</a><span class="recent_date">2.8</span></li>
+								<li><a href="http://www.perham.net/mike/log/archives" title="Visit the archives!">Visit the archives for more!</a></li>
+			</ul>
+		</li-->
+				  <li id="linkcat-6" class="linkcat"><h2>Blog</h2>
+	<ul>
+<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://www.mikeperham.com" title="My Professional Site">mikeperham</a></li>
+<li><a href="http://nsputnik.com">Nick</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://reqfd.net/stack/" rel="friend">Sharon</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+	</ul>
+</li>
+  <li id="linkcat-7" class="linkcat"><h2>Home Page</h2>
+	<ul>
+<li><a href="http://nsputnik.com">Nick</a></li>
+
+	</ul>
+</li>
+			</ul>
+</div>			
+	</div>
+
+	<div id="footer">
+		<p>&copy; 2006&ndash;2007 Mutterings &mdash; <a href="http://www.perham.net/mike/log/sitemap/">Sitemap</a> &mdash; <a href="http://cutline.tubetorial.com/">Cutline</a> by <a href="http://www.tubetorial.com">Chris Pearson</a></p>
+			</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2569989-1";
+urchinTracker();
+</script>
+</body>
+</html>

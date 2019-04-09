@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Mutterings  &raquo; Blog Archive   &raquo; Why People Buy IBM</title>
+
+<meta name="generator" content="WordPress 2.0" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/default/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+<style type="text/css" media="screen">
+/*	To accomodate differing install paths of WordPress, images are referred only here,
+	and not in the wp-layout.css file. If you prefer to use only CSS for colors and what
+	not, then go right ahead and delete the following lines, and the image files. */
+		
+	body { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickbgcolor.jpg"); }	
+	#page { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickbgwide.jpg") repeat-y top; border: none; } 
+	#header { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickheader.jpg") no-repeat bottom center; }
+	#footer { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickfooter.jpg") no-repeat bottom; border: none;}
+
+/*	Because the template is slightly different, size-wise, with images, this needs to be set here
+	If you don't want to use the template's images, you can also delete the following two lines. */
+		
+	#header 	{ margin: 0 !important; margin: 0 0 0 1px; padding: 1px; height: 198px; width: 758px; }
+	#headerimg 	{ margin: 7px 9px 0; height: 192px; width: 740px; } 
+
+/* 	To ease the insertion of a personal header image, I have done it in such a way,
+	that you simply drop in an image called 'personalheader.jpg' into your /images/
+	directory. Dimensions should be at least 760px x 200px. Anything above that will
+	get cropped off of the image. */
+	/*
+	#headerimg { background: url('http://www.perham.net/mike/log/wp-content/themes/default/images/personalheader.jpg') no-repeat top;}
+	*/
+</style>
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+</head>
+<body>
+<div id="page">
+
+
+<div id="header">
+	<div id="headerimg">
+		<h1><a href="http://www.perham.net/mike/log/">Mutterings</a></h1>
+		<div class="description">Life in the Slow Lane</div>
+	</div>
+</div>
+<hr />
+
+	<div id="content" class="widecolumn">
+				
+  	
+		<div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://www.perham.net/mike/log/?p=354">One Genius of a Senator</a></div>
+			<div class="alignright"><a href="http://www.perham.net/mike/log/?p=356">Coming this Friday</a> &raquo;</div>
+		</div>
+	
+		<div class="post" id="post-355">
+			<h2><a href="http://www.perham.net/mike/log/?p=355" rel="bookmark" title="Permanent Link: Why People Buy IBM">Why People Buy IBM</a></h2>
+	
+			<div class="entrytext">
+				<p>I&#8217;ve been messing with <a href="http://www.eclipse.org/">Eclipse</a> and their <a href="http://www.eclipse.org/webtools/">WebTools Project</a> for the last few nights.  In theory it sounds like a great idea: integrate the container into the IDE so that you can edit your project source and publish (aka hot deploy) those changes directly to the container for testing.  J2EE is infamous for its painfully long deployment cycles which make it a nightmare to build the UI layers of a web application.  Fix a typo, wait 2 minutes for the build and deploy to finish, test your app for 30 seconds, find another typo, repeat.  It&#8217;s a mind-numbing process and has probably spurred on billions in hardware upgrade sales.  WTP does not completely solve the issues but it does promised to reduce the cycle time by integrating with the container as closely as possible to minimize deployment time.</p>
+<p>So all good in theory.  I downloaded the latest stable build, 1.0M8, released about two weeks ago and installed it into Fedora&#8217;s native eclipse.  It promptly broke, probably because it requires a very current set of dependencies.  Ok, my fault!  I downloaded the latest version of Eclipse, 3.1.1, along with a set of additional plugins required by WTP.  Everything installs cleanly.  Now my project uses Subversion for source control so I downloaded Subclipse and installed it.  As soon as Eclipse restarted, it was hosed.  Sigh.  I reinstalled everything and made a backup of working Eclipse install.  So I tried to install Spring-IDE.  Hosed.  I tried to install the latest updates for those additional plugins mentioned above.  Hosed.  Ok, so WTP is really, really finicky; I&#8217;ll deal with it and live without those plugins.  It takes me several hours to get my current project recognized as a WTP  Dynamic Web Project.  Thankfully someone <a href="http://jira.codehaus.org/browse/MPECLIPSE-80">patched the maven eclipse plugin</a> to generate the .wtpmodule file required.</p>
+<p>We use <a href="http://www.devx.com/ibmrational/Article/27796/2046">Rational Software Architect</a> at my workplace and recently purchased about 50 licenses.  I won&#8217;t say what we paid but its a lot more than free.  RSA is based on Eclipse 3.0 (i.e. about a year old now) but IBM added their own version of WTP that works with WebSphere and a substantial set of modeling and visualization tools on top of Eclipse to justify the expense.  All of this works really seamlessly - I recently discovered the WTP integration and found that it cut my deployment time in half.</p>
+<p>Unfortunately Eclipse and WTP does not currently work nearly as smoothly as RSA.  You have the incredible fragility of the install, the system seems to pause for 15-30 seconds at times and the container integration is still not as smooth as with RSA.  That&#8217;s why companies pay for commercial software - sometimes open source software is stable and just as good as its commercial bretheren but all too often it is not.  RSA is one example where paying some bucks will ultimately make developers more productive.
+</p>
+	
+					
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+						 
+						on Tuesday, October 4th, 2005 at 9:32 pm						and is filed under <a href="http://www.perham.net/mike/log/?cat=5" title="View all posts in Software" rel="category tag">Software</a>.
+						You can follow any responses to this entry through the <a href='http://www.perham.net/mike/log/?feed=rss2&amp;p=355'>RSS 2.0</a> feed. 
+						
+													You can <a href="#respond">leave a response</a>, or <a href="http://www.perham.net/mike/log/wp-trackback.php?p=355" rel="trackback">trackback</a> from your own site.
+						
+												
+					</small>
+				</p>
+	
+			</div>
+		</div>
+		
+	
+<!-- You can start editing here. -->
+
+	<h3 id="comments">One Response to &#8220;Why People Buy IBM&#8221;</h3> 
+
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-132">
+			<cite><a href='http://roumanoff.com' rel='external nofollow'>Patrick Roumanoff</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-132" title="">October 18th, 2005 at 5:52 am</a> </small>
+
+			<p>I think this is other around, and that WTP was mainly donated by IBM to eclipse, and that the code base of WTP is mainly a copy/paste of RSA. if you look carefully at the easrly release of WTP you see com.ibm.* packages all over the place.</p>
+<p>But RSA as a strict project structure you can&#8217;t change, and WTP improved on that with dynamic web project. You can even use maven dependencies with WTP which you can&#8217;t with RSA.</p>
+<p>Simply put, with a maven project you can&#8217;t use RSA without breaking something. with WTP you can.</p>
+<p>But you are right, WTP is a nigthmare to configure and its workspace metadata is very sensitive. remember it&#8217;s still in beta.</p>
+<p>RSA is a final product. paying for something that doesn&#8217;t work is just not an option.
+</p>
+
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+
+<h3 id="respond">Leave a Reply</h3>
+
+
+<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="355" />
+</p>
+
+</form>
+
+
+	
+		
+	</div>
+
+
+<hr />
+<div id="footer">
+	<p>
+		Mutterings is proudly powered by 
+		<a href="http://wordpress.org/">WordPress</a>
+		<br /><a href="feed:http://www.perham.net/mike/log/?feed=rss2">Entries (RSS)</a>
+		and <a href="feed:http://www.perham.net/mike/log/?feed=comments-rss2">Comments (RSS)</a>.
+		<!-- 12 queries. 0.147 seconds. -->
+	</p>
+</div>
+</div>
+
+<!-- Gorgeous design by Michael Heilemann - http://binarybonsai.com/kubrick/ -->
+
+		</body>
+</html>

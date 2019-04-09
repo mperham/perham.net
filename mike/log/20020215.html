@@ -1,0 +1,126 @@
+<html><head><title>Web Log</title></head><body>
+<h3>2/11/2002</h3>
+Bought my new bike on Thursday and picked it up on Saturday.  Jarod and I
+went cruising that afternoon and put 100 miles on it.  It is a beautiful
+bike but definitely NOT made for long distance touring.  I'm 6' tall and my
+knees hurt after about 20 minutes of riding.  This is definitely a commuter
+bike.  I plan on doing a few cosmetic things to it to make it look real
+sharp; I want to add xenon headlamps (they are actually safer because of
+drivers will notice you more often), install flush turn signals and
+elimenate the hideous rear fender on the bike.  I have no plans to touch
+anything mechanically on the bike.  Oh, and I'm also considering adding sliders to protect the body if it ever falls over.
+<P>
+I tried out some active, powered antennaes for my TV in a valiant effort to
+see the Olympics.  Folks, powered antennaes are the most worthless pieces
+of junk - don't bother.  I literally get a better picture from my $10
+passive radio shack deal than I did from two different $50 active antennaes.
+<h3>1/28/2002</h3>
+Sold my 1999 Ninja 500R last night for $2500.  It was a piece of crap - good
+riddance.  If anyone is thinking about buying one, don't.  The Suzuki GS500
+or SV650 are much better bikes.  This from a service manager of a
+local motorcycle place with decades of experience...  That made me feel
+better since I am planning on buying a SV650S real soon now.
+<P>
+Looks like I'll be getting and accepting a job offer with <a
+href="http://www.powered.com">powered</a> today.  I need the medical
+insurance to resume my bike riding.
+
+<h3>1/18/2002</h3>
+I recently cancelled my cable.  Time Warner upped their rates such that 
+standard cable now costs more than directv.  Instead I'm now using an 
+antenna and saving $45/month.  95% of my TV watching is FOX and NBC 
+anyhow.  Good riddance.
+<P>
+I went into my apt complex office yesterday and asked them to give me a 
+rate cut since I am about to sign a lease and the apt market sucks right 
+now (vacancy rate is very high right now so it's a renter's market right 
+now).  They called me today and said they'd give me $100 off next month's 
+rent.  Hey, I was going to sign anyhow so I'll take free money!  :-)  
+Moral of the story: it never hurts to ask.
+
+<h3>1/17/2002</h3>
+
+Hooked up <a href="http://jakarta.apache.org/lucene/">lucene</a> as the
+new keyword search engine inside <a
+href="../resume.html">marketgravity</a>. Previously we were using <a
+href="http://www.oracle.com/intermedia/">intermedia</a> and I hated it.  
+It tied us to Oracle and required alot of Oracle-specific skills that the
+dev team (being all java developers) didn't have.  Lucene is a pure-Java
+file-based search engine and seems to be much faster.  It only took me 1.5
+days to hook up and the API is relatively simple.
+
+<h3>1/6/2002</h3>
+I've been investigating secure file transfer mechanisms since ftp is 
+simply too insecure.  There's several different programs, most of which 
+seem to use ssh or a version thereof for the underlying transport.  The 
+contenders include: sftp, scp and ssft.  There are several flavors of the 
+first two while the later is written by the same fellow who wrote WarFTPd.
+<P>
+I grabbed <a href="http://www.openssh.org">openssh</a> and compiled it for
+Win32 with the cygwin package.  Worked out of the box without a problem -
+as long as you are comfortable with compilers and Unix.  :-)  This package
+has sftp and scp include in its suite of secure tools.  You run the ssh
+server on one box and then can use any of the secure tools to login or
+xfer files.  Works pretty well.
+<P>
+The problem with it is that sftp is slow.  REALLY slow.  Miserably slow.  
+So I tested scp.  It's actually much faster.  5-10x faster.  What is so 
+perplexing is that my tests were simply "transfer this large file from one 
+machine to another".  You'd think that that would use the same or similar 
+code.  Very odd.  Another result of my testing is that the <a 
+href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">PuTTY</a> secure 
+tools suite is the fastest of the bunch.  Highly recommended.
+
+<h3>12/30/2001</h3>
+Bye to Raj.  Best of luck in Atlanta, buddy.
+<P>
+Got a DVD player for Xmas.  Actually I got a gift certificate to Fry's and 
+with it bought a demo Panasonic DVD-RP56.  Supposedly a good value for the 
+money although the MP3 player leaves something to be desired.  I wish it 
+had a shuffle mode.  The problem with getting a DVD player is now I need 
+to upgrade the other components in my system.  I have a crappy TV so now I 
+need to buy a $2000 TV.  Argh!  What I really need is a super remote.  I 
+have 5 remotes now and really need something that handles macros.  I'm 
+considering the Pronto 2000 but it costs as much as the DVD player!  Only 
+one conclusion can be drawn from my situation: home theatre is expensive.
+
+<h3>12/17/2001</h3>
+It's been a while since I rapped at ya.  I'm doing contract work for 
+Powered - they are buying the marketGravity system that I was the main 
+architect for so I am helping them morph the code into something they can 
+use.
+<p>
+Right now I'm working on revamping our tree control applet.  marketGravity 
+has a web-based UI built on Struts and JSP technology.  Well, we needed 
+something that could show hierarchical data for selection (like the 
+left-hand tree in Windows Explorer) and there isn't anything out of the 
+box in the HTML world like that.  Since I'm a java developer and I was the 
+one solving the problem, I decided to go with a java 1.1 applet that 
+displays data given to it from the server.  Every browser worth 
+considering supports java 1.1 applets so compatibility is a non-issue.  
+Anyhow, long story short, the tree applet worked OK as designed.
+<p>
+But it had this one annoying property - if you reloaded the page, the 
+hierarchy would reset itself and the user would have to open the folders 
+again.  Now it doesn't.  :-)  I rewrote it to speak XML (previously it 
+used a proprietary flat file format) and wrote a whole server-side caching 
+scheme whereby the server tracks what the user clicks and can reload that 
+state the next time the applet reinitializes.  Big shout-out to John 
+Wilson, whose micro-sized XML parser, MinML2, is used by the tree.
+<p>
+Today.  Wow, what a productive day.  I started today with a million
+errands to run.  I got up at 6AM and went straight to work, put it my 8
+hours (wrote all of the server-side state caching and started debugging).  
+I then drove to Frys because my desktop's power supply blew up last night 
+- sparks and all!  Bought a new case/PS and moved all my hardware over to 
+the new case.  Cleaned out the fish tank, applied for a motorcycle chassis 
+repair course at ACC, burnt a CD for Becky's birthday and paid all my 
+bills.  Whew.
+
+
+
+<hr>
+<a href="archive.html">Web Log Archive</a><br>
+<a href="..">Back to Mike's Home Page</a>
+</body>
+</html>

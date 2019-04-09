@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Mutterings  &raquo; Blog Archive   &raquo; Xdoclet2 - Absolute Garbage</title>
+
+<meta name="generator" content="WordPress 2.0" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/default/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+<style type="text/css" media="screen">
+/*	To accomodate differing install paths of WordPress, images are referred only here,
+	and not in the wp-layout.css file. If you prefer to use only CSS for colors and what
+	not, then go right ahead and delete the following lines, and the image files. */
+		
+	body { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickbgcolor.jpg"); }	
+	#page { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickbgwide.jpg") repeat-y top; border: none; } 
+	#header { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickheader.jpg") no-repeat bottom center; }
+	#footer { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickfooter.jpg") no-repeat bottom; border: none;}
+
+/*	Because the template is slightly different, size-wise, with images, this needs to be set here
+	If you don't want to use the template's images, you can also delete the following two lines. */
+		
+	#header 	{ margin: 0 !important; margin: 0 0 0 1px; padding: 1px; height: 198px; width: 758px; }
+	#headerimg 	{ margin: 7px 9px 0; height: 192px; width: 740px; } 
+
+/* 	To ease the insertion of a personal header image, I have done it in such a way,
+	that you simply drop in an image called 'personalheader.jpg' into your /images/
+	directory. Dimensions should be at least 760px x 200px. Anything above that will
+	get cropped off of the image. */
+	/*
+	#headerimg { background: url('http://www.perham.net/mike/log/wp-content/themes/default/images/personalheader.jpg') no-repeat top;}
+	*/
+</style>
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+</head>
+<body>
+<div id="page">
+
+
+<div id="header">
+	<div id="headerimg">
+		<h1><a href="http://www.perham.net/mike/log/">Mutterings</a></h1>
+		<div class="description">Life in the Slow Lane</div>
+	</div>
+</div>
+<hr />
+
+	<div id="content" class="widecolumn">
+				
+  	
+		<div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://www.perham.net/mike/log/?p=299">Make Millions!</a></div>
+			<div class="alignright"><a href="http://www.perham.net/mike/log/?p=301">Where&#8217;s Noah when you need him?</a> &raquo;</div>
+		</div>
+	
+		<div class="post" id="post-300">
+			<h2><a href="http://www.perham.net/mike/log/?p=300" rel="bookmark" title="Permanent Link: Xdoclet2 - Absolute Garbage">Xdoclet2 - Absolute Garbage</a></h2>
+	
+			<div class="entrytext">
+				<p>I&#8217;ve upgraded all the components in my top secret project to the latest versions so I can try out the latest open source Java stuff.  Needless to say it is always good for your long-term job prospects to stay ahead of the curve so you are seen as a leader rather than a follower.</p>
+<p>Part of that upgrade is a move to Hibernate3.  Since I don&#8217;t want to maintain both Java source and Hibernate mapping files, something must allow me to annotate the Java source with the data which needs to be in the mapping file.  For the last few years, this something has been Xdoclet1.  I have a love-hate relationship with Xdoclet1 - its Hibernate mapping documentation is pretty bad so you often need to spin your wheels searching Google or their mailing list for other examples of what you are trying to do.</p>
+<p>Now since Hibernate3 is brand new, I figure I should upgrade to Xdoclet2 also.  And thus my misery started.  To shorten a long and frustrating story:</p>
+<ul>
+<li>The project is called Xdoclet 2 v1.0.1.  Oh, that seems logical.</li>
+<li>Their website has NO documentation whatsoever except reference guides to the tags.  No examples or samples which tie everything together into something sensical.</li>
+<li>The product does not work as installed.  You have to edit a file deep within it to make it work.  They&#8217;ve known about this for over a month and not fixed it.</li>
+<li>Their unit tests (which I dived into as a last ditch attempt to get SOME sort of sample usage) are full of nonsensical variables like &#8220;foo&#8221; and &#8220;bar&#8221; with no business scenarios or anything that is easily understandable to anyone but the developer who wrote the test.</li>
+<li>Their explanation for why I should switch to Xdoclet2?  It&#8217;s <strong>easier</strong> for me to write my own plugins!  Gee, thanks but 90% of your user base just wants to develop their Hibernate mappings as simple and easily as possible.</li>
+</ul>
+<p>Basically I&#8217;m giving up and dropping back down to Xdoclet1.  As soon as Hibernate Annotations are available, I&#8217;m going to drop all this crap and use them instead.  I hate to say it but the Xdoclet projects appear to be an example of open source projects that do not think of the user actually trying to use their software.  Honestly I don&#8217;t see Xdoclet2 around for much longer - those using JDK 1.4 can stick with Xdoclet1 and those with JDK 5 can use the upcoming EJB and Hibernate annotations.  Good riddance.</p>
+<p>UPDATE: I may think I&#8217;m a leader but Hani&#8217;s BileBlog <a href="http://www.jroller.com/page/fate?entry=stillborn_ideas_xdoclet2">got there</a> way before me.
+</p>
+	
+					
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+						 
+						on Sunday, July 24th, 2005 at 7:31 pm						and is filed under <a href="http://www.perham.net/mike/log/?cat=1" title="View all posts in General" rel="category tag">General</a>.
+						You can follow any responses to this entry through the <a href='http://www.perham.net/mike/log/?feed=rss2&amp;p=300'>RSS 2.0</a> feed. 
+						
+													You can <a href="#respond">leave a response</a>, or <a href="http://www.perham.net/mike/log/wp-trackback.php?p=300" rel="trackback">trackback</a> from your own site.
+						
+												
+					</small>
+				</p>
+	
+			</div>
+		</div>
+		
+	
+<!-- You can start editing here. -->
+
+
+   
+		<!-- If comments are open, but there are no comments. -->
+		
+	 
+
+
+<h3 id="respond">Leave a Reply</h3>
+
+
+<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="300" />
+</p>
+
+</form>
+
+
+	
+		
+	</div>
+
+
+<hr />
+<div id="footer">
+	<p>
+		Mutterings is proudly powered by 
+		<a href="http://wordpress.org/">WordPress</a>
+		<br /><a href="feed:http://www.perham.net/mike/log/?feed=rss2">Entries (RSS)</a>
+		and <a href="feed:http://www.perham.net/mike/log/?feed=comments-rss2">Comments (RSS)</a>.
+		<!-- 12 queries. 0.136 seconds. -->
+	</p>
+</div>
+</div>
+
+<!-- Gorgeous design by Michael Heilemann - http://binarybonsai.com/kubrick/ -->
+
+		</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	
+	<title>  Perforce and Cygwin</title>
+	
+	<meta name="generator" content="WordPress 2.7.1" /> <!-- leave this for stats -->
+	
+	<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/cutline/style.css" type="text/css" media="screen" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie7.css" media="screen" />
+	<![endif]-->
+	<!--[if lte IE 6]>
+	<link rel="stylesheet" type="text/css" href="http://www.perham.net/mike/log/wp-content/themes/cutline/ie6.css" media="screen" />
+	<![endif]-->
+	<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/feed/" />
+	<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.perham.net/mike/log/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 2.7.1" />
+
+</head>
+<body class="custom">
+
+<div id="container">
+
+	<div id="masthead">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		<h3>Life in the Slow Lane</h3>
+	</div>
+
+	<ul id="nav">
+		<li><a href="http://www.perham.net/mike/log">front page</a></li>
+		<li><a href="/">perham.net</a></li>
+		<li><a href="/mike/">mike</a></li>
+		<!-- li class="rss"><a href="http://www.perham.net/mike/log/feed/">RSS</a></li-->
+		<li class="rss"><a href="http://feeds.feedburner.com/perham/log">RSS</a></li>
+
+	</ul>
+	
+	<!--div id="header_img">
+	<img src="http://www.perham.net/mike/log/wp-content/themes/cutline/images/header_2.jpg" width="970" height="140" alt="header image" title="header image" />
+	</div-->
+
+	<div id="content_box">
+	
+		<!--?php include (TEMPLATEPATH . '/l_sidebar.php'); ?-->
+		
+		<div id="content" class="posts">
+			
+				
+		
+<div class="navigation">
+	<span class="previous">&larr; <a href="http://www.perham.net/mike/log/2007/05/31/thirsty/">Thirsty?</a></span>
+	<span class="next"><a href="http://www.perham.net/mike/log/2007/06/01/appbar-still-lives/">AppBar still lives!</a> &rarr;</span>
+</div>
+<div class="clear whitespace"></div>
+
+						
+			<h2>Perforce and Cygwin</h2>
+			<h4>May 31st, 2007<!-- by mperham --> &middot; <a href="http://www.perham.net/mike/log/2007/05/31/perforce-and-cygwin/#comments">3 Comments</a></h4>
+			<div class="entry">
+				<p>I love Perforce as an SCM system - it&#8217;s not as dead simple as SVN but it&#8217;s pretty simple to use once you understand what a clientspec is (in fact I wrote the Perforce SCM plugin for Maven 2.x).</p>
+<p>I like cygwin - the installer is horrible but it works ok once you get past that.</p>
+<p>The problem is that the two don&#8217;t work too well together.  cygwin likes to use pseudo-unix paths on Windows that look like /cygdrive/c/src/foo/bar instead of c:\src\foo\bar.  So when you create a bash script to automate some file chore, those paths are used.  Well, Perforce doesn&#8217;t understand those paths.  Others have suggested creating a clientspec whose root matches the cygwin syntax and use that clientspec with the cygwin tools.  My solution is simpler but non-obvious: use the cygpath command to convert the cygwin path to a standard windows path <strong>but</strong> it must be an absolute path.  If it is not an absolute path, p4 tries to resolve the path and cygwin will hand it a cygdrive-style path again.</p>
+<p><code>p4 edit `cygpath -a -w $file`</code></p>
+<p>I hope this helps someone else with the same problem!</p>
+							</div>
+			<p class="tagged"><strong>Tags:</strong> <a href="http://www.perham.net/mike/log/category/software/" title="View all posts in Software" rel="category tag">Software</a></p>
+			<div class="clear"></div>
+			
+			
+<!-- You can start editing here. -->
+
+
+<div id="comments">
+
+	<h3 class="comments_headers">3 responses so far &darr;</h3>
+	
+	<ul id="comment_list">
+
+	
+			
+		<li class="comment " id="comment-62402">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-62402" title="Permalink to this comment">1</a></span>
+				<strong><a href='http://www.perforce.com' rel='external nofollow' class='url'>Tony Smith</a> </strong>
+				<span class="comment_time">// Jun 15, 2007 at 3:37 am</span>
+			</p>
+			<div class="entry">
+				<p>Hi Mike,</p>
+<p>Thanks for your comments - glad you like Perforce. One thing that might also help you is to use the Cygwin client instead of the win32 client, as that understands Cygwin paths.</p>
+<p>Try this one: </p>
+<p><a href="http://filehost.perforce.com/perforce/r07.2/bin.cygwinx86/p4.exe" rel="nofollow">http://filehost.perforce.com/perforce/r07.2/bin.cygwinx86/p4.exe</a></p>
+<p>Obviously you need to make sure that this p4.exe is ahead of the Windows one in your PATH.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-64812">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-64812" title="Permalink to this comment">2</a></span>
+				<strong>P4 Cygwin client does not work for me </strong>
+				<span class="comment_time">// Jul 26, 2007 at 9:17 pm</span>
+			</p>
+			<div class="entry">
+				<p>The Cygwin Perforce client does not work for me or a colleauge. We still get &#8220;path  is not under client&#8217;s root.</p>
+ 
+							</div>
+		</li>
+		
+			
+		<li class="comment " id="comment-77196">
+			<p class="comment_meta">
+				<span class="comment_num"><a href="#comment-77196" title="Permalink to this comment">3</a></span>
+				<strong>Jonathan </strong>
+				<span class="comment_time">// Jul 21, 2008 at 7:12 am</span>
+			</p>
+			<div class="entry">
+				<p>Try adding the following to your .bashrc and then p4 from commandline just works:</p>
+<p>  function p4() {<br />
+    export PWD=`cygpath -wa .`<br />
+    /cygdrive/c/Program\ Files/Perforce/p4.exe $@<br />
+  }</p>
+ 
+							</div>
+		</li>
+		
+			
+	</ul>
+		
+	
+
+	<!-- Comment Form -->
+	</div> <!-- Close #comments container -->
+<div class="clear flat"></div>
+			
+				
+		</div>
+		
+		<div id="sidebar">
+	<ul class="sidebar_list">
+		<li class="widget">
+			<h2>Contact Me</h2>
+<ul>
+<li>Email: mperham AT gmail.com</li>
+<li>Twitter: <a href="http://twitter.com/mperham">mperham</a></li>
+</ul>
+		</li>
+				<!--li class="widget">
+			<h2>Search It!</h2>
+			<form method="get" id="search_form" action="http://www.perham.net/mike/log/">
+	<input type="text" class="search_input" value="To search, type and hit enter" name="s" id="s" onfocus="if (this.value == 'To search, type and hit enter') {this.value = '';}" onblur="if (this.value == '') {this.value = 'To search, type and hit enter';}" />
+	<input type="hidden" id="searchsubmit" value="Search" />
+</form>
+		</li>
+		<li class="widget">
+			<h2>Recent Entries</h2>
+			<ul>
+												<li><a href="http://www.perham.net/mike/log/2009/10/22/trackday-2009-10-18/">Trackday 2009-10-18</a><span class="recent_date">10.22</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/09/09/panther-city-leather/">Panther City Leather</a><span class="recent_date">9.9</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/05/14/harris-hill-road-track-day-2/">Harris Hill Road Track Day</a><span class="recent_date">5.14</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/04/18/pest-control/">Pest Control</a><span class="recent_date">4.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/04/11/april-notes/">April Notes</a><span class="recent_date">4.11</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/27/dell-g2410t-review/">Dell G2410t review</a><span class="recent_date">3.27</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/19/the-new-prohibition/">The New Prohibition</a><span class="recent_date">3.19</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/18/let-it-die-on-the-economy/">LET IT DIE: On the economy</a><span class="recent_date">3.18</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/03/12/welcome/">Welcome!</a><span class="recent_date">3.12</span></li>
+								<li><a href="http://www.perham.net/mike/log/2009/02/08/next-generation-av/">Next Generation AV</a><span class="recent_date">2.8</span></li>
+								<li><a href="http://www.perham.net/mike/log/archives" title="Visit the archives!">Visit the archives for more!</a></li>
+			</ul>
+		</li-->
+				  <li id="linkcat-6" class="linkcat"><h2>Blog</h2>
+	<ul>
+<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://www.mikeperham.com" title="My Professional Site">mikeperham</a></li>
+<li><a href="http://nsputnik.com">Nick</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://reqfd.net/stack/" rel="friend">Sharon</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+	</ul>
+</li>
+  <li id="linkcat-7" class="linkcat"><h2>Home Page</h2>
+	<ul>
+<li><a href="http://nsputnik.com">Nick</a></li>
+
+	</ul>
+</li>
+			</ul>
+</div>			
+	</div>
+
+	<div id="footer">
+		<p>&copy; 2006&ndash;2007 Mutterings &mdash; <a href="http://www.perham.net/mike/log/sitemap/">Sitemap</a> &mdash; <a href="http://cutline.tubetorial.com/">Cutline</a> by <a href="http://www.tubetorial.com">Chris Pearson</a></p>
+			</div>
+</div>
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-2569989-1";
+urchinTracker();
+</script>
+</body>
+</html>

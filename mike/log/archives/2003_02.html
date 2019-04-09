@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title>Mutterings: February 2003 Archives</title>
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/styles-site.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.perham.net/mike/log/index.rdf" />
+<link rel="start" href="http://www.perham.net/mike/log/" title="Home" />
+<link rel="prev" href="http://www.perham.net/mike/log/archives/2003_01.html" title="January 2003" />
+
+<link rel="next" href="http://www.perham.net/mike/log/archives/2003_03.html" title="March 2003" />
+
+
+<script language="javascript" type="text/javascript">
+function OpenComments (c) {
+    window.open(c,
+                    'comments',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+
+function OpenTrackback (c) {
+    window.open(c,
+                    'trackback',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+</script>
+
+</head>
+
+<body>	
+
+<div id="banner">
+<h1><a href="http://www.perham.net/mike/log/" accesskey="1">Mutterings</a></h1>
+<span class="description">Mike Perham's blog</span>
+</div>
+
+<div id="container">
+
+<div class="blog">
+
+<div id="menu">
+<a href="http://www.perham.net/mike/log/archives/2003_01.html">&laquo; January 2003</a> |
+
+<a href="http://www.perham.net/mike/log/">Main</a>
+| <a href="http://www.perham.net/mike/log/archives/2003_03.html">March 2003 &raquo;</a>
+
+</div>
+
+</div>
+
+<div class="blog">
+
+
+<h2 class="date">February 25, 2003</h2>
+
+
+<div class="blogbody">
+<a name="000030"></a>
+<h3 class="title">It's Cold</h3>
+
+<p>Austin weather is currently miserable.  There's a quarter inch layer of ice on the roads and sidewalks.  UT has shut down and my boss called and told me not to come in today.  I doubt I would have anyways, it's really treacherous out there right now.  Here's a picture of the conditions outside my house:</p>
+
+<p><img src="myimages/winterice.jpg"></p>
+
+
+
+<div class="posted">
+	Posted by mike at <a href="http://www.perham.net/mike/log/archives/000030.html#000030">09:21 AM</a>
+		| <a href="http://www.perham.net/mike/log/mt-comment.cgi?entry_id=30" onclick="OpenComments(this.href); return false">Comments (0)</a>
+	
+	
+</div>
+
+</div>
+
+
+
+<h2 class="date">February 12, 2003</h2>
+
+
+<div class="blogbody">
+<a name="000029"></a>
+<h3 class="title">Upgrading your HDVR2 drive</h3>
+
+<p>Someone emailed me asking how to upgrade his HDVR2.  Here's the essentials:</p>
+
+<p>Adding a 120GB drive is pretty easy if you are comfortable mucking about<br />
+with your computer hardware.  Doesn't take more than 5 minutes if you know<br />
+what you are doing.</p>
+
+<p>You put the old 40GB drive and the new 120GB in at the same time, boot<br />
+from the mfstools CD-ROM and issue a single command.  Unhook the 120GB,<br />
+put it in the HDVR2 and you are set.</p>
+
+<p>The boot CD is here:</p>
+
+<p><a href="http://star1.jongans.com/mfstools2.iso">http://star1.jongans.com/mfstools2.iso</a></p>
+
+<p>The command is:</p>
+
+<p>mfsbackup -f 4138 -6so - /dev/hdX | mfsrestore -s 127 -xzpi - /dev/hdY</p>
+
+<p>where X is the letter of the old drive and Y is the letter of the new<br />
+drive (the letter will be one of a, b, c, or d).  The drives are listed when the CD boots - you can read the messages by waiting for the CD to finish booting and hitting Shift-PgUp.</p>
+
+<p>You can read more here:</p>
+
+<p><a href="http://www.tivocommunity.com/tivo-vb/showthread.php?s=&threadid=90268">http://www.tivocommunity.com/tivo-vb/showthread.php?s=&threadid=90268</a><br />
+<a href="http://www.tivocommunity.com/tivo-vb/showthread.php?s=&threadid=86235">http://www.tivocommunity.com/tivo-vb/showthread.php?s=&threadid=86235</a></p>
+
+<p>If you have further questions, please ask them in the Tivo Upgrade Center<br />
+forum at the tivocommunity.com site.</p>
+
+<p>Note that adding network support is considerably more difficult - I suggest spending a weekend reading if you really want to do it.</p>
+
+
+
+<div class="posted">
+	Posted by mike at <a href="http://www.perham.net/mike/log/archives/000029.html#000029">03:48 PM</a>
+		| <a href="http://www.perham.net/mike/log/mt-comment.cgi?entry_id=29" onclick="OpenComments(this.href); return false">Comments (0)</a>
+	
+	
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+</body>
+</html>

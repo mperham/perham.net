@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title>Mutterings: September 2003 Archives</title>
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/styles-site.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.perham.net/mike/log/index.rdf" />
+<link rel="start" href="http://www.perham.net/mike/log/" title="Home" />
+<link rel="prev" href="http://www.perham.net/mike/log/archives/2003_08.html" title="August 2003" />
+
+<link rel="next" href="http://www.perham.net/mike/log/archives/2003_10.html" title="October 2003" />
+
+
+<script language="javascript" type="text/javascript">
+function OpenComments (c) {
+    window.open(c,
+                    'comments',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+
+function OpenTrackback (c) {
+    window.open(c,
+                    'trackback',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+</script>
+
+</head>
+
+<body>	
+
+<div id="banner">
+<h1><a href="http://www.perham.net/mike/log/" accesskey="1">Mutterings</a></h1>
+<span class="description">Mike Perham's blog</span>
+</div>
+
+<div id="container">
+
+<div class="blog">
+
+<div id="menu">
+<a href="http://www.perham.net/mike/log/archives/2003_08.html">&laquo; August 2003</a> |
+
+<a href="http://www.perham.net/mike/log/">Main</a>
+| <a href="http://www.perham.net/mike/log/archives/2003_10.html">October 2003 &raquo;</a>
+
+</div>
+
+</div>
+
+<div class="blog">
+
+
+<h2 class="date">September 27, 2003</h2>
+
+
+<div class="blogbody">
+<a name="000065"></a>
+<h3 class="title">Garage Whoas!</h3>
+
+<p>Here's the new garage door.  I kinda miss the windows but I like the new, quiet opener.</p>
+
+<p><img src="myimages/new_garage.jpg"/></p>
+
+
+
+<div class="posted">
+	Posted by mike at <a href="http://www.perham.net/mike/log/archives/000065.html#000065">11:27 AM</a>
+		| <a href="http://www.perham.net/mike/log/mt-comment.cgi?entry_id=65" onclick="OpenComments(this.href); return false">Comments (0)</a>
+	
+	
+</div>
+
+</div>
+
+
+
+<h2 class="date">September 22, 2003</h2>
+
+
+<div class="blogbody">
+<a name="000064"></a>
+<h3 class="title">Image Trickery</h3>
+
+<p>I played around with the Java Advanced Imaging API (JAI) a year ago when I was trying to come up with a solution to creating photo albums for my vacation pictures.  I just wanted something to iterate through all pictures in a directory, create 16th sized thumbnails and an index page which can be used to view those thumbnails.  I was able to create such a program, Genny, which I have used for a few of my picture albums but sometimes the thumbnails look terrible.  I did some research and it turns out to just be bugs in the JAI.  Nothing I can do about it without some massive debugging and learning imaging algorithms.  As a side note, I really should have written Genny in a scripting language like Perl or Python - there's no need for the complexities of Java.  At the time I had planned to put a Swing interface on top of it though...</p>
+
+<p>I discovered <a href="http://www.yeo.nu/jmagick/">JMagick</a> today which is a Java wrapper around the great ImageMagick libraries.  Supposedly much faster and much higher quality than the JAI algorithms.  I've used ImageMagick in the past with great success so I'll have to add this to my toolbelt.</p>
+
+
+
+<div class="posted">
+	Posted by mike at <a href="http://www.perham.net/mike/log/archives/000064.html#000064">02:10 PM</a>
+		| <a href="http://www.perham.net/mike/log/mt-comment.cgi?entry_id=64" onclick="OpenComments(this.href); return false">Comments (0)</a>
+	
+	
+</div>
+
+</div>
+
+
+
+<h2 class="date">September 21, 2003</h2>
+
+
+<div class="blogbody">
+<a name="000063"></a>
+<h3 class="title">Garage Woes</h3>
+
+<p>Well, I got home yesterday and noticed this on my garage door:</p>
+
+<p><img src="myimages/garage.jpg"></p>
+
+<p>Now I have to replace my garage door.  I know nothing about garage doors but my initial calls yesterday got me a price range in the mid-hundreds.  Wonderful.</p>
+
+
+
+<div class="posted">
+	Posted by mike at <a href="http://www.perham.net/mike/log/archives/000063.html#000063">09:11 AM</a>
+		| <a href="http://www.perham.net/mike/log/mt-comment.cgi?entry_id=63" onclick="OpenComments(this.href); return false">Comments (0)</a>
+	
+	
+</div>
+
+</div>
+
+
+
+<h2 class="date">September 18, 2003</h2>
+
+
+<div class="blogbody">
+<a name="000062"></a>
+<h3 class="title">Ch-ch-ch-changes...</h3>
+
+<p>I'm constantly amazed at how fast and yet how slow the tech world seems to move.  This time two years ago I was using BEA Weblogic, Oracle, Struts, and ant as the major components in building enterprise web applications.  Now I'm using Websphere and resin, mysql and DB2, hibernate, velocity and tapestry, and maven.  The world seems to move fast because I have to learn new systems constantly as new tools constantly become better than existing tools.  It seems slow though because <i>the tools are essentially interchangable</i>.  There is no huge revolutionary leap in any of these tools, just constant evolution.</p>
+
+<p>One thing that is profoundly changing how development is done is the maturing world of open source tools.  With very few exceptions, the most popular tools these days are built by volunteers at places like Apache and sourceforge.  This is making our lives as developers radically easier because we can get the code for these projects in order to track down problems or customize for special requirements.  10 years ago, if you wanted an application component, you looked at the ads in development magazines for relevant tools.  </p>
+
+<p>When I wrote AppBar in 1996, I released the source for it on the web.  It was literally the <b>first</b> open source application I had ever seen on Windows.  At the time, Windows had a very strong freeware and shareware base and no precedent for open source; no one released their source code.  I learned from the source code examples available in MSDN but I didn't want others to have as hard as a time (and MSDN cost $$$) and wanted to give other people the opportunity to customize AppBar to suit their needs.  For my trouble I received $116 and a German translation of the AppBar interface in contributions.  Was it worth it?  Absolutely.  :-)  I'm proud to have been part of the push for openness in development.</p>
+
+
+
+<div class="posted">
+	Posted by mike at <a href="http://www.perham.net/mike/log/archives/000062.html#000062">07:15 PM</a>
+		| <a href="http://www.perham.net/mike/log/mt-comment.cgi?entry_id=62" onclick="OpenComments(this.href); return false">Comments (0)</a>
+	
+	
+</div>
+
+</div>
+
+
+
+<h2 class="date">September 10, 2003</h2>
+
+
+<div class="blogbody">
+<a name="000061"></a>
+<h3 class="title">Web Services Rant</h3>
+
+<p>Support for both document-passing and RPC-invocation semantics in web services is the worst decision the WSDL developers ever made.  It makes interoperability between different systems a living hell for developers and will cripple web services from being deployed widely until the industry settles on a common, well understood  format.  </p>
+
+<p>Currently there are three formats: rpc/encoded, rpc/literal and document/literal.  WS-I has come out and said that SOAP encoding is terrible and should not be used which is true and rules out rpc/encoded.  The problem is that pretty much ever system until now has defaulted to rpc/encoded so that is what most people use, including the public services exposed by Amazon and Google.  Axis, the leading free and open source web service server does rpc/encoded very well and everything else pretty poorly.</p>
+
+<p>But that's not enough.  Even with rpc/literal, you do not have absolute control over the generated SOAP.  Instead the SOAP framework generates small pieces of the SOAP document which can lead to interop problems.  document/literal is the only way to get absolute control of the generated document and that is what WS-I should have mandated.  This is fundamental architecture - giving people choices here just makes for problems and delays adoption.</p>
+
+
+
+<div class="posted">
+	Posted by mike at <a href="http://www.perham.net/mike/log/archives/000061.html#000061">01:51 PM</a>
+		| <a href="http://www.perham.net/mike/log/mt-comment.cgi?entry_id=61" onclick="OpenComments(this.href); return false">Comments (1)</a>
+	
+	
+</div>
+
+</div>
+
+
+</div>
+</div>
+
+</body>
+</html>

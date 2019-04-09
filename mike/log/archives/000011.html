@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title>Mutterings: Database Findings</title>
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/styles-site.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.perham.net/mike/log/index.rdf" />
+
+<link rel="start" href="http://www.perham.net/mike/log/" title="Home" />
+<link rel="prev" href="http://www.perham.net/mike/log/archives/000010.html" title="Fowl Headgear" />
+
+<link rel="next" href="http://www.perham.net/mike/log/archives/000012.html" title="DB2 disappointment" />
+
+
+<script type="text/javascript" language="javascript">
+<!--
+
+function OpenTrackback (c) {
+    window.open(c,
+                    'trackback',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+
+var HOST = 'www.perham.net';
+
+// Copyright (c) 1996-1997 Athenia Associates.
+// http://www.webreference.com/js/
+// License is granted if and only if this entire
+// copyright notice is included. By Tomer Shiran.
+
+function setCookie (name, value, expires, path, domain, secure) {
+    var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "") + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
+    document.cookie = curCookie;
+}
+
+function getCookie (name) {
+    var prefix = name + '=';
+    var c = document.cookie;
+    var nullstring = '';
+    var cookieStartIndex = c.indexOf(prefix);
+    if (cookieStartIndex == -1)
+        return nullstring;
+    var cookieEndIndex = c.indexOf(";", cookieStartIndex + prefix.length);
+    if (cookieEndIndex == -1)
+        cookieEndIndex = c.length;
+    return unescape(c.substring(cookieStartIndex + prefix.length, cookieEndIndex));
+}
+
+function deleteCookie (name, path, domain) {
+    if (getCookie(name))
+        document.cookie = name + "=" + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+}
+
+function fixDate (date) {
+    var base = new Date(0);
+    var skew = base.getTime();
+    if (skew > 0)
+        date.setTime(date.getTime() - skew);
+}
+
+function rememberMe (f) {
+    var now = new Date();
+    fixDate(now);
+    now.setTime(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+    setCookie('mtcmtauth', f.author.value, now, '', HOST, '');
+    setCookie('mtcmtmail', f.email.value, now, '', HOST, '');
+    setCookie('mtcmthome', f.url.value, now, '', HOST, '');
+}
+
+function forgetMe (f) {
+    deleteCookie('mtcmtmail', '', HOST);
+    deleteCookie('mtcmthome', '', HOST);
+    deleteCookie('mtcmtauth', '', HOST);
+    f.email.value = '';
+    f.author.value = '';
+    f.url.value = '';
+}
+
+//-->
+</script>
+
+
+
+</head>
+
+<body>
+
+<div id="banner">
+<h1><a href="http://www.perham.net/mike/log/" accesskey="1">Mutterings</a></h1>
+<span class="description"></span>
+</div>
+
+<div id="container">
+
+<div class="blog">
+
+<div id="menu">
+<a href="http://www.perham.net/mike/log/archives/000010.html">&laquo; Fowl Headgear</a> |
+
+<a href="http://www.perham.net/mike/log/">Main</a>
+| <a href="http://www.perham.net/mike/log/archives/000012.html">DB2 disappointment &raquo;</a>
+
+</div>
+
+</div>
+
+
+<div class="blog">
+
+<h2 class="date">November 05, 2002</h2>
+
+<div class="blogbody">
+
+<h3 class="title">Database Findings</h3>
+
+<p>My chosen profession is that of the software architect.  I write large scale multi-tier systems that cost a lot of money.  An integral part of these systems is the database.  The relational database was invented in the early 70s with the first software examples appearing in the mid 80s or thereabouts.</p>
+
+<p>As an architect, part of my job is providing as many choices as I can to the customer so they can tailor their installation of my software to suit their own needs/desires.  One of the big choices is that of the database - which database should I choose?  There are many choices:</p>
+
+<p>Commercial:<br />
+Oracle<br />
+Sybase<br />
+Microsoft SQL Server<br />
+IBM DB2</p>
+
+<p>Free:<br />
+postgresql<br />
+mysql<br />
+sapdb</p>
+
+<p>When it comes right down to it, those 7 choices cover 99% of all databases in the world.  Oracle is basically presumed to be the industry leader and having the fastest, most scalable offering.  But this was all rumor - until today.</p>
+
+<p>We've been pushing for database independence at work so I've been investigating most of the major offerings to see if they are potential candidates for use with our software.  In doing so, I basically tried to get our unit test suite to run on each database.  The platform is Windows XP with a 2.5Ghz P4.  Here's the timing results of the test suite as run on each system:</p>
+
+<p>Oracle - 3:00<br />
+SQL Server - 3:45<br />
+postgresql - 6:00<br />
+sapdb - unable to run our app</p>
+
+<p>The unit tests very much test the speed of the database out of the box.  I am not a DBA and none of the systems were tuned in any way.  SAPDB has some serious limitations in how much data you can return in a SELECT statement (8k!) which basically makes it useless for large J2EE applications.  BUT what I could get to run on SAPDB was blazingly fast.  With SAPDB, our cleandb procedure, which deletes the entire tablespace and rebuilds it from a set of SQL files, took 1/3 of the time it took on Oracle.  If you can live with its limitations, give it a try.</p>
+
+<p>Overall I'm a little disappointed with postgresql.  It was stable and relatively easy to get working with our system but the performance is nowhere near the speed of the commercial guys.  I can't test Sybase because it only supports Windows NT right now (!).  I'm not even going to try mysql simply because our customers would laugh us out of the room if we told them we support it.  I'm going to try to get DB2 up and running tomorrow.</p>
+
+<p>In closing, for the past 5 years I've always heard that Oracle was solid but not necessarily the fastest database.  Now I understand why they charge so much for it - it's solid, fast and flexible.</p>
+
+<a name="more"></a>
+
+
+<span class="posted">Posted by mike at November  5, 2002 04:43 PM
+
+<br /></span>
+
+</div>
+
+
+<div class="comments-head"><a name="comments"></a>Comments</div>
+
+
+
+<div class="comments-head">Post a comment</div>
+
+<div class="comments-body">
+<form method="post" action="http://www.perham.net/mike/log/mt-comments.cgi" name="comments_form" onsubmit="if (this.bakecookie.checked) rememberMe(this)">
+<input type="hidden" name="static" value="1" />
+<input type="hidden" name="entry_id" value="11" />
+
+<label for="author">Name:</label><br />
+<input id="author" name="author" /><br /><br />
+
+<label for="email">Email Address:</label><br />
+<input id="email" name="email" /><br /><br />
+
+<label for="url">URL:</label><br />
+<input id="url" name="url" /><br /><br />
+
+<label for="text">Comments:</label><br />
+<textarea id="text" name="text" rows="10" cols="50"></textarea><br /><br />
+
+<input type="checkbox" id="bakecookie" name="bakecookie" /><label for="bakecookie">Remember info?</label><br /><br />
+
+<input type="submit" name="preview" value="&nbsp;PREVIEW&nbsp;" />
+<input type="submit" name="post" value="&nbsp;POST&nbsp;" /><br /><br />
+
+<input type="button" onclick="forgetMe(this.form)" value="FORGET PERSONAL INFORMATION" />
+</form>
+
+<script type="text/javascript" language="javascript">
+<!--
+document.comments_form.email.value = getCookie("mtcmtmail");
+document.comments_form.author.value = getCookie("mtcmtauth");
+document.comments_form.url.value = getCookie("mtcmthome");
+//-->
+</script>
+
+
+</div>
+</div>
+</body>
+</html>

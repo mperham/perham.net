@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title>Mutterings: Microsoft and Vodafone's new services standards</title>
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/styles-site.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.perham.net/mike/log/index.rdf" />
+
+<link rel="start" href="http://www.perham.net/mike/log/" title="Home" />
+<link rel="prev" href="http://www.perham.net/mike/log/archives/000067.html" title="Microsoft and I agree on something" />
+
+<link rel="next" href="http://www.perham.net/mike/log/archives/000069.html" title="VOIP + 802.11b" />
+
+
+<script type="text/javascript" language="javascript">
+<!--
+
+function OpenTrackback (c) {
+    window.open(c,
+                    'trackback',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+
+var HOST = 'www.perham.net';
+
+// Copyright (c) 1996-1997 Athenia Associates.
+// http://www.webreference.com/js/
+// License is granted if and only if this entire
+// copyright notice is included. By Tomer Shiran.
+
+function setCookie (name, value, expires, path, domain, secure) {
+    var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "") + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
+    document.cookie = curCookie;
+}
+
+function getCookie (name) {
+    var prefix = name + '=';
+    var c = document.cookie;
+    var nullstring = '';
+    var cookieStartIndex = c.indexOf(prefix);
+    if (cookieStartIndex == -1)
+        return nullstring;
+    var cookieEndIndex = c.indexOf(";", cookieStartIndex + prefix.length);
+    if (cookieEndIndex == -1)
+        cookieEndIndex = c.length;
+    return unescape(c.substring(cookieStartIndex + prefix.length, cookieEndIndex));
+}
+
+function deleteCookie (name, path, domain) {
+    if (getCookie(name))
+        document.cookie = name + "=" + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+}
+
+function fixDate (date) {
+    var base = new Date(0);
+    var skew = base.getTime();
+    if (skew > 0)
+        date.setTime(date.getTime() - skew);
+}
+
+function rememberMe (f) {
+    var now = new Date();
+    fixDate(now);
+    now.setTime(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+    setCookie('mtcmtauth', f.author.value, now, '', HOST, '');
+    setCookie('mtcmtmail', f.email.value, now, '', HOST, '');
+    setCookie('mtcmthome', f.url.value, now, '', HOST, '');
+}
+
+function forgetMe (f) {
+    deleteCookie('mtcmtmail', '', HOST);
+    deleteCookie('mtcmthome', '', HOST);
+    deleteCookie('mtcmtauth', '', HOST);
+    f.email.value = '';
+    f.author.value = '';
+    f.url.value = '';
+}
+
+//-->
+</script>
+
+
+
+</head>
+
+<body>
+
+<div id="banner">
+<h1><a href="http://www.perham.net/mike/log/" accesskey="1">Mutterings</a></h1>
+<span class="description">Mike Perham's blog</span>
+</div>
+
+<div id="container">
+
+<div class="blog">
+
+<div id="menu">
+<a href="http://www.perham.net/mike/log/archives/000067.html">&laquo; Microsoft and I agree on something</a> |
+
+<a href="http://www.perham.net/mike/log/">Main</a>
+| <a href="http://www.perham.net/mike/log/archives/000069.html">VOIP + 802.11b &raquo;</a>
+
+</div>
+
+</div>
+
+
+<div class="blog">
+
+<h2 class="date">October 14, 2003</h2>
+
+<div class="blogbody">
+
+<h3 class="title">Microsoft and Vodafone's new services standards</h3>
+
+<p><a href="http://www.webservices.org/index.php/article/articleview/1203/1/2/">http://www.webservices.org/index.php/article/articleview/1203/1/2/</a></p>
+
+<p>The executive summary is that Vodafone and MS are partnering to create standards for the use of Web Services over a GSM network.  I think this is a poor choice in the long run - tying it to the GSM network just means that the cell carrier will charge the hell out of it and no one will use it.  See GPRS for a current example.</p>
+
+<p>There's a better solution: Wi-Fi integration.  Every coffee house, hotel, airport, etc has a wireless hotspot these days and they will only get more prevelant.  It provides a free network connection (the pay-per-use hotspots will go the way of the dinosaur in a year or two) and from there, additional protocols can be created to solve higher-level problems through standards bodies like the W3C or IETF.</p>
+
+<p>Another thought: consider the rising demand for Voice over IP (VOIP).  How long do you think it will take before someone offers an Wi-Fi handset that works without wires like a <a href="http://www.sipphone.com">SIPPhone</a>?  It's not going kill off the cell phone but certain market segments might find it cheaper.</p>
+
+<a name="more"></a>
+
+
+<span class="posted">Posted by mike at October 14, 2003 01:11 PM
+
+<br /></span>
+
+</div>
+
+
+<div class="comments-head"><a name="comments"></a>Comments</div>
+
+<div class="comments-body">
+<p>And, of course, see also <a href="http://www.wififreespot.com/index.html">http://www.wififreespot.com/index.html</a></p>
+
+<p>You're overstating the case a bit to suggest that *every* coffee shop has a hotspot nowadays; even in the tech-happy Bay Area, not all the Starbucks locations feature connectivity, and few other shops have it (so far). (Is Austin better off in this respect?) </p>
+
+<p>I agree that use seems more likely to go up than down, but I'm not sure how quickly it'll occur. Business users have little need outside of airports and hotels, it seems to me, and though the masses may text one another a lot via phone, that isn't the same as acquiring a device (or carrying one's laptop around) so that one can send email or access the Web while away from home / local library. Me, though my Palm has WiFi capability, I haven't actually tried using a hotspot yet because I haven't needed the access; sure, I could go to north Oakland and buy a hot chocolate and test out the nearest free hotspot, but why? (Since I use my Palm to work on my diss, read news via AvantGo, etc., it's hardly a vanity device, and it's with me nearly always.)</p>
+
+<p>Why do you think the charge aspect will vanish? </p>
+<span class="comments-post">Posted by: <a href="mailto&#58;gthistle144&#64;yahoo&#46;com">gthistle</a> on October 14, 2003 02:18 PM</span>
+</div>
+<div class="comments-body">
+<p>Yeah, yeah.  Every small coffee shop in Austin seems to have one.  My guess is that small, "homey" coffee joints tend to have them more because people sit and browse...  Starbucks is more of a "get your coffee and go" sort of place in my experience.</p>
+
+<p>Charges will go away for two reasons: 1) users will overwhelmingly use the free hotspots over the pay hotspots.  I see tons of people with laptops at Mozarts but very few at Borders with their T-Mobile pay hotspot.  2) The cost of billing and metering will  quickly overwhelm the cost of simply providing the service for free.  A DSL connection and access point will cost you $100 + $40/month.  Should you try to make money off the connection or give it away in hopes of getting more customers who buy more food or drink?  I don't know the answer to that one but I know where I choose to support businesses with free connections.</p>
+<span class="comments-post">Posted by: <a href="mailto&#58;blog&#64;perham&#46;net">mike</a> on October 14, 2003 02:30 PM</span>
+</div>
+<div class="comments-body">
+<p>Ah, but Starbucks has that agreement with T-Mobile, which (here) means that most of the hotspots are at a Starbucks. SF proper may be different, but very few cafes in Berkeley offer a connection. Very few anything in the East Bay, actually, downtown Oakland included. It amuses me no end that the stretch in downtown Long Beach just before Ocean Blvd is one narrow free hotspot because I usually think of Long Beach and Oakland as economically similar.</p>
+
+<p>Fair enough re: charge. I hadn't thought about it as separate from usage issues.</p>
+<span class="comments-post">Posted by: <a href="mailto&#58;gthistle144&#64;yahoo&#46;com">gthistle</a> on October 14, 2003 03:55 PM</span>
+</div>
+
+
+<div class="comments-head">Post a comment</div>
+
+<div class="comments-body">
+<form method="post" action="http://www.perham.net/mike/log/mt-comment.cgi" name="comments_form" onsubmit="if (this.bakecookie.checked) rememberMe(this)">
+<input type="hidden" name="static" value="1" />
+<input type="hidden" name="entry_id" value="68" />
+
+<label for="author">Name:</label><br />
+<input id="author" name="author" /><br /><br />
+
+<label for="email">Email Address:</label><br />
+<input id="email" name="email" /><br /><br />
+
+<label for="url">URL:</label><br />
+<input id="url" name="url" /><br /><br />
+
+<label for="text">Comments:</label><br />
+<textarea id="text" name="text" rows="10" cols="50"></textarea><br /><br />
+
+<input type="checkbox" id="bakecookie" name="bakecookie" /><label for="bakecookie">Remember info?</label><br /><br />
+
+<input type="submit" name="preview" value="&nbsp;PREVIEW&nbsp;" />
+<input type="submit" name="post" value="&nbsp;POST&nbsp;" /><br /><br />
+
+<input type="button" onclick="forgetMe(this.form)" value="FORGET PERSONAL INFORMATION" />
+</form>
+
+<script type="text/javascript" language="javascript">
+<!--
+document.comments_form.email.value = getCookie("mtcmtmail");
+document.comments_form.author.value = getCookie("mtcmtauth");
+document.comments_form.url.value = getCookie("mtcmthome");
+//-->
+</script>
+
+
+</div>
+</div>
+</body>
+</html>

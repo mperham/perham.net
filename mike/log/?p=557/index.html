@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Mutterings  &raquo; Blog Archive   &raquo; OpenID in practice</title>
+
+ <meta name="generator" content="WordPress 2.1.3" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/Indigo/style.css" type="text/css" media="screen" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.perham.net/mike/log/?feed=rss2" />
+
+<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.perham.net/mike/log/?feed=rss" />
+
+<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.perham.net/mike/log/?feed=atom" />
+
+<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel='archives' title='May 2007' href='http://www.perham.net/mike/log/?m=200705' />
+	<link rel='archives' title='April 2007' href='http://www.perham.net/mike/log/?m=200704' />
+	<link rel='archives' title='March 2007' href='http://www.perham.net/mike/log/?m=200703' />
+	<link rel='archives' title='February 2007' href='http://www.perham.net/mike/log/?m=200702' />
+	<link rel='archives' title='January 2007' href='http://www.perham.net/mike/log/?m=200701' />
+	<link rel='archives' title='December 2006' href='http://www.perham.net/mike/log/?m=200612' />
+	<link rel='archives' title='November 2006' href='http://www.perham.net/mike/log/?m=200611' />
+	<link rel='archives' title='October 2006' href='http://www.perham.net/mike/log/?m=200610' />
+	<link rel='archives' title='September 2006' href='http://www.perham.net/mike/log/?m=200609' />
+	<link rel='archives' title='August 2006' href='http://www.perham.net/mike/log/?m=200608' />
+	<link rel='archives' title='July 2006' href='http://www.perham.net/mike/log/?m=200607' />
+	<link rel='archives' title='June 2006' href='http://www.perham.net/mike/log/?m=200606' />
+	<link rel='archives' title='May 2006' href='http://www.perham.net/mike/log/?m=200605' />
+	<link rel='archives' title='April 2006' href='http://www.perham.net/mike/log/?m=200604' />
+	<link rel='archives' title='March 2006' href='http://www.perham.net/mike/log/?m=200603' />
+	<link rel='archives' title='February 2006' href='http://www.perham.net/mike/log/?m=200602' />
+	<link rel='archives' title='January 2006' href='http://www.perham.net/mike/log/?m=200601' />
+	<link rel='archives' title='December 2005' href='http://www.perham.net/mike/log/?m=200512' />
+	<link rel='archives' title='November 2005' href='http://www.perham.net/mike/log/?m=200511' />
+	<link rel='archives' title='October 2005' href='http://www.perham.net/mike/log/?m=200510' />
+	<link rel='archives' title='September 2005' href='http://www.perham.net/mike/log/?m=200509' />
+	<link rel='archives' title='August 2005' href='http://www.perham.net/mike/log/?m=200508' />
+	<link rel='archives' title='July 2005' href='http://www.perham.net/mike/log/?m=200507' />
+	<link rel='archives' title='June 2005' href='http://www.perham.net/mike/log/?m=200506' />
+	<link rel='archives' title='May 2005' href='http://www.perham.net/mike/log/?m=200505' />
+	<link rel='archives' title='April 2005' href='http://www.perham.net/mike/log/?m=200504' />
+	<link rel='archives' title='March 2005' href='http://www.perham.net/mike/log/?m=200503' />
+	<link rel='archives' title='February 2005' href='http://www.perham.net/mike/log/?m=200502' />
+	<link rel='archives' title='January 2005' href='http://www.perham.net/mike/log/?m=200501' />
+	<link rel='archives' title='December 2004' href='http://www.perham.net/mike/log/?m=200412' />
+	<link rel='archives' title='November 2004' href='http://www.perham.net/mike/log/?m=200411' />
+	<link rel='archives' title='October 2004' href='http://www.perham.net/mike/log/?m=200410' />
+	<link rel='archives' title='September 2004' href='http://www.perham.net/mike/log/?m=200409' />
+	<link rel='archives' title='August 2004' href='http://www.perham.net/mike/log/?m=200408' />
+	<link rel='archives' title='July 2004' href='http://www.perham.net/mike/log/?m=200407' />
+	<link rel='archives' title='June 2004' href='http://www.perham.net/mike/log/?m=200406' />
+	<link rel='archives' title='May 2004' href='http://www.perham.net/mike/log/?m=200405' />
+	<link rel='archives' title='April 2004' href='http://www.perham.net/mike/log/?m=200404' />
+	<link rel='archives' title='March 2004' href='http://www.perham.net/mike/log/?m=200403' />
+	<link rel='archives' title='February 2004' href='http://www.perham.net/mike/log/?m=200402' />
+	<link rel='archives' title='January 2004' href='http://www.perham.net/mike/log/?m=200401' />
+	<link rel='archives' title='December 2003' href='http://www.perham.net/mike/log/?m=200312' />
+	<link rel='archives' title='November 2003' href='http://www.perham.net/mike/log/?m=200311' />
+	<link rel='archives' title='October 2003' href='http://www.perham.net/mike/log/?m=200310' />
+	<link rel='archives' title='September 2003' href='http://www.perham.net/mike/log/?m=200309' />
+	<link rel='archives' title='August 2003' href='http://www.perham.net/mike/log/?m=200308' />
+	<link rel='archives' title='July 2003' href='http://www.perham.net/mike/log/?m=200307' />
+	<link rel='archives' title='June 2003' href='http://www.perham.net/mike/log/?m=200306' />
+	<link rel='archives' title='May 2003' href='http://www.perham.net/mike/log/?m=200305' />
+	<link rel='archives' title='April 2003' href='http://www.perham.net/mike/log/?m=200304' />
+	<link rel='archives' title='March 2003' href='http://www.perham.net/mike/log/?m=200303' />
+	<link rel='archives' title='February 2003' href='http://www.perham.net/mike/log/?m=200302' />
+	<link rel='archives' title='January 2003' href='http://www.perham.net/mike/log/?m=200301' />
+	<link rel='archives' title='December 2002' href='http://www.perham.net/mike/log/?m=200212' />
+	<link rel='archives' title='November 2002' href='http://www.perham.net/mike/log/?m=200211' />
+	<link rel='archives' title='October 2002' href='http://www.perham.net/mike/log/?m=200210' />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+	<div class="header">
+		
+		<div class="title">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		</div>
+
+		<div class="navigation">
+			<a href="http://www.perham.net/mike/log">Home</a>
+			<a href="./?page_id=564">About Me</a>
+
+			<a href="../gallery">Photos</a>
+			<a href="mailto:mike AT perham.net">Contact</a>
+		
+			<div class="clearer"><span></span></div>
+		</div>
+
+	</div>
+
+	<div class="main">
+		
+		<div class="content">
+
+			
+			
+			<div class="post" id="post-557">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=557" rel="bookmark" title="Permanent Link to OpenID in practice">OpenID in practice</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 22nd, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p>OpenID looks to be a very nice, lightweight identity system.  With OpenID, you are identified by a URL, in my case http://perham.net/mike.  Anyone can request this URL and get an HTML page with headers that point to my OpenID server.  </p>
+<blockquote><p>
+    &lt;link rel=&#8221;openid.server&#8221; href=&#8221;http://www.myopenid.com/server&#8221; /&gt;<br />
+    &lt;link rel=&#8221;openid.delegate&#8221; href=&#8221;http://mperham.myopenid.com/&#8221; /&gt;<br />
+    &lt;meta http-equiv=&#8221;X-XRDS-Location&#8221; content=&#8221;http://mperham.myopenid.com/xrds&#8221; /&gt;
+</p></blockquote>
+<p>Through a fancy series of browser redirects, any website can verify that the current user is &#8220;http://perham.net/mike&#8221;.  That&#8217;s the core of it - there are <a href="http://www.openidenabled.com/openid/simple-registration-extension/">simple extensions</a> to get more data about the user so sites can access the user&#8217;s name, email, etc automatically.</p>
+<p>The only caveat is the complex series of redirects required.  I run with an ad blocker and javascript blocker 100% of the time so the process did not work at first.  Once I granted all the necessary permissions in my browser, the redirects worked as expected.  For the 99% of the browsing public that are less paranoid than me, OpenID should just work.</p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=5" title="View all posts in Software" rel="category tag">Software</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> </p>
+
+			</div>
+
+			
+<!-- You can start editing here. -->
+
+
+   
+		<!-- If comments are open, but there are no comments. -->
+		
+	 
+
+
+<a name="respond"></a><h3>Leave a Comment</h3>
+<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="commentform">
+
+<p><input type="text" name="author" id="author" class="styled" value="" size="22" tabindex="1" />
+<input type="hidden" name="comment_post_ID" value="557" />
+<input type="hidden" name="redirect_to" value="/mike/log/?p=557" />
+<label for="author"><small>Name</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+	<p><small><strong>Please note:</strong> Comment moderation is enabled and may delay your comment. There is no need to resubmit your comment.</small></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" /></p>
+
+
+</form>
+
+
+			
+			<p align="center"> </p>
+
+			
+		</div>
+
+		<div class="sidenav">
+
+
+
+			
+		<h1>Search</h1>
+
+		<form method="get" id="searchform" action="/mike/log/index.php">
+
+		<input type="text" value="" name="s" id="s" /><input type="submit" id="sidebarsubmit" value="Search" />
+
+		</form>
+
+<h1>Recent Posts</h1>
+
+<ul>
+
+<li><a href='http://www.perham.net/mike/log/?p=571'>Modern Parenting</a></li><li><a href='http://www.perham.net/mike/log/?p=570'>Introducing ActiveScaffold</a></li><li><a href='http://www.perham.net/mike/log/?p=567'>What I learned from Star Trek</a></li><li><a href='http://www.perham.net/mike/log/?p=565'>It&#8217;s alive!</a></li><li><a href='http://www.perham.net/mike/log/?page_id=564'>About Me</a></li><li><a href='http://www.perham.net/mike/log/?p=563'>Heroes</a></li><li><a href='http://www.perham.net/mike/log/?p=562'>Offline Rails Apps</a></li><li><a href='http://www.perham.net/mike/log/?p=561'>Wordpress Upgrade</a></li><li><a href='http://www.perham.net/mike/log/?p=560'>Creating Windows-friendly video in Linux</a></li><li><a href='http://www.perham.net/mike/log/?p=559'>10 Steps to Fascism</a></li>
+</ul>
+
+
+
+		<h1>Categories</h1>
+
+		<ul>
+
+			<li><a href="http://www.perham.net/mike/log/?cat=2" title="View all posts filed under Business">Business</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=1" title="View all posts filed under General">General</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=4" title="View all posts filed under Motorcycles">Motorcycles</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=3" title="View all posts filed under Personal">Personal</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=8" title="View all posts filed under Politics">Politics</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=5" title="View all posts filed under Software">Software</a>
+</li>
+
+		</ul>
+
+		
+		<h1>Archives</h1>
+
+		<ul>
+
+			<li><a href='http://www.perham.net/mike/log/?m=200705' title='May 2007'>May 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200704' title='April 2007'>April 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200703' title='March 2007'>March 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200702' title='February 2007'>February 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200701' title='January 2007'>January 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200612' title='December 2006'>December 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200611' title='November 2006'>November 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200610' title='October 2006'>October 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200609' title='September 2006'>September 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200608' title='August 2006'>August 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200607' title='July 2006'>July 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200606' title='June 2006'>June 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200605' title='May 2006'>May 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200604' title='April 2006'>April 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200603' title='March 2006'>March 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200602' title='February 2006'>February 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200601' title='January 2006'>January 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200512' title='December 2005'>December 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200511' title='November 2005'>November 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200510' title='October 2005'>October 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200509' title='September 2005'>September 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200508' title='August 2005'>August 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200507' title='July 2005'>July 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200506' title='June 2005'>June 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200505' title='May 2005'>May 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200504' title='April 2005'>April 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200503' title='March 2005'>March 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200502' title='February 2005'>February 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200501' title='January 2005'>January 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200412' title='December 2004'>December 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200411' title='November 2004'>November 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200410' title='October 2004'>October 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200409' title='September 2004'>September 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200408' title='August 2004'>August 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200407' title='July 2004'>July 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200406' title='June 2004'>June 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200405' title='May 2004'>May 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200404' title='April 2004'>April 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200403' title='March 2004'>March 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200402' title='February 2004'>February 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200401' title='January 2004'>January 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200312' title='December 2003'>December 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200311' title='November 2003'>November 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200310' title='October 2003'>October 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200309' title='September 2003'>September 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200308' title='August 2003'>August 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200307' title='July 2003'>July 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200306' title='June 2003'>June 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200305' title='May 2003'>May 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200304' title='April 2003'>April 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200303' title='March 2003'>March 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200302' title='February 2003'>February 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200301' title='January 2003'>January 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200212' title='December 2002'>December 2002</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200211' title='November 2002'>November 2002</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200210' title='October 2002'>October 2002</a></li>
+		</ul>
+
+	
+		<h1>Meta</h1>
+
+		<ul>
+
+		<li><a href="http://www.perham.net/mike/log/?feed=rss2" title="Syndicate this site using RSS"><abbr title="Really Simple Syndication">RSS</abbr></a></li>
+
+		<li><a href="http://www.perham.net/mike/log/?feed=comments-rss2" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+
+		<li><a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a></li>
+
+		<li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
+
+		
+		</ul>
+
+		</div>
+	
+	
+	<div class="clearer"><span></span></div>
+
+
+</div>		
+</div>
+<div class="footer">&copy; 2002-2007 <a href="http://www.perham.net/mike/log">Mike Perham.</a></div>
+
+</body>
+
+</html>
+<!-- Dynamic Page Served (once) in 0.253 seconds -->

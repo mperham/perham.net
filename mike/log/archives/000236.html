@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<title>Mutterings: Testing Tapestry pages</title>
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/styles-site.css" type="text/css" />
+<link rel="alternate" type="application/rss+xml" title="RSS" href="http://www.perham.net/mike/log/index.rdf" />
+
+<link rel="start" href="http://www.perham.net/mike/log/" title="Home" />
+<link rel="prev" href="http://www.perham.net/mike/log/archives/000235.html" title="Google Maps technical info" />
+
+<link rel="next" href="http://www.perham.net/mike/log/archives/000237.html" title="The Online Menu" />
+
+
+<script type="text/javascript" language="javascript">
+<!--
+
+function OpenTrackback (c) {
+    window.open(c,
+                    'trackback',
+                    'width=480,height=480,scrollbars=yes,status=yes');
+}
+
+var HOST = 'www.perham.net';
+
+// Copyright (c) 1996-1997 Athenia Associates.
+// http://www.webreference.com/js/
+// License is granted if and only if this entire
+// copyright notice is included. By Tomer Shiran.
+
+function setCookie (name, value, expires, path, domain, secure) {
+    var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "") + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
+    document.cookie = curCookie;
+}
+
+function getCookie (name) {
+    var prefix = name + '=';
+    var c = document.cookie;
+    var nullstring = '';
+    var cookieStartIndex = c.indexOf(prefix);
+    if (cookieStartIndex == -1)
+        return nullstring;
+    var cookieEndIndex = c.indexOf(";", cookieStartIndex + prefix.length);
+    if (cookieEndIndex == -1)
+        cookieEndIndex = c.length;
+    return unescape(c.substring(cookieStartIndex + prefix.length, cookieEndIndex));
+}
+
+function deleteCookie (name, path, domain) {
+    if (getCookie(name))
+        document.cookie = name + "=" + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+}
+
+function fixDate (date) {
+    var base = new Date(0);
+    var skew = base.getTime();
+    if (skew > 0)
+        date.setTime(date.getTime() - skew);
+}
+
+function rememberMe (f) {
+    var now = new Date();
+    fixDate(now);
+    now.setTime(now.getTime() + 365 * 24 * 60 * 60 * 1000);
+    setCookie('mtcmtauth', f.author.value, now, '', HOST, '');
+    setCookie('mtcmtmail', f.email.value, now, '', HOST, '');
+    setCookie('mtcmthome', f.url.value, now, '', HOST, '');
+}
+
+function forgetMe (f) {
+    deleteCookie('mtcmtmail', '', HOST);
+    deleteCookie('mtcmthome', '', HOST);
+    deleteCookie('mtcmtauth', '', HOST);
+    f.email.value = '';
+    f.author.value = '';
+    f.url.value = '';
+}
+
+//-->
+</script>
+
+
+
+</head>
+
+<body>
+
+<div id="banner">
+<h1><a href="http://www.perham.net/mike/log/" accesskey="1">Mutterings</a></h1>
+<span class="description">Mike Perham's blog</span>
+</div>
+
+<div id="container">
+
+<div class="blog">
+
+<div id="menu">
+<a href="http://www.perham.net/mike/log/archives/000235.html">&laquo; Google Maps technical info</a> |
+
+<a href="http://www.perham.net/mike/log/">Main</a>
+| <a href="http://www.perham.net/mike/log/archives/000237.html">The Online Menu &raquo;</a>
+
+</div>
+
+</div>
+
+
+<div class="blog">
+
+<h2 class="date">February 12, 2005</h2>
+
+<div class="blogbody">
+
+<h3 class="title">Testing Tapestry pages</h3>
+
+<p>At Webify, we have three main subsystems of our applications: Hibernate for the database layer, Spring for the component container layer and Tapestry for the Web UI layer.</p>
+
+<p>It's relatively easy to unit test Hibernate and Spring code via JUnit, they both provide hooks so you can start them up by hand.  Tapestry, on the other hand, is meant to run within an application server - it requires a container to run.  Well, mock objects have recently become popular as a way of testing code which requires a container to run; you just create the container objects which are used by this code so that it thinks it is running within a container:</p>
+
+<pre>
+        MockServletContext servCtx = new MockServletContext("/webroot");
+        MockServletConfig servCfg = new MockServletConfig(servCtx, "tapestry");
+        ApplicationServlet servlet = new ApplicationServlet();
+        servlet.init(servCfg);
+        
+        MockHttpServletRequest req = new MockHttpServletRequest(servCtx, "GET", "/");
+        MockHttpServletResponse resp = new MockHttpServletResponse();
+        servlet.service(req, resp);
+        if (!pageRequested) {
+            fail("Home page was not executed");
+        }
+</pre>
+
+<p>The ApplicationServlet is the method of entry into the Tapestry system.  On the filesystem, you create a "tapestry.application" file in webroot/WEB-INF which contains the page definitions.  In this case, this just tests that the Home page is rendered.</p>
+
+<pre>
+public class HomePage extends BasePage implements PageRenderListener {
+    public void pageBeginRender(PageEvent arg0) {
+        RequestTest.setPageRequested();
+    }
+}
+</pre>
+
+<p>Pretty simple, huh?  Now we can do basic login testing as part of our unit tests to ensure that the Web UI actually works, rather than needing to run a container and testing it by hand!</p>
+
+<a name="more"></a>
+
+
+<span class="posted">Posted by mike at February 12, 2005 06:39 PM
+
+<br /></span>
+
+</div>
+
+
+<div class="comments-head"><a name="comments"></a>Comments</div>
+
+<div class="comments-body">
+<p>Uh...... ok.</p>
+<span class="comments-post">Posted by: <a href="mailto&#58;jim&#64;perham&#46;net">Yo Daddy</a> on February 13, 2005 12:39 PM</span>
+</div>
+<div class="comments-body">
+<p>Oh, this is useful. I had no idea mock objects were "popular" these days ..</p>
+<span class="comments-post">Posted by: <a target="_blank" title="http://www.bloglife.net/users/rsingh" href="http://www.perham.net/mike/log/mt-comment.cgi?__mode=red;id=314">Raj</a> on February 17, 2005 10:11 AM</span>
+</div>
+
+
+<div class="comments-head">Post a comment</div>
+
+<div class="comments-body">
+<form method="post" action="http://www.perham.net/mike/log/mt-comment.cgi" name="comments_form" onsubmit="if (this.bakecookie.checked) rememberMe(this)">
+<input type="hidden" name="static" value="1" />
+<input type="hidden" name="entry_id" value="236" />
+
+<label for="author">Name:</label><br />
+<input id="author" name="author" /><br /><br />
+
+<label for="email">Email Address:</label><br />
+<input id="email" name="email" /><br /><br />
+
+<label for="url">URL:</label><br />
+<input id="url" name="url" /><br /><br />
+
+<label for="text">Comments:</label><br />
+<textarea id="text" name="text" rows="10" cols="50"></textarea><br /><br />
+
+<input type="checkbox" id="bakecookie" name="bakecookie" /><label for="bakecookie">Remember info?</label><br /><br />
+
+<input type="submit" name="preview" value="&nbsp;PREVIEW&nbsp;" />
+<input type="submit" name="post" value="&nbsp;POST&nbsp;" /><br /><br />
+
+<input type="button" onclick="forgetMe(this.form)" value="FORGET PERSONAL INFORMATION" />
+</form>
+
+<script type="text/javascript" language="javascript">
+<!--
+document.comments_form.email.value = getCookie("mtcmtmail");
+document.comments_form.author.value = getCookie("mtcmtauth");
+document.comments_form.url.value = getCookie("mtcmthome");
+//-->
+</script>
+
+
+</div>
+</div>
+</body>
+</html>

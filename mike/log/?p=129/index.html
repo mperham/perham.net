@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Mutterings  &raquo; Blog Archive   &raquo; DVD Sizing</title>
+
+<meta name="generator" content="WordPress 2.0" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/default/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+<style type="text/css" media="screen">
+/*	To accomodate differing install paths of WordPress, images are referred only here,
+	and not in the wp-layout.css file. If you prefer to use only CSS for colors and what
+	not, then go right ahead and delete the following lines, and the image files. */
+		
+	body { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickbgcolor.jpg"); }	
+	#page { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickbgwide.jpg") repeat-y top; border: none; } 
+	#header { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickheader.jpg") no-repeat bottom center; }
+	#footer { background: url("http://www.perham.net/mike/log/wp-content/themes/default/images/kubrickfooter.jpg") no-repeat bottom; border: none;}
+
+/*	Because the template is slightly different, size-wise, with images, this needs to be set here
+	If you don't want to use the template's images, you can also delete the following two lines. */
+		
+	#header 	{ margin: 0 !important; margin: 0 0 0 1px; padding: 1px; height: 198px; width: 758px; }
+	#headerimg 	{ margin: 7px 9px 0; height: 192px; width: 740px; } 
+
+/* 	To ease the insertion of a personal header image, I have done it in such a way,
+	that you simply drop in an image called 'personalheader.jpg' into your /images/
+	directory. Dimensions should be at least 760px x 200px. Anything above that will
+	get cropped off of the image. */
+	/*
+	#headerimg { background: url('http://www.perham.net/mike/log/wp-content/themes/default/images/personalheader.jpg') no-repeat top;}
+	*/
+</style>
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+</head>
+<body>
+<div id="page">
+
+
+<div id="header">
+	<div id="headerimg">
+		<h1><a href="http://www.perham.net/mike/log/">Mutterings</a></h1>
+		<div class="description">Life in the Slow Lane</div>
+	</div>
+</div>
+<hr />
+
+	<div id="content" class="widecolumn">
+				
+  	
+		<div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://www.perham.net/mike/log/?p=128">Stupidity, Thy name is Mike</a></div>
+			<div class="alignright"><a href="http://www.perham.net/mike/log/?p=130">Two Bikes for the price of One</a> &raquo;</div>
+		</div>
+	
+		<div class="post" id="post-129">
+			<h2><a href="http://www.perham.net/mike/log/?p=129" rel="bookmark" title="Permanent Link: DVD Sizing">DVD Sizing</a></h2>
+	
+			<div class="entrytext">
+				<p>Tonight I came across one of those programming questions which is easy to pose but maddeningly difficult to solve.  I&#8217;m trying to burn a DVD (which is limited to 4.5GB) with a set of 11 videos which total about 6.6GB and individually range in size from 550MB to 750MB.  The problem is: given a set of N file sizes, find a subset which total closest to the magical 4.5GB number without going over.</p>
+<p>I wasn&#8217;t about to figure out all the permutations myself (with 11 files you have 2^11 permutations, although many of them are trivial to discard).  Now it&#8217;s been years since I&#8217;ve been in school but my initial thought was this is a perfect example of a <a href="http://www.nist.gov/dads/HTML/dynamicprog.html">dynamic programming</a> problem but as my skills are not as sharp as they used to be, I&#8217;m still unclear how to turn this notion into an efficient implementation.</p>
+<p>So I went back to the drawing board and realized that the calculations I want to perform can be represented as a bitmask from 1 to 2^N where each bit represents whether to add the number at that index to the total.  Let&#8217;s say I have 3 file sizes and want to total as close to 18 as possible:</p>
+<p>14<br />
+3<br />
+12</p>
+<p>There are 8 possibilities:</p>
+<p>000 = 0<br />
+001 = 14<br />
+010 = 3<br />
+011 = 17<br />
+100 = 12<br />
+101 = 26<br />
+110 = 15<br />
+111 = 29</p>
+<p>And so the answer is 011 = 17.  My size optimizer handles up to 32 sizes (due to an int having 32 bits).  I can&#8217;t imagine wanting to fit more than about 20 shows on a DVD so that should be sufficient.</p>
+<p>So that&#8217;s my algorithm.  It&#8217;s NP-complete, running in O(2^N) time unfortunately but that&#8217;s required to find the optimal fit.
+</p>
+	
+					
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+						 
+						on Friday, April 2nd, 2004 at 9:26 pm						and is filed under <a href="http://www.perham.net/mike/log/?cat=3" title="View all posts in Personal" rel="category tag">Personal</a>.
+						You can follow any responses to this entry through the <a href='http://www.perham.net/mike/log/?feed=rss2&amp;p=129'>RSS 2.0</a> feed. 
+						
+													You can skip to the end and leave a response. Pinging is currently not allowed.
+			
+												
+					</small>
+				</p>
+	
+			</div>
+		</div>
+		
+	
+<!-- You can start editing here. -->
+
+
+   
+		<!-- If comments are open, but there are no comments. -->
+		
+	 
+
+
+<h3 id="respond">Leave a Reply</h3>
+
+
+<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="129" />
+</p>
+
+</form>
+
+
+	
+		
+	</div>
+
+
+<hr />
+<div id="footer">
+	<p>
+		Mutterings is proudly powered by 
+		<a href="http://wordpress.org/">WordPress</a>
+		<br /><a href="feed:http://www.perham.net/mike/log/?feed=rss2">Entries (RSS)</a>
+		and <a href="feed:http://www.perham.net/mike/log/?feed=comments-rss2">Comments (RSS)</a>.
+		<!-- 12 queries. 0.133 seconds. -->
+	</p>
+</div>
+</div>
+
+<!-- Gorgeous design by Michael Heilemann - http://binarybonsai.com/kubrick/ -->
+
+		</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Mutterings  &raquo; Blog Archive   &raquo; Next-Gen App Frameworks</title>
+
+<meta name="generator" content="WordPress 2.0.5" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/default/style.css" type="text/css" media="screen" />
+<link rel="alternate" type="application/rss+xml" title="Mutterings RSS Feed" href="http://www.perham.net/mike/log/?feed=rss2" />
+<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+</head>
+<body>
+<div id="page">
+
+
+<div id="header">
+	<div id="headerimg">
+		<h1><a href="http://www.perham.net/mike/log/">Mutterings</a></h1>
+		<div class="description">Life in the Slow Lane</div>
+	</div>
+</div>
+<hr />
+
+	<div id="content" class="widecolumn">
+
+  
+		<div class="navigation">
+			<div class="alignleft">&laquo; <a href="http://www.perham.net/mike/log/?p=442">New Car</a></div>
+			<div class="alignright"><a href="http://www.perham.net/mike/log/?p=445">Ted Stevens</a> &raquo;</div>
+		</div>
+
+		<div class="post" id="post-444">
+			<h2><a href="http://www.perham.net/mike/log/?p=444" rel="bookmark" title="Permanent Link: Next-Gen App Frameworks">Next-Gen App Frameworks</a></h2>
+
+			<div class="entry">
+				<p>Rails isn&#8217;t the only NG framework out there. Others have overlapping functionality with Rails, with their own strengths and weaknesses.</p>
+<ul>
+<li><a href="http://www.symfony-project.com/tutorial/my_first_project.html">Symfony for PHP5</a> - the language and the framework are much more verbose and far less elegant due to the lack of metaprogramming within PHP itself.  Ruby can dynamically add methods and accessors to objects at runtime - PHP can&#8217;t so there are a number of workarounds which add bloat to your system (Base model classes, Peer model objects, etc).  I didn&#8217;t see any support for associations, validations, or migrations within the data model - those are all nice to have. There is a nice feature to auto-support content localization within database values.  Probably the best part of the entire system is that they have a notion of a user, credentials and basic user-level security.  Every Rails app has to roll this on their own and it&#8217;s a major lapse IMO.</li>
+<li><a href="http://www.djangoproject.com/documentation/overview/">Django for Python</a> - much more elegant than Symfony, due to Python&#8217;s dynamic language capabilities.  Both require you to specify your data model in their own format, but it is not clear to me whether these representations can handle all scenarios. Rails allows you to execute raw SQL if their API does not support an advanced feature your model needs.  Like Symfony, it comes with a notion of users and groups which can be used to implement the basic user security required by 99% of all webapps.  Django has an <a href="http://www.djangoproject.com/documentation/tutorial2/">incredibly powerful generic CRUD editing system</a>.  Very impressive.  Controllers are a little awkward compared to Rails as you have to import more trivia.</li>
+</ul>
+<p>One interesting thing I see all these frameworks moving toward is the notion of encapsulating an action within a clean URL.  Opaque URLs would be something like http://reviews.cnet.com/Digital_cameras/2001-6501_7-0.html.  It&#8217;s not clear what is at this URL.  A clean URL would be something like http://www.perham.net/mike/log/2006/01/10 which you can assume will show you all posts in my blog on Jan 10, 2006.  The URL moves from an arbitrary string to a more logically constructed action identifier.  Now if you want to see all postings within January, the user can assume you just remove 10 from the URL and the system will adapt.</p>
+<p>Another interesting note: neither framework once mentions testing or web services, both of which Rails integrates nicely.</p>
+<p>Rails is still the king IMO.  There are a number of features which would be nice to see in Rails, especially Symfony&#8217;s user functionality and Django&#8217;s slick CRUD editing interface, but overall the other two are still playing catchup.
+</p>
+
+				
+				<p class="postmetadata alt">
+					<small>
+						This entry was posted
+						 
+						on Sunday, July 16th, 2006 at 12:17 pm						and is filed under <a href="http://www.perham.net/mike/log/?cat=5" title="View all posts in Software" rel="category tag">Software</a>.
+						You can follow any responses to this entry through the <a href='http://www.perham.net/mike/log/?feed=rss2&amp;p=444'>RSS 2.0</a> feed. 
+
+													You can skip to the end and leave a response. Pinging is currently not allowed.
+
+						
+					</small>
+				</p>
+
+			</div>
+		</div>
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-0461304543703941";
+google_ad_width = 468;
+google_ad_height = 60;
+google_ad_format = "468x60_as";
+google_ad_type = "text";
+google_ad_channel ="";
+google_color_bg = "F0F0F0";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+
+	
+<!-- You can start editing here. -->
+
+	<h3 id="comments">13 Responses to &#8220;Next-Gen App Frameworks&#8221;</h3> 
+
+	<ol class="commentlist">
+
+	
+		<li class="alt" id="comment-44849">
+			<cite><a href='http://www.holovaty.com/' rel='external nofollow'>Adrian Holovaty</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44849" title="">July 16th, 2006 at 1:03 pm</a> </small>
+
+			<p>Hey there,</p>
+<p>A quick correction to this article&#8230;</p>
+<p>Actually, Django was created before Rails; it&#8217;s not a copy, as you imply. It wasn&#8217;t open-sourced, though, until Rails went open-source. Hope this clears up any confusion &#8212; and feel free to correct your error in the writeup. <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_wink.gif' alt=';)' class='wp-smiley' /> </p>
+<p>BTW, Django also comes with a user authentication system.
+</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-44850">
+			<cite><a href='http://simon.incutio.com/' rel='external nofollow'>Simon Willison</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44850" title="">July 16th, 2006 at 1:17 pm</a> </small>
+
+			<p>Another Django clarification: Django not only allows but encourages you to roll your own SQL queries when it makes sense to do so, adding them as custom methods to your model. This is documented here: <a href="http://www.djangoproject.com/documentation/model_api/#executing-custom-sql" rel="nofollow">http://www.djangoproject.com/documentation/model_api/#executing-custom-sql</a>
+</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-44851">
+			<cite>mperham</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44851" title="">July 16th, 2006 at 1:47 pm</a> </small>
+
+			<p>@adrian, thanks, corrected.  I did mention Django&#8217;s users/groups feature.</p>
+<p>@simon, I was actually referring to the process of defining the database schema.  What if you need to create an index with a database-specific option (e.g., &#8220;ALLOW REVERSE SCANS&#8221; in DB2)?  I assume it allows you to model basic indexes with Python but does it allow arbitrary SQL when defining your tables, columns, etc?</p>
+<p>Let me know if there are other mistakes and I&#8217;ll be happy to correct.
+</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-44891">
+			<cite><a href='http://jeffcroft.com' rel='external nofollow'>Jeff Croft</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44891" title="">July 16th, 2006 at 7:58 pm</a> </small>
+
+			<p>Django generates SQL based on the model definition and will automatically run it against your database in order to create the tables and columns. However, there&#8217;s nothing stopping you from modifying the generated SQL if it&#8217;s not to your liking. You could certainly add db-specific options if you like.</p>
+<p>Also, re: web services (depending on what exactly you mean by that), Django offers a <a href="http://code.djangoproject.com/changeset/3237" rel="nofollow">serialization framework</a> that includes a JSON serializer, which should make creating REST-style APIs quite painless.</p>
+<p>I&#8217;m not convinced that Django is &#8220;playing catchup&#8221; to Rails from what I&#8217;ve read about Rails (I haven&#8217;t actually used it). You mention features here that Symfony and Django have that Rails doesn&#8217;t &#8212; what about the other way around? What is it that Rails offers that Django doesn&#8217;t that leads to your &#8220;playing catchup&#8221; conclusion?
+</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-44893">
+			<cite><a href='http://www.b-list.org/' rel='external nofollow'>James Bennett</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44893" title="">July 16th, 2006 at 8:49 pm</a> </small>
+
+			<p>And one more thing about models:</p>
+<p>While the common pattern with Django is to define the models in Python code, then let Django create the tables (and, as Jeff pointed out, you can edit the SQL before it&#8217;s executed), we also support creating the tables first via straight SQL, then having Django introspect them to generate Python model definitions (which, again, you can edit).</p>
+<p>So you can go either way.
+</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-44897">
+			<cite>mperham</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44897" title="">July 16th, 2006 at 9:44 pm</a> </small>
+
+			<p>Jeff, I didn&#8217;t know about the serialization framework but it doesn&#8217;t look all that useful except in the simplest of cases.  Rails certainly has the equivalent feature (not sure if it is in 1.1 or 1.2) but the web services layer allows you to define xml structures independent from your model so you can define coarser-grained service methods that use multiple models (or no models) to perform business logic.   For instance a search parameters structure to support a product lookup service would not be a model but it might allow automated searching of a product or user model.  I would be surprised if Django didn&#8217;t have this capability but like I said, I&#8217;m not familiar with it.</p>
+<p>By far Django&#8217;s biggest weakness IMO is its utter lack of testing support.  Maybe it has something but the documentation has NOTHING on the subject whereas Rails has incredibly deep and useful infrastructure around testing, both unit (model) and integration (view and controller).  Any dynamically typed framework like Django or Rails MUST have automated testing or else refactoring becomes an exercise in frustration as you test all the nooks and crannies of your app by hand.  If you change a column name or a method name, how else do you ensure you have updated the code affected by the change?  You just can&#8217;t scale development to large systems without automated testing.</p>
+<p>Rails also has model-based validation so your model can never be &#8220;corrupted&#8221; with invalid data.  Putting validation at the view or controller level means you need to repeat yourself for each view or controller instance.  I skimmed over Manipulators which sounds like an interesting twist on validation but at first glance I would prefer the rules in the model itself as those rules essentially are your data contract with the rest of the application and so should be front and center in the model, not in a utility class.</p>
+<p>James, do you guys have anything like the migrations feature in Rails?  That seems really useful</p>
+<p><a href="http://glu.ttono.us/articles/2005/10/27/the-joy-of-migrations" rel="nofollow">http://glu.ttono.us/articles/2005/10/27/the-joy-of-migrations</a></p>
+<p>It does look like Django is reasonably feature-similar to Rails.  The testing issue is a showstopper for me - fix that and I think you have a viable alternative to Rails.
+</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-44898">
+			<cite><a href='http://jeffcroft.com' rel='external nofollow'>Jeff Croft</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44898" title="">July 16th, 2006 at 9:52 pm</a> </small>
+
+			<p>Thanks for the response. The serialization framework is new, and I know jacob has plans to expand it. Not sure if he intends on it doing everything that Rails does or not, but I know it&#8217;s not done by any means.</p>
+<p>As for model-based validation, it seems that Django has that. Unless I&#8217;m not understanding what exactly you mean (I&#8217;m no hardcore programmer), that is. Django has several built-in validators, documented here: <a href="http://www.djangoproject.com/documentation/forms/#validators" rel="nofollow">http://www.djangoproject.com/documentation/forms/#validators</a></p>
+<p>They&#8217;re related to manipulators, but manipulators are defined within your model, so I&#8217;d called that &#8220;model-based&#8221;, unless you&#8217;ve got a different meaning for that.</p>
+<p>I&#8217;m really a designer and not a programmer, and frankly, most of what you&#8217;re talking about is over my head. Thanks for the bit on testing, though. That certainly does sound like a nice feature of Rails that Django is missing. </p>
+<p>As to the rest of the stuff: you&#8217;ve got both of the creators of Django and another high-profile member of its community commenting on this thread already, so I&#8217;ll leave it to them to respond. They know this stuff a lot better than my little designer brain can handle. <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' />
+</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-44947">
+			<cite>mperham</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44947" title="">July 17th, 2006 at 10:24 am</a> </small>
+
+			<p>Couple of Django questions:</p>
+<p>1) Why &#8220;Entry.objects.get(id=2)&#8221; instead of &#8220;Entry.get(id=2)&#8221;?  Why use a separate model helper object rather than just putting all the helper methods directly on the model object itself?<br />
+2) Does the admin interface support related objects?  If I&#8217;m looking at a Blog object, is the admin interface smart enough to allow me to create a related Entry object, automagically?  If it did, I would be in awe of you guys.
+</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-44949">
+			<cite><a href='http://jeffcroft.com' rel='external nofollow'>Jeff Croft</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44949" title="">July 17th, 2006 at 10:36 am</a> </small>
+
+			<p>I can answer number two: Yes.</p>
+<p>The number of custom admin options in Django absolutely astounding. What you are looking for is &#8220;edit_inline&#8221;. It&#8217;s documented here: <a href="http://www.djangoproject.com/documentation/model_api/" rel="nofollow">http://www.djangoproject.com/documentation/model_api/</a></p>
+<p>Sort of related is &#8220;core,&#8221; which lets you specify related objects that are essential to a another object instance&#8217;s existence. So, for your &#8220;blog&#8221; object, if you said that &#8220;entry&#8221; relationships were &#8220;core,&#8221; and then you deleted all the entries for a particular blog, the blog would also be deleted.</p>
+<p>The admin is freaking unbelievable. You have to try it and play with all the options to really appreciate it fully.</p>
+<p>As for question number one: I *think* the answer is that by using the helper object, it allows people to replace that helper object with one of their own, if they prefer. I could be wrong about that, though &#8212; the other guys here are definitely more equipped to answer that than me.
+</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-44952">
+			<cite><a href='http://www.b-list.org/' rel='external nofollow'>James Bennett</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44952" title="">July 17th, 2006 at 10:47 am</a> </small>
+
+			<p>Mike:</p>
+<p>Trying again, but your comment form keeps telling me 8 and 2 aren&#8217;t 10.</p>
+<p>There&#8217;s a branch underway to add some automated schema-migration stuff to Django; it&#8217;s a Summer of Code project, so we&#8217;ll have something by the end of the summer.</p>
+<p>We ship tests for everything that&#8217;s in Django&#8217;s core, and those should serve as good examples of how to do it yourself; as with so many things, the answer to &#8220;why doesn&#8217;t Django do x&#8221; is &#8220;Python already has really good libraries for it; use them&#8221;.</p>
+<p>Validation is already largely in the model layer even if it doesn&#8217;t appear to be; the manipulator/formfields system is there for translating between HTML form input and Python data trying to go into a model. And large chunks of that, even, are being moved into the model layer.</p>
+<p>It&#8217;s &#8220;Entry.objects.get&#8221; instead of &#8220;Entry.get&#8221; because &#8220;objects&#8221; is a manager &#8212; a class that implements the table-level SQL and other options for the model. Every model gets a default one called &#8220;objects&#8221; but, as Jeff pointed out, you can redefine it or add additional managers which change the way you interact with the database at the table level (e.g., adding new types of queries, filtering the results of existing ones, etc.).</p>
+<p>Also, and maybe this is just me, I don&#8217;t think &#8220;be a viable alternative to Rails&#8221; is or should be a goal for Django; Django should be Django, and focus on solving the problems of web development in the way that seems best, rather than trying to &#8220;beat&#8221; or compete with anything else. Plus, I think Django is a viable alternative to Rails; I ditched Rails for it a year ago, and now I&#8217;m happily working with it for a living <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' />
+</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-44953">
+			<cite><a href='http://www.holovaty.com/' rel='external nofollow'>Adrian Holovaty</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44953" title="">July 17th, 2006 at 10:57 am</a> </small>
+
+			<p>Contrary to what Jeff said in a previous comment, Django models are not validation-aware at the moment. Currently, model validation is decoupled from model instances. To validate a model instance, you run it through something called a &#8220;manipulator.&#8221; Manipulators are generated dynamically on a per-model basis, but they&#8217;re decoupled from model instances.</p>
+<p>I&#8217;m working on changing this, though, to make model instances validation-aware. That is, a model instance will know how to validate itself, with no need for manipulators in that case. Hope this clears things up!
+</p>
+
+		</li>
+
+	
+	
+		<li class="" id="comment-44956">
+			<cite><a href='http://www.holovaty.com/' rel='external nofollow'>Adrian Holovaty</a></cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44956" title="">July 17th, 2006 at 11:13 am</a> </small>
+
+			<p>We use “Entry.objects.get(id=2)” instead of “Entry.get(id=2)” to separate &#8220;table-level&#8221; functionality from &#8220;row-level&#8221; functionality. &#8220;Entry.objects&#8221; is the One True interface for &#8220;table-level&#8221; functionality, and any other method or attribute access on an object instance is row-level.</p>
+<p>It&#8217;s all about namespacing. If we combined the two, it (1) would be confusing and (2) would introduce potential for name conflicts between default methods such as get(), filter() and count(), and field names.</p>
+<p>By the way, may I politely suggest that this comment form be made more usable? Twice, I&#8217;ve submitted a comment, having forgotten to fill in the &#8220;Please add these numbers&#8221; thing. I click &#8220;Back,&#8221; and my comment has been lost. At least redisplay the form with the error message. In fact, if you used Django, you&#8217;d get that form-redisplay functionality for free. <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' />
+</p>
+
+		</li>
+
+	
+	
+		<li class="alt" id="comment-44981">
+			<cite>mperham</cite> Says:
+						<br />
+
+			<small class="commentmetadata"><a href="#comment-44981" title="">July 17th, 2006 at 12:50 pm</a> </small>
+
+			<p>@James, like it or not, Django is very similar to Rails and since Rails is the current golden child in the industry, you&#8217;re inevitably going to be compared and contrasted with them and termed &#8220;an alternative&#8221;.</p>
+<p>Regarding testing, I see it from a user perspective.  I&#8217;m sure you have excellent testing libraries but that means integration overhead required for every project.  If testing is integrated out of the box, plugins and other Django libraries can assume it exists and add their own functionality into the tests.  As a professional software engineer, one of the things that excites me the most about Rails is the ease of full stack testing.  I work on a huge J2EE system at work and we have many, many thousands of lines of code which need to be tested by hand because of the incredible difficulty of testing that code in an automated fashion.</p>
+<p>@Adrian, ok so it holds the static functionality for the Entry class.  Makes sense.  Sorry about the math problem.  It&#8217;s a Word Press plugin - I&#8217;ll see if there&#8217;s a later version.</p>
+<p>BTW two further comments - I appreciate your professional tone throughout here.  Too often these conversations are taken personally and descend into madness.  My regard for Django and the dev team has steadily increased over the last two days.</p>
+<p>Secondly, your documentation is incredible.  With Rails you pretty much have to buy the book but sections like this (http://www.djangoproject.com/documentation/cache/) really explain what the feature does and how to use it.  Kudos.
+</p>
+
+		</li>
+
+	
+	
+	</ol>
+
+ 
+
+
+<h3 id="respond">Leave a Reply</h3>
+
+
+<form action="http://www.perham.net/mike/log/wp-comments-post.php" method="post" id="commentform">
+
+
+<p><input type="text" name="author" id="author" value="" size="22" tabindex="1" />
+<label for="author"><small>Name (required)</small></label></p>
+
+<p><input type="text" name="email" id="email" value="" size="22" tabindex="2" />
+<label for="email"><small>Mail (will not be published) (required)</small></label></p>
+
+<p><input type="text" name="url" id="url" value="" size="22" tabindex="3" />
+<label for="url"><small>Website</small></label></p>
+
+
+<!--<p><small><strong>XHTML:</strong> You can use these tags: &lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;code&gt; &lt;em&gt; &lt;i&gt; &lt;strike&gt; &lt;strong&gt; </small></p>-->
+
+<p><textarea name="comment" id="comment" cols="100%" rows="10" tabindex="4"></textarea></p>
+
+<p><input name="submit" type="submit" id="submit" tabindex="5" value="Submit Comment" />
+<input type="hidden" name="comment_post_ID" value="444" />
+</p>
+        <div id="answerdiv">
+       
+       
+    	     <p>
+            <input type="text" name="answer" id="answer" size="6" tabindex="4" /> <label for="answer">Please add 10 and 7</label>     
+
+
+            </p>
+        </div>
+        
+         <script type="text/javascript">
+            var urlField = document.getElementById("url");
+            var submitp = urlField.parentNode;
+            var answerDiv = document.getElementById("answerdiv");
+            submitp.appendChild(answerDiv, urlField);
+        </script>
+        
+        
+</form>
+
+
+
+	
+	</div>
+
+
+<hr />
+<div id="footer">
+<!-- If you'd like to support WordPress, having the "powered by" link someone on your blog is the best way, it's our only promotion or advertising. -->
+	<p>
+		Mutterings is proudly powered by 
+		<a href="http://wordpress.org/">WordPress</a>
+		<br /><a href="feed:http://www.perham.net/mike/log/?feed=rss2">Entries (RSS)</a>
+		and <a href="feed:http://www.perham.net/mike/log/?feed=comments-rss2">Comments (RSS)</a>.
+		<!-- 18 queries. 0.257 seconds. -->
+	</p>
+</div>
+</div>
+
+<!-- Gorgeous design by Michael Heilemann - http://binarybonsai.com/kubrick/ -->
+
+		</body>
+</html>

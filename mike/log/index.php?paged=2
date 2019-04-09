@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head profile="http://gmpg.org/xfn/11">
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>Mutterings  </title>
+
+ <meta name="generator" content="WordPress 2.1.3" /> <!-- leave this for stats -->
+
+<link rel="stylesheet" href="http://www.perham.net/mike/log/wp-content/themes/Indigo/style.css" type="text/css" media="screen" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://www.perham.net/mike/log/?feed=rss2" />
+
+<link rel="alternate" type="text/xml" title="RSS .92" href="http://www.perham.net/mike/log/?feed=rss" />
+
+<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="http://www.perham.net/mike/log/?feed=atom" />
+
+<link rel="pingback" href="http://www.perham.net/mike/log/xmlrpc.php" />
+
+	<link rel='archives' title='May 2007' href='http://www.perham.net/mike/log/?m=200705' />
+	<link rel='archives' title='April 2007' href='http://www.perham.net/mike/log/?m=200704' />
+	<link rel='archives' title='March 2007' href='http://www.perham.net/mike/log/?m=200703' />
+	<link rel='archives' title='February 2007' href='http://www.perham.net/mike/log/?m=200702' />
+	<link rel='archives' title='January 2007' href='http://www.perham.net/mike/log/?m=200701' />
+	<link rel='archives' title='December 2006' href='http://www.perham.net/mike/log/?m=200612' />
+	<link rel='archives' title='November 2006' href='http://www.perham.net/mike/log/?m=200611' />
+	<link rel='archives' title='October 2006' href='http://www.perham.net/mike/log/?m=200610' />
+	<link rel='archives' title='September 2006' href='http://www.perham.net/mike/log/?m=200609' />
+	<link rel='archives' title='August 2006' href='http://www.perham.net/mike/log/?m=200608' />
+	<link rel='archives' title='July 2006' href='http://www.perham.net/mike/log/?m=200607' />
+	<link rel='archives' title='June 2006' href='http://www.perham.net/mike/log/?m=200606' />
+	<link rel='archives' title='May 2006' href='http://www.perham.net/mike/log/?m=200605' />
+	<link rel='archives' title='April 2006' href='http://www.perham.net/mike/log/?m=200604' />
+	<link rel='archives' title='March 2006' href='http://www.perham.net/mike/log/?m=200603' />
+	<link rel='archives' title='February 2006' href='http://www.perham.net/mike/log/?m=200602' />
+	<link rel='archives' title='January 2006' href='http://www.perham.net/mike/log/?m=200601' />
+	<link rel='archives' title='December 2005' href='http://www.perham.net/mike/log/?m=200512' />
+	<link rel='archives' title='November 2005' href='http://www.perham.net/mike/log/?m=200511' />
+	<link rel='archives' title='October 2005' href='http://www.perham.net/mike/log/?m=200510' />
+	<link rel='archives' title='September 2005' href='http://www.perham.net/mike/log/?m=200509' />
+	<link rel='archives' title='August 2005' href='http://www.perham.net/mike/log/?m=200508' />
+	<link rel='archives' title='July 2005' href='http://www.perham.net/mike/log/?m=200507' />
+	<link rel='archives' title='June 2005' href='http://www.perham.net/mike/log/?m=200506' />
+	<link rel='archives' title='May 2005' href='http://www.perham.net/mike/log/?m=200505' />
+	<link rel='archives' title='April 2005' href='http://www.perham.net/mike/log/?m=200504' />
+	<link rel='archives' title='March 2005' href='http://www.perham.net/mike/log/?m=200503' />
+	<link rel='archives' title='February 2005' href='http://www.perham.net/mike/log/?m=200502' />
+	<link rel='archives' title='January 2005' href='http://www.perham.net/mike/log/?m=200501' />
+	<link rel='archives' title='December 2004' href='http://www.perham.net/mike/log/?m=200412' />
+	<link rel='archives' title='November 2004' href='http://www.perham.net/mike/log/?m=200411' />
+	<link rel='archives' title='October 2004' href='http://www.perham.net/mike/log/?m=200410' />
+	<link rel='archives' title='September 2004' href='http://www.perham.net/mike/log/?m=200409' />
+	<link rel='archives' title='August 2004' href='http://www.perham.net/mike/log/?m=200408' />
+	<link rel='archives' title='July 2004' href='http://www.perham.net/mike/log/?m=200407' />
+	<link rel='archives' title='June 2004' href='http://www.perham.net/mike/log/?m=200406' />
+	<link rel='archives' title='May 2004' href='http://www.perham.net/mike/log/?m=200405' />
+	<link rel='archives' title='April 2004' href='http://www.perham.net/mike/log/?m=200404' />
+	<link rel='archives' title='March 2004' href='http://www.perham.net/mike/log/?m=200403' />
+	<link rel='archives' title='February 2004' href='http://www.perham.net/mike/log/?m=200402' />
+	<link rel='archives' title='January 2004' href='http://www.perham.net/mike/log/?m=200401' />
+	<link rel='archives' title='December 2003' href='http://www.perham.net/mike/log/?m=200312' />
+	<link rel='archives' title='November 2003' href='http://www.perham.net/mike/log/?m=200311' />
+	<link rel='archives' title='October 2003' href='http://www.perham.net/mike/log/?m=200310' />
+	<link rel='archives' title='September 2003' href='http://www.perham.net/mike/log/?m=200309' />
+	<link rel='archives' title='August 2003' href='http://www.perham.net/mike/log/?m=200308' />
+	<link rel='archives' title='July 2003' href='http://www.perham.net/mike/log/?m=200307' />
+	<link rel='archives' title='June 2003' href='http://www.perham.net/mike/log/?m=200306' />
+	<link rel='archives' title='May 2003' href='http://www.perham.net/mike/log/?m=200305' />
+	<link rel='archives' title='April 2003' href='http://www.perham.net/mike/log/?m=200304' />
+	<link rel='archives' title='March 2003' href='http://www.perham.net/mike/log/?m=200303' />
+	<link rel='archives' title='February 2003' href='http://www.perham.net/mike/log/?m=200302' />
+	<link rel='archives' title='January 2003' href='http://www.perham.net/mike/log/?m=200301' />
+	<link rel='archives' title='December 2002' href='http://www.perham.net/mike/log/?m=200212' />
+	<link rel='archives' title='November 2002' href='http://www.perham.net/mike/log/?m=200211' />
+	<link rel='archives' title='October 2002' href='http://www.perham.net/mike/log/?m=200210' />
+
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.perham.net/mike/log/xmlrpc.php?rsd" />
+
+</head>
+
+<body>
+
+
+<div class="container">
+
+	<div class="header">
+		
+		<div class="title">
+		<h1><a href="http://www.perham.net/mike/log">Mutterings</a></h1>
+		</div>
+
+		<div class="navigation">
+			<a href="http://www.perham.net/mike/log">Home</a>
+			<a href="./?page_id=564">About Me</a>
+
+			<a href="../gallery">Photos</a>
+			<a href="mailto:mike AT perham.net">Contact</a>
+		
+			<div class="clearer"><span></span></div>
+		</div>
+
+	</div>
+
+	<div class="main">
+		
+		<div class="content">
+
+			
+			
+			<div class="post" id="post-557">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=557" rel="bookmark" title="Permanent Link to OpenID in practice">OpenID in practice</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 22nd, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p>OpenID looks to be a very nice, lightweight identity system.  With OpenID, you are identified by a URL, in my case http://perham.net/mike.  Anyone can request this URL and get an HTML page with headers that point to my OpenID server.  </p>
+<blockquote><p>
+    &lt;link rel=&#8221;openid.server&#8221; href=&#8221;http://www.myopenid.com/server&#8221; /&gt;<br />
+    &lt;link rel=&#8221;openid.delegate&#8221; href=&#8221;http://mperham.myopenid.com/&#8221; /&gt;<br />
+    &lt;meta http-equiv=&#8221;X-XRDS-Location&#8221; content=&#8221;http://mperham.myopenid.com/xrds&#8221; /&gt;
+</p></blockquote>
+<p>Through a fancy series of browser redirects, any website can verify that the current user is &#8220;http://perham.net/mike&#8221;.  That&#8217;s the core of it - there are <a href="http://www.openidenabled.com/openid/simple-registration-extension/">simple extensions</a> to get more data about the user so sites can access the user&#8217;s name, email, etc automatically.</p>
+<p>The only caveat is the complex series of redirects required.  I run with an ad blocker and javascript blocker 100% of the time so the process did not work at first.  Once I granted all the necessary permissions in my browser, the redirects worked as expected.  For the 99% of the browsing public that are less paranoid than me, OpenID should just work.</p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=5" title="View all posts in Software" rel="category tag">Software</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=557#respond" title="Comment on OpenID in practice">No Comments &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-556">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=556" rel="bookmark" title="Permanent Link to Identity and Authentication">Identity and Authentication</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 21st, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p>A central tenet of software engineering is &#8220;reuse, don&#8217;t rewrite&#8221;.  Unfortunately there are a number of political and social realities which force developers to rewrite the same feature over and over.  One example of this is authentication and authorization systems.  I find myself having to write the same code over and over to deal with users, passwords, login, forgot password, etc.  There are a number of reasons why this functionality is hard to share; outsourcing authentication requires more than just technical savvy - you need trust, privacy, and reliability assurances from that authentication provider.</p>
+<p>Microsoft tried this once with its .NET Passport system with limited success, mostly due to the aforementioned business issues.  Now more grassroots efforts are trying to advance open standards for authentication mechanisms, in an effort to standardize and get momentum.  The <a href="http://www.projectliberty.org/index.php/liberty/about">Liberty Alliance</a> has been around for a few years and <a href="http://openid.net/">OpenID</a> is another system which seems to be getting some traction in the Ruby on Rails world.  I&#8217;ve always believed that a standardized notion of the user and authentication/authorization is next thing required to advance application development.  So I&#8217;m going to play with OpenID and see how well it works.</p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=5" title="View all posts in Software" rel="category tag">Software</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=556#respond" title="Comment on Identity and Authentication">No Comments &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-555">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=555" rel="bookmark" title="Permanent Link to 4/13 Track Day">4/13 Track Day</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 20th, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p>I had an awesome time at TWS last Friday.  The weather was near perfect and the 675 ran flawlessly.  I was up to speed almost immediately and by the end of the day I had bested my best lap time on the old SV by a second (2:14.5).  No knee down but the chicken strips on the tires are all gone.  I also managed to get some good video footage with my new camcorder; I&#8217;m in the process of converting the raw AVI into something small for public consumption.</p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=4" title="View all posts in Motorcycles" rel="category tag">Motorcycles</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=555#respond" title="Comment on 4/13 Track Day">No Comments &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-554">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=554" rel="bookmark" title="Permanent Link to Goodbye Triple">Goodbye Triple</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 20th, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p>I finally sold my <a href="http://www.perham.net/mike/gallery/v/motorcycle/speed3">Speed Triple</a> tonight to a rather sketchy fellow who bought it with almost no fuss at all.  I was planning on looking for another bike rather quickly but due to an unexpected IRS bill over some stock I forgot to report (please don&#8217;t throw me in jail, Uncle Sam!), that&#8217;ll have to wait for a month or two.  <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_sad.gif' alt=':(' class='wp-smiley' /></p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=4" title="View all posts in Motorcycles" rel="category tag">Motorcycles</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=554#respond" title="Comment on Goodbye Triple">No Comments &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-553">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=553" rel="bookmark" title="Permanent Link to I surrender to the Germans">I surrender to the Germans</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 14th, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p>I spent 4-5 hours working on the stereo install, rewiring everything as best as I could figure and in the end, could only get it to sound terrible.  It obviously wasn&#8217;t grounded properly as there was audible hum and the pre-amp connections only partly worked (?!).  In doing this, I cut all the factory wiring so it looks like I&#8217;m going to have to bring it to the local custom audio place and have them put in an aftermarket amp in order to rewire everything.  Since I&#8217;m doing that, I might as well have them put in rear speakers too.  Unfortunately this means this is going to be a lot more expensive than I had hoped.  <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_sad.gif' alt=':(' class='wp-smiley' /></p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=3" title="View all posts in Personal" rel="category tag">Personal</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=553#respond" title="Comment on I surrender to the Germans">No Comments &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-552">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=552" rel="bookmark" title="Permanent Link to Live in Stereo">Live in Stereo</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 12th, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p>The new head unit appeared in the mail yesterday so I immediately tore apart the Boxster.  I pulled out the factory head unit and realized I was in for a mess of wiring.  So I got to play with my new soldering iron a little bit. <img src='http://www.perham.net/mike/log/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' />  I also learned that the factory amp uses a custom plug for the pre-amp input but the Alpine head uses standard RCA outputs which led to the discovery that me and the Crutchfield shopping cart had had a bit of a misunderstanding; I was missing the universal adapter that should bridge from RCA < -> custom.  Oops.  I called them at 10pm last night and they are sending out an adapter with next day shipping for free.  I&#8217;m happy to call out a company that has great customer service.</p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=3" title="View all posts in Personal" rel="category tag">Personal</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=552#comments" title="Comment on Live in Stereo">1 Comment &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-551">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=551" rel="bookmark" title="Permanent Link to Random Notes">Random Notes</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 11th, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<ul>
+<li>Acrobat Reader 8.0 is about a zillion times better than previous versions.  I was pegged on 5.1 for the last 5 years due to the horrible performance of 6 and 7 but 8 is almost as fast as 5.1 and contains a much more usable user interface.</li>
+<li>The Canon ZR800 has an external microphone input but it only works well with powered mics.  Don&#8217;t bother with cheap webcam microphones and types of passive mics.</li>
+<li>I saw Six Feet Under for the first time last night.  It was entertaining; I&#8217;ll try to catch future episodes.</li>
+</ul>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=1" title="View all posts in General" rel="category tag">General</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=551#comments" title="Comment on Random Notes">1 Comment &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-550">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=550" rel="bookmark" title="Permanent Link to Random Post of the Day">Random Post of the Day</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 9th, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p><a href="http://thrillingwonder.blogspot.com/2007/04/new-lords-of-logistics.html">Enjoy!</a></p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=1" title="View all posts in General" rel="category tag">General</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=550#respond" title="Comment on Random Post of the Day">No Comments &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-549">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=549" rel="bookmark" title="Permanent Link to Happy Easter">Happy Easter</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 8th, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p><a href="http://www.washingtonpost.com/wp-srv/photo/gallery/070402/GAL-07Apr02-69859/index.html">Peep diorama</a>.  I like 16 and 17 the best.</p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=1" title="View all posts in General" rel="category tag">General</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=549#respond" title="Comment on Happy Easter">No Comments &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<div class="post" id="post-548">
+
+			<h1><a href="http://www.perham.net/mike/log/?p=548" rel="bookmark" title="Permanent Link to Boxster Audio">Boxster Audio</a></h1>
+
+			<div class="descr"><img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/timeicon.gif" alt="" /> April 7th, 2007 by <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/author.gif" alt="" /> mperham </div>
+
+				<div class="entry">
+
+			<p>I noticed the windscreen (the plastic between the headrests, minimizes turbulence) on the Boxster was rattling when driving it home from the dealer.  Well, it detached at 70 mph on the freeway two days later.  The dealer said it wasn&#8217;t officially covered under the certified warranty but they fixed it no charge anyways this morning.  Kudos to them.</p>
+<p>The dealer showed me how to memorize the channels.  You just hold down the button.  It tunes immediately to what is preset but if you continue to hold the button down, it will replace it with what was tuned when pressed.  They really should tune on button release, not button press.</p>
+<p>That&#8217;s water under the bridge though because I just bought an Alpine CDA-9885 head unit with ipod cable to replace it.  The guy at CustomSounds recommended the Alpine as having the best ipod integration (which I confirmed with some research on the intertubes).  I was going to get the 9881 or 9883 but he also mentioned that a bright display is important in a convertible where direct sunlight is frequent.  The 9885 has an OLED display which is supposed to be very readable in sunlight.  The only thing I&#8217;ll really miss is the speed sensitive volume feature - I loved this in my Z3 as I found myself adjusting the volume constantly otherwise.</p>
+<p>I got up the nerve to try to install the unit myself.  Crutchfield supplies a ton of tidbits with the head unit: removal tool, antenna adapter, wiring harness, universal adapter, and install guide!  With all that help, I figured it can&#8217;t be that hard.  When I talked to the CustomSounds guys, they wanted MSRP for the head unit along with nickel and diming me with all the adapters and harnesses.  It really sounded like it would cost $500 to install a $200 head.  So wish me luck and I&#8217;ll post the results soon.</p>
+
+				</div>
+
+			<p class="info">Posted in <a href="http://www.perham.net/mike/log/?cat=3" title="View all posts in Personal" rel="category tag">Personal</a> <strong>|</strong>  <img src="http://www.perham.net/mike/log/wp-content/themes/Indigo/img/comments.gif" alt="" /> <a href="http://www.perham.net/mike/log/?p=548#respond" title="Comment on Boxster Audio">No Comments &raquo;</a></p>
+
+			</div>
+
+			
+			
+			<p align="center"><a href="http://www.perham.net/mike/log/index.php?paged=3">&laquo; Previous Entries</a> <a href="http://www.perham.net/mike/log/index.php">Next Entries &raquo;</a></p>
+
+			
+		</div>
+
+		<div class="sidenav">
+
+
+
+			
+		<h1>Search</h1>
+
+		<form method="get" id="searchform" action="/mike/log/index.php">
+
+		<input type="text" value="" name="s" id="s" /><input type="submit" id="sidebarsubmit" value="Search" />
+
+		</form>
+
+<h1>Recent Posts</h1>
+
+<ul>
+
+<li><a href='http://www.perham.net/mike/log/?p=571'>Modern Parenting</a></li><li><a href='http://www.perham.net/mike/log/?p=570'>Introducing ActiveScaffold</a></li><li><a href='http://www.perham.net/mike/log/?p=567'>What I learned from Star Trek</a></li><li><a href='http://www.perham.net/mike/log/?p=565'>It&#8217;s alive!</a></li><li><a href='http://www.perham.net/mike/log/?page_id=564'>About Me</a></li><li><a href='http://www.perham.net/mike/log/?p=563'>Heroes</a></li><li><a href='http://www.perham.net/mike/log/?p=562'>Offline Rails Apps</a></li><li><a href='http://www.perham.net/mike/log/?p=561'>Wordpress Upgrade</a></li><li><a href='http://www.perham.net/mike/log/?p=560'>Creating Windows-friendly video in Linux</a></li><li><a href='http://www.perham.net/mike/log/?p=559'>10 Steps to Fascism</a></li>
+</ul>
+
+
+
+		<h1>Categories</h1>
+
+		<ul>
+
+			<li><a href="http://www.perham.net/mike/log/?cat=2" title="View all posts filed under Business">Business</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=1" title="View all posts filed under General">General</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=4" title="View all posts filed under Motorcycles">Motorcycles</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=3" title="View all posts filed under Personal">Personal</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=8" title="View all posts filed under Politics">Politics</a>
+</li>
+	<li><a href="http://www.perham.net/mike/log/?cat=5" title="View all posts filed under Software">Software</a>
+</li>
+
+		</ul>
+
+		
+		<h1>Blogroll</h1>
+
+		<ul>
+
+		<li><a href="http://andrewbusey.com/" rel="friend">Andrew</a></li>
+<li><a href="http://greythistle.livejournal.com/" rel="friend">Greythistle</a></li>
+<li><a href="http://www.livejournal.com/users/jbelshaw" rel="friend">Jarod</a></li>
+<li><a href="http://perhamodyssey.blogspot.com/" rel="parent">Jim</a></li>
+<li><a href="http://mattklepac.com/" rel="friend met colleague">Matt</a></li>
+<li><a href="http://yinsight.blogspot.com/" rel="friend">Rath</a></li>
+<li><a href="http://steven.teleki.net/st/" rel="friend met colleague">Steve</a></li>
+
+		</ul>
+
+		
+		<h1>Archives</h1>
+
+		<ul>
+
+			<li><a href='http://www.perham.net/mike/log/?m=200705' title='May 2007'>May 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200704' title='April 2007'>April 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200703' title='March 2007'>March 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200702' title='February 2007'>February 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200701' title='January 2007'>January 2007</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200612' title='December 2006'>December 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200611' title='November 2006'>November 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200610' title='October 2006'>October 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200609' title='September 2006'>September 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200608' title='August 2006'>August 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200607' title='July 2006'>July 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200606' title='June 2006'>June 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200605' title='May 2006'>May 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200604' title='April 2006'>April 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200603' title='March 2006'>March 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200602' title='February 2006'>February 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200601' title='January 2006'>January 2006</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200512' title='December 2005'>December 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200511' title='November 2005'>November 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200510' title='October 2005'>October 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200509' title='September 2005'>September 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200508' title='August 2005'>August 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200507' title='July 2005'>July 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200506' title='June 2005'>June 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200505' title='May 2005'>May 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200504' title='April 2005'>April 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200503' title='March 2005'>March 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200502' title='February 2005'>February 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200501' title='January 2005'>January 2005</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200412' title='December 2004'>December 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200411' title='November 2004'>November 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200410' title='October 2004'>October 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200409' title='September 2004'>September 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200408' title='August 2004'>August 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200407' title='July 2004'>July 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200406' title='June 2004'>June 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200405' title='May 2004'>May 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200404' title='April 2004'>April 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200403' title='March 2004'>March 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200402' title='February 2004'>February 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200401' title='January 2004'>January 2004</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200312' title='December 2003'>December 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200311' title='November 2003'>November 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200310' title='October 2003'>October 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200309' title='September 2003'>September 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200308' title='August 2003'>August 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200307' title='July 2003'>July 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200306' title='June 2003'>June 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200305' title='May 2003'>May 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200304' title='April 2003'>April 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200303' title='March 2003'>March 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200302' title='February 2003'>February 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200301' title='January 2003'>January 2003</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200212' title='December 2002'>December 2002</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200211' title='November 2002'>November 2002</a></li>
+	<li><a href='http://www.perham.net/mike/log/?m=200210' title='October 2002'>October 2002</a></li>
+		</ul>
+
+	
+		<h1>Meta</h1>
+
+		<ul>
+
+		<li><a href="http://www.perham.net/mike/log/?feed=rss2" title="Syndicate this site using RSS"><abbr title="Really Simple Syndication">RSS</abbr></a></li>
+
+		<li><a href="http://www.perham.net/mike/log/?feed=comments-rss2" title="The latest comments to all posts in RSS">Comments <abbr title="Really Simple Syndication">RSS</abbr></a></li>
+
+		<li><a href="http://validator.w3.org/check/referer" title="This page validates as XHTML 1.0 Transitional">Valid <abbr title="eXtensible HyperText Markup Language">XHTML</abbr></a></li>
+
+		<li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
+
+		
+		</ul>
+
+		</div>
+	
+	
+	<div class="clearer"><span></span></div>
+
+
+</div>		
+</div>
+<div class="footer">&copy; 2002-2007 <a href="http://www.perham.net/mike/log">Mike Perham.</a></div>
+
+</body>
+
+</html>
+<!-- Dynamic Page Served (once) in 0.295 seconds -->
