@@ -2,8 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset-min.css">
-<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.4.1/build/cssreset/cssreset-min.css">
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <style>
+    .title {
+      border-bottom: 1px solid black;
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body style="padding-top: 40px;">
   <div class="topbar" >
@@ -11,10 +18,10 @@
       <div class="container">
         <a class="brand" href="#">Mike Perham</a>
         <ul class="nav">
-          <li><a href="mailto:mperham@gmail.com">mperham@gmail.com</a>
+          <li><a href="mailto:mike@perham.net">mike@perham.net</a>
           <li><a href="http://www.mikeperham.com/">Blog</a>
           <li><a href="http://github.com/mperham">GitHub</a>
-          <li><a href="http://twitter.com/mperham">Twitter</a>
+          <li><a href="http://ruby.social/@getajobmike">Mastodon</a>
         </ul>
       </div>
     </div>
@@ -23,60 +30,64 @@
   <div class="container">
   <h1>Summary</h1>
   <p>
-  I am a software developer, technical speaker and open source enthusiast.  For 8 years I
-  focused on the design and development of object-oriented ecommerce and
-  enterprise systems in Java.  Five years ago I switched to Ruby and focused on building 
-  systems with open source tools.  I'm currently based in San Francisco
-  but am looking to relocate to Portland.
+  I am a software developer, technical speaker and open source enthusiast.
+  For many years now I've been self-employed, building commercial software tools focused
+  on background jobs, a popular pattern for scaling transactional processing.
   </p>
   <h2>Professional Experience</h2>
+
+  <h3 class="title">CEO, Contributed Systems (07/2014 - Present)</h3>
   <p>
-  <h3>
-  Carbon Five (01/2011 - Present)<br/>
-  </h3>
-  <h3>Technical Lead</h3>
+    Focused on the design and development of our Sidekiq and Faktory background job systems.
+    As of 2025, I have over 2000 customers and annual sales approaching $10m/year.
+    I have done this with no employees, only me.
   </p>
+  <p>
+    I manage and develop the <a href="https://sidekiq.org">Sidekiq</a> and <a href="https://contribsys.com/faktory">Faktory</a> open source projects along with the Sidekiq Pro, Sidekiq Enterprise, and Faktory Enterprise commercial products.
+    All available for sale at <a href="https://billing.contribsys.com">https://billing.contribsys.com</a>.
+  </p>
+
+  <h3 class="title">Director of Technical Operations, The Clymb (02/2012 - 07/2014)</h3>
+  <p>
+  Lead developer and head of DevOps for TheClymb.com, an online retailer focused on outdoor adventure.
+  In this role, I was responsible for the health and stability of the website infrastructure, building scalable systems with Ruby and OSS tools and led a team of developers monitoring the e-commerce platform.
+  TheClymb.com was Sidekiq's first customer.
+  Sample technologies: Ruby, Rails, Redis, RSpec, Sidekiq, MySQL.
+  </p>
+
+  <h3 class="title">Technical Lead, Carbon Five (01/2011 - 01/2012)</h3>
   <p>
   Moved to San Francisco and did independent Ruby consulting for 6 months before joining C5.
   </p>
   <p>
-  Developer and project lead for customer engagements with Carbon Five, a web development services company.  In this role, I advised clients on proper development process, building scalable systems with Ruby and OSS tools and led a team of developers building software (usually Rails web sites, e.g. <a href="http://manilla.com">http://manilla.com</a>) for clients.  Sample technologies: jruby, redis, rspec, heroku, jquery.
+  Developer and project lead for customer engagements with Carbon Five, a web development services company.
+  In this role, I advised clients on proper development process, building scalable systems with Ruby and OSS tools and led a team of developers building software (usually Rails web sites, e.g. <a href="http://manilla.com">http://manilla.com</a>) for clients.
+  Sample technologies: jruby, redis, rspec, heroku, jquery.
   </p>
-  <p>
-  <h3>
-  OneSpot Corporation (03/2009 - 06/2010)<br/>
-  </h3>
-  <h3>Software Engineer</h3>
-  </p>
+
+  <h3 class="title">Software Engineer, OneSpot Corporation (03/2009 - 06/2010)</h3>
   <p>
   Ruby and systems developer.  I led development of our 2nd and 3rd generation message 
   queue processing systems, automated system provisioning, content generation and caching.  Worked with technologies like Varnish, nginx, Passenger, thin, Sinatra, EventMachine, Rails, Ruby, Cassandra, Solr, RabbitMQ, postgresql, ec2 and Chef.  I pushed a lot of open source based on my work to Github. 
   Spoke at LoneStarRubyConf and Austin on Rails during this time on various technical subjects.
   </p>
+
+  <h3 class="title">Software Engineer, FiveRuns Corporation (09/2007 - 3/2009)</h3>
   <p>
-  <h3>
-  FiveRuns Corporation (09/2007 - 3/2009)<br/>
-  </h3>
-  <h3>Software Engineer</h3>
+  I spent 15 months building FiveRuns' Manage and Dash (unreleased) services.
+  I personally focus on the lower-level portions of our service, building http-based services, data processing via message queuing and performance tuning both Ruby code and MySQL schema.
+  I've contributed to many open source projects during this time and spoken at several conferences and user groups in the US and Europe including Rubyconf and Railsconf Europe.
   </p>
+
+  <h3 class="title">Software Architect, Webify Solutions, IBM Corp (05/2003 - 09/2007)</h3>
   <p>
-  I've spent the last 15 months building FiveRuns' Manage and Dash (unreleased) services.  I personally focus on the lower-level
-  portions of our service, building http-based services, data processing via message queuing and performance 
-  tuning both Ruby code and MySQL schema.  I've contributed to many 
-  open source projects during this time and spoken at several conferences and user groups in the US and Europe including Rubyconf and Railsconf Europe.
-  </p>
-  <p>
-  <h3>
-  Webify Solutions, IBM Corp (05/2003 - 09/2007)
-  </h3>
-  <h3>Software Architect</h3>
-  </p>
-  <p>My long-term focus at IBM (which acquired Webify in 8/06) is the design and implementation of service-oriented applications based on IBM's Business Services Fabric middleware.  Since these applications are different from traditional monolithic applications, there is a real need to design and document how to build these applications.
+    My long-term focus at IBM (which acquired Webify in 8/06) is the design and implementation of service-oriented applications based on IBM's Business Services Fabric middleware.
+    Since these applications are different from traditional monolithic applications, there is a real need to design and document how to build these applications.
   </p>
   <p>
   <b>Accomplishments</b>
   <ul>
-  <li>Initial architecture documentation for Webify's <a href="http://www.webifysolutions.com/technology.html">SOBA Fabric</a>.
+  <li>Initial architecture documentation for Webify's SOBA Fabric.
   <li>Member of <a href="http://www.oasis-open.org">OASIS</a> and <a href="http://www.ws-i.org">WS-I</a> web services standards bodies.
   <li>Architect and lead developer of Webify's J2EE-based healthcare solution.  System runs on WebSphere 6.0 and DB2 using Hibernate, Spring and Tapestry.
   <li>Developer of Webify's Maven-based build system and <a href="http://maven.apache.org">Apache Maven</a> PMC member and committer.
@@ -87,13 +98,13 @@
   <p>
   Cornell University, BS and M.Eng, Computer Science
   </p>
-  <h2>Speaking</h2>
+  <h2>Public Speaking</h2>
   <p>
-    I have given talks at LoneStar RubyConf, RailsConf Europe, RubyConf, OSON and several regional user groups.
+    I have given talks at RubyConf, RailsConf, RailsConf Europe, OSON and several regional user groups.
   </p>
   <h2>Spare Time</h2>
   <p>
-  In my spare time, I like working on numerous OSS projects and race motorcycles.  See <a href="http://github.com/mperham">my GitHub page</a> for more details.
+  In my spare time, I like working on numerous OSS projects and ride my e-bikes.  See <a href="http://github.com/mperham">my GitHub page</a> for more details.
   </p>
   </div>
 </body>
